@@ -2,6 +2,10 @@
 
 ## Baseline
 
+- Section: `<Sxx / Sxx.n>`
+- Lineage: `<original or parent -> child>`
+- Replan generation: `<0+>`
+- Current review round: `<0..5>`
 - Section base: `<commit or fingerprint>`
 - Current head: `<commit or fingerprint>`
 - Contract: `.agent-work/sections/<Sxx>-CONTRACT.md`

@@ -1,4 +1,4 @@
-# Sectioned Feature Development v1.1
+# Sectioned Feature Development v2
 
 ## 设计理念
 
@@ -9,7 +9,7 @@
 
 ## 简要执行流程
 
-`trigger → PLAN-FULL → section implement → SECTION/DELTA review → next section → INTEGRATION`
+`PLAN → section implement → bounded review/repair → hard-cap recovery → integration`
 
 ## 安装
 
@@ -17,6 +17,6 @@
 
 ## 历史资料
 
-`docs/version-history/` 包含从 v1 到 v1.1 的全部历史。每个历史版本包含原始 Prompt、Audit Pack 分析、外部研究、更新说明和按用户策略保留的 appendix。
+`docs/version-history/` 包含从 v1 到 v2 的全部历史。每个历史版本包含原始 Prompt、Audit Pack 分析、外部研究、更新说明和按用户策略保留的 appendix。
 
 `docs/CHANGE_LOG.md` 是截至本快照的累计流程变更记录。

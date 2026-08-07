@@ -1,73 +1,73 @@
 # Orchestration Protocol
 
-Use this protocol when an orchestrator delegates section planning, implementation, code review, repair, and final verification to separate agent contexts.
+Use this reference when the main agent delegates planning, section implementation, full section review, repair, automatic hard-cap re-decomposition, and final integration to separate agent contexts.
 
 ## Contents
 
 1. [Roles](#1-roles)
 2. [Context packets](#2-context-packets)
 3. [Profile routing](#3-profile-routing)
-4. [Orchestration algorithm](#4-orchestration-algorithm)
-5. [Section lifecycle](#5-section-lifecycle)
-6. [Commit discipline](#6-commit-discipline)
-7. [Worktrees and parallel agents](#7-worktrees-and-parallel-agents)
+4. [Section orchestration algorithm](#4-section-orchestration-algorithm)
+5. [Five-round hard-cap recovery](#5-five-round-hard-cap-recovery)
+6. [Commit and branch discipline](#6-commit-and-branch-discipline)
+7. [Worktrees and retry isolation](#7-worktrees-and-retry-isolation)
 8. [Decision handling](#8-decision-handling)
 9. [State integrity](#9-state-integrity)
 
 ## 1. Roles
 
-### Orchestrator
+### Main orchestrator
 
-Owns the feature contract, state machine, artifact integrity, dependency graph, authorization, and stop decisions. It must not treat subagent prose as evidence without inspecting the resulting repository state and recorded checks.
+Owns the feature contract, `PLAN-FULL.md`, dependency graph, execution state, subagent prompts, review-round accounting, backup/retry branch selection, and final acceptance gates. It must inspect repository state rather than trusting agent prose.
 
 ### Plan reviewer
 
-Challenges the full plan before implementation when risk or ambiguity warrants it. It checks section boundaries, dependencies, global invariants, validation oracles, compatibility, rollout, rollback, and missing integration gates. It does not implement.
+Challenges initial section boundaries, dependencies, ownership, invariants, test oracles, compatibility, rollout, rollback, and integration checkpoints. It does not implement.
 
 ### Section implementer
 
-Receives one frozen section contract and the minimum feature context needed to preserve global invariants. It implements, tests, records evidence, and stops. It does not broaden scope or declare the feature mergeable.
+Receives one extracted section and frozen contract. It implements only that section, runs requested checks, and records handoff evidence.
 
-### Section discovery reviewer
+### Section reviewer
 
-Receives a clean context and performs one full `SECTION` review against a stable section base/head. It creates evidence-backed findings and coverage records. It does not repair during discovery.
+A fresh `sol_xhigh` context running `$code-review` in `SECTION` mode. Every counting review is a new full review of the current section range and direct semantic impact cone. It does not receive previous review conclusions before forming its own view.
 
 ### Repair agent
 
-Receives only frozen, authorized finding IDs, acceptance criteria, section contract, and exact repair base. It makes the smallest coherent repair and records checks. It cannot close its own findings.
+A `sol_high` context receiving the current round's frozen agent-fixable findings. It makes the smallest coherent repair, runs relevant checks, and records what changed. It does not decide whether the section is accepted.
 
-### Delta verifier
+### Hard-cap decomposer
 
-Reviews only the repair patch and invalidated impact cone. It verifies finding closure and new defects introduced by the repair. It does not rescan the stable section without a reset trigger.
+A clean `@sol_max` context (profile `sol_max`) used only after five full review rounds fail to produce two consecutive clean rounds. It receives the failed section, original section base, current `PLAN-FULL.md`, and the five review histories. It splits only that section into smaller descendants and updates affected plan edges; it does not implement product code.
 
 ### Integration reviewer
 
-Receives the feature base/head, original feature contract, section summary, cross-section contracts, deferred-work ledger, and final evidence. It reviews feature-level behavior and interactions rather than replaying every local line review.
+A clean reviewer focused on cross-section composition and full-feature acceptance after active leaf sections are accepted.
 
 ### Decision owner
 
-The user or accountable maintainer who resolves business semantics, compatibility policy, accepted risk, migration behavior, rollout decisions, and other non-inferable choices.
+The user or accountable maintainer. Only genuine product semantics, compatibility policy, migration meaning, acceptable risk, rollout behavior, or other non-inferable business choices require this authority.
 
 ## 2. Context packets
 
-Keep packets explicit and small enough to remain salient.
+Keep packets explicit. Do not preload persuasive history where independence matters.
 
 ### Implementer packet
 
 ```text
-- Working path
-- Repository instructions and relevant architecture sources
-- Feature goal, non-goals, and global invariants
-- Current section ID and frozen contract path
-- Exact section base
-- Required checks and evidence paths
-- Commit authorization and profile routing
-- Explicit instruction not to modify future sections
+Working path: {path}
+Feature plan: .agent-work/PLAN-FULL.md
+Current execution plan: .agent-work/PLAN.md
+Section: {ID}
+Section contract: .agent-work/sections/{ID}-CONTRACT.md
+Section base: {section_base}
+Feature invariants: {IDs}
+Required checks: {commands}
+Commit authority: {mode}
+Do not implement future sections.
 ```
 
-Do not include the entire previous review transcript. Include only accepted decisions that changed authoritative artifacts.
-
-### Independent section-review packet
+### Full section review packet
 
 ```text
 Review mode: SECTION
@@ -76,42 +76,56 @@ Section: {ID}
 Range: {section_base}..{section_head}
 Feature contract: .agent-work/PLAN-FULL.md
 Section contract: .agent-work/sections/{ID}-CONTRACT.md
-Handoff: .agent-work/sections/{ID}-HANDOFF.md
-Output: .agent-work/reviews/{ID}-SECTION-r01.md
+Implementation handoff: .agent-work/sections/{ID}-HANDOFF.md
+Output: .agent-work/reviews/{ID}-SECTION-r{NN}.md
 Use: $code-review
 ```
 
-Do not seed suspected findings or previous persuasive conclusions into the first discovery reviewer.
+Do not include previous review findings, whether the last round was clean, or language such as “final confirmation”. The main orchestrator, not the reviewer, owns the two-clean-round rule.
 
 ### Repair packet
 
 ```text
 Working path: {path}
 Section: {ID}
-Repair base: {reviewed_head}
-Authorized findings: {IDs}
-Frozen finding ledger: {review_file_or_ledger}
+Current reviewed head: {head}
+Authorized findings from round {NN}: {IDs}
+Review file: .agent-work/reviews/{ID}-SECTION-r{NN}.md
 Frozen acceptance criteria: {criteria}
-Section contract: {contract_path}
+Section contract: .agent-work/sections/{ID}-CONTRACT.md
 Required checks: {commands}
-Output handoff: {handoff_path}
-Do not fix unlisted findings or broaden scope.
+Do not broaden scope or fix unlisted speculative issues.
 ```
 
-### Delta-verification packet
+### Hard-cap `@sol_max` packet
 
 ```text
-Review mode: DELTA
-Working path: {path}
-Section: {ID}
-Repair range: {repair_base}..{repair_head}
-Frozen findings: {IDs and ledger path}
-Review only the repair delta, invalidated impact cone, and reopened conclusions.
-Output: .agent-work/reviews/{ID}-DELTA-rNN.md
-Use: $code-review
+Task: Re-decompose one non-converging section. Do not implement product code.
+Working path: {failed_working_path}
+Feature plan: .agent-work/PLAN-FULL.md
+Feature state: .agent-work/FEATURE-STATE.md
+Current failed section: {ID} — {title}
+Original section base: {section_base}
+Failed tip: {failed_tip}
+Backup branch: {backup_branch}
+Hard-cap summary: .agent-work/replans/{ID}-g{generation}-HARD-CAP.md
+Review files:
+  - .agent-work/reviews/{ID}-SECTION-r01.md
+  - .agent-work/reviews/{ID}-SECTION-r02.md
+  - .agent-work/reviews/{ID}-SECTION-r03.md
+  - .agent-work/reviews/{ID}-SECTION-r04.md
+  - .agent-work/reviews/{ID}-SECTION-r05.md
+
+The section failed to reach two consecutive clean full SECTION reviews within five rounds.
+Split only this section into smaller independently implementable, testable, and reviewable descendants.
+Preserve accepted predecessor sections and user-owned feature semantics.
+Use hierarchical lineage IDs such as {ID}.1, {ID}.2; recursively extend if needed.
+Use the five review histories as decomposition evidence: repeated root causes must become explicit boundaries, invariants, oracles, or separate descendants.
+Update requirement coverage, dependency edges, downstream Requires, checkpoints, and deferred-work ownership affected by the split.
+Do not carry failed implementation choices forward merely because they already exist.
 ```
 
-### Integration-review packet
+### Integration review packet
 
 ```text
 Review mode: INTEGRATION
@@ -120,195 +134,212 @@ Feature range: {feature_base}..{feature_head}
 Feature contract and requirement matrix: .agent-work/PLAN-FULL.md
 Feature state: .agent-work/FEATURE-STATE.md
 Section contracts/handoffs: .agent-work/sections/
-Prior review index: .agent-work/reviews/
-Focus: cross-section contracts, end-to-end behavior, deferred work, migration,
-rollout/rollback, security, reliability, operations, and full acceptance.
+Review/replan evidence: .agent-work/reviews/, .agent-work/replans/
+Focus: full acceptance, cross-section contracts, migration, rollout/rollback,
+security, reliability, operations, cleanup, and deferred-work closure.
 Output: .agent-work/reviews/FEATURE-INTEGRATION-r01.md
 Use: $code-review
 ```
 
-The integration reviewer may read prior ledgers after forming an independent view of the current feature state. Do not preload prior rationalizations as the framing.
-
 ## 3. Profile routing
 
-Use project-configured profile names. If the governing instructions define the following aliases, route by default as follows:
+When the configured aliases exist, use:
 
-- Ordinary section implementation: `sol-medium`.
-- High-risk implementation or plan repair: `sol_high`.
-- Independent section and integration discovery review: clean `sol_xhigh`.
-- Authorized repair: `sol_high`.
-- Delta verification: `sol_xhigh` or another independent high-reasoning reviewer.
+- ordinary section implementation: `sol-medium`;
+- high-risk section implementation and repairs: `sol_high`;
+- every counting full `SECTION` review: clean `sol_xhigh`;
+- five-round hard-cap re-decomposition: clean `@sol_max` (profile `sol_max`);
+- final integration review: clean `sol_xhigh` unless governing instructions specify otherwise.
 
-Escalate based on semantic risk, not line count. Do not spend the highest profile on mechanical extraction or formatting.
+`@sol_max` is not a generic sixth reviewer. Its task is to change the decomposition, not to continue the same search process.
 
-## 4. Orchestration algorithm
+## 4. Section orchestration algorithm
 
 ```text
-mode = resolve_authority()
-state = initialize_feature_state()
-feature_base = freeze_feature_base()
-plan = write_and_validate_full_plan()
-
-if plan_requires_review(plan):
-    plan_review = clean_plan_review(plan)
-    resolve_plan_findings_or_block()
-
-for section in dependency_order(plan):
-    ensure_predecessors_accepted(section)
-    section_base = current_integrated_head()
-    extract_plan(section)
+for section in dependency_order(active_leaf_sections):
+    section_base = accepted_predecessor_head(section)
+    extract_to_PLAN(section)
     freeze_contract(section, section_base)
 
-    implementation = run_implementer(section)
-    inspect_handoff_and_repository(implementation)
-    run_required_local_checks(section)
-    commit_if_authorized(section)
-    section_head = current_head()
+    run_implementer(section)
+    inspect_repo_and_handoff()
+    run_required_checks()
+    commit_if_authorized("implementation")
 
-    review = clean_section_review(section_base, section_head)
-    repair_waves = 0
+    review_round = 0
+    clean_streak = 0
 
-    while review.has_blocking_findings():
-        if review.needs_decision():
-            record_blocker_and_stop()
+    while review_round < 5:
+        review_round += 1
+        section_head = current_head()
+        report = run_clean_sol_xhigh_full_SECTION_review(
+            section_base,
+            section_head,
+            output=f"{section}-SECTION-r{review_round:02d}.md"
+        )
 
-        if repair_waves >= 5:
-            diagnose_convergence_failure_and_stop()
+        findings = main_agent_validate_and_deduplicate(report)
 
-        findings = freeze_smallest_coherent_fixable_wave(review)
-        repair_base = current_head()
-        run_repair_agent(findings)
-        inspect_repair_and_checks()
-        commit_if_authorized(findings)
-        repair_head = current_head()
-        repair_waves += 1
+        if findings.require_user_decision():
+            persist_state_and_block_for_decision()
 
-        if reset_triggered(repair_base, repair_head, section.contract):
-            record_reset_reason()
-            section_base = rebaseline_section_preserving_history()
-            review = clean_section_review(section_base, current_head())
-        else:
-            review = delta_verify(repair_base, repair_head, findings)
+        if findings.has_no_new_material_actionable_issue():
+            clean_streak += 1
+            persist_round_state()
+            if clean_streak == 2:
+                accept_section_provisionally()
+                break
+            continue
 
-    accept_section_provisionally()
-    update_feature_state()
-    remove_transient_plan_after_durable_record()
+        clean_streak = 0
+        fixable = findings.agent_fixable_material_items()
+        run_sol_high_repair(fixable)
+        inspect_repo_and_handoff()
+        run_relevant_checks()
+        commit_if_authorized("repair")
+        persist_round_state()
 
-    if integration_checkpoint_triggered(section):
-        run_targeted_integration_checkpoint()
-        resolve_checkpoint_failure_or_reset()
-
-ensure_all_sections_accepted_and_deferred_items_resolved()
-integration_review = clean_feature_integration_review(feature_base, current_head())
-repair_integration_findings_with_same_delta_protocol()
-run_full_feature_validation()
-archive_plan_and_report()
+    if not section_is_accepted():
+        hard_cap_replan(section)
+        replace_parent_with_active_descendants()
+        continue_from_original_section_base()
 ```
 
-## 5. Section lifecycle
+### What counts as material
 
-Use these states in `FEATURE-STATE.md`:
+A new `Must Fix`, `Should Fix`, or blocking `Needs Decision` root cause is material.
+
+These normally do not reset a clean streak:
+
+- repeated wording of an already-closed root cause;
+- explicit work assigned to a later section when the current intermediate state is valid;
+- unsupported hypotheses;
+- style-only preferences;
+- non-blocking `Should Plan` or bounded debt.
+
+The main orchestrator makes this accounting decision from the review report and current evidence.
+
+### DELTA checks
+
+Targeted DELTA verification may be useful inside a repair wave, especially for risky fixes. It does not increment `review_round` and cannot increment `clean_streak`. Only a fresh full `SECTION` review counts.
+
+## 5. Five-round hard-cap recovery
+
+There is no soft cap. The only review-round budget is five full `SECTION` reviews per active section attempt.
+
+If round 5 ends without `clean_streak == 2`:
+
+1. **Do not run round 6.**
+2. **Do not ask whether to continue.**
+3. Persist the failed attempt and review history.
+4. Create `codex/backup/{feature-slug}-{section-id}-g{generation}-{timestamp}` at the failed tip.
+5. Compile a round-by-round hard-cap summary.
+6. Invoke clean `@sol_max` with the packet above.
+7. Validate the revised `PLAN-FULL.md`.
+8. Mark the failed parent `SPLIT_AFTER_HARD_CAP` and activate its descendants.
+9. Retry descendants from the failed parent's original `section_base`, not from the failed tip.
+
+### Round-by-round summary
+
+The summary must preserve evidence, not vague “review still found issues” language:
+
+| Round | Reviewed head | New material findings | Root cause / boundary | Repair commit | Result |
+|---|---|---|---|---|---|
+| 1 | `<sha>` | `REV-...` | `<...>` | `<sha>` | findings |
+| 2 | `<sha>` | `...` | `...` | `<sha>` | findings/clean |
+| 3 | `<sha>` | `...` | `...` | `<sha>` | ... |
+| 4 | `<sha>` | `...` | `...` | `<sha>` | ... |
+| 5 | `<sha>` | `...` | `...` | `—` | hard cap |
+
+Also state recurring patterns: contract coupling, ownership ambiguity, too many behaviors, weak oracle, repair-induced interaction, or another evidence-backed cause.
+
+### Decomposition requirements for `@sol_max`
+
+A valid split must do more than reduce line count. Descendants should separate one or more of:
+
+- behavior outcomes;
+- ownership/state boundaries;
+- contract introduction vs consumer migration;
+- happy path vs risky side-effect path when independently shippable/testable;
+- schema expansion vs migration vs contraction;
+- policy evaluation vs enforcement integration;
+- background production vs consumption/retry behavior;
+- enabling refactor vs observable behavior;
+- bug-prone interaction classes identified by the five reviews.
+
+Each descendant needs an independent oracle and a stable intermediate repository state.
+
+## 6. Commit and branch discipline
+
+In `EXECUTE_WITH_COMMITS`:
+
+- commit the initial coherent section implementation before its first review;
+- after a review with agent-fixable material findings, make one coherent repair commit before the next full review;
+- keep unrelated cleanup/user work out of section commits;
+- at hard cap, ensure the failed attempt's section-owned work is committed before making the backup ref;
+- the backup branch is created automatically under the skill's delegated authority;
+- never push/merge the backup branch automatically.
+
+Recommended messages:
 
 ```text
-PLANNED
-READY
-CONTRACT_FROZEN
-IMPLEMENTING
-LOCAL_VALIDATION
-SECTION_REVIEW
-DECISION_BLOCKED
-REPAIRING
-DELTA_VERIFY
-SECTION_ACCEPTED
-INTEGRATION_BLOCKED
-SUPERSEDED
-ABANDONED
+feat(section-S03): implement <behavior>
+fix(section-S03): address review round 2 findings
+chore(agent): snapshot S03 before hard-cap replan
 ```
 
-Allowed primary transitions:
+The snapshot commit is only needed when section-owned tracked changes remain. Do not manufacture an empty snapshot commit.
+
+## 7. Worktrees and retry isolation
+
+After hard-cap backup, prefer a new retry branch/worktree rooted at `section_base` instead of resetting the failed branch.
+
+Recommended retry branch:
 
 ```text
-PLANNED -> READY
-READY -> CONTRACT_FROZEN
-CONTRACT_FROZEN -> IMPLEMENTING
-IMPLEMENTING -> LOCAL_VALIDATION
-LOCAL_VALIDATION -> SECTION_REVIEW
-SECTION_REVIEW -> SECTION_ACCEPTED | DECISION_BLOCKED | REPAIRING
-REPAIRING -> DELTA_VERIFY
-DELTA_VERIFY -> SECTION_ACCEPTED | DECISION_BLOCKED | REPAIRING | SECTION_REVIEW(reset)
-SECTION_ACCEPTED -> INTEGRATION_BLOCKED when a checkpoint disproves compatibility
+codex/retry/{feature-slug}-{section-id}-g{next-generation}-{YYYYMMDD-HHMMSS}
 ```
 
-A section may become `SUPERSEDED` only through an explicit replan that records replacement sections and preserves history.
+Rules:
 
-## 6. Commit discipline
-
-When commits are authorized:
-
-- One implementation commit per coherent section is the default.
-- Add one repair commit per coherent repair wave.
-- Include the section ID in the subject, for example:
-
-```text
-feat(upload): S03 add idempotent chunk recovery
-fix(upload): S03 close REV-004 and REV-006
-```
-
-- Keep generated changes, formatting-only churn, and unrelated cleanup out unless inseparable and documented.
-- Do not amend or squash during the workflow unless explicitly requested; stable commit boundaries are review evidence.
-- Do not commit a failed section merely to make progress. If a checkpoint commit is needed for recovery, label it clearly and do not mark the section accepted.
-
-When commits are not authorized, record content fingerprints or exact working-tree diff commands in `FEATURE-STATE.md` so the review range remains reproducible.
-
-## 7. Worktrees and parallel agents
-
-Use a separate worktree per parallel section. Record:
-
-- Worktree path.
-- Branch.
-- Common accepted base.
-- Section ID.
-- Files/owners expected to change.
-- Integration order.
-- Integration checkpoint.
-
-Do not run parallel sections when both touch:
-
-- The same database migration sequence.
-- The same public API or shared type contract.
-- The same authorization policy.
-- The same state machine or coordinator.
-- The same generated source of truth.
-- The same release flag semantics.
-
-After integrating a parallel section, review the actual merge or cherry-pick delta and run the planned checkpoint. A section reviewed only in isolation is not evidence that the combined head is correct.
+- failed product-code commits remain only in the failed/backup lineage;
+- do not cherry-pick them by default;
+- carry forward the revised planning/state artifacts, not failed product-code diffs;
+- if unrelated dirty user work exists, leave its worktree untouched and create an isolated retry worktree;
+- update `FEATURE-STATE.md` with the new active path/branch.
 
 ## 8. Decision handling
 
-A `Needs Decision` record must contain:
+### Must block
 
-- The exact ambiguity.
-- Why code or repository evidence cannot resolve it.
-- Affected section and feature criteria.
-- Safe options with tradeoffs.
-- Default behavior only when an authoritative policy already establishes one.
-- Work that can continue without prejudging the decision.
+- required product semantics are undefined;
+- two authoritative sources conflict;
+- compatibility/migration behavior requires owner choice;
+- acceptable risk or rollout policy cannot be inferred;
+- the `@sol_max` split would require changing a frozen user-owned requirement.
 
-Do not ask broad questions such as “How should this work?” Ask the smallest bounded decision that unblocks a safe implementation.
+### Must not block merely for permission
+
+- review round 5 was reached;
+- a backup branch must be created;
+- `@sol_max` must be invoked;
+- the current section must be split;
+- a retry branch/worktree must be created under already delegated execution authority;
+- the main agent must extract the first ready descendant and continue.
 
 ## 9. State integrity
 
-At every transition, update `FEATURE-STATE.md` before handing work to a new agent context.
+Before every handoff, update `FEATURE-STATE.md` with:
 
-Record:
+- feature branch/worktree and active retry path;
+- section ID and lineage;
+- section base/current head;
+- review round and clean streak;
+- review report path and material finding IDs;
+- repair commit/check result;
+- replan generation;
+- hard-cap backup branch/failed tip when applicable;
+- active descendants and retired parent;
+- exact next action.
 
-- Feature and section base/head.
-- Current state and next action.
-- Accepted decisions and source.
-- Open findings and review file.
-- Checks run and exact result.
-- Deferred items and owner section.
-- Reset reason and invalidated evidence.
-- Residual risk.
-
-If chat history and the artifact disagree, stop and reconcile against repository reality. Do not silently choose the more convenient version.
+After context compression, reread `PLAN-FULL.md`, `FEATURE-STATE.md`, and the current `PLAN.md` before continuing.

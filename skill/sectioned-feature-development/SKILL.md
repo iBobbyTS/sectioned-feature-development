@@ -1,68 +1,71 @@
 ---
 name: sectioned-feature-development
-description: "Plan and execute non-trivial software changes as reviewable sections with durable feature state, per-section contracts, isolated implementation/review, bounded repair deltas, integration checkpoints, and a final cross-section review. Use when any trigger applies: expected behavioral edits may exceed roughly 300 lines; more than three modules, packages, services, pages, or workflows are affected; the change crosses a high-risk semantic boundary; architecture or state ownership changes; the impact cone is difficult to bound; or a previous whole-change implementation/review failed to converge."
+description: "Plan and execute non-trivial software changes as reviewable sections with durable feature state, per-section contracts, independent implementation/review agents, two-clean-review section acceptance, automatic hard-cap re-decomposition, integration checkpoints, and a final cross-section gate. Use when any trigger applies: expected behavioral edits may exceed roughly 300 lines; more than three modules, packages, services, pages, or workflows are affected; the change crosses a high-risk semantic boundary; architecture or state ownership changes; the impact cone is difficult to bound; or a previous whole-change implementation/review failed to converge."
 ---
 
 # Sectioned Feature Development
 
-Develop one large feature as a sequence of bounded, evidence-backed sections. Preserve a stable feature contract across sections, review each section once at full scope, verify repairs only through their delta and invalidated impact cone, and reserve merge readiness for a final cross-section integration gate.
+Develop one large feature as a sequence of bounded sections. Each section must be independently implementable, testable, reviewable, and reversible enough to diagnose. A section is provisionally accepted only after two consecutive fresh full `SECTION` reviews find no new material actionable issue. If five full review rounds fail to reach that condition, automatically preserve the failed attempt, escalate decomposition to `@sol_max` (profile `sol_max`), split only the current section in `PLAN-FULL.md`, and reimplement the smaller descendants from the original section base.
 
 ## Boundary and authority
 
 - Follow repository-local instructions before this skill.
-- Use this skill for one feature, refactor, migration, or architectural transition. Do not use it as a periodic repository audit.
-- Determine the requested mode before changing files:
-  - `PLAN_ONLY`: research and write artifacts; do not create a branch, edit product code, or commit.
-  - `EXECUTE_NO_COMMIT`: implement and validate, but leave commits to the user.
-  - `EXECUTE_WITH_COMMITS`: create the authorized branch or worktree and make bounded section commits.
-- A planning or review request does not authorize commits. Treat branch creation and commits as authorized only when the user or governing project instructions explicitly authorize them.
-- If the governing Custom Instructions contain a scoped exception that explicitly delegates branch/commit authority to `$sectioned-feature-development`, that specific delegation takes precedence over their general no-commit rule only for the bounded branch and implementation/repair commits required by this workflow. It does not override any non-delegated safety restriction.
-- Never push, merge, open a pull request, rewrite history, reset, clean, or delete user work unless separately authorized.
-- Stop before implementation or repair when product semantics, compatibility policy, migration behavior, rollout risk, or another accountable decision is unresolved.
+- Use this skill for one feature, refactor, migration, or architectural transition, not for periodic repository audits.
+- Determine execution authority before changing product code:
+  - `PLAN_ONLY`: write/validate planning artifacts only.
+  - `EXECUTE_NO_COMMIT`: implement and validate without branch/commit operations.
+  - `EXECUTE_WITH_COMMITS`: create/switch bounded feature or retry branches/worktrees and make section implementation/repair commits.
+- A planning or review request alone does not authorize commits.
+- If governing Custom Instructions explicitly delegate branch/commit authority to `$sectioned-feature-development`, that scoped delegation takes precedence over their general no-commit rule only for this workflow's bounded feature/retry branches and implementation/repair/snapshot commits.
+- Never push, merge, create a pull request, rewrite published history, clean, delete user work, or discard unrelated changes unless separately authorized.
+- A five-round review hard cap is **not** a user-decision point. Do not ask whether to continue. Run the automatic re-decomposition protocol below.
+- Still stop when a real user-owned decision is required: product semantics, compatibility policy, migration meaning, acceptable risk, rollout behavior, or another non-inferable business choice.
 
 ## Trigger
 
-Use the workflow when any condition holds:
+Use this workflow when any condition holds:
 
 - Expected behavioral edits are roughly more than 300 lines.
 - More than three modules, packages, services, pages, or workflows are affected.
 - The change crosses persistence, schema, money, time, units, security, permissions, tenancy, routing, concurrency, background jobs, public API, deployment, or shared-state boundaries.
-- The architecture or state owner changes.
+- Architecture or state ownership changes.
 - The impact cone is difficult to bound.
 - A previous whole-change implementation or review loop failed to converge.
 
-The line threshold is only a trigger. A 40-line authorization change may need this workflow; a large generated-file update may not.
+The line threshold is only a routing trigger. Semantic risk and reviewability dominate raw line count.
 
 ## Required artifacts
 
-Use these paths unless repository rules define an equivalent location:
+Use these paths unless repository rules define equivalent ones:
 
 ```text
 .agent-work/
-├── PLAN-FULL.md                 # authoritative feature plan and section graph
-├── PLAN.md                      # transient current-section execution packet
-├── FEATURE-STATE.md             # durable state, decisions, coverage, and heads
+├── PLAN-FULL.md
+├── PLAN.md
+├── FEATURE-STATE.md
 ├── sections/
 │   ├── S01-CONTRACT.md
 │   ├── S01-HANDOFF.md
 │   └── ...
 ├── reviews/
 │   ├── S01-SECTION-r01.md
-│   ├── S01-DELTA-r02.md
-│   ├── FEATURE-INTEGRATION-r01.md
+│   ├── S01-SECTION-r02.md
+│   └── ...
+├── replans/
+│   ├── S01-g01-HARD-CAP.md
 │   └── ...
 └── plans/
     └── {YYYYMMDD-HHMM}_FULL.md
 ```
 
-Copy templates from `assets/` when creating these artifacts. Keep `PLAN-FULL.md` and `FEATURE-STATE.md` authoritative; chat history is not project state.
+Keep `PLAN-FULL.md` and `FEATURE-STATE.md` authoritative. Chat history is not durable project state.
 
 ## Load references progressively
 
-- Read [references/section-planning.md](references/section-planning.md) before dividing the feature.
-- Read [references/orchestration-protocol.md](references/orchestration-protocol.md) before delegating implementation, review, or repair.
-- Read [references/integration-and-convergence.md](references/integration-and-convergence.md) before accepting a section, diagnosing a loop, or starting the final integration gate.
-- Read [references/artifact-schemas.md](references/artifact-schemas.md) when creating, validating, extracting, or archiving artifacts.
+- Read [references/section-planning.md](references/section-planning.md) before dividing or re-dividing a feature.
+- Read [references/orchestration-protocol.md](references/orchestration-protocol.md) before delegating implementation, review, repair, or hard-cap recovery.
+- Read [references/integration-and-convergence.md](references/integration-and-convergence.md) before accepting a section or running integration gates.
+- Read [references/artifact-schemas.md](references/artifact-schemas.md) when creating, extracting, validating, carrying forward, or archiving artifacts.
 
 ## State machine
 
@@ -74,60 +77,74 @@ PREFLIGHT
   -> SECTION_CONTRACT
   -> IMPLEMENT
   -> LOCAL_VALIDATE
-  -> SECTION_REVIEW
-  -> {DECISION_BLOCK | REPAIR -> DELTA_VERIFY | SECTION_ACCEPTED}
+  -> COMMIT_IF_AUTHORIZED
+  -> FULL_SECTION_REVIEW
+       -> CLEAN -> FULL_SECTION_REVIEW
+       -> FINDINGS -> REPAIR -> COMMIT -> FULL_SECTION_REVIEW
+       -> USER_DECISION -> BLOCK
+       -> ROUND_5_WITHOUT_2_CLEAN -> HARD_CAP_REPLAN
+  -> SECTION_ACCEPTED
   -> INTEGRATION_CHECKPOINT when triggered
   -> next SECTION_CONTRACT
   -> FEATURE_INTEGRATION_REVIEW
-  -> {DECISION_BLOCK | REPAIR -> DELTA_VERIFY | FINAL_VALIDATE}
+  -> FINAL_VALIDATE
   -> ARCHIVE_AND_REPORT
+
+HARD_CAP_REPLAN
+  -> BACKUP_FAILED_TIP
+  -> SOL_MAX_SPLIT_CURRENT_SECTION
+  -> VALIDATE_REVISED_PLAN
+  -> RETRY_FROM_ORIGINAL_SECTION_BASE
+  -> EXTRACT_FIRST_READY_CHILD
+  -> IMPLEMENT
 ```
 
-Do not advance merely because an agent says it is done. Advance only when the artifact and evidence gate for the state is satisfied.
+Do not advance because an agent says it is done. Advance only when the corresponding artifact and evidence gate is satisfied.
 
 ## Phase 0: Preflight and feature contract
 
-1. Inspect repository rules, architecture sources, current branch, `git status`, relevant recent commits, build/test entry points, and available validation environment.
-2. Record the exact feature base commit. Do not plan against a moving or ambiguous base.
-3. Use the repository's code-index or graph tool before broad text search when project instructions require it.
-4. Write the feature contract in `PLAN-FULL.md`:
-   - One-sentence outcome.
-   - User-visible or operator-visible behavior.
-   - Explicit non-goals.
-   - Global invariants that every section must preserve.
-   - Hard constraints and authoritative sources.
-   - Full-feature acceptance criteria and verification commands.
-   - Compatibility, migration, rollout, rollback, flag, and observability requirements.
-5. Identify ownership and state boundaries before choosing files or abstractions.
-6. If direct implementation would materially worsen a god object, ambiguous state owner, fragile state machine, circular dependency, duplicated semantic boundary, or under-tested core path, add the smallest enabling refactor with protective characterization tests. Do not hide speculative cleanup inside feature sections.
-7. In `EXECUTE_WITH_COMMITS`, create a feature branch. Use isolated worktrees only for genuinely independent parallel sections.
+1. Inspect repository rules, architecture sources, current branch, `git status`, relevant recent commits, build/test entry points, and validation environment.
+2. Freeze the exact `feature_base` commit.
+3. Use the repository's code graph/index first when governing instructions require it.
+4. Create `.agent-work/PLAN-FULL.md` and record:
+   - one-sentence outcome;
+   - observable behavior;
+   - explicit non-goals;
+   - feature-level invariants;
+   - authoritative constraints;
+   - full acceptance criteria and validation commands;
+   - ownership/state boundaries;
+   - compatibility, migration, rollout, rollback, flag, observability, and cleanup requirements.
+5. Identify the smallest enabling refactor if direct work would materially worsen an unsafe ownership boundary or under-tested core path.
+6. In `EXECUTE_WITH_COMMITS`, create the feature branch before product-code implementation.
 
 ## Phase 1: Divide the feature
 
-Create `PLAN-FULL.md` before product-code implementation.
+Create all initial sections in `PLAN-FULL.md` before implementation.
 
-Prefer this order:
+Prefer:
 
-1. A walking-skeleton or contract-proving section when architecture or integration is uncertain.
-2. Coherent vertical behavior slices that cross only the layers needed to deliver and verify one outcome.
-3. Compatibility or migration sections using expand–migrate–contract or branch-by-abstraction where needed.
-4. Cleanup or contraction only after all consumers have moved and evidence proves the old path is unused.
+1. walking skeleton / contract proof when integration is uncertain;
+2. vertical behavior slices;
+3. explicit expand-migrate-contract or branch-by-abstraction stages when compatibility requires them;
+4. cleanup/contraction only after consumers have moved and evidence proves the old path is unused.
 
-Every section must have a stable ID such as `S01` and include:
+Every section needs:
 
-- Goal and observable behavior increment.
-- Dependencies and predecessor head.
-- Expected files, symbols, workflows, and semantic boundaries.
-- Non-goals and explicitly deferred work.
-- Global invariants touched.
-- Acceptance criteria with an executable or inspectable oracle.
-- Validation commands and evidence to retain.
-- Compatibility, rollout, recovery, and cleanup implications.
-- Size/risk estimate and split trigger.
+- stable ID such as `S01`;
+- goal and observable behavior increment;
+- dependency/predecessor relationship;
+- expected files/symbols/workflows and semantic boundaries;
+- non-goals and named deferred work;
+- touched feature invariants;
+- falsifiable acceptance criteria;
+- exact validation commands/evidence;
+- compatibility/rollout/recovery implications;
+- estimated size/risk and split trigger.
 
-A section is valid only if one implementer can complete it, one reviewer can understand it, and its behavior can be verified without relying on undocumented future work. Prefer vertical slices; allow horizontal enabling work only when it establishes a tested seam required by later slices.
+A valid section can be understood by one reviewer without loading the entire feature implementation and can be verified without undocumented future work.
 
-Use `scripts/section_plan.py` to validate the plan and extract the active section when practical:
+Use the helper when practical:
 
 ```bash
 python {skill-dir}/scripts/section_plan.py validate .agent-work/PLAN-FULL.md
@@ -136,145 +153,213 @@ python {skill-dir}/scripts/section_plan.py extract \
   .agent-work/PLAN-FULL.md S01 --output .agent-work/PLAN.md
 ```
 
+Hierarchical descendant IDs are valid after a hard-cap split, for example `S03 -> S03.1, S03.2` and later `S03.1 -> S03.1.1, S03.1.2`.
+
 ## Phase 2: Plan gate
 
-Before implementing `S01`, and after any material replan, verify:
+Before implementation, verify:
 
-- Every full-feature acceptance criterion maps to one or more sections and to a final integration check.
-- Dependencies form an explicit acyclic graph.
-- No section relies on an unstated schema, API, permission, state-ownership, or rollout decision.
-- Each high-risk boundary has a single source of truth and a test oracle.
-- Cross-section contracts and integration checkpoints are named.
-- Refactors are separated from behavior changes unless inseparable and justified.
-- Parallel sections do not modify the same owner, contract, migration, or state machine.
-- The final section is not a vague “integrate everything” dump.
+- every full-feature requirement maps to section evidence and final integration evidence;
+- dependencies are explicit and acyclic;
+- high-risk boundaries have one authoritative owner and an oracle;
+- cross-section contracts/checkpoints are named;
+- refactor and behavior are separated unless inseparable;
+- no section is a vague “finish/integrate everything” bucket;
+- each section is small enough to plausibly converge under the five-review-round rule.
 
-For a high-risk or ambiguous plan, use one clean plan reviewer before code. The reviewer challenges slicing, dependencies, invariants, testability, rollout, and rollback; it does not implement.
+Use one clean plan reviewer for ambiguous/high-risk plans. It challenges decomposition and contracts; it does not implement.
 
-## Phase 3: Freeze the current section
+## Phase 3: Freeze one current section
 
-For the next ready section:
+For the next dependency-ready section:
 
 1. Record `section_base` as the exact accepted predecessor head.
-2. Extract the section into `.agent-work/PLAN.md`.
-3. Create `.agent-work/sections/{ID}-CONTRACT.md` from the template.
-4. Resolve or block every open contract question before code.
-5. Update `FEATURE-STATE.md` to `CONTRACT_FROZEN` with the section ID, base, dependencies, risk, and expected verification.
+2. Extract exactly that section into `.agent-work/PLAN.md`.
+3. Create `.agent-work/sections/{ID}-CONTRACT.md`.
+4. Resolve genuine open business decisions before code.
+5. Set `replan_generation` to `0` for an original section, or inherit/increment lineage for descendants.
+6. Update `FEATURE-STATE.md` with section ID, lineage, base, execution path, expected checks, review round `0`, and clean streak `0`.
 
-The section contract is immutable during ordinary implementation. A material change to acceptance criteria, public contract, schema, state owner, authorization, concurrency, destructive behavior, or rollout semantics requires an explicit replan and review-baseline reset.
+Ordinary implementation must not silently redefine the frozen section contract.
 
 ## Phase 4: Implement and locally validate
 
-Delegate one current section, not the whole feature.
+Delegate exactly one current section.
 
-- Give the implementer repository rules, feature goal and global invariants, the current section contract, relevant architecture sources, and the exact base. Do not preload prior reviewers' persuasive narratives.
-- Default to the configured medium implementation profile for ordinary sections. Escalate architecture, migration, security, concurrency, or other high-risk sections to the configured high profile.
-- Require the smallest implementation that satisfies the frozen contract.
-- Add or update meaningful tests. Cover behavior, edge cases, error paths, and regression risk; do not add execution-only assertions.
-- Run the section's targeted checks before broad checks.
-- Record changed files, decisions, commands, results, limitations, and current head in `{ID}-HANDOFF.md`.
-- In `EXECUTE_WITH_COMMITS`, commit the coherent implementation with the section ID in the message. Keep unrelated cleanup out of the commit.
+Default routing when these configured profiles exist:
 
-Do not start the next section while the current section has failed required validation, unresolved contract questions, or unreviewed code.
+- ordinary implementation: `sol-medium`;
+- high-risk implementation or repair: `sol_high`;
+- section review: fresh `sol_xhigh`;
+- hard-cap section re-decomposition: `@sol_max` (profile `sol_max`).
 
-## Phase 5: Section review and bounded repair
+The implementer receives repository rules, feature goal/invariants, current `PLAN.md`, section contract, exact `section_base`, and required checks. It must not implement future sections.
 
-Use a clean reviewer with `$code-review` in `SECTION` mode. The review range is exactly `section_base..section_head`, plus only the semantically necessary impact cone.
+Require:
 
-The review packet must include:
+- smallest code change satisfying the section contract;
+- meaningful behavior/edge/error regression coverage;
+- targeted checks before broad checks;
+- `.agent-work/sections/{ID}-HANDOFF.md` with files, decisions, commands/results, limitations, and head.
 
-- Section ID, base, and head.
-- Section contract and feature-level invariants.
-- Dependency and deferred-work declarations.
-- Implementation handoff and validation evidence.
-- Review output path under `.agent-work/reviews/`.
+In `EXECUTE_WITH_COMMITS`, commit the coherent section implementation before review.
 
-Review rules:
+## Phase 5: Full section review loop
 
-1. Perform one broad `SECTION` discovery pass for the stable section baseline.
-2. Classify findings as `Needs Decision`, `Agent-Fixable`, or `External Blocker`; freeze stable IDs and acceptance criteria.
-3. Stop immediately when a human decision is required for a safe repair.
-4. Send only authorized, frozen `Agent-Fixable` findings to a separate repair agent.
-5. Commit one coherent repair wave when commits are authorized.
-6. Re-review only the repair delta and invalidated impact cone in `DELTA` mode.
-7. Run a new full section pass only when a reset trigger materially changes the baseline or semantics.
+Each **review round** is one fresh, independent, full `$code-review` invocation in `SECTION` mode over the current `section_base..section_head` plus the direct semantic impact cone.
 
-Do **not** require two consecutive empty whole-section reviews. Accept the section when there are no unresolved blocking findings, mandatory coverage is complete or explicitly bounded, required checks pass or blockers are recorded, and repair closure has code-visible evidence.
+Use a clean `sol_xhigh` subagent for every counting round. Do not tell it whether previous rounds were clean and do not preload prior reviewer conclusions. Give it only the current section packet and output path:
 
-Use a normal soft cap of three repair waves and a hard cap of five. At the hard cap, block and diagnose the cause instead of running another generic review.
+```text
+Review mode: SECTION
+Section: {ID}
+Range: {section_base}..{section_head}
+Feature contract: .agent-work/PLAN-FULL.md
+Section contract: .agent-work/sections/{ID}-CONTRACT.md
+Implementation handoff: .agent-work/sections/{ID}-HANDOFF.md
+Output: .agent-work/reviews/{ID}-SECTION-r{NN}.md
+Use: $code-review
+```
 
-A section verdict is one of:
+Maintain:
 
-- `section-accepted`
-- `section-blocked`
-- `insufficient-evidence`
+```text
+review_round = 0
+clean_streak = 0
+```
 
-`section-accepted` is provisional. It does not mean the whole feature is mergeable.
+For at most five full review rounds:
 
-## Phase 6: Integration checkpoints and parallel work
+1. Increment `review_round` and run a fresh full `SECTION` review.
+2. Main agent inspects the report and current repository state.
+3. If a finding requires a genuine user-owned decision, record it and block immediately.
+4. If there is **no new material actionable finding**:
+   - increment `clean_streak`;
+   - if `clean_streak == 2`, mark the section `section-accepted`;
+   - otherwise run the next fresh full review.
+5. If there is any new `Must Fix`, `Should Fix`, or blocking `Needs Decision` finding:
+   - set `clean_streak = 0`;
+   - deduplicate symptoms under stable root-cause IDs;
+   - send only agent-fixable findings from that round to a `sol_high` repair agent;
+   - run the relevant deterministic checks;
+   - in `EXECUTE_WITH_COMMITS`, commit the repair;
+   - update the handoff and `section_head`;
+   - run the next **fresh full `SECTION` review**, not a counting DELTA review.
 
-Run a targeted integration checkpoint when any of these occurs:
+The following do not break a clean streak unless they imply a material defect in the frozen section: repeated wording of an already-closed root cause, explicitly deferred future-section work, unsupported hypotheses, style preference, `Should Plan`, or bounded debt.
 
-- A public contract, schema, permission model, state owner, queue, deployment path, or feature flag is introduced or changed.
-- A dependency cluster is complete.
-- Two previously independent branches are combined.
-- The next section assumes behavior produced by multiple accepted sections.
-- The plan explicitly marks a checkpoint.
+A repair validation may use targeted tests or a non-counting DELTA check internally, but only a fresh full `SECTION` review increments `review_round` or `clean_streak`.
 
-At a checkpoint, verify cross-section contracts and representative end-to-end paths without reopening every accepted line.
+There is **no soft cap**.
 
-Parallelize only sections that:
+### Five-round hard cap
 
-- Have all dependencies accepted.
-- Do not write the same semantic owner or contract.
-- Have isolated branches/worktrees and deterministic integration order.
-- Can be validated independently.
+After review round 5, if the section has not reached two consecutive clean full reviews, do **not** ask the user whether to continue and do **not** start review round 6. Enter `HARD_CAP_REPLAN` automatically.
 
-After integration, rebase review evidence on the actual combined head. If the combination changes semantics outside declared contracts, trigger an integration reset.
+## Phase 6: Automatic hard-cap re-decomposition
 
-## Phase 7: Final feature integration gate
+Treat five-round non-convergence as evidence that the current section boundary is still too broad, too coupled, or insufficiently isolated for reliable agent implementation/review. Preserve the failed attempt, then retry from the original section base with smaller descendants.
 
-After all sections are accepted and all deferred items are resolved or explicitly approved, use a clean reviewer with `$code-review` in `INTEGRATION` mode over `feature_base..feature_head`.
+### 6.1 Preserve the failed attempt
 
-This is not another line-by-line replay of every section. It must challenge:
+1. Record `failed_tip = HEAD`, `section_base`, current section ID, replan generation, all five review files, repair commits, and check results.
+2. Ensure current-section-owned code changes are committed when commits are authorized. Never absorb unrelated user changes into the snapshot.
+3. Create a backup branch **without prompting for authorization**:
 
-- Full-feature behavior against the original contract.
-- Cross-section API, schema, state, permission, ordering, and error contracts.
-- End-to-end critical paths and combined edge cases.
-- Migration, compatibility, rollout, rollback, flag lifecycle, and cleanup.
-- Observability, performance, security, privacy, operational readiness, and documentation.
-- Requirement coverage, deferred-work closure, and branch-scope integrity.
+```text
+codex/backup/{feature-slug}-{section-id}-g{generation}-{YYYYMMDD-HHMMSS}
+```
 
-Repair integration findings through the same frozen-finding and `DELTA` protocol. Reset only when semantics or the baseline materially change.
+Point it at `failed_tip`. Prefer creating the ref without switching branches.
+4. Write `.agent-work/replans/{section-id}-g{generation}-HARD-CAP.md` using the bundled template. Summarize, round by round, what each of the five reviews found, which root causes were repaired, what recurred, and why the section did not achieve two clean rounds.
 
-Then run the deterministic full-feature validation suite. State final readiness as:
+The backup is evidence and a recovery point. Do not continue implementing on that failed code state.
 
-- `mergeable`
-- `not-mergeable`
-- `insufficient-evidence`
+### 6.2 Escalate decomposition to `@sol_max`
 
-## Phase 8: Archive and report
+Spawn a clean `@sol_max` subagent (profile `sol_max`). Explicitly tell it:
 
-1. Update `FEATURE-STATE.md` with every section base/head, verdict, review file, checks, decisions, resets, and residual risk.
-2. Delete transient `.agent-work/PLAN.md` only after its section is accepted or explicitly abandoned and its durable artifacts exist.
-3. Move `.agent-work/PLAN-FULL.md` to `.agent-work/plans/{YYYYMMDD-HHMM}_FULL.md` after final reporting. Use the helper script or an equivalent safe move.
-4. Keep contracts, handoffs, and review evidence unless repository policy says otherwise.
-5. Report in Chinese by default:
-   - Feature outcome and final readiness.
-   - Section table with heads and verdicts.
-   - Findings repaired by stable ID.
-   - Decisions and reset events.
-   - Checks run and not run.
-   - Residual risk, rollout/rollback status, and recommended follow-up.
-   - Maintainability judgment covering ownership boundaries, complexity, tests, and cleanup.
+- the currently failing section ID/title and its `section_base`;
+- the feature goal, invariants, and current `PLAN-FULL.md`;
+- the backup branch and failed tip;
+- the five review files plus a concise round-by-round issue summary;
+- that the hard cap was reached;
+- that it must **split only the current section in `PLAN-FULL.md` into smaller independently implementable/reviewable descendant sections**;
+- that accepted predecessor sections and user-owned feature semantics are frozen;
+- that it must update requirement coverage, dependency edges, downstream `Requires`, checkpoints, and deferred-work ownership affected by the split;
+- that it must not implement product code;
+- that descendants should use hierarchical lineage IDs such as `S03.1`, `S03.2`; if a descendant later fails, continue the hierarchy.
 
-## Non-negotiable convergence rules
+The `@sol_max` replan must use the five review histories as decomposition evidence: repeated bug classes should become explicit boundaries, invariants, oracles, or separate descendant sections rather than being copied as prose into one smaller-looking but semantically identical section.
 
-- One stable baseline gets one full discovery pass; repairs get delta verification.
-- A clean reviewer is not a substitute for a frozen contract and deterministic checks.
-- A repair agent cannot close its own findings by explanation.
-- New scope discovered during a section is added through an explicit replan, not silently absorbed.
-- Section-local success cannot override a feature-level invariant.
-- No next section while the current section is blocked.
-- No feature-level merge verdict before the final integration gate.
-- Repeated new findings after the hard cap are a process signal: re-specify, add an oracle, split the section, redesign the boundary, stabilize the base, or obtain a human decision.
+### 6.3 Main-agent plan rewrite and validation
+
+After `@sol_max` returns:
+
+1. Main agent inspects and, if necessary, normalizes the `PLAN-FULL.md` split. `@sol_max` proposes the decomposition; the main agent owns final artifact integrity.
+2. Preserve the parent section as historical lineage with state `SPLIT_AFTER_HARD_CAP`; do not schedule it again.
+3. Validate the revised `PLAN-FULL.md` with `section_plan.py` and verify the dependency graph remains acyclic and every full-feature requirement remains covered.
+4. If the proposed split requires a new user-owned product decision, block only for that decision. Do not ask for permission merely to continue after the hard cap.
+5. Update `FEATURE-STATE.md` with backup branch, failed tip, hard-cap summary, descendant IDs, and next ready descendant.
+
+### 6.4 Retry from the original section base
+
+Do **not** cherry-pick the failed section implementation or repair commits into the retry.
+
+Start the descendant sequence from the failed parent section's original `section_base`:
+
+- In `EXECUTE_WITH_COMMITS`, create a new retry branch/worktree from `section_base`. Prefer a new branch/worktree rather than resetting the failed branch.
+- Carry forward only orchestration artifacts required for the revised plan/state; do not carry failed product-code diffs.
+- If unrelated user changes make branch switching unsafe, leave the failed worktree untouched and create an isolated retry worktree from `section_base`.
+- Record the new retry path/branch in `FEATURE-STATE.md`.
+
+Then the **main agent** extracts the first dependency-ready descendant from revised `PLAN-FULL.md` into `.agent-work/PLAN.md` and resumes Phase 3 → Phase 5 with the normal implementer/reviewer agents.
+
+Hard-cap recovery is recursive. If `S03.1` itself reaches five rounds without two consecutive clean reviews, preserve that failed attempt, call `@sol_max`, split it into `S03.1.1`, `S03.1.2`, and retry those from `S03.1`'s own `section_base`.
+
+## Phase 7: Integration checkpoints
+
+Run a targeted checkpoint when a public contract, schema, permission model, state owner, queue, deployment path, feature flag, or dependency cluster becomes consumable by later sections.
+
+Verify cross-section contracts and representative end-to-end paths without reopening every accepted local line. A checkpoint may invalidate an accepted section only when actual combined behavior disproves its frozen contract evidence.
+
+Parallelize only sections with accepted dependencies, distinct semantic owners/contracts, isolated worktrees, and deterministic integration order.
+
+## Phase 8: Final feature integration gate
+
+After all active leaf sections are accepted and all deferred items are resolved or explicitly approved, use a clean `$code-review` `INTEGRATION` review over `feature_base..feature_head`.
+
+Focus on what section reviews cannot prove alone:
+
+- original full-feature behavior and non-goals;
+- cross-section API/schema/state/permission/ordering/error contracts;
+- end-to-end critical paths and combined edge cases;
+- migration, compatibility, rollout, rollback, flags, cleanup;
+- observability, performance, security, privacy, operational readiness, documentation;
+- requirement coverage and branch-scope integrity.
+
+Repair integration findings in bounded scope and rerun the necessary integration evidence. Do not mechanically replay all accepted section reviews.
+
+Then run the deterministic full-feature validation suite and state final readiness as `mergeable`, `not-mergeable`, or `insufficient-evidence`.
+
+## Phase 9: Archive and report
+
+1. Update `FEATURE-STATE.md` with every active/retired section lineage, base/head, verdict, review rounds, clean streak, backup branch, hard-cap replan, checks, decisions, and residual risk.
+2. Delete transient `.agent-work/PLAN.md` only after its section is accepted, split, or explicitly abandoned and durable artifacts exist.
+3. Move `.agent-work/PLAN-FULL.md` to `.agent-work/plans/{YYYYMMDD-HHMM}_FULL.md` after final reporting.
+4. Keep contracts, handoffs, review evidence, and hard-cap summaries unless repository policy says otherwise.
+5. Report in Chinese by default: feature result, section lineage/status, hard-cap splits, findings repaired, checks, decisions, integration result, residual risk, and maintainability judgment.
+
+## Non-negotiable rules
+
+- One implementer works on one extracted section/descendant at a time.
+- Every counting review is a fresh full `SECTION` review from a clean reviewer context.
+- Two consecutive clean full reviews are required for section acceptance.
+- Any material actionable finding resets the clean streak to zero.
+- Five full review rounds is a hard cap; there is no soft cap and no round 6.
+- Hard-cap recovery automatically backs up the failed tip and invokes `@sol_max` to split the current section; it does not request continuation approval.
+- Reimplementation after a split starts from the failed parent section's original base, not from its repeatedly repaired code.
+- Failed-attempt commits are preserved on `codex/backup/***` and are not cherry-picked by default.
+- A repair agent does not declare its own work accepted.
+- New user-owned semantics require a real decision; ordinary technical decomposition does not.
+- Section acceptance is provisional and cannot replace the final integration gate.

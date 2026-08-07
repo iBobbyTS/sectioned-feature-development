@@ -61,6 +61,18 @@ def main() -> int:
         run("extract", str(plan), "S01", "--output", str(current), expected=2)
         run("extract", str(plan), "S99", "--output", str(tmp_path / "missing.md"), expected=2)
 
+        hierarchical = tmp_path / "HIERARCHICAL.md"
+        hierarchical_text = template.replace("S02", "S03.1")
+        hierarchical.write_text(hierarchical_text, encoding="utf-8")
+        hvalid = run("validate", str(hierarchical)).stdout
+        assert "2 sections" in hvalid
+        hlisted = run("list", str(hierarchical)).stdout
+        assert "S03.1" in hlisted
+        hcurrent = tmp_path / "PLAN-HIERARCHICAL.md"
+        run("extract", str(hierarchical), "S03.1", "--output", str(hcurrent))
+        hextracted = hcurrent.read_text(encoding="utf-8")
+        assert "## S03.1" in hextracted
+
         archive_dir = tmp_path / "plans"
         run(
             "archive",

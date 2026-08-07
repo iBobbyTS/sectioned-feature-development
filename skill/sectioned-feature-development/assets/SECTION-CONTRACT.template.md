@@ -3,14 +3,18 @@
 ## Identity and Baseline
 
 - Feature: `<name>`
-- Section: `<Sxx>`
+- Section: `<Sxx / Sxx.n>`
+- Parent section: `<none or Sxx>`
+- Lineage: `<Sxx -> Sxx.n or original>`
+- Replan generation: `<0+>`
 - Contract revision: `1`
 - Frozen at: `<timestamp>`
 - Section base: `<commit or fingerprint>`
 - Dependency heads: `<Syy=commit>`
 - Plan fingerprint: `<sha256>`
 - Implementer profile: `<profile>`
-- Review profile: `<profile>`
+- Review profile: `sol_xhigh`
+- Acceptance rule: `2 consecutive clean full SECTION reviews within 5 rounds`
 
 ## Goal
 
@@ -66,9 +70,11 @@
 
 - `none` before implementation, otherwise block.
 
-## Replan / Full-review Reset Triggers
+## Replan / Hard-Cap Triggers
 
 - Acceptance criteria or behavior changes.
 - Public contract/schema/permission/state owner/concurrency/destructive/rollout semantics change.
 - Scope materially expands.
 - Base/head changes outside tracked implementation or repair.
+
+- Five full SECTION review rounds without two consecutive clean rounds retires this attempt and triggers automatic `@sol_max` re-decomposition (profile `sol_max`).

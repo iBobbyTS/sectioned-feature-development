@@ -4,7 +4,7 @@
 
 - Source plan: `.agent-work/PLAN-FULL.md`
 - Source fingerprint: `<sha256>`
-- Section: `<Sxx>`
+- Section: `<Sxx / Sxx.n>`
 - Section base: `<commit>`
 - Generated at: `<timestamp>`
 

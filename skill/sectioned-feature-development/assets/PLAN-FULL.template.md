@@ -71,10 +71,10 @@
 
 ## Section Index and Dependency Graph
 
-| ID | Title | Type | Depends on | Integrates with | Risk | Status |
-|---|---|---|---|---|---|---|
-| S01 | <title> | vertical | — | CP1 | medium | planned |
-| S02 | <title> | enabling/expand/migrate/contract | S01 | CP1 | high | planned |
+| ID | Parent | Replan gen | Title | Type | Depends on | Integrates with | Risk | Status |
+|---|---|---:|---|---|---|---|---|---|
+| S01 | — | 0 | <title> | vertical | — | CP1 | medium | planned |
+| S02 | — | 0 | <title> | enabling/expand/migrate/contract | S01 | CP1 | high | planned |
 
 ```text
 S01 -> S02 -> CP1 -> FINAL
@@ -123,6 +123,8 @@ S01 -> S02 -> CP1 -> FINAL
 
 ### 预计范围
 
+- Lineage: `original`
+- Replan generation: `0`
 - Files/symbols/workflows: `<expected scope>`
 - Semantic boundaries: `<persistence/security/API/etc.>`
 - Estimated behavioral size: `<range>`
@@ -183,6 +185,8 @@ S01 -> S02 -> CP1 -> FINAL
 
 ### 预计范围
 
+- Lineage: `original`
+- Replan generation: `0`
 - Files/symbols/workflows: `<...>`
 - Semantic boundaries: `<...>`
 - Estimated behavioral size: `<...>`

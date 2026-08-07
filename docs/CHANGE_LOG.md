@@ -9,3 +9,7 @@
 ## v1.1 — 20260807-093926
 
 把 Custom Instructions 收缩为触发路由；由上层指令显式授予 scoped branch/commit 例外；Custom Instructions 与 Skill description 保留一致触发条件。
+
+## v2 — 20260807-095143
+
+恢复“小 section 连续两次独立 clean”作为接受条件；去掉 soft cap；第 5 次 full SECTION review 仍不收敛时自动备份并由 sol_max 重拆当前 section，支持层级 section ID。

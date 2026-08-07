@@ -22,15 +22,16 @@ FEATURE_RE = re.compile(
     r"<!--\s*FEATURE-CONTEXT:END\s*-->",
     re.DOTALL | re.IGNORECASE,
 )
+SECTION_ID_PATTERN = r"S\d{2,}(?:\.\d+)*"
 SECTION_RE = re.compile(
-    r"<!--\s*SECTION:(S\d{2,}):START\s*-->(.*?)"
-    r"<!--\s*SECTION:\1:END\s*-->",
+    rf"<!--\s*SECTION:({SECTION_ID_PATTERN}):START\s*-->(.*?)"
+    rf"<!--\s*SECTION:\1:END\s*-->",
     re.DOTALL | re.IGNORECASE,
 )
 SECTION_MARKER_RE = re.compile(
-    r"<!--\s*SECTION:(S\d{2,}):(START|END)\s*-->", re.IGNORECASE
+    rf"<!--\s*SECTION:({SECTION_ID_PATTERN}):(START|END)\s*-->", re.IGNORECASE
 )
-ID_RE = re.compile(r"\bS\d{2,}\b", re.IGNORECASE)
+ID_RE = re.compile(rf"\b{SECTION_ID_PATTERN}\b", re.IGNORECASE)
 
 REQUIRED_HEADING_GROUPS: tuple[tuple[str, ...], ...] = (
     ("目标", "Goal"),
@@ -254,10 +255,10 @@ def parse_plan(path: Path) -> ParsedPlan:
         errors.append("dependency cycle: " + " -> ".join(cycle))
 
     raw_starts = len(
-        re.findall(r"<!--\s*SECTION:S\d{2,}:START\s*-->", text, re.IGNORECASE)
+        re.findall(rf"<!--\s*SECTION:{SECTION_ID_PATTERN}:START\s*-->", text, re.IGNORECASE)
     )
     raw_ends = len(
-        re.findall(r"<!--\s*SECTION:S\d{2,}:END\s*-->", text, re.IGNORECASE)
+        re.findall(rf"<!--\s*SECTION:{SECTION_ID_PATTERN}:END\s*-->", text, re.IGNORECASE)
     )
     if raw_starts != len(sections) or raw_ends != len(sections):
         errors.append(

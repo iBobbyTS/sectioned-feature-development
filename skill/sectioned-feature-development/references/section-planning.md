@@ -12,8 +12,9 @@ Use this guide to turn one large feature into reviewable sections without losing
 6. [Requirement coverage matrix](#6-requirement-coverage-matrix)
 7. [Planning cross-section contracts](#7-planning-cross-section-contracts)
 8. [Parallelization decision](#8-parallelization-decision)
-9. [Common anti-patterns](#9-common-anti-patterns)
-10. [Example decomposition](#10-example-decomposition)
+9. [Hard-cap re-decomposition](#9-hard-cap-re-decomposition)
+10. [Common anti-patterns](#10-common-anti-patterns)
+11. [Example decomposition](#11-example-decomposition)
 
 ## 1. Plan around behavior and invariants
 
@@ -243,7 +244,34 @@ A pair of sections may run in parallel only when all are true:
 
 When uncertain, run sequentially. Parallel agents can increase throughput while also multiplying integration states and reviewer load.
 
-## 9. Common anti-patterns
+## 9. Hard-cap re-decomposition
+
+When one active section reaches five fresh full `SECTION` review rounds without two consecutive clean rounds, do not increase the review budget. Treat the five reports as empirical evidence that the section boundary is still wrong for agentic implementation/review.
+
+The `@sol_max` decomposer should split only the failed section and preserve accepted predecessors plus the original feature contract. Use hierarchical IDs such as `S03.1`, `S03.2`; if `S03.1` later fails, use `S03.1.1`, `S03.1.2`.
+
+Good split axes include:
+
+- one observable behavior per descendant;
+- one authoritative state/ownership boundary per descendant where practical;
+- contract introduction separated from consumer migration;
+- schema expand, data migrate, and contract/remove separated;
+- enabling refactor separated from behavior;
+- policy definition separated from enforcement integration;
+- producer separated from worker/retry/dead-letter behavior;
+- root-cause classes repeatedly exposed by different review rounds separated into independent oracles.
+
+A valid re-decomposition must update:
+
+- requirement coverage matrix;
+- dependency graph and downstream `Requires`;
+- integration checkpoints;
+- deferred-work ownership;
+- section lineage and replan generation.
+
+Do not preserve failed implementation structure merely because code already exists. The retry starts from the failed parent section's original `section_base`; the backup branch exists for forensic comparison and recovery, not as the new implementation base.
+
+## 10. Common anti-patterns
 
 ### Horizontal layer plan
 
@@ -292,7 +320,7 @@ Problem: agents optimize for output rather than behavior.
 
 Better: define observable acceptance criteria and commands.
 
-## 10. Example decomposition
+## 11. Example decomposition
 
 Feature: add resumable bulk upload with per-tenant quotas.
 
