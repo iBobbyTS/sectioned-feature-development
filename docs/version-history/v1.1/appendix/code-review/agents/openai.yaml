@@ -1,0 +1,4 @@
+interface:
+  display_name: "Code Review"
+  short_description: "Evidence-driven review with bounded repair convergence"
+  default_prompt: "Use $code-review to inspect this bounded change, report evidence-backed findings, and state the correct section or merge-readiness verdict."

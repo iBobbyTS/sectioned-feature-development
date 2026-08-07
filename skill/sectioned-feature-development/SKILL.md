@@ -1,6 +1,6 @@
 ---
 name: sectioned-feature-development
-description: "Plan and execute large, risky, or multi-module software changes as reviewable sections with durable feature state, per-section contracts, isolated implementation and review, bounded repair deltas, integration checkpoints, and a final cross-section review. Use when a feature or refactor may exceed roughly 300 behavioral lines, touches more than three modules, crosses a high-risk semantic boundary, or repeatedly fails to converge under whole-change review."
+description: "Plan and execute non-trivial software changes as reviewable sections with durable feature state, per-section contracts, isolated implementation/review, bounded repair deltas, integration checkpoints, and a final cross-section review. Use when any trigger applies: expected behavioral edits may exceed roughly 300 lines; more than three modules, packages, services, pages, or workflows are affected; the change crosses a high-risk semantic boundary; architecture or state ownership changes; the impact cone is difficult to bound; or a previous whole-change implementation/review failed to converge."
 ---
 
 # Sectioned Feature Development
@@ -16,6 +16,7 @@ Develop one large feature as a sequence of bounded, evidence-backed sections. Pr
   - `EXECUTE_NO_COMMIT`: implement and validate, but leave commits to the user.
   - `EXECUTE_WITH_COMMITS`: create the authorized branch or worktree and make bounded section commits.
 - A planning or review request does not authorize commits. Treat branch creation and commits as authorized only when the user or governing project instructions explicitly authorize them.
+- If the governing Custom Instructions contain a scoped exception that explicitly delegates branch/commit authority to `$sectioned-feature-development`, that specific delegation takes precedence over their general no-commit rule only for the bounded branch and implementation/repair commits required by this workflow. It does not override any non-delegated safety restriction.
 - Never push, merge, open a pull request, rewrite history, reset, clean, or delete user work unless separately authorized.
 - Stop before implementation or repair when product semantics, compatibility policy, migration behavior, rollout risk, or another accountable decision is unresolved.
 
