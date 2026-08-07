@@ -1,0 +1,4 @@
+interface:
+  display_name: "Sectioned Feature Development"
+  short_description: "Split large changes into reviewed, convergent sections"
+  default_prompt: "Use $sectioned-feature-development to plan and execute this large feature as bounded, testable sections with per-section review and a final integration gate."
