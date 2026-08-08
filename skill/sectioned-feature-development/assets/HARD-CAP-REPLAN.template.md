@@ -1,64 +1,62 @@
-# Hard-Cap Replan：<Section ID — Title>
+# Hard-Cap Recovery：<Section ID — Title>
 
 ## Failed Attempt
 
-- Feature: `<name>`
-- Parent section: `<Sxx / Sxx.n>`
-- Parent lineage: `<...>`
+- Feature / parent lineage: `<...>`
 - Replan generation: `<n>`
 - Original section base: `<commit>`
 - Failed tip: `<commit>`
 - Backup branch: `codex/backup/<...>`
 - Failed working path: `<path>`
-- Hard cap: `5 full SECTION reviews`
-- Required acceptance: `2 consecutive clean full SECTION reviews`
+- Contract / plan fingerprints: `<...>`
+- Assurance envelope revision: `<vN>`
+- Hard cap: `5 completed full SECTION reviews`
+- Required acceptance: `2 consecutive CLEAN admissions`
 
-## Five Review Rounds
+## Five Completed Review Rounds
 
-| Round | Reviewed head | New material findings | Root cause / boundary | Repair commit | Result |
-|---:|---|---|---|---|---|
-| 1 | `<sha>` | `<REV ids / none>` | `<...>` | `<sha / —>` | `findings / clean` |
-| 2 | `<sha>` | `<...>` | `<...>` | `<...>` | `<...>` |
-| 3 | `<sha>` | `<...>` | `<...>` | `<...>` | `<...>` |
-| 4 | `<sha>` | `<...>` | `<...>` | `<...>` | `<...>` |
-| 5 | `<sha>` | `<...>` | `<...>` | `<...>` | `hard-cap / clean` |
+| Round | Reviewed head | Raw review | Admission | Material admitted findings | Non-authoritative proposals | Repair commit | Result |
+|---:|---|---|---|---|---|---|---|
+| 1 | `<sha>` | `<path>` | `<path>` | `<IDs/none>` | `<IDs/none>` | `<sha/—>` | `<...>` |
+| 2 | `<sha>` | `<path>` | `<path>` | `<...>` | `<...>` | `<...>` | `<...>` |
+| 3 | `<sha>` | `<path>` | `<path>` | `<...>` | `<...>` | `<...>` | `<...>` |
+| 4 | `<sha>` | `<path>` | `<path>` | `<...>` | `<...>` | `<...>` | `<...>` |
+| 5 | `<sha>` | `<path>` | `<path>` | `<...>` | `<...>` | `<...>` | `hard-cap` |
 
-## Review Artifacts
+## Classified Nonconvergence
 
-- `.agent-work/reviews/<ID>-SECTION-r01.md`
-- `.agent-work/reviews/<ID>-SECTION-r02.md`
-- `.agent-work/reviews/<ID>-SECTION-r03.md`
-- `.agent-work/reviews/<ID>-SECTION-r04.md`
-- `.agent-work/reviews/<ID>-SECTION-r05.md`
+- Primary diagnosis: `DEFECT_DENSITY | ASSURANCE_BOUNDARY_DRIFT | ARCHITECTURE_BOUNDARY_FAILURE | CONTRACT_AMBIGUITY | EVIDENCE_FAILURE`
+- Evidence from admitted findings: <...>
+- Raw proposals explicitly excluded from requirements: <...>
+- Recurrent root causes: <...>
+- Contract/oracle defects: <...>
+- Complexity inflation inventory: <mechanisms added without durable requirement anchors>
 
-## Convergence Diagnosis
+## Recovery Mode
 
-- Recurring root-cause classes: <...>
-- Coupled ownership/contracts: <...>
-- Weak or over-broad oracle: <...>
-- Repair-induced interactions: <...>
-- Evidence that motivates the split: <...>
+- Mode: `SPLIT | SIMPLIFY_REPLACE | REBOUND | OWNER_DECISION | REPAIR_EVIDENCE`
+- Why this mode follows from the diagnosis: <...>
+- Failed product-code commits to carry forward: `none by default`
+- Frozen predecessors/user-owned semantics: <...>
 
-## @sol_max Re-decomposition Request
+## @sol_max Request
 
-- Split only this parent section.
-- Preserve accepted predecessors and user-owned feature semantics.
-- Use hierarchical descendant IDs.
-- Update requirement coverage, dependency edges, downstream `Requires`, checkpoints, and deferred-work ownership.
-- Do not implement product code.
-- Do not copy failed implementation structure without re-deriving the boundary from the review evidence.
+Use only admitted findings as required recovery evidence. Put rejected scope proposals in a separate non-authoritative appendix. Modify only this section lineage and affected dependency/coverage edges. Do not implement product code or promote a proposal into a requirement.
 
-## Resulting Descendants
+For `SIMPLIFY_REPLACE`, explicitly delete/avoid unapproved mechanisms and replace the inflated section with the smallest proportional leaf set; one replacement leaf is allowed.
 
-| ID | Goal | Depends on | Independent oracle | Review-risk reduction |
-|---|---|---|---|---|
-| `<Sxx.1>` | <...> | <...> | <...> | <...> |
-| `<Sxx.2>` | <...> | <...> | <...> | <...> |
+## Replacement / Descendants
+
+| ID | Goal | Depends on | Independent oracle | Complexity reduction | Review-risk reduction |
+|---|---|---|---|---|---|
+| `<Sxx.1 or SxxR>` | <...> | <...> | <...> | <...> | <...> |
 
 ## Retry
 
-- Parent state: `SPLIT_AFTER_HARD_CAP`
-- Retry starts from: `<original section base>`
+- Parent state: `SPLIT_AFTER_HARD_CAP | REPLACED_AFTER_HARD_CAP`
+- Retry starts from: `<original parent section base>`
 - Retry branch/worktree: `<codex/retry/...>`
-- First ready descendant: `<Sxx.1>`
-- Failed implementation commits cherry-picked: `no`
+- First ready active leaf: `<...>`
+- Failed implementation/repair commits cherry-picked: `no`
+- Recursion depth after recovery: `<0+>`
+- Depth rule: `SPLIT may create depth <=3; depth 4+ must REBOUND or SIMPLIFY_REPLACE without continuation approval`

@@ -1,339 +1,196 @@
 # Section Planning Guide
 
-Use this guide to turn one large feature into reviewable sections without losing feature-level coherence.
+Use this reference to turn a large feature into independently implementable and mergeable increments without manufacturing abstractions merely to make the plan look modular.
 
 ## Contents
 
-1. [Plan around behavior and invariants](#1-plan-around-behavior-and-invariants)
-2. [Preferred section types](#2-preferred-section-types)
-3. [Section quality test](#3-section-quality-test)
-4. [Size heuristics](#4-size-heuristics)
-5. [Dependency graph](#5-dependency-graph)
-6. [Requirement coverage matrix](#6-requirement-coverage-matrix)
-7. [Planning cross-section contracts](#7-planning-cross-section-contracts)
-8. [Parallelization decision](#8-parallelization-decision)
-9. [Hard-cap re-decomposition](#9-hard-cap-re-decomposition)
-10. [Common anti-patterns](#10-common-anti-patterns)
-11. [Example decomposition](#11-example-decomposition)
+1. [Plan around outcomes](#1-plan-around-outcomes)
+2. [Preferred section patterns](#2-preferred-section-patterns)
+3. [Minimum-sufficient design](#3-minimum-sufficient-design)
+4. [Section quality gate](#4-section-quality-gate)
+5. [Dependency and ownership graph](#5-dependency-and-ownership-graph)
+6. [Cross-section defects](#6-cross-section-defects)
+7. [Parallel work](#7-parallel-work)
+8. [Hard-cap recovery planning](#8-hard-cap-recovery-planning)
+9. [Anti-patterns](#9-anti-patterns)
 
-## 1. Plan around behavior and invariants
+## 1. Plan around outcomes
 
-A useful section is not merely a group of files. It is a bounded change in system behavior with a known owner, explicit dependencies, and a testable completion condition.
+A section is one self-contained behavior increment or one enabling seam needed by named later increments. It is not a folder, layer, agent allocation, or arbitrary line-count bucket.
 
-Start from four maps:
+Write the observable result first, then identify the minimum code path required to make it real and testable. A valid section normally has:
 
-1. **Outcome map** — user, operator, API consumer, or background-system outcomes.
-2. **Invariant map** — truths that must hold across every intermediate and final state.
-3. **ownership map** — modules or services that own state, decisions, and side effects.
-4. **dependency map** — contracts that must exist before another section can proceed.
+- one principal outcome;
+- one finite set of owners/contracts;
+- a valid intermediate repository/runtime state;
+- a falsifiable oracle;
+- explicit non-goals and deferred owners;
+- a rollback or recovery path appropriate to its risk.
 
-Do not begin by assigning one section to frontend, one to backend, and one to tests. That creates horizontal partial work whose correctness cannot be observed until late integration.
+Prefer a smaller section when review would otherwise switch among unrelated workflows, threat models, data owners, or failure semantics. Do not make a section so small that it introduces an unused API or abstraction whose meaning cannot be reviewed in use.
 
-## 2. Preferred section types
+## 2. Preferred section patterns
 
-### 2.1 Walking skeleton
+### Walking skeleton
 
-Use a walking skeleton when the architecture, deployment route, data flow, or integration path is uncertain. Implement the thinnest end-to-end path that proves the major components can communicate and that the validation environment can observe the result.
+Use when integration feasibility is uncertain. Build the thinnest real end-to-end path through intended boundaries, with a concrete validation route. Avoid production-scale breadth, generic frameworks, or polish.
 
-A walking skeleton should:
+### Vertical behavior slice
 
-- Exercise real entry and exit points.
-- Use the intended ownership and dependency direction.
-- Include a minimal test or demo path.
-- Avoid premature breadth and polish.
-- Produce information that can change later section design.
+Default choice. Implement one behavior through only the layers necessary to expose and verify it. It may touch multiple modules; conceptual unity matters more than file count.
 
-It is not a throwaway prototype unless the plan explicitly says so.
+### Enabling refactor
 
-### 2.2 Vertical behavior slice
+Use only when a named later behavior cannot be implemented safely without a seam, authoritative owner, or characterization coverage. Preserve behavior and keep the refactor independently reviewable. Do not bundle broad cleanup.
 
-This is the default. A vertical section implements one coherent outcome across only the layers required to make it real and testable.
+### Expand–migrate–contract
 
-Examples:
+Use for incompatible schemas, APIs, events, or shared state:
 
-- Register one account type end to end, including validation, persistence, API, UI state, and tests.
-- Support one new export format from request through generated artifact and download behavior.
-- Add one permission-controlled action, including policy evaluation, UI affordance, audit record, and denial tests.
+1. expand with a compatible new path;
+2. migrate consumers/data/traffic incrementally;
+3. contract only after evidence proves the old path is unused.
 
-A vertical section may touch several modules. Reviewability comes from one behavior and one contract, not from a low file count alone.
+Name the contraction criterion before expansion so temporary dual paths do not become permanent.
 
-### 2.3 Enabling refactor
+### Branch by abstraction
 
-Use only when later behavior cannot be added safely without a seam, stable owner, or characterization coverage.
+Use for gradual implementation replacement when a stable seam already has semantic value. Introduce/verify the seam, route existing behavior through it, add the replacement, migrate, switch authority, then remove the old path and temporary seam when no longer needed.
 
-An enabling refactor must:
+Do not create an abstraction solely because large-feature guidance mentions this pattern.
 
-- Preserve observable behavior.
-- Have protective tests before or within the same section.
-- Establish a specific boundary required by named later sections.
-- Avoid broad cleanup, renaming, or abstraction unrelated to the feature.
-- Be independently reversible.
+### Feature-flagged increment
 
-Separate large moves/renames from semantic changes so reviewers can distinguish structure from behavior.
+Use when deploy and exposure must be decoupled. Record owner, default behavior, on/off test matrix, rollout cohort, kill switch, and removal section. A flag does not excuse an invalid intermediate state or untested hidden path.
 
-### 2.4 Expand–migrate–contract
+## 3. Minimum-sufficient design
 
-Use for incompatible APIs, schemas, event formats, state representations, or shared interfaces.
+For every nontrivial mechanism, write a complexity-budget row:
 
-- **Expand:** add a backward-compatible new path while retaining the old path.
-- **Migrate:** move consumers, data, or traffic incrementally; observe both paths.
-- **Contract:** remove the old path only after evidence proves migration is complete.
+| Mechanism | Current anchor | Simpler alternative | Why insufficient | Removal condition |
+|---|---|---|---|---|
 
-Give each phase its own section or small cluster. Record the exit condition for the contract phase before starting expansion, or the temporary dual-path state may become permanent.
+A current anchor is one of:
 
-### 2.5 Branch by abstraction
+- approved requirement or acceptance criterion;
+- feature/section invariant;
+- authoritative repository policy or existing public contract;
+- demonstrated compatibility/migration constraint;
+- reachable failure/security consequence inside the frozen assurance envelope.
 
-Use when replacing a large implementation behind a stable seam.
+The following are not anchors by themselves:
 
-Typical section sequence:
+- “more robust”;
+- “future-proof”;
+- “industry best practice” without applicability evidence;
+- a reviewer preference;
+- a hypothetical actor/environment excluded by the contract;
+- avoiding a possible future rewrite;
+- making a section look architecturally complete.
 
-1. Introduce or verify an abstraction with no behavioral change.
-2. Route the current implementation through it.
-3. Add the new implementation behind the same contract.
-4. Migrate selected callers or traffic.
-5. Make the new implementation authoritative.
-6. Remove the old implementation and temporary seam when appropriate.
+Prefer existing extension points and local code until evidence justifies a shared helper, service, registry, configurable policy, persistence layer, generalized framework, or new security mechanism.
 
-Do not introduce an abstraction merely to make the plan look incremental. It must narrow a real semantic boundary.
-
-### 2.6 Feature-flagged slice
-
-Use a release flag when incomplete behavior must coexist with a deployable branch or when rollout needs controlled exposure.
-
-Every flag needs:
-
-- Owner.
-- Default state and safe legacy behavior.
-- Scope or cohort semantics.
-- Test matrix for relevant on/off states.
-- Rollout and rollback method.
-- Expiry or removal section.
-
-Do not use flags to hide broken intermediate states from tests.
-
-## 3. Section quality test
-
-A proposed section is acceptable only when all applicable questions have good answers.
+## 4. Section quality gate
 
 ### Coherence
 
-- Does the section change one related behavior or establish one necessary seam?
-- Can its purpose be stated without “and then also” clauses?
-- Are refactor, generated churn, formatting, and behavior disentangled?
+- Can the goal be stated without unrelated “and also” clauses?
+- Does one behavior or enabling seam explain the diff?
+- Are structural moves and behavior changes separated when practical?
 
 ### Independence
 
-- Are all predecessors explicit?
-- Can the section be implemented without guessing future contracts?
-- Can it be reverted without reverting unrelated sections?
+- Are predecessor heads and runtime assumptions explicit?
+- Can the section be implemented without inventing future contracts?
+- Can it be reverted without reverting unrelated accepted work?
 
 ### Testability
 
-- Is there a deterministic oracle for completion?
-- Can the critical path be exercised before future sections exist?
-- Are negative, boundary, and failure cases named?
+- Is there a deterministic oracle for the main outcome?
+- Are supported negative, boundary, and partial-failure paths named?
+- Does the validation environment actually exercise the relevant trust boundary?
 
 ### Reviewability
 
-- Can a reviewer understand the intent from the contract and diff?
-- Is the impact cone bounded enough for one review session?
-- Are generated files, lockfiles, migrations, or mechanical edits separated or clearly labeled?
+- Can a fresh reviewer understand intent from the contract packet?
+- Is the direct semantic impact cone finite and named?
+- Are generated, mechanical, migration, and semantic changes distinguishable?
 
 ### Integrability
 
-- Does the repository remain buildable and operational after the section?
-- Are temporary compatibility states explicit and safe?
-- Is the next consumer of this section named?
+- Does the system remain buildable and operational after the section?
+- Are compatibility and temporary states explicit?
+- Is the next consumer or checkpoint named?
 
-### Feature coherence
+### Proportionality
 
-- Which feature-level acceptance criteria does the section advance?
-- Which global invariants does it touch?
-- What remains deliberately deferred?
+- Does every new mechanism have an approved anchor?
+- Is the assurance envelope proportional to artifact role and supported deployment?
+- Are non-goals concrete enough to reject attractive generalizations?
 
-## 4. Size heuristics
+## 5. Dependency and ownership graph
 
-Do not use line count as the sole splitter. Use it as a warning signal together with semantic breadth.
+Use explicit edges:
 
-A normal section should usually satisfy these heuristics:
+- `requires`: implementation cannot start until predecessor acceptance;
+- `integrates-with`: independently buildable work needing a checkpoint;
+- `migrates-from`: a consumer/data move depends on an expanded path;
+- `contracts`: cleanup follows migration evidence;
+- `conflicts-with`: sections share an owner/contract and cannot proceed independently.
 
-- One primary behavior or seam.
-- One implementer session and one reviewer session.
-- A small number of semantic owners.
-- Roughly 100–400 behavioral lines when practical, excluding generated files, snapshots, lockfiles, and pure moves.
-- No more than one high-risk semantic boundary unless the boundaries are inseparable.
+The graph must be acyclic. A cycle usually means the boundary is wrong or a common contract/walking-skeleton section is missing.
 
-Split again when:
+Avoid parallel sections that both modify the same schema, permission owner, state machine, central coordinator, migration, or public contract.
 
-- The section needs multiple independent acceptance oracles.
-- Its contract contains several unrelated outcomes.
-- It changes both a provider contract and many consumers without a compatibility phase.
-- It mixes data migration, runtime cutover, and old-path removal.
-- Review requires repeatedly switching between unrelated workflows.
-- The implementation cannot be left in a valid intermediate state.
-- The repair impact cone would approximate the whole feature.
+## 6. Cross-section defects
 
-Do not split so finely that a new API or abstraction has no real usage. A section must remain understandable as a working increment.
+Do not confuse scope control with defect denial.
 
-## 5. Dependency graph
+A candidate is `IN_SCOPE_REPLAN` when:
 
-Represent dependencies explicitly in `PLAN-FULL.md`.
+- approved behavior or an authoritative invariant is genuinely violated;
+- the trigger is reachable in the supported model;
+- the smallest correct repair crosses the current section boundary.
 
-Use these edge types:
+The main agent must preserve the finding, revise the section graph in bounded form, invalidate affected evidence, and retry. It must not classify the problem as scope creep merely because the repair touches another section.
 
-- `requires`: implementation cannot begin until predecessor is accepted.
-- `integrates-with`: sections can be built independently but need a checkpoint together.
-- `migrates-from`: consumer or data migration depends on an expanded compatible path.
-- `contracts`: cleanup removes a temporary path after all migrations prove complete.
-- `conflicts-with`: sections cannot run in parallel because they modify the same semantic owner.
+By contrast, adding a new guarantee, threat actor, environment, compatibility promise, or generalized product is a `SCOPE_PROPOSAL` until approved.
 
-The graph must be acyclic. If two sections require each other, the boundary is wrong or a walking skeleton/common contract section is missing.
+## 7. Parallel work
 
-## 6. Requirement coverage matrix
+Parallelize only when:
 
-Map every full-feature criterion to implementation and verification.
+- dependencies are accepted;
+- semantic owners/contracts are distinct;
+- worktrees and generated artifacts are isolated;
+- integration order and checkpoint are predetermined;
+- conflicts can be resolved without choosing new semantics.
 
-```markdown
-| Requirement | Primary section(s) | Section oracle | Integration oracle | Status |
-|---|---|---|---|---|
-| R-01 | S01, S03 | targeted test | end-to-end flow | planned |
-| R-02 | S02 | schema test | migration rehearsal | planned |
-```
+Parallel work increases throughput but also integration states and review load. Sequential execution is the safe default when boundaries are uncertain.
 
-No requirement may be covered only by “final testing.” That usually means the section design has no local oracle.
+## 8. Hard-cap recovery planning
 
-Also map non-functional requirements:
+Use the five admitted review rounds as empirical evidence. Diagnose before choosing a recovery shape:
 
-- Security and authorization.
-- Privacy and data retention.
-- Concurrency and ordering.
-- Reliability, retry, and idempotency.
-- Performance and cost ceilings.
-- Observability and operational control.
-- Accessibility and UX states.
-- Migration, rollout, rollback, and recovery.
+- `DEFECT_DENSITY` → split by behavior/root cause/oracle;
+- `ASSURANCE_BOUNDARY_DRIFT` → simplify and replace, deleting unapproved mechanisms;
+- `ARCHITECTURE_BOUNDARY_FAILURE` → rebound owners/contracts;
+- `CONTRACT_AMBIGUITY` → obtain the exact owner decision;
+- `EVIDENCE_FAILURE` → repair the oracle/environment.
 
-## 7. Planning cross-section contracts
+Do not automatically split every failure. Recursive splitting of an inflated design preserves the wrong problem. `SIMPLIFY_REPLACE` may yield one smaller replacement leaf rather than multiple descendants.
 
-For every producer-consumer relationship, record:
+Retry from the failed parent section's original base and re-derive code. Carrying repeatedly repaired code forward defeats the purpose of changing the boundary.
 
-- Authoritative owner.
-- Data or control contract.
-- Version or compatibility state.
-- Error and fallback semantics.
-- Ordering and idempotency assumptions.
-- Security/permission context propagated.
-- Test that proves the contract at the producer.
-- Test that proves it at the consumer.
-- Integration checkpoint that proves the combined path.
+## 9. Anti-patterns
 
-Do not rely on “both sections use the same type” as proof when runtime serialization, persistence, permissions, or deployment boundaries exist.
-
-## 8. Parallelization decision
-
-Parallel work is an optimization, not the default.
-
-A pair of sections may run in parallel only when all are true:
-
-- Neither depends on the other's code or accepted behavior.
-- They do not modify the same state owner, schema, public contract, migration, or central coordinator.
-- Their test fixtures and generated artifacts do not conflict.
-- Their branches/worktrees are isolated.
-- The integration order and checkpoint are predetermined.
-- A conflict can be resolved without inventing new semantics.
-
-When uncertain, run sequentially. Parallel agents can increase throughput while also multiplying integration states and reviewer load.
-
-## 9. Hard-cap re-decomposition
-
-When one active section reaches five fresh full `SECTION` review rounds without two consecutive clean rounds, do not increase the review budget. Treat the five reports as empirical evidence that the section boundary is still wrong for agentic implementation/review.
-
-The `@sol_max` decomposer should split only the failed section and preserve accepted predecessors plus the original feature contract. Use hierarchical IDs such as `S03.1`, `S03.2`; if `S03.1` later fails, use `S03.1.1`, `S03.1.2`.
-
-Good split axes include:
-
-- one observable behavior per descendant;
-- one authoritative state/ownership boundary per descendant where practical;
-- contract introduction separated from consumer migration;
-- schema expand, data migrate, and contract/remove separated;
-- enabling refactor separated from behavior;
-- policy definition separated from enforcement integration;
-- producer separated from worker/retry/dead-letter behavior;
-- root-cause classes repeatedly exposed by different review rounds separated into independent oracles.
-
-A valid re-decomposition must update:
-
-- requirement coverage matrix;
-- dependency graph and downstream `Requires`;
-- integration checkpoints;
-- deferred-work ownership;
-- section lineage and replan generation.
-
-Do not preserve failed implementation structure merely because code already exists. The retry starts from the failed parent section's original `section_base`; the backup branch exists for forensic comparison and recovery, not as the new implementation base.
-
-## 10. Common anti-patterns
-
-### Horizontal layer plan
-
-```text
-S01 database
-S02 backend
-S03 frontend
-S04 tests
-```
-
-Problem: no section has an observable outcome, tests arrive after design errors have compounded, and the final section becomes the first real integration.
-
-Better: slice by outcome, with contract or migration sections only where necessary.
-
-### One section per directory or file type
-
-Problem: file layout is not a semantic boundary. Reviewers still need the whole feature to know whether a section is correct.
-
-### “Foundation” section with speculative abstractions
-
-Problem: the agent designs APIs without actual usage evidence, and later sections inherit wrong assumptions.
-
-Better: pair a new seam with at least one real use or walking skeleton.
-
-### Final “wire everything together” section
-
-Problem: all cross-section risk is delayed to the largest, least reviewable step.
-
-Better: define integration checkpoints after each dependency cluster.
-
-### Mixed refactor and behavior
-
-Problem: movement and semantics obscure each other, making defects and rollback harder.
-
-Better: enabling refactor first with characterization tests, then behavior.
-
-### Parallel dependent agents
-
-Problem: both agents invent the shared contract, resulting in incompatible implementations or a large reconciliation patch.
-
-Better: freeze the shared contract in an accepted predecessor section.
-
-### “Done” defined by files changed
-
-Problem: agents optimize for output rather than behavior.
-
-Better: define observable acceptance criteria and commands.
-
-## 11. Example decomposition
-
-Feature: add resumable bulk upload with per-tenant quotas.
-
-```text
-S00  Walking skeleton: one small upload travels through UI, API, storage, and status readback.
-S01  Quota policy owner and denial behavior with unit/contract tests.
-S02  Expand upload session schema/API for resumable offsets; old single-shot path remains valid.
-S03  Implement server-side chunk validation, idempotency, and recovery.
-S04  Implement client resume flow and user-visible states behind a release flag.
-CP1  Integrate S01–S04: quota + interrupted upload + resume end to end.
-S05  Migrate eligible callers and telemetry dashboards.
-S06  Rollout controls, cleanup, documentation, and remove obsolete path after evidence.
-FINAL Cross-section acceptance, migration rehearsal, rollback, security, performance, and flag-lifecycle review.
-```
-
-This plan has vertical outcomes, explicit high-risk boundaries, an intermediate integration checkpoint, and a defined contraction phase.
+- One section per directory or technical layer.
+- “Build a reusable framework” before a concrete second/third use.
+- Review-discovered hypotheses copied into requirements without admission.
+- Security controls against actors excluded by the supported deployment model.
+- A final section named “integrate everything.”
+- Feature flags without owners/removal criteria.
+- Data migration, cutover, and old-path deletion in one opaque section.
+- Splitting after implementation but keeping the same coupled code state.
+- Treating more tests as proof when the tests encode an inflated contract.
+- Using line count as the sole section boundary.

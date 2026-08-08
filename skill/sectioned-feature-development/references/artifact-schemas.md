@@ -1,41 +1,28 @@
 # Artifact Schemas and Lifecycle
 
-This reference defines the durable artifacts used by the workflow and the deterministic helper script.
+This reference defines the durable Markdown artifacts and deterministic helper commands.
 
 ## Contents
 
 1. [`PLAN-FULL.md`](#1-plan-fullmd)
 2. [`PLAN.md`](#2-planmd)
 3. [`FEATURE-STATE.md`](#3-feature-statemd)
-4. [`{ID}-CONTRACT.md`](#4-id-contractmd)
-5. [`{ID}-HANDOFF.md`](#5-id-handoffmd)
-6. [Review files](#6-review-files)
-7. [Hard-cap replan files](#7-hard-cap-replan-files)
+4. [Section contract and handoff](#4-section-contract-and-handoff)
+5. [Raw review and admission](#5-raw-review-and-admission)
+6. [Scope-change records](#6-scope-change-records)
+7. [Hard-cap records](#7-hard-cap-records)
 8. [Archive lifecycle](#8-archive-lifecycle)
-9. [Helper script commands](#9-helper-script-commands)
+9. [Helper commands](#9-helper-commands)
 
 ## 1. `PLAN-FULL.md`
 
-Purpose: authoritative feature contract, requirement coverage, section lineage/dependency graph, integration gates, and all active section specifications.
+Authoritative source for feature promises, assurance envelope, requirement coverage, section graph, checkpoints, rollout/recovery, decisions, and approved scope changes.
 
-Required top-level content:
-
-- Feature metadata and exact base.
-- Goal, user/operator behavior, non-goals, and global invariants.
-- Authoritative sources and hard constraints.
-- Full acceptance criteria and validation commands.
-- Ownership/state-boundary map.
-- Requirement coverage matrix.
-- Section index, lineage, and dependency graph.
-- Integration checkpoint plan.
-- Rollout, rollback, migration, flag, observability, and cleanup plan.
-- Decision and deferred-work ledgers.
-
-Use exact markers so `scripts/section_plan.py` can extract stable context:
+Required markers:
 
 ```markdown
 <!-- FEATURE-CONTEXT:START -->
-...feature context required by every section...
+...stable context...
 <!-- FEATURE-CONTEXT:END -->
 
 <!-- SECTION:S01:START -->
@@ -44,215 +31,163 @@ Use exact markers so `scripts/section_plan.py` can extract stable context:
 <!-- SECTION:S01:END -->
 ```
 
-After hard-cap re-decomposition, hierarchical IDs are valid:
+Hierarchical IDs such as `S03.1.1` are valid. Retired parents may remain in status/history tables, but active executable blocks and dependency edges must not be contradictory.
 
-```markdown
-<!-- SECTION:S03.1:START -->
-## S03.1 — Smaller descendant
-...
-<!-- SECTION:S03.1:END -->
-```
+Each active section needs the exact headings accepted by `section_plan.py`, including `最低充分设计与复杂度预算`.
 
-If `S03.1` later requires another hard-cap split, use descendants such as `S03.1.1` and `S03.1.2`.
-
-Each active section block must contain:
-
-```markdown
-### 目标
-### 行为增量
-### 依赖
-### 预计范围
-### 非目标
-### 全局不变量
-### 验收标准
-### 验证命令
-### 发布与恢复
-### 延后项
-```
-
-For a hard-cap descendant, add lineage in `预计范围` or metadata, for example:
-
-```markdown
-- Lineage: `S03 -> S03.1`
-- Replan generation: `1`
-- Replaces parent behavior slice: `S03` (parent state: `SPLIT_AFTER_HARD_CAP`)
-```
-
-The retired parent can remain in the top-level section index/history but must not remain an active executable section block if doing so would leave contradictory dependencies. Requirement/dependency tables must point at active descendants.
+Fingerprint the complete plan whenever freezing a contract or approving a scope change.
 
 ## 2. `PLAN.md`
 
-Purpose: transient execution packet for exactly one active leaf section.
+Transient packet generated from one validated plan and one active leaf. It contains:
 
-Generated content includes:
+- source path and SHA-256;
+- extraction time;
+- stable feature context;
+- exactly one section block.
 
-- Source plan path and SHA-256 fingerprint.
-- Extraction time.
-- Feature context block.
-- Exactly one active section block.
-
-Do not append unrelated scratch notes. Put durable decisions in `FEATURE-STATE.md`, the section contract, or hard-cap replan record.
-
-Delete `PLAN.md` only after the active section is accepted, split, or explicitly abandoned and durable artifacts exist.
+Do not append decisions or review notes. Put durable state in the designated artifacts.
 
 ## 3. `FEATURE-STATE.md`
 
-Purpose: externalized state across agents, context resets, review rounds, and hard-cap retries.
+Externalized orchestration state. Update before every handoff and after every mutation/review/admission.
 
-Required records:
+Must record:
 
-- Feature base/current head and execution mode.
-- Active branch/worktree and retry branch/worktree.
-- Current state and next action.
-- Section status with lineage, base/head, review round, clean streak, and replan generation.
-- Requirement coverage status.
-- Decisions and authority.
-- Open findings and review locations.
-- Checks run/not run.
-- Integration checkpoints.
-- Hard-cap events, backup branches, failed tips, and descendant mapping.
-- Reset/evidence invalidation events.
-- Deferred items and residual risk.
+- execution mode, working path, branch/worktree;
+- feature/section base and head;
+- plan/contract/assurance revisions;
+- active lineage and replan generation;
+- review attempt, valid round, clean streak;
+- raw/admission paths and classifications;
+- scope-change and complexity ledgers;
+- checks, decisions, checkpoints, hard-cap events;
+- exact next action and residual risk.
 
-Update it before every context handoff.
+If artifact and session disagree, repository reality plus authoritative artifacts win after explicit reconciliation.
 
-## 4. `{ID}-CONTRACT.md`
+## 4. Section contract and handoff
 
-Purpose: immutable agreement for one active section attempt.
+### `{ID}-CONTRACT.md`
 
-Required records:
+Immutable for one attempt. Contains exact scope, direct impact cone, assurance envelope, complexity budget, acceptance criteria, evidence, deferred owners, and replan rules.
 
-- Section ID and lineage.
-- Replan generation.
-- Feature identifier.
-- Frozen `section_base` and dependency heads.
-- Goal, behavior, non-goals, and global invariants.
-- Scope and semantic boundaries.
-- Acceptance criteria and verification commands.
-- Compatibility, migration, rollout, rollback, and observability.
-- Allowed deferred work.
-- Replan/reset triggers.
-- Open user-owned decisions; must be empty before implementation.
+Changing a frozen promise requires a new revision/fingerprint and invalidation record. Hard-cap replacement creates new contracts; do not rewrite history to make failed reviews appear consistent.
 
-A hard-cap split retires the parent attempt. Descendants receive new contracts rooted at the appropriate base rather than mutating the old contract in place.
+### `{ID}-HANDOFF.md`
 
-## 5. `{ID}-HANDOFF.md`
+Evidence claim from implementer/repairer. Contains actual files/behavior, impact cone, checks, decisions, limitations, repair IDs, complexity receipt, and scope proposals. Reviewers verify it independently.
 
-Purpose: implementation or repair evidence for the next context.
-
-Required records:
-
-- Section ID/lineage and review round context.
-- Base/head or diff fingerprint.
-- Files and behavior changed.
-- Decisions made and source.
-- Commands run with exact outcome.
-- Manual/runtime evidence.
-- Known limitations and deferred work.
-- Suggested impact-cone edges.
-- Commit ID when authorized.
-
-A handoff is a claim to verify, not proof by itself.
-
-## 6. Review files
-
-Counting section review names:
-
-```text
-{ID}-SECTION-r01.md
-{ID}-SECTION-r02.md
-{ID}-SECTION-r03.md
-{ID}-SECTION-r04.md
-{ID}-SECTION-r05.md
-```
-
-Optional non-counting repair evidence may use:
-
-```text
-{ID}-DELTA-r02-fix01.md
-```
-
-Final/integration files may use:
-
-```text
-FEATURE-INTEGRATION-r01.md
-FEATURE-INTEGRATION-DELTA-r01-fix01.md
-```
-
-Every counting review file should record:
-
-- Review mode `SECTION`.
-- Exact base/head.
-- Contract and feature-invariant paths.
-- Coverage and critical paths.
-- New material findings with stable IDs.
-- Checks/evidence.
-- Reviewer's local verdict.
-
-The main orchestrator separately records `review_round` and `clean_streak`; an individual reviewer does not decide the two-clean workflow condition.
-
-## 7. Hard-cap replan files
+## 5. Raw review and admission
 
 Naming:
+
+```text
+{ID}-SECTION-r01-RAW.md
+{ID}-SECTION-r01-ADMISSION.md
+{ID}-SECTION-r01-retry01-RAW.md          # evidence-failure retry if needed
+{ID}-SECTION-r01-retry01-ADMISSION.md
+FEATURE-INTEGRATION-r01-RAW.md
+FEATURE-INTEGRATION-r01-ADMISSION.md
+```
+
+Raw review contains candidates and evidence. Admission contains authoritative class decisions. Never edit raw review to match admission.
+
+Admission required top-level fields:
+
+- mode/section/counting round/attempt;
+- raw path and frozen revisions;
+- reviewed base/head;
+- valid-full-review flag;
+- result/clean flag/streak.
+
+Each finding block uses exact markers:
+
+```markdown
+<!-- FINDING:REV-001:START -->
+### REV-001 — Title
+...required fields...
+<!-- FINDING:REV-001:END -->
+```
+
+`review_gate.py` validates class/boundary consistency and material evidence fields. `history` validates contiguous completed rounds, streak, acceptance, and hard cap.
+
+## 6. Scope-change records
+
+Path:
+
+```text
+.agent-work/scope-changes/SC-001.md
+```
+
+Required lifecycle:
+
+1. `PROPOSED`: records current boundary, proposed promise, evidence, cost, and alternatives.
+2. Owner decides `APPROVED` or `REJECTED`.
+3. If approved, update exact plan text, fingerprints/contracts, coverage, evidence, and invalidation state.
+4. If rejected, keep record non-authoritative and do not feed it to repair/recovery as a requirement.
+
+A raw reviewer comment cannot be marked approved by the main agent unless existing governance already grants that authority.
+
+## 7. Hard-cap records
+
+Path:
 
 ```text
 .agent-work/replans/{ID}-g{generation}-HARD-CAP.md
 ```
 
-Required records:
+Must distinguish:
 
-- Failed parent section ID/title and lineage.
-- Original `section_base`.
-- Failed tip.
-- `codex/backup/***` branch.
-- Five review files and reviewed heads.
-- Round-by-round new material findings/root causes.
-- Repair commits/checks.
-- Recurring failure pattern.
-- `@sol_max` prompt/context summary.
-- Descendant IDs and dependency/requirement changes.
-- Retry branch/worktree and new active section.
+- five raw reviews;
+- five admission decisions;
+- material admitted root causes;
+- rejected/non-authoritative proposals;
+- code/check history;
+- diagnosis and recovery mode;
+- backup branch/failed tip/original base;
+- replacement/descendant plan and retry path.
 
-Use `assets/HARD-CAP-REPLAN.template.md`.
+Do not say “five reviews found five defects” unless five defects were admitted.
 
 ## 8. Archive lifecycle
 
 After final reporting:
 
-1. Ensure `FEATURE-STATE.md` points to actual final head and final verdict.
-2. Ensure active sections no longer depend on transient `PLAN.md` content.
-3. Preserve parent/descendant lineage for every hard-cap split.
-4. Remove transient `PLAN.md`.
-5. Move `PLAN-FULL.md` to `.agent-work/plans/{YYYYMMDD-HHMM}_FULL.md`.
-6. Preserve contracts, handoffs, review files, replan files, and backup branch names unless repository policy specifies otherwise.
+1. reconcile final feature head/state/verdict;
+2. ensure all active leaves and approved scope changes are represented;
+3. remove transient `PLAN.md` only after durable records exist;
+4. move `PLAN-FULL.md` to `.agent-work/plans/{YYYYMMDD-HHMM}_FULL.md`;
+5. preserve contracts, handoffs, raw/admission pairs, scope changes, hard-cap records, and named backup refs according to repository policy;
+6. exclude `.DS_Store`, `__MACOSX`, `__pycache__`, `.pyc`, temporary outputs, and unrelated artifacts from a distributed skill/package.
 
-## 9. Helper script commands
+## 9. Helper commands
 
 ```bash
-# Validate feature/section headings, markers, hierarchical IDs, references, and dependency DAG
+# Validate plan markers, headings, hierarchical IDs, dependencies, and DAG
 python scripts/section_plan.py validate .agent-work/PLAN-FULL.md
 
-# List sections and titles
+# List active section blocks
 python scripts/section_plan.py list .agent-work/PLAN-FULL.md
 
-# Extract an original section
-python scripts/section_plan.py extract \
-  .agent-work/PLAN-FULL.md S03 --output .agent-work/PLAN.md
-
-# Extract a hard-cap descendant
+# Extract one leaf
 python scripts/section_plan.py extract \
   .agent-work/PLAN-FULL.md S03.1 --output .agent-work/PLAN.md
 
-# Print SHA-256 fingerprint
+# Fingerprint
 python scripts/section_plan.py fingerprint .agent-work/PLAN-FULL.md
 
-# Copy to timestamped archive
+# Safe archive copy; add --move only after finalization
 python scripts/section_plan.py archive \
   .agent-work/PLAN-FULL.md --dest-dir .agent-work/plans
 
-# Move only after finalization
-python scripts/section_plan.py archive \
-  .agent-work/PLAN-FULL.md --dest-dir .agent-work/plans --move
+# Validate one admission
+python scripts/review_gate.py validate \
+  .agent-work/reviews/S03.1-SECTION-r01-ADMISSION.md
+
+# Validate one section history and compute status
+python scripts/review_gate.py history \
+  '.agent-work/reviews/S03.1-SECTION-r*-ADMISSION.md'
 ```
 
-The script refuses duplicate IDs, invalid markers/headings, self/unknown dependencies, dependency cycles, and output/archive overwrite.
+Scripts refuse malformed markers, missing required headings, duplicate/self/unknown dependencies, dependency cycles, inconsistent admission class/boundary combinations, invalid clean results, duplicate/noncontiguous completed rounds, and more than five completed rounds.

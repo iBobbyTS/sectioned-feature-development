@@ -38,6 +38,7 @@ REQUIRED_HEADING_GROUPS: tuple[tuple[str, ...], ...] = (
     ("行为增量", "Observable Behavior Increment", "Behavior Increment"),
     ("依赖", "Dependencies"),
     ("预计范围", "Expected Scope", "Scope"),
+    ("最低充分设计与复杂度预算", "Minimum-sufficient Design and Complexity Budget", "Minimum Sufficient Design and Complexity Budget"),
     ("非目标", "Non-goals", "Non-Goals"),
     ("全局不变量", "Global Invariants", "Feature-level Invariants"),
     ("验收标准", "Acceptance Criteria"),
@@ -59,6 +60,7 @@ FEATURE_HEADING_GROUPS: tuple[tuple[str, ...], ...] = (
     ("完整功能验收标准", "Full-feature Acceptance Criteria"),
     ("完整功能验证命令", "Full-feature Validation Commands"),
     ("Ownership / State Boundary", "Ownership and State Boundary"),
+    ("Assurance Envelope", "保障边界", "安全保障边界"),
     (
         "Compatibility / Migration / Rollout / Rollback",
         "Compatibility, Migration, Rollout, and Rollback",

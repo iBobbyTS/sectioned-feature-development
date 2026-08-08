@@ -13,3 +13,7 @@
 ## v2 — 20260807-095143
 
 恢复“小 section 连续两次独立 clean”作为接受条件；去掉 soft cap；第 5 次 full SECTION review 仍不收敛时自动备份并由 sol_max 重拆当前 section，支持层级 section ID。
+
+## v2.1 — 20260808-162346
+
+针对 review scope 膨胀增加 finding admission、scope/assurance envelope 与 anti-overdesign 约束；hard-cap recovery 改为先诊断 split/simplify/rebound/evidence，而非机械继续强化 reviewer 创建的安全/治理模型。

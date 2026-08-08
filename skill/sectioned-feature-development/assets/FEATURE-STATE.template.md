@@ -1,79 +1,95 @@
 # Feature State：<Feature Name>
 
-## 1. Current State
+## Current State
 
 - Mode: `PLAN_ONLY | EXECUTE_NO_COMMIT | EXECUTE_WITH_COMMITS`
 - Working path: `<path>`
-- Active feature/retry branch: `<branch/path or N/A>`
+- Active branch/worktree: `<branch/path or N/A>`
 - Feature base: `<commit>`
 - Current head: `<commit or diff fingerprint>`
 - Current state: `<state>`
 - Active section: `<Sxx / Sxx.n or none>`
 - Parent lineage: `<none or Sxx -> Sxx.n>`
 - Replan generation: `<0+>`
-- Review round: `<0..5>`
+- Valid review rounds: `<0..5>`
+- Review attempts: `<0+>`
 - Clean streak: `<0..2>`
-- Next action: `<exact next gate>`
+- Contract revision / plan fingerprint: `<...>`
+- Assurance envelope revision: `<vN>`
+- Next action: `<exact gate>`
 - Last updated: `<timestamp>`
 
-## 2. Feature Contract Summary
+## Feature Contract Summary
 
 - Goal: <...>
 - Non-goals: <...>
 - Global invariants: `INV-01`, `INV-02`
+- Assurance exclusions: <...>
 - Plan: `.agent-work/PLAN-FULL.md`
 
-## 3. Section Status and Lineage
+## Section Status and Lineage
 
-| ID | Parent | State | Base | Head | Review round | Clean streak | Replan gen | Contract | Review/Handoff |
+| ID | Parent | State | Base | Head | Completed rounds | Clean streak | Replan gen | Contract | Handoff |
 |---|---|---|---|---|---:|---:|---:|---|---|
 | S01 | — | PLANNED | — | — | 0 | 0 | 0 | — | — |
 
-Valid states include `PLANNED`, `CONTRACT_FROZEN`, `IMPLEMENTED`, `UNDER_REVIEW`, `REPAIRING`, `SECTION_ACCEPTED`, `SPLIT_AFTER_HARD_CAP`, `BLOCKED`.
+Valid states: `PLANNED`, `CONTRACT_FROZEN`, `IMPLEMENTED`, `UNDER_REVIEW`, `REPAIRING`, `IN_SCOPE_REPLAN`, `SECTION_ACCEPTED`, `REPLACED_AFTER_HARD_CAP`, `SPLIT_AFTER_HARD_CAP`, `BLOCKED`.
 
-## 4. Requirement Coverage
+## Requirement Coverage
 
 | Requirement | Active section evidence | Integration evidence | Status |
 |---|---|---|---|
 | R-01 | — | — | planned |
 
-## 5. Open Findings
+## Review Admission Ledger
 
-| Finding | Severity/class | Section/round | Frozen acceptance | Review file | Status |
+| Section/round | Raw review | Admission record | Valid? | Material admitted IDs | Non-authoritative proposals | Result | Clean streak |
+|---|---|---|---|---|---|---|---:|
+| — | — | — | — | — | — | — | 0 |
+
+## Scope-change Ledger
+
+| ID | Type | Proposed guarantee/boundary | Source | Status | Owner | Approved revision |
+|---|---|---|---|---|---|---|
+| — | — | — | — | — | — | — |
+
+## Complexity Ledger
+
+| Section | Mechanism | Requirement anchor | Simpler alternative | Removal condition | Status |
 |---|---|---|---|---|---|
-| — | — | — | — | — | none |
+| — | — | — | — | — | — |
 
-## 6. Decisions
+## Decisions
 
 | ID | Decision | Authority/source | Affected scope | Status |
 |---|---|---|---|---|
 | D-01 | <...> | <...> | Sxx | accepted/open |
 
-## 7. Checks and Evidence
+## Checks and Evidence
 
 | Time | Scope | Command/evidence | Result | Artifact |
 |---|---|---|---|---|
 | <...> | S01 | `<command>` | pass/fail/blocked | `<path>` |
 
-## 8. Hard-Cap Replans
+## Hard-Cap Recoveries
 
-| Parent | Generation | Original base | Failed tip | Backup branch | Summary | Descendants | Retry branch/worktree |
-|---|---:|---|---|---|---|---|---|
-| — | — | — | — | — | — | — | — |
+| Parent | Diagnosis | Mode | Generation | Original base | Failed tip | Backup branch | Replacement/descendants | Retry path |
+|---|---|---|---:|---|---|---|---|---|
+| — | — | — | — | — | — | — | — | — |
 
-## 9. Integration Checkpoints
+## Integration Checkpoints
 
-| ID | Included active sections/head | Contracts/paths | Result | Evidence |
+| ID | Included active sections/head | Contracts/paths | Admission result | Evidence |
 |---|---|---|---|---|
 | CP1 | — | — | planned | — |
 
-## 10. Reset / Evidence Invalidation Events
+## Evidence Invalidation Events
 
 | ID | Time | Trigger | Old baseline | New baseline | Evidence invalidated |
 |---|---|---|---|---|---|
 | — | — | — | — | — | none |
 
-## 11. Deferred Work and Residual Risk
+## Deferred Work and Residual Risk
 
 | ID | Item/risk | Required before merge? | Owner | Status/acceptance |
 |---|---|---|---|---|

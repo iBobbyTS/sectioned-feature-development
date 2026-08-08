@@ -1,4 +1,4 @@
 interface:
   display_name: "Sectioned Feature Development"
-  short_description: "Split large changes with auto re-decomposition"
-  default_prompt: "Use $sectioned-feature-development to implement this large change as reviewable sections, require two clean reviews per section, and automatically re-split any section that hits the five-review hard cap."
+  short_description: "将大型高风险改动拆成可审查 section，并阻止 review 扩张既定范围"
+  default_prompt: "Use $sectioned-feature-development to plan and execute this large change as bounded sections without letting review expand the approved scope."
