@@ -3,13 +3,14 @@
 ## Contents
 
 1. [Authority hierarchy](#authority-hierarchy)
-2. [Minimum sufficient design](#minimum-sufficient-design)
-3. [Security and threat models](#security-and-threat-models)
-4. [Persistence and recovery](#persistence-and-recovery)
-5. [Generic governance and analyzers](#generic-governance-and-analyzers)
-6. [Testing infrastructure](#testing-infrastructure)
-7. [Scope-growth signals](#scope-growth-signals)
-8. [Correction protocol](#correction-protocol)
+2. [Active-contract sanitation](#active-contract-sanitation)
+3. [Minimum sufficient design](#minimum-sufficient-design)
+4. [Security and threat models](#security-and-threat-models)
+5. [Persistence and recovery](#persistence-and-recovery)
+6. [Generic governance and analyzers](#generic-governance-and-analyzers)
+7. [Testing infrastructure](#testing-infrastructure)
+8. [Scope-growth signals](#scope-growth-signals)
+9. [Correction protocol](#correction-protocol)
 
 ## Authority hierarchy
 
@@ -22,6 +23,17 @@ Use this order:
 5. reviewer suggestions.
 
 Reviewer suggestions cannot override levels 1–4. They are candidates to classify, not requirements to implement. The approved scope is monotonic during implementation/review: it may be narrowed or simplified, but it may grow only through an explicit owner decision. Repeated reviewer agreement does not create authority.
+
+## Active-contract sanitation
+
+When adopting this skill mid-feature, preserve accepted code and evidence but inspect the active, unaccepted contract before continuing. For every guarantee, oracle, structural allowance, supported actor/environment, and blocker, record its authority at levels 1–4 above.
+
+- Keep anchored items.
+- Downgrade reviewer-authored, unanchored items to `SCOPE_PROPOSAL` and remove them from repair/test obligations.
+- Do not reopen accepted sections merely because a newer workflow uses different artifacts.
+- Do not let an old over-expanded contract manufacture a new `EVIDENCE_GAP`.
+
+This is contract sanitation, not a new audit or plan-review cycle.
 
 ## Minimum sufficient design
 

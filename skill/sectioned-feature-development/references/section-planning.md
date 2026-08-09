@@ -43,6 +43,7 @@ A section should normally have:
 - one primary behavior owner;
 - one coherent outcome;
 - one bounded changed contract;
+- one frozen scope manifest separating allowed-to-edit owners from inspect-only dependency paths and explicit exclusions;
 - one direct semantic impact cone;
 - one review intensity (`MECHANICAL`, `BOUNDED`, or `HIGH_RISK`);
 - one set of targeted tests;
@@ -77,9 +78,9 @@ List only mechanisms required by the approved behavior, for example:
 - Add explicit route-level regression tests in the existing test module.
 ```
 
-When the list is empty, the implementer may make local edits and small local helpers but may not add a new service, registry, persistence layer, background worker, parser framework, global analyzer, CI policy, public config surface, or security subsystem.
+When the list is empty, the implementer may make local edits and small local helpers inside the allowed-to-edit manifest but may not add a new service, registry, persistence layer, background worker, parser framework, global analyzer, CI policy, public config surface, or security subsystem.
 
-A reviewer cannot add an item to this list. A required new mechanism is either:
+A reviewer cannot add an item to this list or expand the allowed-to-edit manifest. It may inspect an unlisted dependency only through a recorded causal chain from changed code. A required new mechanism or repair owner is either:
 
 - already implied by an authoritative repository contract and accepted by the main agent; or
 - a product/architecture decision for the owner.

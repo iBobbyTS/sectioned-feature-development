@@ -4,6 +4,7 @@
 - Section base:
 - Plan source:
 - Primary owner:
+- Original section lineage:
 
 ## Outcome and changed contract
 
@@ -11,8 +12,18 @@
 
 ## Direct impact cone
 
-- Changed files/symbols/routes/workflows:
-- Direct callers/callees/contracts/tests that may be inspected:
+### Allowed-to-edit manifest
+
+- Owners/files/symbols/routes/workflows the implementer or repair agent may change:
+
+### Inspect-only dependency paths
+
+- Direct callers/callees/serializers/contracts/tests that may be inspected to prove causality:
+- An unlisted dependency may be inspected only with an exact data/control/serialization/contract chain from a changed symbol. Inspection does not authorize editing it.
+
+### Explicit exclusions
+
+- Owners/mechanisms that may not be added or changed without a main-agent scope decision:
 
 ## Existing invariants
 
@@ -33,7 +44,7 @@
 
 ## Acceptance criteria
 
-- Falsifiable behavior, edge, and error outcomes.
+- `AC-<ID>` — Falsifiable behavior, edge, and error outcome.
 
 ## Validation tiers
 
@@ -43,7 +54,9 @@
 
 ## Review boundary
 
-Blocking findings must be `DIFF_CAUSED`, `MERGE_BLOCKING_DEPENDENCY`, or a contract-required `EVIDENCE_GAP`. Review may not add a new product guarantee, threat model, durability/compatibility promise, generalized framework, global analyzer, or CI policy.
+Blocking findings must be `DIFF_CAUSED`, tightly proven `MERGE_BLOCKING_DEPENDENCY`, or an `EVIDENCE_GAP` citing an exact acceptance criterion/repository gate. Review may not add a new product guarantee, threat model, durability/compatibility promise, generalized framework, global analyzer, or CI policy.
+
+A real blocker requiring a new owner returns to the main agent for one explicit causal scope amendment or owner rebound. The reviewer or repair agent may not expand this manifest.
 
 ## Reset triggers
 

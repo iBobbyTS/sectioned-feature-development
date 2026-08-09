@@ -38,7 +38,7 @@ Run at final integration or when repository rules require:
 - deployment/migration dry run;
 - cross-service integration.
 
-Do not run Tier 3 after every local repair. A test-only local oracle change stays at Tier 1/2 unless it modifies shared/global test infrastructure.
+Do not run Tier 3 after every local repair. A test-only local oracle change stays at Tier 1/2 unless it modifies shared/global test infrastructure. Tier 3 validates only the already-listed feature acceptance criteria and repository-required gates; it cannot create new routes, flows, analyzers, or governance obligations.
 
 ## Checkpoint triggers
 
@@ -52,7 +52,7 @@ Run a checkpoint when a later section begins consuming a new:
 - deployment/flag/rollout path;
 - compatibility stage.
 
-A checkpoint verifies producer-consumer composition and representative behavior. It does not re-review every accepted local diff.
+A checkpoint verifies producer-consumer composition and representative behavior. It uses the same finding taxonomy, five-part blocking proof, and scope authority as section review. It does not re-review every accepted local diff.
 
 ## Integration review boundary
 
@@ -64,13 +64,17 @@ The final integration review asks what local section reviews could not prove:
 - Are feature non-goals and branch scope preserved?
 - Do rollout/rollback/observability requirements actually requested by the feature hold?
 
+Integration composition creates no new requirement authority. Admit only feature-diff-caused composition defects, necessary merge-blocking dependencies, or evidence gaps tied to an existing feature acceptance criterion/repository gate.
+
 It does not:
 
 - repeat local style/maintainability review;
 - audit unrelated modules;
 - create a repository-wide governance initiative;
 - strengthen security/durability/compatibility beyond the approved feature;
-- reopen accepted sections without combined-behavior evidence.
+- reopen accepted sections without concrete combined-behavior evidence.
+
+Use one cumulative integration repair budget of at most five waves across checkpoints and final integration. Rerunning final evidence does not reset it. After the cap, allow at most one bounded `@sol_max` diagnosis/recovery event; if the next repair/final pass does not close, report `not-mergeable` or stop for a genuine owner decision rather than expanding the feature.
 
 ## Evidence failures
 

@@ -5,8 +5,13 @@
 - Section base:
 - Current head:
 - Contract:
-- Direct impact cone:
+- Original section lineage:
+- Allowed-to-edit owners/files/symbols/routes:
+- Inspect-only dependency paths/direct impact cone:
+- Explicitly excluded owners/mechanisms:
 - Supported environment/non-goals:
+- Cumulative repair waves used:
+- Automatic recovery used:
 
 ## Initial bounded coverage
 
@@ -18,18 +23,21 @@
 - Risk lenses triggered:
 - Checks/experiments:
 - Explicit gaps:
+- Causal inspection expansions beyond named cone:
 
 ## Findings
 
-| ID | Class | Severity | Causality | Trigger | Violated authority | Consequence | Smallest bounded repair | Status |
-|---|---|---|---|---|---|---|---|---|
-| REV-001 | DIFF_CAUSED | Must Fix |  |  |  |  |  | open |
+| ID | Class | Severity | Causality/path | Trigger | Authority / AC ID | Consequence | Allowed repair owner | Smallest bounded repair | Status |
+|---|---|---|---|---|---|---|---|---|---|
+| REV-001 | DIFF_CAUSED | Must Fix |  |  |  |  |  |  | open |
 
 ## Repair waves
 
 ### Wave 1
 
+- Origin phase: `INITIAL_BOUNDED | REPAIR_DELTA | FINAL_BOUNDED | CHECKPOINT | INTEGRATION | RECOVERY`
 - Finding IDs:
+- Frozen repair owners:
 - Repair range:
 - Targeted checks:
 - Delta review result:

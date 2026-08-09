@@ -10,8 +10,12 @@ Review the current section using `$code-review` as a **single-pass reviewer**. D
 - Handoff: `.agent-work/sections/<ID>-HANDOFF.md`
 - Review range:
 - Previous reviewed head, for DELTA:
-- Frozen finding IDs/acceptance criteria, for DELTA:
-- Direct impact cone:
+- Frozen finding IDs/acceptance criteria/repair owners, for DELTA:
+- Allowed-to-edit owners/files/symbols/routes:
+- Inspect-only dependency paths/direct impact cone:
+- Explicitly excluded owners/mechanisms:
+- Cumulative repair waves used: `<N>/5`
+- Automatic recovery used: `no | yes`
 - Required checks:
 - Transient output: `.agent-work/reviews/<ID>-CANDIDATES.md`
 
@@ -20,15 +24,19 @@ Review the current section using `$code-review` as a **single-pass reviewer**. D
 Report only:
 
 - `DIFF_CAUSED` defects introduced by the specified diff;
-- `MERGE_BLOCKING_DEPENDENCY` defects that the diff newly depends on/exposes/makes reachable;
-- contract-required `EVIDENCE_GAP`.
+- `MERGE_BLOCKING_DEPENDENCY` defects on a necessary acceptance path whose faulty behavior the diff newly depends on, activates, serializes, or publicly exposes;
+- `EVIDENCE_GAP` tied to an exact acceptance criterion or repository-required gate that existed before this review.
 
-Unrelated old bugs, stronger product/security/durability/compatibility guarantees, new supported environments, generic frameworks, whole-repository analyzers, CI governance, future-proofing, style preferences, and named later-section work are non-blocking.
+Incidental traversal through a shared entry point, proximity to changed code, unrelated old bugs, stronger product/security/durability/compatibility guarantees, new supported environments, generic frameworks, whole-repository analyzers, CI governance, future-proofing, style preferences, and named later-section work are non-blocking.
 
 Every blocker must prove changed-hunk causality, reachable trigger, existing authority, material consequence, and a bounded repair. For security findings, also prove the current asset, actor/capability, entry point, trust boundary, and preconditions.
 
+The manifest bounds edits, not causal inspection. To inspect an unlisted dependency, record the exact data/control/serialization/contract chain from a changed symbol and stop at the candidate; do not fan out recursively. Inspection does not authorize changing a new owner. Report that need to the main agent.
+
 ## Mode-specific boundary
 
-- `INITIAL_BOUNDED`: review the complete section diff once; batch root causes and record coverage.
+- `INITIAL_BOUNDED`: review the complete section diff once using only risk lenses triggered by the frozen contract; batch root causes and record coverage.
 - `REPAIR_DELTA`: review only the repair range, frozen findings, and invalidated impact cone. Do not rescan unchanged original scope.
-- `FINAL_BOUNDED`: independently verify the current complete diff, highest-risk changed path, repair impact cones, and accidental scope growth. Do not audit the repository or strengthen the contract.
+- `FINAL_BOUNDED`: this is not another open-ended discovery pass. Verify the current diff against the contract, highest-risk changed path, repair impact cones, and accidental scope growth. Do not audit the repository or strengthen the contract.
+
+Any admitted repair from any mode counts toward the same cumulative five-wave section budget.

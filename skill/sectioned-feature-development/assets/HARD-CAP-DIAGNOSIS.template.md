@@ -3,29 +3,34 @@
 ## Snapshot
 
 - Feature goal:
+- Original section lineage:
 - Section goal:
 - Section base:
 - Current head:
 - Backup ref:
+- Automatic recovery already used: `no | yes`
+- Cumulative repair waves used:
 - Current diff summary:
 
 ## Five repair waves
 
-| Wave | Finding IDs/root causes | Repair range | Result | Recurrence/interaction |
-|---:|---|---|---|---|
-| 1 |  |  |  |  |
-| 2 |  |  |  |  |
-| 3 |  |  |  |  |
-| 4 |  |  |  |  |
-| 5 |  |  |  |  |
+| Wave | Phase | Finding IDs/root causes | Repair range | Result | Recurrence/interaction |
+|---:|---|---|---|---|---|
+| 1 |  |  |  |  |  |
+| 2 |  |  |  |  |  |
+| 3 |  |  |  |  |  |
+| 4 |  |  |  |  |  |
+| 5 |  |  |  |  |  |
 
 ## Current blocker
 
 - Causality:
+- Necessary acceptance path:
+- Exact acceptance criterion/repository authority:
 - Trigger:
-- Existing authority:
 - Consequence:
-- Why another local repair wave is not yet authorized:
+- Current owner and required repair owner:
+- Why another ordinary local repair wave is not authorized:
 
 ## Structural mechanisms and anchors
 
@@ -51,8 +56,10 @@ Choose exactly one:
 ## Rationale and minimal recovery plan
 
 - Why this classification fits the admitted evidence:
+- Is this the lineage's one automatic recovery event: `yes/no`
+- Exact named recovery wave, or exact replacement boundary:
 - Code/evidence preserved:
 - Code/mechanisms removed or changed:
 - PLAN-FULL entries changed:
 - New owner decision required, if any:
-- Next section/base/head:
+- Stop condition after this recovery:

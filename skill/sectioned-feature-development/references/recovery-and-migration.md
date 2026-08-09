@@ -6,7 +6,7 @@
 2. [Hard-cap evidence packet](#hard-cap-evidence-packet)
 3. [Recovery classifications](#recovery-classifications)
 4. [Preservation rules](#preservation-rules)
-5. [Structural recovery limit](#structural-recovery-limit)
+5. [Automatic recovery limit](#automatic-recovery-limit)
 6. [Adopting a new skill version mid-feature](#adopting-a-new-skill-version-mid-feature)
 7. [Legacy evidence](#legacy-evidence)
 
@@ -21,16 +21,17 @@ One repair wave is:
 3. targeted validation;
 4. delta review closing or reopening those IDs.
 
-The initial review, final review, repeated comments, rejected scope proposals, plan formatting corrections, and tool retries do not count.
+Reviewer invocations, repeated comments, rejected scope proposals, plan formatting corrections, and tool retries do not count. Any admitted repair arising from initial, delta, final, checkpoint, or integration review does count toward the applicable cumulative budget.
 
-The fifth wave is allowed to complete. Recovery begins only before a sixth wave or when the current wave proves the section architecture/contract cannot close locally.
+The fifth wave is allowed to complete. The counter does not reset when entering final review or choosing a non-structural recovery. Recovery begins only before a sixth wave or when the current wave proves the section architecture/contract cannot close locally.
 
 ## Hard-cap evidence packet
 
 Before invoking `@sol_max`, collect:
 
 - feature outcome and non-goals;
-- section goal, base, head, direct impact cone;
+- original section lineage and whether its one automatic recovery event is already used;
+- section goal, base, head, frozen scope manifest, and direct impact cone;
 - current diff summary;
 - five repair waves and stable finding IDs;
 - which findings were closed and what recurred;
@@ -46,11 +47,11 @@ Do not send rejected proposals intermixed with admitted requirements.
 
 ### `CONTINUE_CURRENT`
 
-Use when architecture/ownership is sound and findings are independent local omissions. Produce one bounded repair plan against current code.
+Use when architecture/ownership is sound and one named local root cause remains. Authorize exactly one recovery repair wave against current code, then go directly to `FINAL_BOUNDED`. It does not create another general five-wave cycle.
 
 ### `SIMPLIFY_CURRENT`
 
-Use when review-created mechanisms, stronger threat models, generalized tooling, or excessive proof infrastructure dominate. Delete/simplify unanchored mechanisms and preserve requirement-aligned fixes.
+Use when review-created mechanisms, stronger threat models, generalized tooling, or excessive proof infrastructure dominate. Delete/simplify unanchored mechanisms in one named recovery wave, preserve requirement-aligned fixes, then go directly to `FINAL_BOUNDED`.
 
 ### `SPLIT_REMAINING`
 
@@ -62,7 +63,7 @@ Use when the unresolved behavior belongs to another existing owner or section. M
 
 ### `REPAIR_EVIDENCE`
 
-Use when product behavior appears correct but the required oracle/environment is broken. Fix evidence in the current section; do not create an evidence-only descendant.
+Use when product behavior appears correct but one acceptance-criterion-anchored oracle/environment is broken. Fix that evidence in one named recovery wave; do not create an evidence-only descendant.
 
 ### `RESTART_FROM_BASE`
 
@@ -83,14 +84,16 @@ Use only when the implementation direction, state owner, or threat model is demo
 - Do not copy rejected scope proposals into new contracts.
 - Do not rewrite the full plan when only one section/dependency changes.
 - Do not add a descendant solely for a test, checkpoint, review format, or provenance record.
+- If all unresolved items are reviewer-created tooling, generalized oracles, or process artifacts without an exact acceptance anchor, structural recovery is forbidden; simplify/delete them or stop.
 
-## Structural recovery limit
+## Automatic recovery limit
 
-One automatic structural recovery—`SPLIT_REMAINING`, `REBOUND_OWNER`, or `RESTART_FROM_BASE`—is allowed per original section.
+One automatic hard-cap recovery event is allowed per original section lineage, regardless of classification.
 
-A second hard cap may still use `CONTINUE_CURRENT`, `SIMPLIFY_CURRENT`, or `REPAIR_EVIDENCE` automatically. A second structural rewrite indicates an unresolved owner/architecture decision and should stop for that decision rather than recursively growing `S03.1.1.1...`.
+- Non-structural recovery (`CONTINUE_CURRENT`, `SIMPLIFY_CURRENT`, `REPAIR_EVIDENCE`) authorizes exactly one named recovery wave followed by `FINAL_BOUNDED`. Another independent blocker stops the lineage; do not diagnose/recover again automatically.
+- Structural recovery (`SPLIT_REMAINING`, `REBOUND_OWNER`, `RESTART_FROM_BASE`) may establish a genuinely new boundary with a fresh five-wave budget, but the replacement inherits `automatic_recovery_used = yes`. If it reaches another hard cap, stop rather than recursively growing `S03.1.1.1...`.
 
-This limit prevents technical recovery from becoming a new feature graph.
+This limit prevents technical recovery from becoming a new feature graph or a hidden sequence of five-wave cycles.
 
 ## Adopting a new skill version mid-feature
 
@@ -103,8 +106,9 @@ When adopting mid-feature:
 3. Preserve accepted sections and closed findings.
 4. Continue with delta review when a repair is already in progress.
 5. Use one final bounded review if prior coverage is unclear.
-6. Add only the minimum fields needed for future continuation.
-7. Do not create migration sections, plan-review loops, legacy admission copies, or “clean lineage” worktrees.
+6. Sanitize only the active, unaccepted contract: trace each guarantee, oracle, and structural allowance to user intent, repository rules, or established product behavior; downgrade unanchored reviewer-authored items to `SCOPE_PROPOSAL`.
+7. Add only the minimum fields needed for future continuation.
+8. Do not create migration sections, plan-review loops, legacy admission copies, or “clean lineage” worktrees.
 
 If an old plan lacks new optional headings, note them in current state and continue. Do not run a strict validator that retroactively fails accepted work.
 

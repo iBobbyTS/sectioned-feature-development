@@ -52,7 +52,7 @@ The current section diff creates an incorrect behavior, regression, unsafe trans
 
 ### `MERGE_BLOCKING_DEPENDENCY`
 
-The defect existed before, but this diff newly relies on it, exposes it publicly, or makes its trigger reachable. Repair only the smallest dependency needed for safe merge.
+The defect existed before, but a necessary acceptance path now depends on, activates, serializes, or publicly exposes its faulty behavior. Incidental traversal through a shared entry point, proximity to changed code, or merely becoming easier to notice is insufficient. Repair only the smallest dependency needed for safe merge.
 
 ### `PREEXISTING_OUT_OF_SCOPE`
 
@@ -68,7 +68,7 @@ The behavior is assigned to a named later section and the current intermediate s
 
 ### `EVIDENCE_GAP`
 
-An already-required behavior lacks adequate evidence. The repair is the smallest test/oracle necessary to prove the current contract—not a generalized harness or sandbox.
+An already-required behavior lacks adequate evidence. Cite the exact acceptance-criterion ID or repository-required gate that existed before the review. The repair is the smallest test/oracle necessary to prove it—not a generalized harness or sandbox. A reviewer preference for stronger proof is `SCOPE_PROPOSAL` or `NIT_DEBT`.
 
 ### `NIT_DEBT`
 
@@ -84,9 +84,9 @@ A blocking finding must include:
 | Reachability | Concrete trigger in the frozen supported environment |
 | Authority | Existing requirement, invariant, repository rule, or established behavior |
 | Materiality | Correctness, security, data, reliability, compatibility, or maintainability consequence |
-| Bounded repair | Smallest fix remains inside the current owner and adds no unapproved guarantee |
+| Bounded repair | Smallest fix remains inside the frozen allowed-to-edit owners and adds no unapproved guarantee |
 
-Discard or downgrade a candidate when one field is missing.
+Discard or downgrade a candidate when one field is missing. If a genuine blocker requires editing a new owner, the reviewer reports the causal chain and stops; only the main agent may amend the manifest or rebound ownership.
 
 For security findings also require:
 
@@ -108,7 +108,7 @@ The reviewer receives:
 - exact `BASE..HEAD`;
 - feature outcome and non-goals;
 - section contract;
-- direct impact cone;
+- frozen scope manifest: allowed-to-edit owners, inspect-only dependency paths, excluded mechanisms, and direct impact cone;
 - relevant repository rules;
 - required checks;
 - output path for transient candidates.
@@ -120,7 +120,8 @@ The reviewer should:
 3. trace at least one critical changed path for medium/high-risk sections;
 4. generate and falsify hypotheses before reporting;
 5. batch root causes before repair;
-6. record the files/symbols/contracts/path families reviewed.
+6. record the files/symbols/contracts/path families reviewed;
+7. for any inspection beyond the named cone, record the exact data/control/serialization/contract chain from a changed symbol and stop at the candidate—do not fan out recursively.
 
 It must not:
 
@@ -143,7 +144,7 @@ PREVIOUS_REVIEWED_HEAD..CURRENT_HEAD
 + direct new behavior introduced by the repair
 ```
 
-A delta reviewer may admit a new root cause only if it is caused by that delta, made reachable by that delta, or hidden by code the delta replaced. “I looked at another unchanged area this time” is not sufficient.
+A delta reviewer may admit a new root cause only if the delta causes it, activates it on a necessary acceptance path, or invalidates earlier evidence. “I looked at another unchanged area this time” is not sufficient. The repair agent may edit only frozen repair owners; a needed new owner returns to the main agent before code changes.
 
 The delta report should answer:
 
@@ -168,7 +169,7 @@ Use a fresh reviewer. Give it:
 
 Do not give it rejected hypotheses or persuasive reviewer narratives.
 
-The final reviewer verifies:
+The final reviewer is not another open-ended discovery pass. It verifies only:
 
 - contract correctness of the final diff;
 - one highest-risk end-to-end changed path;
@@ -176,7 +177,7 @@ The final reviewer verifies:
 - accidental mechanism/scope growth;
 - test sufficiency proportional to the section.
 
-It reports only a new `DIFF_CAUSED`, `MERGE_BLOCKING_DEPENDENCY`, or required `EVIDENCE_GAP`. A clean final pass is sufficient; do not require a second full clean pass.
+It reports only a new `DIFF_CAUSED`, tightly proven `MERGE_BLOCKING_DEPENDENCY`, or acceptance-criterion-anchored `EVIDENCE_GAP`. Any resulting repair counts toward the same cumulative five-wave section budget. A clean final pass is sufficient; do not require a second full clean pass.
 
 ## Sticky coverage
 

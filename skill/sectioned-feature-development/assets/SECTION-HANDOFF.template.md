@@ -38,4 +38,6 @@ Use `none` when no new mechanism was introduced.
 
 - Base..head:
 - Highest-risk changed path:
-- Direct impact cone:
+- Allowed-to-edit manifest actually used:
+- Causal inspection paths beyond the named cone, if any:
+- Highest-risk direct impact cone:

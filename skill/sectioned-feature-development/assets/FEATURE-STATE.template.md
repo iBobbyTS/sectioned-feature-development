@@ -7,14 +7,19 @@
 - Feature base:
 - Current feature head:
 - Workflow adoption note: `new | legacy artifacts preserved prospectively`
+- Integration repair waves used: `0/5`
+- Integration automatic recovery used: `no | yes`
 
 ## Current section
 
 - ID/title:
+- Original section lineage:
 - Section base:
 - Current head:
 - Status: `PLANNED | IMPLEMENTING | INITIAL_REVIEW | REPAIR_DELTA | CLEAN_A | FINAL_REVIEW | ACCEPTED | HARD_CAP_DIAGNOSIS | BLOCKED`
-- Primary owner/direct impact cone:
+- Allowed-to-edit owners/files/symbols/routes:
+- Inspect-only dependency paths/direct impact cone:
+- Explicitly excluded owners/mechanisms:
 - Allowed structural changes:
 - Review intensity: `MECHANICAL | BOUNDED | HIGH_RISK`
 
@@ -22,7 +27,7 @@
 
 - Initial bounded review: `not-run | complete`
 - Open finding IDs:
-- Repair waves used: `0/5`
+- Cumulative repair waves used: `0/5`
 - Clean A closure: `no | yes`
 - Final bounded review: `not-run | clean | findings`
 - Clean B final: `no | yes`
@@ -39,7 +44,9 @@
 
 - Generation:
 - Backup ref:
+- Automatic hard-cap recovery used for original lineage: `no | yes`
 - Recovery classification:
+- Authorized named recovery wave or replacement boundary:
 - Preserved code/evidence:
 
 ## Decisions and next action
@@ -50,6 +57,6 @@
 
 ## Section summary
 
-| Section | Base | Head | Status | Clean A | Clean B | Notes |
-|---|---|---|---|---|---|---|
-| S01 |  |  |  |  |  |  |
+| Section | Original lineage | Base | Head | Status | Waves | Recovery used | Clean A | Clean B | Notes |
+|---|---|---|---|---|---:|---|---|---|---|
+| S01 | S01 |  |  |  | 0 | no |  |  |  |

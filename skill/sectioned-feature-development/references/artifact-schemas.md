@@ -41,7 +41,8 @@ Required section fields:
 
 - goal;
 - dependencies;
-- expected scope/direct impact cone;
+- frozen scope manifest: allowed-to-edit owners/files/symbols/routes, inspect-only dependency paths, and excluded mechanisms;
+- direct impact cone;
 - non-goals/deferred owner;
 - invariants;
 - allowed structural changes;
@@ -67,11 +68,13 @@ A changed source hash does not invalidate completed work by itself.
 Keep compact:
 
 - feature base/head and execution mode;
-- current section/base/head/status;
+- current section/base/head/status and original lineage;
+- frozen scope manifest;
 - Clean A/Clean B status;
-- open finding IDs and repair-wave count;
+- open finding IDs and cumulative repair-wave count;
 - current checks and evidence gaps;
-- recovery generation/backup if any;
+- recovery generation/backup and automatic-recovery-used flag;
+- integration repair-wave/recovery counters;
 - next action and owner decisions;
 - accepted/deferred sections summary.
 
@@ -83,7 +86,7 @@ Freeze:
 
 - section ID/title/base;
 - outcome and changed contract;
-- primary owner and direct impact cone;
+- frozen allowed-to-edit owners, inspect-only dependency paths, excluded mechanisms, and direct impact cone;
 - explicit non-goals/deferred owner;
 - allowed structural changes;
 - acceptance criteria;
@@ -111,8 +114,8 @@ Keep it concise enough for a reviewer to orient without reconstructing the whole
 One `{ID}-REVIEW.md` contains:
 
 1. scope/base/head/contract;
-2. initial coverage summary;
-3. admitted findings table;
+2. initial coverage summary, including any causal inspection expansion outside the named cone;
+3. admitted findings table with acceptance-criterion/repository-gate authority and repair-owner decision;
 4. repair waves and delta closure;
 5. Clean A status;
 6. final bounded result;
@@ -128,7 +131,7 @@ Use stable IDs. Do not create separate durable admission files. The main agent's
 Record:
 
 - base/head and backup ref;
-- five repair waves;
+- original section lineage, automatic-recovery-used state, and cumulative repair waves;
 - open/root recurring causes;
 - rejected scope proposals separately;
 - current architecture/structural mechanisms;

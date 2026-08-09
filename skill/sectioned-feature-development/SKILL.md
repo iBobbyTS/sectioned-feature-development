@@ -38,7 +38,7 @@ The thresholds only route work into this skill. Semantic ownership and reviewabi
 
 ## Non-negotiable anti-expansion rules
 
-1. **Current-diff causality:** a blocking finding must be caused by the current section diff, or be a pre-existing defect that the diff newly depends on, exposes, or makes reachable.
+1. **Current-diff causality:** a blocking finding must be caused by the current section diff, or be a pre-existing defect that the diff necessarily depends on, activates, serializes, or exposes on an acceptance path. Merely passing through the same entry point or discovering an old defect nearby is insufficient.
 2. **Monotonic scope:** after the feature/section contract is frozen, implementation and review may simplify or narrow it but may not enlarge it without an explicit owner decision. Repetition by multiple reviewers does not create authority.
 3. **No review-authored requirements:** reviewers cannot enlarge the feature contract, supported environment, threat model, compatibility promise, durability promise, or rollout obligation.
 4. **No automatic mechanism growth:** a new registry, service, persistence layer, background worker, parser framework, global analyzer, CI governance rule, security control, or public configuration surface requires an explicit plan/repository anchor. Reviewer preference is not an anchor.
@@ -49,6 +49,7 @@ The thresholds only route work into this skill. Semantic ownership and reviewabi
 9. **Proportional validation:** targeted checks after repairs, section/package checks before final review, and broad repository/application checks at integration. Do not rerun the broadest suite after every local edit.
 10. **Review is not audit:** unchanged code may be inspected only to establish causality, reachability, contract reality, or direct regression risk. Unrelated repository defects are out of scope.
 11. **Inaction is valid:** a clean review may return no finding. Never manufacture work to justify a reviewer invocation.
+12. **Finite cumulative budgets:** section and integration repair waves count across initial, delta, final, and recovery phases. Entering a new review phase or choosing `CONTINUE_CURRENT` never resets a counter.
 
 ## Durable artifacts
 
@@ -156,7 +157,9 @@ When this skill is introduced after work has started:
 - do not migrate old review files merely to satisfy a new template;
 - do not replay accepted predecessor reviews or checkpoints unless current product code changed their contract;
 - treat missing new-format metadata as legacy format, not as evidence failure;
-- use one bounded final review when the current section's prior coverage cannot be reconstructed economically.
+- use one bounded final review when the current section's prior coverage cannot be reconstructed economically;
+- sanitize only the active, unaccepted contract: every guarantee, oracle, and structural allowance must trace to user intent, repository rules, or established product behavior; downgrade reviewer-authored, unanchored items to `SCOPE_PROPOSAL`;
+- never use that sanitation to reopen accepted sections or invalidate otherwise applicable evidence.
 
 ## Phase 1: Divide into minimal behavior sections
 
@@ -171,7 +174,8 @@ Every section must define:
 
 - one coherent goal and observable increment;
 - exact dependency/predecessor relationship;
-- expected changed owners, symbols, routes, workflows, and direct impact cone;
+- a frozen scope manifest: allowed-to-edit owners/files/symbols/routes, inspect-only dependency paths, and explicitly excluded owners/mechanisms;
+- a direct impact cone starting from changed symbols and acceptance paths;
 - explicit non-goals and deferred owners;
 - existing invariants it must preserve;
 - structural changes it is allowed to introduce;
@@ -202,7 +206,7 @@ For the next dependency-ready section:
 
 1. Record exact `section_base` as the accepted predecessor head.
 2. Extract only that section into `PLAN.md`.
-3. Create `{ID}-CONTRACT.md` with goal, base, owners, direct impact cone, allowed structural changes, non-goals, acceptance criteria, and validation tiers.
+3. Create `{ID}-CONTRACT.md` with goal, base, a frozen scope manifest, direct impact cone, allowed structural changes, non-goals, acceptance criteria, and validation tiers.
 4. Resolve real owner decisions before product code.
 5. Choose review intensity: `MECHANICAL`, `BOUNDED`, or `HIGH_RISK`.
 6. Update `FEATURE-STATE.md` with current section, base/head, status, review intensity, open findings, repair waves, and next action.
@@ -231,7 +235,7 @@ The implementer receives repository rules, feature outcome/invariants, `PLAN.md`
 - targeted checks first;
 - one concise `{ID}-HANDOFF.md` with changed files, decisions, commands/results, limitations, and head.
 
-If a new mechanism is not listed under allowed structural changes, stop and either use a local solution or obtain a real contract decision. Do not let an implementer “future-proof” the section.
+If a new mechanism is not listed under allowed structural changes, stop and either use a local solution or obtain a real contract decision. The repair agent may edit only the allowed-to-edit manifest. If a real blocker requires another owner, return to the main agent for one explicit causal scope decision or owner rebound; the reviewer/repair agent may not enlarge scope. Do not let an implementer “future-proof” the section.
 
 In `EXECUTE_WITH_COMMITS`, commit the coherent implementation before review. Do not create separate commits for every state/ledger edit; archive review evidence with the next coherent repair or section-acceptance commit.
 
@@ -246,11 +250,11 @@ For delta verification, prefer reusing the initial reviewer session when availab
 Classify every candidate as exactly one:
 
 - `DIFF_CAUSED`: current section diff introduces the defect.
-- `MERGE_BLOCKING_DEPENDENCY`: a pre-existing defect is newly depended on, exposed, or made reachable by the diff.
+- `MERGE_BLOCKING_DEPENDENCY`: a pre-existing defect lies on a necessary acceptance path and the diff newly depends on, activates, serializes, or publicly exposes its faulty behavior. Incidental traversal, shared entry points, or proximity are insufficient.
 - `PREEXISTING_OUT_OF_SCOPE`: unrelated old defect; do not fix here.
 - `SCOPE_PROPOSAL`: stronger product/security/durability/compatibility/governance promise; do not implement automatically.
 - `DEFERRED_OWNER`: explicitly owned by a later section while the current intermediate state remains correct.
-- `EVIDENCE_GAP`: an already-required behavior lacks adequate evidence; add only the smallest oracle.
+- `EVIDENCE_GAP`: an already-required behavior lacks adequate evidence; cite the exact pre-review acceptance criterion or repository-required gate and add only the smallest oracle. A reviewer preference for stronger proof is not an evidence gap.
 - `NIT_DEBT`: non-blocking polish, preference, or bounded debt.
 
 Only `DIFF_CAUSED`, `MERGE_BLOCKING_DEPENDENCY`, and a contract-required `EVIDENCE_GAP` block by default.
@@ -269,15 +273,18 @@ For security findings, additionally identify the current asset, actor/capability
 
 The main agent owns admission. Reviewer prose is a candidate set, not a contract amendment. Do not copy rejected proposals into `PLAN-FULL.md`, descendants, tests, or repair prompts.
 
+The scope manifest bounds edits, not causal inspection. A reviewer may inspect an unlisted dependency only by recording a concrete data/control/serialization/contract chain from a changed symbol to the candidate. That chain authorizes inspection only; editing a new owner requires the main-agent decision above. This preserves genuine cross-owner findings without permitting an open-ended audit.
+
 ### 3.2 `INITIAL_BOUNDED`
 
 Run exactly one initial full review over `section_base..section_head` plus the direct semantic impact cone. Use the bundled review request. The reviewer must:
 
-- inspect all changed behavior once through relevant correctness/risk lenses;
+- inspect all changed behavior once through risk lenses triggered by the frozen contract;
 - batch material root causes before repair;
 - report only current-diff findings under the admission rules;
 - avoid repository audit, future-proofing, and generic governance/tooling proposals;
-- record reviewed coverage so unaffected conclusions can be retained.
+- record reviewed coverage so unaffected conclusions can be retained;
+- record any inspection beyond the named cone as an exact causal dependency chain; do not fan out recursively from that dependency.
 
 Write the authoritative classification and coverage summary into `{ID}-REVIEW.md`. Use `{ID}-CANDIDATES.md` only as transient reviewer output; overwrite or delete it after triage.
 
@@ -285,7 +292,7 @@ If no blocker is admitted, `Clean A` is satisfied by the implementation evidence
 
 ### 3.3 `REPAIR_DELTA`
 
-Freeze admitted root-cause IDs and acceptance criteria. Batch compatible findings into the smallest coherent repair wave.
+Freeze admitted root-cause IDs, acceptance-criterion IDs, allowed repair owners, and closure checks. Batch compatible findings into the smallest coherent repair wave.
 
 After each repair, review only:
 
@@ -294,21 +301,21 @@ After each repair, review only:
 - direct callers/callees/contracts/tests whose prior conclusion the repair invalidated;
 - new behavior introduced by the repair.
 
-Retain all unaffected initial coverage. A delta reviewer may admit a new blocker only when the repair delta caused it, made it reachable, or invalidated the earlier evidence. It may not reopen the original section under a different lens.
+Retain all unaffected initial coverage. A delta reviewer may admit a new blocker only when the repair delta caused it, activated it on a necessary acceptance path, or invalidated the earlier evidence. It may not reopen the original section under a different lens.
 
-Run targeted checks for the repaired owner. Update the single review ledger. When all admitted findings are closed and required targeted/section checks pass, record:
+The repair agent may modify only frozen repair owners. If closure requires a new owner, stop the repair and return to the main agent for a causal scope decision. Run targeted checks for the repaired owner. Update the single review ledger. When all admitted findings are closed and required targeted/section checks pass, record:
 
 ```text
 Clean A — closure evidence satisfied
 ```
 
-A repair wave is one coherent batch of admitted root-cause classes plus its code fix and delta verification. The initial reviewer call, final reviewer call, repeated wording, rejected scope proposals, and tool retries do not count as repair waves.
+A repair wave is one coherent batch of admitted root-cause classes plus its code fix and delta verification. Any admitted repair arising from initial, delta, final, checkpoint, or integration review counts toward the applicable cumulative budget. Reviewer calls, repeated wording, rejected scope proposals, and tool retries do not count.
 
 ### 3.4 `FINAL_BOUNDED`
 
 Use one fresh reviewer after `Clean A`. Give it the current complete section diff, frozen contract/non-goals, direct impact cone, current checks, and a concise list of closed root-cause IDs. Do not give it rejected scope proposals or prior persuasive narratives.
 
-The final reviewer checks:
+`FINAL_BOUNDED` is not a second open-ended discovery pass. It checks only:
 
 - the complete current diff against the frozen contract;
 - the highest-risk changed path end to end;
@@ -324,7 +331,7 @@ Clean B — independent final evidence satisfied
 
 Then mark the section `SECTION_ACCEPTED`.
 
-If it finds a new admissible blocker, repair it through `REPAIR_DELTA`, then rerun only `FINAL_BOUNDED`. Do not restart the entire initial discovery unless a reset trigger fires.
+If it finds a new admissible blocker, that repair uses the same cumulative section-wave budget. Repair it through `REPAIR_DELTA`, then rerun only `FINAL_BOUNDED`. Do not restart the entire initial discovery unless a reset trigger fires.
 
 ### 3.5 Full-reset triggers
 
@@ -342,7 +349,7 @@ Do not reset because a plan/review template changed, a fingerprint changed, test
 
 ## Phase 4: Five-wave hard-cap recovery
 
-Allow up to five admitted repair waves for one stable section boundary. The fifth wave is repaired and delta-verified normally. Enter hard-cap diagnosis only when:
+Allow up to five admitted repair waves for one stable section boundary, cumulatively across initial, delta, and final phases. The fifth wave is repaired and delta-verified normally. The counter never resets while that boundary remains stable. Enter hard-cap diagnosis only when:
 
 - a sixth independent root-cause class would require another repair wave;
 - a repair cannot close without changing the section goal/owner/architecture; or
@@ -368,7 +375,7 @@ The backup is a recovery point, not a command to abandon current correct work.
 
 Give a clean [@sol_max](subagent://sol_max):
 
-- current section goal/contract, base/head, and diff summary;
+- original section lineage, whether its single automatic recovery event is already used, current goal/contract, base/head, and diff summary;
 - all admitted root-cause classes and repair results;
 - current open blocker and test evidence;
 - structural changes already present and their requirement anchors;
@@ -377,11 +384,11 @@ Give a clean [@sol_max](subagent://sol_max):
 
 Require exactly one recovery classification:
 
-- `CONTINUE_CURRENT`: architecture is sound; authorize one new bounded repair plan on current code.
-- `SIMPLIFY_CURRENT`: remove review-created or unanchored mechanisms and return to the minimum sufficient design.
+- `CONTINUE_CURRENT`: architecture is sound; authorize exactly one named recovery repair wave on current code, then go directly to `FINAL_BOUNDED`.
+- `SIMPLIFY_CURRENT`: remove review-created or unanchored mechanisms in exactly one named recovery wave, then go directly to `FINAL_BOUNDED`.
 - `SPLIT_REMAINING`: split only unresolved product behavior into at most two independently shippable descendants while preserving already-correct current work.
 - `REBOUND_OWNER`: move unresolved behavior to the correct existing owner/section and update only affected dependencies.
-- `REPAIR_EVIDENCE`: fix the oracle/environment in the current section; do not create a test-only descendant.
+- `REPAIR_EVIDENCE`: fix one contract-anchored oracle/environment gap in one named recovery wave; do not create a test-only descendant.
 - `RESTART_FROM_BASE`: last resort when the implementation direction or threat model is demonstrably wrong and in-place simplification would preserve most of the wrong design.
 
 Technical recovery proceeds without asking whether to continue. Ask only when recovery requires a new product guarantee, supported environment, compatibility policy, threat model, migration meaning, or rollout decision.
@@ -389,18 +396,21 @@ Technical recovery proceeds without asking whether to continue. Ask only when re
 ### 4.3 Recovery constraints
 
 - Default to `CONTINUE_CURRENT` or `SIMPLIFY_CURRENT`; preserve verified repairs.
+- One automatic hard-cap recovery event is allowed per original section lineage, regardless of classification. It never grants another general five-wave cycle.
+- A non-structural recovery authorizes one named recovery wave only. If its repair or following `FINAL_BOUNDED` reveals another independent blocker, stop and report the unresolved technical/owner decision; do not start another automatic recovery.
+- A structural replacement may receive a fresh five-wave budget because its boundary changed, but it inherits `automatic_recovery_used = yes`; another hard cap stops rather than recursively recovering.
 - `SPLIT_REMAINING` may add at most two active descendants and may not create process/evidence-only sections.
 - Do not re-review accepted predecessors or rebuild “clean evidence lineage.”
 - Do not cherry-pick nothing by default; keep current valid code unless `RESTART_FROM_BASE` is justified.
 - `RESTART_FROM_BASE` must state which architectural assumptions are wrong, which current mechanisms will be discarded, and why bounded reversion/simplification is insufficient.
-- One automatic structural recovery (`SPLIT_REMAINING`, `REBOUND_OWNER`, or `RESTART_FROM_BASE`) is allowed per original section. A second structural recovery requires a real owner/architecture decision rather than blind recursive splitting. Non-structural `CONTINUE_CURRENT`, `SIMPLIFY_CURRENT`, or `REPAIR_EVIDENCE` may proceed automatically.
+- If the unresolved set consists only of reviewer-created tooling, generalized oracles, or process artifacts without an exact acceptance-criterion anchor, structural recovery is prohibited; use `SIMPLIFY_CURRENT`, a truly contract-anchored `REPAIR_EVIDENCE`, or stop.
 - Update only the affected section/dependency entries in `PLAN-FULL.md`. Do not rewrite the whole feature plan or invalidate unaffected fingerprints/evidence.
 
 ## Phase 5: Integration checkpoints and final gate
 
 Run a targeted checkpoint only when a later section begins consuming a new public contract, schema, permission boundary, state owner, queue, deployment path, or compatibility stage.
 
-Checkpoint review verifies composition and representative paths; it does not reopen every accepted local line. An accepted section is invalidated only when changed product code or observed combined behavior disproves its contract.
+Checkpoint review verifies composition and representative paths; it does not reopen every accepted local line. It uses the same finding classes, five-part blocking proof, scope authority, and cumulative repair accounting as section review. An accepted section is invalidated only when changed product code or observed combined behavior disproves its contract.
 
 After all sections are accepted, run one fresh `$code-review` integration pass over `feature_base..feature_head`, using the bundled integration request. Focus only on:
 
@@ -410,9 +420,11 @@ After all sections are accepted, run one fresh `$code-review` integration pass o
 - representative end-to-end paths;
 - branch-scope integrity and residual risk.
 
-Do not repeat local section review or upgrade the feature into a repository audit. Repair integration findings in bounded deltas and rerun only invalidated integration evidence.
+Integration composition creates no new authority to add product scope, deployment models, threat models, durability, observability, rollout promises, routes, analyzers, or browser flows. Admit only feature-diff-caused composition defects, necessary merge-blocking dependencies, or evidence gaps tied to an existing feature acceptance criterion/repository gate.
 
-Run the broadest deterministic suite/build/browser/application checks once at final integration unless repository rules require otherwise. State readiness as `mergeable`, `not-mergeable`, or `insufficient-evidence`.
+Do not repeat local section review or upgrade the feature into a repository audit. Use one cumulative integration budget of at most five repair waves across checkpoint/final integration; it never resets when final evidence is rerun. After that, allow at most one bounded `@sol_max` diagnosis/recovery event for the feature integration boundary; if the next bounded repair/final pass does not close, stop as `not-mergeable` or for a genuine owner decision.
+
+Run the broadest deterministic suite/build/browser/application checks once at final integration unless repository rules require otherwise. These checks verify the already-listed feature acceptance criteria and repository-required gates; they do not create new acceptance scope. State readiness as `mergeable`, `not-mergeable`, or `insufficient-evidence`.
 
 ## Phase 6: Archive and report
 
@@ -430,7 +442,9 @@ Run the broadest deterministic suite/build/browser/application checks once at fi
 - Two evidence types are required: `Clean A` closure and `Clean B` independent final verification; two repeated full clean scans are not required.
 - Only current-diff or newly depended-on material defects block.
 - Review-created scope proposals never enter repair prompts or descendant plans without owner approval.
-- Up to five repair waves; the fifth finding is repaired normally.
+- Up to five cumulative section repair waves; final-review repairs count, and the fifth finding is repaired normally.
+- One automatic hard-cap recovery event per original section lineage; recovery never silently resets the loop.
+- Integration uses the same admission boundary and its own finite cumulative repair budget.
 - Hard-cap recovery preserves valid current work and diagnoses before splitting or restarting.
 - Skill/artifact schema changes never retroactively invalidate product evidence.
 - Section acceptance is provisional; only the final cross-section gate establishes feature merge readiness.

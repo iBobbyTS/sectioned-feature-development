@@ -21,3 +21,7 @@
 ## v3 — 20260809-133655
 
 基于四个真实项目的过长 review 数据大幅简化收敛：每个稳定 section 只做一次 INITIAL_BOUNDED，repair 只做 REPAIR_DELTA，最后一次 FINAL_BOUNDED；hard cap 按 admitted repair wave，而不是 reviewer 次数；禁止 clean-lineage/evidence-only 重建。
+
+## v3.1 — 20260809-161721
+
+收紧 MERGE_BLOCKING_DEPENDENCY 因果、EVIDENCE_GAP authority anchor 和 edit-vs-inspect manifest；section repair budget 跨 initial/delta/final/recovery 累计；每个 original lineage 只允许一次自动 hard-cap recovery；integration 复用同一 admission boundary。

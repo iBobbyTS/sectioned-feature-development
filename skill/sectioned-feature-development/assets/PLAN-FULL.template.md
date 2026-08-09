@@ -62,8 +62,10 @@ One coherent observable behavior increment.
 ### Expected scope and direct impact cone
 
 - Primary owner:
-- Expected files/symbols/routes/workflows:
-- Direct callers/callees/contracts/tests that may be inspected:
+- Allowed-to-edit owners/files/symbols/routes/workflows:
+- Inspect-only dependency paths/direct callers/callees/serializers/contracts/tests:
+- Explicitly excluded owners/mechanisms:
+- Unlisted dependencies may be inspected only through a recorded causal chain from a changed symbol; inspection does not authorize editing.
 
 ### Non-goals and deferred owner
 
@@ -112,8 +114,10 @@ One coherent observable behavior increment.
 ### Expected scope and direct impact cone
 
 - Primary owner:
-- Expected files/symbols/routes/workflows:
-- Direct callers/callees/contracts/tests that may be inspected:
+- Allowed-to-edit owners/files/symbols/routes/workflows:
+- Inspect-only dependency paths/direct callers/callees/serializers/contracts/tests:
+- Explicitly excluded owners/mechanisms:
+- Unlisted dependencies may be inspected only through a recorded causal chain from a changed symbol; inspection does not authorize editing.
 
 ### Non-goals and deferred owner
 
