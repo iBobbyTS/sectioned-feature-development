@@ -1,26 +1,20 @@
-# Feature Integration Raw Review Request
+# Feature Integration Review Request
 
-- Review mode: `INTEGRATION`
-- Working path: `<path>`
-- Feature: `<name>`
-- Feature base/head: `<base>..<head>`
-- Feature contract: `.agent-work/PLAN-FULL.md`
-- Feature state: `.agent-work/FEATURE-STATE.md`
-- Assurance envelope revision: `<vN>`
-- Active section artifacts: `.agent-work/sections/`
-- Review/admission index: `.agent-work/reviews/`
-- Output: `.agent-work/reviews/FEATURE-INTEGRATION-r01-RAW.md`
-- Review skill: `$code-review`
+Use `$code-review` as one fresh `INTEGRATION` pass.
 
-## Required Focus
+- Feature base:
+- Feature head:
+- Feature plan:
+- Accepted section summary:
+- Required end-to-end checks:
+- Output:
 
-- Original full-feature goal, non-goals, and requirement coverage.
-- Cross-section API/schema/state/permission/order/error contracts.
-- End-to-end happy, negative, and partial-failure paths.
-- Migration, compatibility, flags, rollout, rollback, cleanup, and latest combined checks.
-- Security, privacy, reliability, performance, observability, and operations only inside the frozen assurance envelope.
-- Deferred-work closure and branch-scope integrity.
+Review only what local section reviews could not prove:
 
-## Calibration
+- original feature outcome and non-goals;
+- emergent cross-section API/schema/state/permission/ordering/error behavior;
+- required migration, compatibility, rollout, rollback, cleanup, and observability;
+- representative end-to-end paths;
+- branch-scope integrity.
 
-Do not replay every accepted local line. Do not reopen the threat model or supported environment without a concrete reachable cross-section trigger and authoritative anchor. Report raw candidates using the same evidence fields as section review. A separate main-agent admission record determines whether each candidate is material, deferred, a scope proposal, unsupported, or non-blocking.
+Do not repeat local section review, audit unrelated repository code, or add stronger product/security/durability/compatibility/governance requirements.

@@ -1,196 +1,163 @@
-# Section Planning Guide
-
-Use this reference to turn a large feature into independently implementable and mergeable increments without manufacturing abstractions merely to make the plan look modular.
+# Section Planning
 
 ## Contents
 
-1. [Plan around outcomes](#1-plan-around-outcomes)
-2. [Preferred section patterns](#2-preferred-section-patterns)
-3. [Minimum-sufficient design](#3-minimum-sufficient-design)
-4. [Section quality gate](#4-section-quality-gate)
-5. [Dependency and ownership graph](#5-dependency-and-ownership-graph)
-6. [Cross-section defects](#6-cross-section-defects)
-7. [Parallel work](#7-parallel-work)
-8. [Hard-cap recovery planning](#8-hard-cap-recovery-planning)
-9. [Anti-patterns](#9-anti-patterns)
+1. [Purpose](#purpose)
+2. [Choose the first slice](#choose-the-first-slice)
+3. [A valid section](#a-valid-section)
+4. [Structural allowance](#structural-allowance)
+5. [Boundaries and deferred work](#boundaries-and-deferred-work)
+6. [Invalid section patterns](#invalid-section-patterns)
+7. [Plan-review criteria](#plan-review-criteria)
+8. [Examples](#examples)
 
-## 1. Plan around outcomes
+## Purpose
 
-A section is one self-contained behavior increment or one enabling seam needed by named later increments. It is not a folder, layer, agent allocation, or arbitrary line-count bucket.
+Sectioning reduces cognitive and integration risk only when each section represents one coherent behavior increment. Splitting by directory, layer, or evidence artifact can make the plan longer without making the change safer.
 
-Write the observable result first, then identify the minimum code path required to make it real and testable. A valid section normally has:
+The plan should answer:
 
-- one principal outcome;
-- one finite set of owners/contracts;
-- a valid intermediate repository/runtime state;
-- a falsifiable oracle;
-- explicit non-goals and deferred owners;
-- a rollback or recovery path appropriate to its risk.
+- What observable behavior becomes true after this section?
+- Which existing owner is responsible?
+- What exact code and semantic impact cone may change?
+- Which behavior is deliberately not part of this section?
+- What evidence is sufficient to accept it?
 
-Prefer a smaller section when review would otherwise switch among unrelated workflows, threat models, data owners, or failure semantics. Do not make a section so small that it introduces an unused API or abstraction whose meaning cannot be reviewed in use.
+## Choose the first slice
 
-## 2. Preferred section patterns
+When an external seam or architecture assumption is uncertain, begin with the smallest real probe or walking skeleton that can falsify the assumption.
 
-### Walking skeleton
+Examples:
 
-Use when integration feasibility is uncertain. Build the thinnest real end-to-end path through intended boundaries, with a concrete validation route. Avoid production-scale breadth, generic frameworks, or polish.
+- Observe the actual request metadata shape before building a registry around it.
+- Exercise one canonical provider call before creating a general provider framework.
+- Modify one representative route and reload flow before building a whole-repository URL analyzer.
+- Prove the current persistence owner and failure behavior before introducing an outbox or journal.
 
-### Vertical behavior slice
+A probe should produce durable knowledge or a minimal production path. It should not become a second framework.
 
-Default choice. Implement one behavior through only the layers necessary to expose and verify it. It may touch multiple modules; conceptual unity matters more than file count.
+## A valid section
 
-### Enabling refactor
+A section should normally have:
 
-Use only when a named later behavior cannot be implemented safely without a seam, authoritative owner, or characterization coverage. Preserve behavior and keep the refactor independently reviewable. Do not bundle broad cleanup.
+- one primary behavior owner;
+- one coherent outcome;
+- one bounded changed contract;
+- one direct semantic impact cone;
+- one review intensity (`MECHANICAL`, `BOUNDED`, or `HIGH_RISK`);
+- one set of targeted tests;
+- no undocumented dependency on a future section for correctness.
 
-### Expand–migrate–contract
+A section may touch multiple files and layers when those edits are required for one vertical behavior. File count alone does not define reviewability.
 
-Use for incompatible schemas, APIs, events, or shared state:
+Prefer sections such as:
 
-1. expand with a compatible new path;
-2. migrate consumers/data/traffic incrementally;
-3. contract only after evidence proves the old path is unused.
+- “Parse and normalize the quota signal at the existing API boundary.”
+- “Keep one turn bound to its selected account until a confirmed quota terminal signal.”
+- “Remove report month/year from the page URL while preserving reload defaults.”
+- “Expose DeepSeek's single-query capability through the existing provider projection.”
 
-Name the contraction criterion before expansion so temporary dual paths do not become permanent.
+Avoid sections such as:
 
-### Branch by abstraction
+- “Backend changes.”
+- “Security hardening.”
+- “Build a generalized URL governance system.”
+- “Rehabilitate review evidence.”
+- “Final cleanup and everything else.”
 
-Use for gradual implementation replacement when a stable seam already has semantic value. Introduce/verify the seam, route existing behavior through it, add the replacement, migrate, switch authority, then remove the old path and temporary seam when no longer needed.
+## Structural allowance
 
-Do not create an abstraction solely because large-feature guidance mentions this pattern.
+Every section contract includes an **Allowed structural changes** list. This is an authorization boundary, not a prediction.
 
-### Feature-flagged increment
+List only mechanisms required by the approved behavior, for example:
 
-Use when deploy and exposure must be decoupled. Record owner, default behavior, on/off test matrix, rollout cohort, kill switch, and removal section. A flag does not excuse an invalid intermediate state or untested hidden path.
+```text
+- Extend the existing AccountRegistry with one per-turn affinity map.
+- Add one provider capability enum value and reuse the existing projection path.
+- Add explicit route-level regression tests in the existing test module.
+```
 
-## 3. Minimum-sufficient design
+When the list is empty, the implementer may make local edits and small local helpers but may not add a new service, registry, persistence layer, background worker, parser framework, global analyzer, CI policy, public config surface, or security subsystem.
 
-For every nontrivial mechanism, write a complexity-budget row:
+A reviewer cannot add an item to this list. A required new mechanism is either:
 
-| Mechanism | Current anchor | Simpler alternative | Why insufficient | Removal condition |
-|---|---|---|---|---|
+- already implied by an authoritative repository contract and accepted by the main agent; or
+- a product/architecture decision for the owner.
 
-A current anchor is one of:
+## Boundaries and deferred work
 
-- approved requirement or acceptance criterion;
-- feature/section invariant;
-- authoritative repository policy or existing public contract;
-- demonstrated compatibility/migration constraint;
-- reachable failure/security consequence inside the frozen assurance envelope.
+Write non-goals as concrete exclusions, not generic “out of scope” prose.
 
-The following are not anchors by themselves:
+Good examples:
 
-- “more robust”;
-- “future-proof”;
-- “industry best practice” without applicability evidence;
-- a reviewer preference;
-- a hypothetical actor/environment excluded by the contract;
-- avoiding a possible future rewrite;
-- making a section look architecturally complete.
+- No multi-process durability or restart persistence.
+- No replay after downstream bytes have been emitted.
+- No same-UID hostile process model.
+- No whole-repository source analyzer or permanent CI prohibition.
+- No public Admin DTO exposure until S04.
 
-Prefer existing extension points and local code until evidence justifies a shared helper, service, registry, configurable policy, persistence layer, generalized framework, or new security mechanism.
+Deferred work must have a named later owner and a correct intermediate state. A reviewer may block on deferred work only when the current state is already incorrect or unsafe before the later section runs.
 
-## 4. Section quality gate
+## Invalid section patterns
 
-### Coherence
+### Process-only section
 
-- Can the goal be stated without unrelated “and also” clauses?
-- Does one behavior or enabling seam explain the diff?
-- Are structural moves and behavior changes separated when practical?
+Do not create a section only to:
 
-### Independence
+- migrate PLAN or review schema;
+- recompute fingerprints;
+- copy legacy review files;
+- move a test earlier in Git ancestry;
+- obtain a “clean lineage”;
+- re-prove accepted predecessor behavior unchanged by product code.
 
-- Are predecessor heads and runtime assumptions explicit?
-- Can the section be implemented without inventing future contracts?
-- Can it be reverted without reverting unrelated accepted work?
+### Governance expansion
 
-### Testability
+A local feature does not automatically authorize a repository-wide analyzer, policy, registry, or CI guard. Prefer explicit regression tests for the changed routes/owners.
 
-- Is there a deterministic oracle for the main outcome?
-- Are supported negative, boundary, and partial-failure paths named?
-- Does the validation environment actually exercise the relevant trust boundary?
+### Threat-model expansion
 
-### Reviewability
+A test harness, local script, single-user tool, or private directory does not automatically require protection against arbitrary in-process objects, same-UID hostile processes, multi-tenant access, or malicious filesystem rebinding.
 
-- Can a fresh reviewer understand intent from the contract packet?
-- Is the direct semantic impact cone finite and named?
-- Are generated, mechanical, migration, and semantic changes distinguishable?
+### Layer-only split
 
-### Integrability
+Splitting “models,” “services,” and “UI” into separate sections may leave each section semantically incomplete. Prefer a vertical behavior slice unless compatibility staging requires a layer boundary.
 
-- Does the system remain buildable and operational after the section?
-- Are compatibility and temporary states explicit?
-- Is the next consumer or checkpoint named?
+## Plan-review criteria
 
-### Proportionality
+Use one plan review only when architecture, state ownership, or a high-risk boundary is genuinely uncertain. The reviewer checks:
 
-- Does every new mechanism have an approved anchor?
-- Is the assurance envelope proportional to artifact role and supported deployment?
-- Are non-goals concrete enough to reject attractive generalizations?
+- every requirement has an owner and acceptance oracle;
+- dependencies are acyclic;
+- the first slice falsifies uncertain seams early;
+- structural allowances are requirement-anchored;
+- non-goals exclude foreseeable scope expansion;
+- no section exists solely for process/evidence;
+- testing is tiered rather than full-suite-per-edit;
+- final integration covers only emergent cross-section behavior.
 
-## 5. Dependency and ownership graph
+After local plan corrections, the main agent verifies them. Run another plan review only when the behavior contract or architecture materially changed.
 
-Use explicit edges:
+## Examples
 
-- `requires`: implementation cannot start until predecessor acceptance;
-- `integrates-with`: independently buildable work needing a checkpoint;
-- `migrates-from`: a consumer/data move depends on an expanded path;
-- `contracts`: cleanup follows migration evidence;
-- `conflicts-with`: sections share an owner/contract and cannot proceed independently.
+### Account quota switching
 
-The graph must be acyclic. A cycle usually means the boundary is wrong or a common contract/walking-skeleton section is missing.
+Better sequence:
 
-Avoid parallel sections that both modify the same schema, permission owner, state machine, central coordinator, migration, or public contract.
+1. Probe actual metadata and terminal signal path.
+2. Add minimal per-turn affinity in the existing owner.
+3. Add safe switch/replay only for confirmed quota exhaustion before output.
+4. Integrate with UI/status if requested.
 
-## 6. Cross-section defects
+Do not start with a generalized scheduler, parser framework, persistent registry, or hostile-input model unless required.
 
-Do not confuse scope control with defect denial.
+### URL state removal
 
-A candidate is `IN_SCOPE_REPLAN` when:
+Better sequence:
 
-- approved behavior or an authoritative invariant is genuinely violated;
-- the trigger is reachable in the supported model;
-- the smallest correct repair crosses the current section boundary.
+1. Remove internal UI state from representative routes.
+2. Preserve explicit allowlisted functional query parameters.
+3. Add route-level regressions and one browser flow.
+4. Integrate across remaining named routes.
 
-The main agent must preserve the finding, revise the section graph in bounded form, invalidate affected evidence, and retry. It must not classify the problem as scope creep merely because the repair touches another section.
-
-By contrast, adding a new guarantee, threat actor, environment, compatibility promise, or generalized product is a `SCOPE_PROPOSAL` until approved.
-
-## 7. Parallel work
-
-Parallelize only when:
-
-- dependencies are accepted;
-- semantic owners/contracts are distinct;
-- worktrees and generated artifacts are isolated;
-- integration order and checkpoint are predetermined;
-- conflicts can be resolved without choosing new semantics.
-
-Parallel work increases throughput but also integration states and review load. Sequential execution is the safe default when boundaries are uncertain.
-
-## 8. Hard-cap recovery planning
-
-Use the five admitted review rounds as empirical evidence. Diagnose before choosing a recovery shape:
-
-- `DEFECT_DENSITY` → split by behavior/root cause/oracle;
-- `ASSURANCE_BOUNDARY_DRIFT` → simplify and replace, deleting unapproved mechanisms;
-- `ARCHITECTURE_BOUNDARY_FAILURE` → rebound owners/contracts;
-- `CONTRACT_AMBIGUITY` → obtain the exact owner decision;
-- `EVIDENCE_FAILURE` → repair the oracle/environment.
-
-Do not automatically split every failure. Recursive splitting of an inflated design preserves the wrong problem. `SIMPLIFY_REPLACE` may yield one smaller replacement leaf rather than multiple descendants.
-
-Retry from the failed parent section's original base and re-derive code. Carrying repeatedly repaired code forward defeats the purpose of changing the boundary.
-
-## 9. Anti-patterns
-
-- One section per directory or technical layer.
-- “Build a reusable framework” before a concrete second/third use.
-- Review-discovered hypotheses copied into requirements without admission.
-- Security controls against actors excluded by the supported deployment model.
-- A final section named “integrate everything.”
-- Feature flags without owners/removal criteria.
-- Data migration, cutover, and old-path deletion in one opaque section.
-- Splitting after implementation but keeping the same coupled code state.
-- Treating more tests as proof when the tests encode an inflated contract.
-- Using line count as the sole section boundary.
+Do not add a whole-tree source detector or permanent URL grammar/CI governance system unless the owner requested that separate feature.

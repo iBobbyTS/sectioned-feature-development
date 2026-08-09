@@ -1,18 +1,16 @@
-# 当前 Section 实施计划
+# Current Section Plan
 
-> 优先使用 `scripts/section_plan.py extract` 从 `PLAN-FULL.md` 生成。本文件只包含稳定 feature context 和一个 active leaf section。
+> Generated from `.agent-work/PLAN-FULL.md`. The full plan remains authoritative. Its hash is informational and does not invalidate evidence by itself.
 
 - Source plan: `.agent-work/PLAN-FULL.md`
-- Source fingerprint: `<sha256>`
-- Section: `<Sxx / Sxx.n>`
+- Source SHA-256: `<generated>`
+- Section: `<ID>`
 - Section base: `<commit>`
-- Contract: `.agent-work/sections/<ID>-CONTRACT.md`
-- Generated at: `<timestamp>`
 
 ## Feature Context
 
-<copy exact FEATURE-CONTEXT block>
+<copied feature context>
 
 ## Current Section
 
-<copy exactly one active section block>
+<copied selected section>

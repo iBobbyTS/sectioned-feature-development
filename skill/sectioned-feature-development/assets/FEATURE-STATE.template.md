@@ -1,96 +1,55 @@
-# Feature State：<Feature Name>
+# Feature State
 
-## Current State
+## Feature
 
-- Mode: `PLAN_ONLY | EXECUTE_NO_COMMIT | EXECUTE_WITH_COMMITS`
-- Working path: `<path>`
-- Active branch/worktree: `<branch/path or N/A>`
-- Feature base: `<commit>`
-- Current head: `<commit or diff fingerprint>`
-- Current state: `<state>`
-- Active section: `<Sxx / Sxx.n or none>`
-- Parent lineage: `<none or Sxx -> Sxx.n>`
-- Replan generation: `<0+>`
-- Valid review rounds: `<0..5>`
-- Review attempts: `<0+>`
-- Clean streak: `<0..2>`
-- Contract revision / plan fingerprint: `<...>`
-- Assurance envelope revision: `<vN>`
-- Next action: `<exact gate>`
-- Last updated: `<timestamp>`
+- Goal:
+- Execution mode: `PLAN_ONLY | EXECUTE_NO_COMMIT | EXECUTE_WITH_COMMITS`
+- Feature base:
+- Current feature head:
+- Workflow adoption note: `new | legacy artifacts preserved prospectively`
 
-## Feature Contract Summary
+## Current section
 
-- Goal: <...>
-- Non-goals: <...>
-- Global invariants: `INV-01`, `INV-02`
-- Assurance exclusions: <...>
-- Plan: `.agent-work/PLAN-FULL.md`
+- ID/title:
+- Section base:
+- Current head:
+- Status: `PLANNED | IMPLEMENTING | INITIAL_REVIEW | REPAIR_DELTA | CLEAN_A | FINAL_REVIEW | ACCEPTED | HARD_CAP_DIAGNOSIS | BLOCKED`
+- Primary owner/direct impact cone:
+- Allowed structural changes:
+- Review intensity: `MECHANICAL | BOUNDED | HIGH_RISK`
 
-## Section Status and Lineage
+## Review state
 
-| ID | Parent | State | Base | Head | Completed rounds | Clean streak | Replan gen | Contract | Handoff |
-|---|---|---|---|---|---:|---:|---:|---|---|
-| S01 | — | PLANNED | — | — | 0 | 0 | 0 | — | — |
+- Initial bounded review: `not-run | complete`
+- Open finding IDs:
+- Repair waves used: `0/5`
+- Clean A closure: `no | yes`
+- Final bounded review: `not-run | clean | findings`
+- Clean B final: `no | yes`
+- Reset reason, if any:
 
-Valid states: `PLANNED`, `CONTRACT_FROZEN`, `IMPLEMENTED`, `UNDER_REVIEW`, `REPAIRING`, `IN_SCOPE_REPLAN`, `SECTION_ACCEPTED`, `REPLACED_AFTER_HARD_CAP`, `SPLIT_AFTER_HARD_CAP`, `BLOCKED`.
+## Validation
 
-## Requirement Coverage
+- Targeted checks:
+- Section/package checks:
+- Integration checks:
+- Evidence gaps/residual risk:
 
-| Requirement | Active section evidence | Integration evidence | Status |
-|---|---|---|---|
-| R-01 | — | — | planned |
+## Recovery
 
-## Review Admission Ledger
+- Generation:
+- Backup ref:
+- Recovery classification:
+- Preserved code/evidence:
 
-| Section/round | Raw review | Admission record | Valid? | Material admitted IDs | Non-authoritative proposals | Result | Clean streak |
-|---|---|---|---|---|---|---|---:|
-| — | — | — | — | — | — | — | 0 |
+## Decisions and next action
 
-## Scope-change Ledger
+- Owner decisions required:
+- Rejected/non-blocking scope proposals:
+- Next action:
 
-| ID | Type | Proposed guarantee/boundary | Source | Status | Owner | Approved revision |
+## Section summary
+
+| Section | Base | Head | Status | Clean A | Clean B | Notes |
 |---|---|---|---|---|---|---|
-| — | — | — | — | — | — | — |
-
-## Complexity Ledger
-
-| Section | Mechanism | Requirement anchor | Simpler alternative | Removal condition | Status |
-|---|---|---|---|---|---|
-| — | — | — | — | — | — |
-
-## Decisions
-
-| ID | Decision | Authority/source | Affected scope | Status |
-|---|---|---|---|---|
-| D-01 | <...> | <...> | Sxx | accepted/open |
-
-## Checks and Evidence
-
-| Time | Scope | Command/evidence | Result | Artifact |
-|---|---|---|---|---|
-| <...> | S01 | `<command>` | pass/fail/blocked | `<path>` |
-
-## Hard-Cap Recoveries
-
-| Parent | Diagnosis | Mode | Generation | Original base | Failed tip | Backup branch | Replacement/descendants | Retry path |
-|---|---|---|---:|---|---|---|---|---|
-| — | — | — | — | — | — | — | — | — |
-
-## Integration Checkpoints
-
-| ID | Included active sections/head | Contracts/paths | Admission result | Evidence |
-|---|---|---|---|---|
-| CP1 | — | — | planned | — |
-
-## Evidence Invalidation Events
-
-| ID | Time | Trigger | Old baseline | New baseline | Evidence invalidated |
-|---|---|---|---|---|---|
-| — | — | — | — | — | none |
-
-## Deferred Work and Residual Risk
-
-| ID | Item/risk | Required before merge? | Owner | Status/acceptance |
-|---|---|---|---|---|
-| — | — | — | — | none |
+| S01 |  |  |  |  |  |  |

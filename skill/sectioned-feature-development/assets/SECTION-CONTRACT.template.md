@@ -1,99 +1,50 @@
-# Section Contract：<Sxx — Title>
+# `<ID>` Section Contract
 
-## Identity and Baseline
+- Title:
+- Section base:
+- Plan source:
+- Primary owner:
 
-- Feature: `<name>`
-- Section: `<Sxx / Sxx.n>`
-- Parent section / lineage: `<none or Sxx -> Sxx.n>`
-- Replan generation: `<0+>`
-- Contract revision: `1`
-- Frozen at: `<timestamp>`
-- Section base: `<commit or fingerprint>`
-- Dependency heads: `<Syy=commit>`
-- Plan fingerprint: `<sha256>`
-- Assurance envelope revision: `<vN>`
-- Implementer profile: `<profile>`
-- Reviewer profile: `sol_xhigh`
-- Acceptance rule: `2 consecutive CLEAN admissions within 5 completed full reviews`
+## Outcome and changed contract
 
-## Goal and Observable Increment
+- Exact observable behavior this section adds or changes.
 
-- Goal: <one coherent outcome or enabling seam>
-- Observable behavior: <...>
+## Direct impact cone
 
-## Scope and Direct Semantic Impact Cone
+- Changed files/symbols/routes/workflows:
+- Direct callers/callees/contracts/tests that may be inspected:
 
-- Expected files/symbols/workflows: <...>
-- Authoritative owners modified: <...>
-- Direct callers/consumers/contracts included: <finite named set>
-- High-risk boundaries: <...>
-- Permitted mechanical/generated changes: <...>
-- Anything else requires `IN_SCOPE_REPLAN` or an approved scope-change record.
+## Existing invariants
 
-## Assurance Envelope
+- Invariants and repository rules this section must preserve.
 
-- Artifact role / supported deployment: <...>
-- Protected assets: <...>
-- Trusted actors/inputs: <...>
-- Untrusted actors/inputs and capabilities: <...>
-- Entry points / trust boundaries: <...>
-- Required guarantees: <...>
-- Explicit exclusions / non-guarantees: <...>
-- Existing authoritative policy anchors: <...>
+## Allowed structural changes
 
-## Minimum-sufficient Design and Complexity Budget
+- `none`, or explicit requirement-anchored mechanisms.
 
-| Mechanism allowed | Requirement/invariant anchor | Simpler alternative considered | Why insufficient | Removal/rollback condition |
-|---|---|---|---|---|
-| `<none or item>` | `<R/INV/path>` | <...> | <...> | <...> |
+## Non-goals and deferred owner
 
-- New service/registry/configuration/framework not listed above: `forbidden pending replan`
-- New threat actor/environment/guarantee: `forbidden pending owner-approved scope change`
+- Unsupported behavior/environments/actors:
+- Named later section/owner:
 
-## Non-goals and Named Deferred Work
+## Review intensity
 
-- Non-goal: <...>
-- Deferred item -> owner section: <... or none>
+- `MECHANICAL | BOUNDED | HIGH_RISK`
 
-## Feature-level Invariants
+## Acceptance criteria
 
-- `INV-01`: <...>
-- `INV-02`: <...>
+- Falsifiable behavior, edge, and error outcomes.
 
-## Section Acceptance Criteria
+## Validation tiers
 
-- `Sxx-AC-01`: <trigger, expected behavior, evidence>
-- `Sxx-AC-02`: <negative/failure behavior>
+- Targeted:
+- Section/package:
+- Integration checkpoint, if triggered:
 
-## Verification
+## Review boundary
 
-```bash
-<command>
-```
+Blocking findings must be `DIFF_CAUSED`, `MERGE_BLOCKING_DEPENDENCY`, or a contract-required `EVIDENCE_GAP`. Review may not add a new product guarantee, threat model, durability/compatibility promise, generalized framework, global analyzer, or CI policy.
 
-- Runtime/manual evidence: <...>
-- Unavailable checks and blocker policy: <...>
+## Reset triggers
 
-## Compatibility, Rollout, and Recovery
-
-- Intermediate state validity: <...>
-- Compatibility/migration: <...>
-- Feature flag/rollout: <...>
-- Rollback/recovery: <...>
-- Observability/audit: <...>
-
-## Review and Scope-change Rules
-
-- Raw reviewer candidates are not requirements.
-- Main-agent admission uses the frozen contract and assurance envelope.
-- A real defect whose smallest correct repair crosses this section is `IN_SCOPE_REPLAN`, not scope creep.
-- A new feature/actor/environment/compatibility/durability guarantee is `SCOPE_PROPOSAL` until an owner approves `SC-*.md` and revisions are frozen.
-- Open owner decisions before implementation: `none`; otherwise block.
-
-## Replan / Hard-Cap Triggers
-
-- Approved behavior/acceptance criteria or authoritative policy changes.
-- Smallest correct repair crosses the direct impact cone.
-- Implementation exceeds the complexity budget.
-- Contract/evidence cannot produce a finite decision.
-- Five completed full reviews without two clean admissions triggers automatic classified recovery.
+- Material changes to API/schema/trust/persistence/state ownership/concurrency/deployment/section goal.

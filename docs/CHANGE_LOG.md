@@ -17,3 +17,7 @@
 ## v2.1 — 20260808-162346
 
 针对 review scope 膨胀增加 finding admission、scope/assurance envelope 与 anti-overdesign 约束；hard-cap recovery 改为先诊断 split/simplify/rebound/evidence，而非机械继续强化 reviewer 创建的安全/治理模型。
+
+## v3 — 20260809-133655
+
+基于四个真实项目的过长 review 数据大幅简化收敛：每个稳定 section 只做一次 INITIAL_BOUNDED，repair 只做 REPAIR_DELTA，最后一次 FINAL_BOUNDED；hard cap 按 admitted repair wave，而不是 reviewer 次数；禁止 clean-lineage/evidence-only 重建。

@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Validate, list, extract, fingerprint, and archive sectioned feature plans.
 
-The parser is deliberately strict around durable markers and section headings so
-that orchestration does not silently run the wrong section after context resets.
+The validator is intentionally strict only about durable markers, minimum
+reviewability fields, unique IDs, and dependency integrity. Optional workflow
+fields produce warnings rather than retroactively invalidating product work.
 """
 
 from __future__ import annotations
@@ -32,43 +33,35 @@ SECTION_MARKER_RE = re.compile(
     rf"<!--\s*SECTION:({SECTION_ID_PATTERN}):(START|END)\s*-->", re.IGNORECASE
 )
 ID_RE = re.compile(rf"\b{SECTION_ID_PATTERN}\b", re.IGNORECASE)
-
-REQUIRED_HEADING_GROUPS: tuple[tuple[str, ...], ...] = (
-    ("目标", "Goal"),
-    ("行为增量", "Observable Behavior Increment", "Behavior Increment"),
-    ("依赖", "Dependencies"),
-    ("预计范围", "Expected Scope", "Scope"),
-    ("最低充分设计与复杂度预算", "Minimum-sufficient Design and Complexity Budget", "Minimum Sufficient Design and Complexity Budget"),
-    ("非目标", "Non-goals", "Non-Goals"),
-    ("全局不变量", "Global Invariants", "Feature-level Invariants"),
-    ("验收标准", "Acceptance Criteria"),
-    ("验证命令", "Validation Commands", "Verification"),
-    ("发布与恢复", "Release and Recovery", "Rollout and Recovery"),
-    ("延后项", "Deferred Work"),
-)
-
-FEATURE_HEADING_GROUPS: tuple[tuple[str, ...], ...] = (
-    ("一句话目标", "One-sentence Goal", "Goal"),
-    (
-        "用户/操作者可观察行为",
-        "User/Operator Observable Behavior",
-        "Observable Behavior",
-    ),
-    ("非目标", "Non-goals", "Non-Goals"),
-    ("全局不变量", "Global Invariants"),
-    ("硬约束与权威来源", "Hard Constraints and Authorities"),
-    ("完整功能验收标准", "Full-feature Acceptance Criteria"),
-    ("完整功能验证命令", "Full-feature Validation Commands"),
-    ("Ownership / State Boundary", "Ownership and State Boundary"),
-    ("Assurance Envelope", "保障边界", "安全保障边界"),
-    (
-        "Compatibility / Migration / Rollout / Rollback",
-        "Compatibility, Migration, Rollout, and Rollback",
-    ),
-)
-
 REQUIRES_LINE_RE = re.compile(
     r"(?mi)^\s*[-*]?\s*(?:Requires|依赖于|前置(?:依赖)?)\s*:\s*(.+?)\s*$"
+)
+
+FEATURE_REQUIRED: tuple[tuple[str, ...], ...] = (
+    ("Goal", "目标", "一句话目标"),
+    ("Observable behavior", "Observable Behavior", "用户/操作者可观察行为"),
+    ("Non-goals and unsupported environments", "Non-goals", "非目标"),
+    ("Feature acceptance criteria", "Full-feature Acceptance Criteria", "完整功能验收标准"),
+)
+FEATURE_RECOMMENDED: tuple[tuple[str, ...], ...] = (
+    ("Constraints and invariants", "Global Invariants", "全局不变量"),
+    ("Ownership and state boundaries", "Ownership / State Boundary"),
+    ("Allowed structural changes",),
+    ("Validation tiers", "Full-feature Validation Commands", "完整功能验证命令"),
+)
+SECTION_REQUIRED: tuple[tuple[str, ...], ...] = (
+    ("Goal", "目标"),
+    ("Dependencies", "依赖"),
+    ("Expected scope and direct impact cone", "Expected Scope", "预计范围"),
+    ("Non-goals and deferred owner", "Non-goals", "非目标"),
+    ("Acceptance criteria", "Acceptance Criteria", "验收标准"),
+    ("Validation tiers", "Validation Commands", "验证命令"),
+)
+SECTION_RECOMMENDED: tuple[tuple[str, ...], ...] = (
+    ("Invariants", "Global Invariants", "全局不变量"),
+    ("Allowed structural changes",),
+    ("Reset triggers",),
+    ("Review intensity",),
 )
 
 
@@ -85,6 +78,7 @@ class ParsedPlan:
     text: str
     feature_context: str
     sections: tuple[Section, ...]
+    warnings: tuple[str, ...]
 
 
 def _read(path: Path) -> str:
@@ -98,8 +92,7 @@ def _read(path: Path) -> str:
 
 def _heading_present(body: str, aliases: Iterable[str]) -> bool:
     for alias in aliases:
-        pattern = rf"(?mi)^###\s+{re.escape(alias)}\s*$"
-        if re.search(pattern, body):
+        if re.search(rf"(?mi)^###\s+{re.escape(alias)}\s*$", body):
             return True
     return False
 
@@ -108,9 +101,7 @@ def _title_for(section_id: str, body: str) -> str:
     match = re.search(
         rf"(?mi)^##\s+{re.escape(section_id)}\s*(?:[—–-]\s*)?(.+?)\s*$", body
     )
-    if not match:
-        return "<missing title>"
-    return match.group(1).strip()
+    return match.group(1).strip() if match else "<missing title>"
 
 
 def _marker_errors(text: str) -> list[str]:
@@ -125,23 +116,17 @@ def _marker_errors(text: str) -> list[str]:
                     f"nested section marker {section_id} inside {stack[-1]} is not allowed"
                 )
             stack.append(section_id)
+        elif not stack:
+            errors.append(f"orphan END marker for {section_id}")
         else:
-            if not stack:
-                errors.append(f"orphan END marker for {section_id}")
-            else:
-                started = stack.pop()
-                if started != section_id:
-                    errors.append(
-                        f"mismatched marker: started {started}, ended {section_id}"
-                    )
-    if stack:
-        errors.extend(f"missing END marker for {section_id}" for section_id in stack)
+            started = stack.pop()
+            if started != section_id:
+                errors.append(f"mismatched marker: started {started}, ended {section_id}")
+    errors.extend(f"missing END marker for {section_id}" for section_id in stack)
     return errors
 
 
 def _find_dependency_cycle(graph: dict[str, set[str]]) -> list[str] | None:
-    """Return one dependency cycle with the start node repeated, if present."""
-
     visiting: set[str] = set()
     visited: set[str] = set()
     stack: list[str] = []
@@ -152,7 +137,6 @@ def _find_dependency_cycle(graph: dict[str, set[str]]) -> list[str] | None:
         if node in visiting:
             start = stack.index(node)
             return stack[start:] + [node]
-
         visiting.add(node)
         stack.append(node)
         for dependency in sorted(graph.get(node, set())):
@@ -174,12 +158,11 @@ def _find_dependency_cycle(graph: dict[str, set[str]]) -> list[str] | None:
 def parse_plan(path: Path) -> ParsedPlan:
     text = _read(path)
     errors = _marker_errors(text)
+    warnings: list[str] = []
 
     feature_matches = list(FEATURE_RE.finditer(text))
     if len(feature_matches) != 1:
-        errors.append(
-            "plan must contain exactly one FEATURE-CONTEXT START/END block"
-        )
+        errors.append("plan must contain exactly one FEATURE-CONTEXT START/END block")
         feature_context = ""
     else:
         feature_context = feature_matches[0].group(1).strip()
@@ -199,60 +182,59 @@ def parse_plan(path: Path) -> ParsedPlan:
         title = _title_for(section_id, body)
         if title == "<missing title>":
             errors.append(f"{section_id} is missing a '## {section_id} — title' heading")
-        for aliases in REQUIRED_HEADING_GROUPS:
+        for aliases in SECTION_REQUIRED:
             if not _heading_present(body, aliases):
-                errors.append(
-                    f"{section_id} is missing required heading: {aliases[0]}"
-                )
+                errors.append(f"{section_id} is missing required heading: {aliases[0]}")
+        for aliases in SECTION_RECOMMENDED:
+            if not _heading_present(body, aliases):
+                warnings.append(f"{section_id} is missing recommended heading: {aliases[0]}")
         sections.append(Section(section_id=section_id, title=title, body=body))
 
     if not sections:
         errors.append("plan contains no complete SECTION blocks")
 
     if feature_context:
-        for aliases in FEATURE_HEADING_GROUPS:
+        for aliases in FEATURE_REQUIRED:
             if not _heading_present(feature_context, aliases):
                 errors.append(
                     f"FEATURE-CONTEXT is missing required heading: {aliases[0]}"
                 )
+        for aliases in FEATURE_RECOMMENDED:
+            if not _heading_present(feature_context, aliases):
+                warnings.append(
+                    f"FEATURE-CONTEXT is missing recommended heading: {aliases[0]}"
+                )
 
     known = {section.section_id for section in sections}
-    dependency_graph: dict[str, set[str]] = {section_id: set() for section_id in known}
+    graph: dict[str, set[str]] = {section_id: set() for section_id in known}
     for section in sections:
         dependency_block = re.search(
-            r"(?mis)^###\s+(?:依赖|Dependencies)\s*$\s*(.*?)"
+            r"(?mis)^###\s+(?:Dependencies|依赖)\s*$\s*(.*?)"
             r"(?=^###\s+|\Z)",
             section.body,
         )
         if not dependency_block:
             continue
-
         block_text = dependency_block.group(1)
-        requires_lines = REQUIRES_LINE_RE.findall(block_text)
-        if requires_lines:
-            refs = {
-                item.upper()
-                for line in requires_lines
-                for item in ID_RE.findall(line)
-            }
-        else:
-            # Backward-compatible fallback for plans that list dependency IDs
-            # directly under the heading without a `Requires:` label.
-            refs = {item.upper() for item in ID_RE.findall(block_text)}
+        lines = REQUIRES_LINE_RE.findall(block_text)
+        refs = {
+            item.upper()
+            for line in lines
+            for item in ID_RE.findall(line)
+        } if lines else {item.upper() for item in ID_RE.findall(block_text)}
 
         if section.section_id in refs:
             errors.append(f"{section.section_id} cannot depend on itself")
             refs.discard(section.section_id)
-
         unknown = sorted(refs - known)
         if unknown:
             errors.append(
                 f"{section.section_id} references unknown dependency IDs: "
                 + ", ".join(unknown)
             )
-        dependency_graph[section.section_id] = refs & known
+        graph[section.section_id] = refs & known
 
-    cycle = _find_dependency_cycle(dependency_graph)
+    cycle = _find_dependency_cycle(graph)
     if cycle:
         errors.append("dependency cycle: " + " -> ".join(cycle))
 
@@ -275,6 +257,7 @@ def parse_plan(path: Path) -> ParsedPlan:
         text=text,
         feature_context=feature_context,
         sections=tuple(sections),
+        warnings=tuple(warnings),
     )
 
 
@@ -288,6 +271,8 @@ def command_validate(args: argparse.Namespace) -> int:
         f"valid: {plan.path} ({len(plan.sections)} sections, "
         f"sha256={sha256_text(plan.text)})"
     )
+    for warning in plan.warnings:
+        print(f"warning: {warning}", file=sys.stderr)
     return 0
 
 
@@ -315,102 +300,85 @@ def command_extract(args: argparse.Namespace) -> int:
 
     timestamp = datetime.now(timezone.utc).astimezone().isoformat(timespec="seconds")
     content = (
-        "# 当前 Section 实施计划\n\n"
-        "> 本文件由 `section_plan.py extract` 生成；权威来源仍为完整计划。\n\n"
+        "# Current Section Plan\n\n"
+        "> Generated from the full plan. The source hash is informational and does not invalidate evidence by itself.\n\n"
         f"- Source plan: `{plan.path}`\n"
         f"- Source SHA-256: `{sha256_text(plan.text)}`\n"
         f"- Section: `{selected.section_id}`\n"
-        f"- Generated at: `{timestamp}`\n\n"
+        f"- Extracted at: `{timestamp}`\n\n"
         "## Feature Context\n\n"
         f"{plan.feature_context}\n\n"
         "## Current Section\n\n"
         f"{selected.body}\n"
     )
     output.write_text(content, encoding="utf-8")
-    print(f"extracted {selected.section_id} -> {output}")
+    print(f"wrote: {output}")
     return 0
 
 
 def command_fingerprint(args: argparse.Namespace) -> int:
-    path = Path(args.plan)
-    text = _read(path)
-    print(sha256_text(text))
+    plan = parse_plan(Path(args.plan))
+    print(sha256_text(plan.text))
     return 0
 
 
 def command_archive(args: argparse.Namespace) -> int:
     source = Path(args.plan)
     parse_plan(source)
-    dest_dir = Path(args.dest_dir)
-    dest_dir.mkdir(parents=True, exist_ok=True)
-    timestamp = args.timestamp or datetime.now().strftime("%Y%m%d-%H%M")
-    destination = dest_dir / f"{timestamp}_FULL.md"
+    destination_dir = Path(args.dest_dir)
+    destination_dir.mkdir(parents=True, exist_ok=True)
+    timestamp = args.timestamp or datetime.now().astimezone().strftime("%Y%m%d-%H%M")
+    destination = destination_dir / f"{timestamp}_FULL.md"
     if destination.exists():
-        raise ValueError(f"archive exists: {destination}")
+        raise ValueError(f"archive destination exists: {destination}")
     if args.move:
         shutil.move(str(source), str(destination))
-        action = "moved"
     else:
         shutil.copy2(source, destination)
-        action = "copied"
-    print(f"{action} {source} -> {destination}")
+    print(f"archived: {destination}")
     return 0
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(
-        description="Manage sectioned feature PLAN-FULL.md artifacts."
-    )
+    parser = argparse.ArgumentParser(description=__doc__)
     subparsers = parser.add_subparsers(dest="command", required=True)
 
-    validate_parser = subparsers.add_parser("validate", help="validate a full plan")
-    validate_parser.add_argument("plan")
-    validate_parser.set_defaults(func=command_validate)
+    validate = subparsers.add_parser("validate", help="validate plan structure")
+    validate.add_argument("plan")
+    validate.set_defaults(func=command_validate)
 
-    list_parser = subparsers.add_parser("list", help="list section IDs and titles")
-    list_parser.add_argument("plan")
-    list_parser.set_defaults(func=command_list)
+    listing = subparsers.add_parser("list", help="list section IDs and titles")
+    listing.add_argument("plan")
+    listing.set_defaults(func=command_list)
 
-    extract_parser = subparsers.add_parser(
-        "extract", help="extract feature context and one section"
-    )
-    extract_parser.add_argument("plan")
-    extract_parser.add_argument("section")
-    extract_parser.add_argument("--output", required=True)
-    extract_parser.add_argument(
-        "--force", action="store_true", help="replace an existing output file"
-    )
-    extract_parser.set_defaults(func=command_extract)
+    extract = subparsers.add_parser("extract", help="extract one section")
+    extract.add_argument("plan")
+    extract.add_argument("section")
+    extract.add_argument("--output", required=True)
+    extract.add_argument("--force", action="store_true")
+    extract.set_defaults(func=command_extract)
 
-    fingerprint_parser = subparsers.add_parser(
-        "fingerprint", help="print the plan SHA-256"
-    )
-    fingerprint_parser.add_argument("plan")
-    fingerprint_parser.set_defaults(func=command_fingerprint)
+    fingerprint = subparsers.add_parser("fingerprint", help="print informational SHA-256")
+    fingerprint.add_argument("plan")
+    fingerprint.set_defaults(func=command_fingerprint)
 
-    archive_parser = subparsers.add_parser(
-        "archive", help="copy or move a validated plan to a timestamped archive"
-    )
-    archive_parser.add_argument("plan")
-    archive_parser.add_argument("--dest-dir", required=True)
-    archive_parser.add_argument(
-        "--timestamp", help="override YYYYMMDD-HHMM archive timestamp"
-    )
-    archive_parser.add_argument(
-        "--move", action="store_true", help="move instead of the safe default copy"
-    )
-    archive_parser.set_defaults(func=command_archive)
+    archive = subparsers.add_parser("archive", help="copy or move full plan to archive")
+    archive.add_argument("plan")
+    archive.add_argument("--dest-dir", required=True)
+    archive.add_argument("--timestamp")
+    archive.add_argument("--move", action="store_true")
+    archive.set_defaults(func=command_archive)
 
     return parser
 
 
-def main(argv: list[str] | None = None) -> int:
+def main() -> int:
     parser = build_parser()
-    args = parser.parse_args(argv)
+    args = parser.parse_args()
     try:
         return int(args.func(args))
     except ValueError as exc:
-        print(f"error:\n{exc}", file=sys.stderr)
+        print(str(exc), file=sys.stderr)
         return 2
 
 

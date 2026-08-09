@@ -1,4 +1,4 @@
 interface:
   display_name: "Sectioned Feature Development"
-  short_description: "将大型高风险改动拆成可审查 section，并阻止 review 扩张既定范围"
-  default_prompt: "Use $sectioned-feature-development to plan and execute this large change as bounded sections without letting review expand the approved scope."
+  short_description: "Ship large changes without review scope creep"
+  default_prompt: "Use $sectioned-feature-development to implement this change as minimal reviewable sections with patchset-style review and bounded recovery."

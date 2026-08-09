@@ -1,0 +1,103 @@
+# Integration and Proportional Testing
+
+## Contents
+
+1. [Validation tiers](#validation-tiers)
+2. [Checkpoint triggers](#checkpoint-triggers)
+3. [Integration review boundary](#integration-review-boundary)
+4. [Evidence failures](#evidence-failures)
+5. [Merge readiness](#merge-readiness)
+
+## Validation tiers
+
+### Tier 1 — targeted
+
+Run after implementation and each repair:
+
+- exact regression tests for changed behavior;
+- direct owner/module tests;
+- narrow lint/type/static checks for touched code;
+- smallest deterministic reproduction.
+
+### Tier 2 — section/package
+
+Run before `FINAL_BOUNDED`:
+
+- section/package/service test suite;
+- relevant lint/typecheck/build;
+- representative integration path for the section;
+- migration/schema checks when touched.
+
+### Tier 3 — feature/repository
+
+Run at final integration or when repository rules require:
+
+- full repository suite;
+- application build/bundle;
+- browser/E2E flow;
+- deployment/migration dry run;
+- cross-service integration.
+
+Do not run Tier 3 after every local repair. A test-only local oracle change stays at Tier 1/2 unless it modifies shared/global test infrastructure.
+
+## Checkpoint triggers
+
+Run a checkpoint when a later section begins consuming a new:
+
+- public/serialized contract;
+- schema or migration stage;
+- permission/trust boundary;
+- state owner or concurrency protocol;
+- queue/background workflow;
+- deployment/flag/rollout path;
+- compatibility stage.
+
+A checkpoint verifies producer-consumer composition and representative behavior. It does not re-review every accepted local diff.
+
+## Integration review boundary
+
+The final integration review asks what local section reviews could not prove:
+
+- Does the original feature outcome work end to end?
+- Do section contracts compose correctly?
+- Are ordering, state, errors, permissions, migration, and cleanup correct across boundaries?
+- Are feature non-goals and branch scope preserved?
+- Do rollout/rollback/observability requirements actually requested by the feature hold?
+
+It does not:
+
+- repeat local style/maintainability review;
+- audit unrelated modules;
+- create a repository-wide governance initiative;
+- strengthen security/durability/compatibility beyond the approved feature;
+- reopen accepted sections without combined-behavior evidence.
+
+## Evidence failures
+
+Classify an unavailable service, credential, platform, flaky environment, wrong selector, or broken test harness as evidence failure.
+
+Respond proportionally:
+
+- correct the selector or local oracle;
+- use a deterministic fake/probe when contract-appropriate;
+- report the unverified path and residual risk;
+- defer environment-specific validation to final integration when necessary.
+
+Do not create a generic sandbox, network/process interceptor, or large test framework unless the feature contract already requires proving that property.
+
+## Merge readiness
+
+State one:
+
+- `mergeable`: required behavior and integration evidence pass; no unresolved blocker.
+- `not-mergeable`: material blocker remains.
+- `insufficient-evidence`: behavior may be correct but required validation could not be obtained.
+
+Include:
+
+- feature base/head;
+- accepted sections;
+- cross-section findings and repairs;
+- Tier 3 checks run/not run;
+- owner decisions;
+- residual risk and deferred non-blocking work.

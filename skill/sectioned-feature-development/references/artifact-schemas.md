@@ -1,193 +1,146 @@
-# Artifact Schemas and Lifecycle
-
-This reference defines the durable Markdown artifacts and deterministic helper commands.
+# Artifact Schemas
 
 ## Contents
 
-1. [`PLAN-FULL.md`](#1-plan-fullmd)
-2. [`PLAN.md`](#2-planmd)
-3. [`FEATURE-STATE.md`](#3-feature-statemd)
-4. [Section contract and handoff](#4-section-contract-and-handoff)
-5. [Raw review and admission](#5-raw-review-and-admission)
-6. [Scope-change records](#6-scope-change-records)
-7. [Hard-cap records](#7-hard-cap-records)
-8. [Archive lifecycle](#8-archive-lifecycle)
-9. [Helper commands](#9-helper-commands)
+1. [Design goals](#design-goals)
+2. [PLAN-FULL.md](#plan-fullmd)
+3. [PLAN.md](#planmd)
+4. [FEATURE-STATE.md](#feature-statemd)
+5. [Section contract](#section-contract)
+6. [Section handoff](#section-handoff)
+7. [Review ledger](#review-ledger)
+8. [Hard-cap diagnosis](#hard-cap-diagnosis)
+9. [Archival rules](#archival-rules)
 
-## 1. `PLAN-FULL.md`
+## Design goals
 
-Authoritative source for feature promises, assurance envelope, requirement coverage, section graph, checkpoints, rollout/recovery, decisions, and approved scope changes.
+Artifacts exist to survive context compaction and coordinate agents. They must not become a second product or proof system.
 
-Required markers:
+Use these principles:
 
-```markdown
-<!-- FEATURE-CONTEXT:START -->
-...stable context...
-<!-- FEATURE-CONTEXT:END -->
+- one authoritative file per concern;
+- append/update instead of generating duplicate per-round state;
+- product behavior, not workflow formatting, determines validity;
+- hashes/fingerprints aid orientation only;
+- transient reviewer candidates are disposable;
+- commit evidence at coherent boundaries, not after every edit.
 
-<!-- SECTION:S01:START -->
-## S01 — Title
-...
-<!-- SECTION:S01:END -->
-```
+## PLAN-FULL.md
 
-Hierarchical IDs such as `S03.1.1` are valid. Retired parents may remain in status/history tables, but active executable blocks and dependency edges must not be contradictory.
+Required feature fields:
 
-Each active section needs the exact headings accepted by `section_plan.py`, including `最低充分设计与复杂度预算`.
+- goal and observable behavior;
+- authoritative constraints/invariants;
+- non-goals/unsupported environments;
+- ownership/state boundaries;
+- feature acceptance;
+- tiered validation;
+- explicitly allowed structural changes.
 
-Fingerprint the complete plan whenever freezing a contract or approving a scope change.
+Required section fields:
 
-## 2. `PLAN.md`
+- goal;
+- dependencies;
+- expected scope/direct impact cone;
+- non-goals/deferred owner;
+- invariants;
+- allowed structural changes;
+- acceptance criteria;
+- targeted/section/integration validation;
+- reset triggers.
 
-Transient packet generated from one validated plan and one active leaf. It contains:
+Use durable `FEATURE-CONTEXT` and `SECTION:{ID}` markers so extraction is deterministic.
 
-- source path and SHA-256;
-- extraction time;
-- stable feature context;
-- exactly one section block.
+## PLAN.md
 
-Do not append decisions or review notes. Put durable state in the designated artifacts.
+Generated from `PLAN-FULL.md` for one current section. Include:
 
-## 3. `FEATURE-STATE.md`
+- source plan path and informational hash;
+- full feature context;
+- selected section only;
+- explicit warning that PLAN-FULL remains authoritative.
 
-Externalized orchestration state. Update before every handoff and after every mutation/review/admission.
+A changed source hash does not invalidate completed work by itself.
 
-Must record:
+## FEATURE-STATE.md
 
-- execution mode, working path, branch/worktree;
-- feature/section base and head;
-- plan/contract/assurance revisions;
-- active lineage and replan generation;
-- review attempt, valid round, clean streak;
-- raw/admission paths and classifications;
-- scope-change and complexity ledgers;
-- checks, decisions, checkpoints, hard-cap events;
-- exact next action and residual risk.
+Keep compact:
 
-If artifact and session disagree, repository reality plus authoritative artifacts win after explicit reconciliation.
+- feature base/head and execution mode;
+- current section/base/head/status;
+- Clean A/Clean B status;
+- open finding IDs and repair-wave count;
+- current checks and evidence gaps;
+- recovery generation/backup if any;
+- next action and owner decisions;
+- accepted/deferred sections summary.
 
-## 4. Section contract and handoff
+Do not reproduce every reviewer narrative.
 
-### `{ID}-CONTRACT.md`
+## Section contract
 
-Immutable for one attempt. Contains exact scope, direct impact cone, assurance envelope, complexity budget, acceptance criteria, evidence, deferred owners, and replan rules.
+Freeze:
 
-Changing a frozen promise requires a new revision/fingerprint and invalidation record. Hard-cap replacement creates new contracts; do not rewrite history to make failed reviews appear consistent.
+- section ID/title/base;
+- outcome and changed contract;
+- primary owner and direct impact cone;
+- explicit non-goals/deferred owner;
+- allowed structural changes;
+- acceptance criteria;
+- validation tiers;
+- reset triggers.
 
-### `{ID}-HANDOFF.md`
+Ordinary repair does not modify the contract. A material contract change is a reset or owner decision.
 
-Evidence claim from implementer/repairer. Contains actual files/behavior, impact cone, checks, decisions, limitations, repair IDs, complexity receipt, and scope proposals. Reviewers verify it independently.
+## Section handoff
 
-## 5. Raw review and admission
+Record:
 
-Naming:
+- base/head;
+- changed files/symbols;
+- behavior implemented;
+- tests/checks with results;
+- decisions and limitations;
+- structural changes used and their anchors;
+- known non-blocking deferred work.
 
-```text
-{ID}-SECTION-r01-RAW.md
-{ID}-SECTION-r01-ADMISSION.md
-{ID}-SECTION-r01-retry01-RAW.md          # evidence-failure retry if needed
-{ID}-SECTION-r01-retry01-ADMISSION.md
-FEATURE-INTEGRATION-r01-RAW.md
-FEATURE-INTEGRATION-r01-ADMISSION.md
-```
+Keep it concise enough for a reviewer to orient without reconstructing the whole session.
 
-Raw review contains candidates and evidence. Admission contains authoritative class decisions. Never edit raw review to match admission.
+## Review ledger
 
-Admission required top-level fields:
+One `{ID}-REVIEW.md` contains:
 
-- mode/section/counting round/attempt;
-- raw path and frozen revisions;
-- reviewed base/head;
-- valid-full-review flag;
-- result/clean flag/streak.
+1. scope/base/head/contract;
+2. initial coverage summary;
+3. admitted findings table;
+4. repair waves and delta closure;
+5. Clean A status;
+6. final bounded result;
+7. Clean B/acceptance status;
+8. residual risk and non-blocking proposals.
 
-Each finding block uses exact markers:
+Use stable IDs. Do not create separate durable admission files. The main agent's classification in this ledger is authoritative.
 
-```markdown
-<!-- FINDING:REV-001:START -->
-### REV-001 — Title
-...required fields...
-<!-- FINDING:REV-001:END -->
-```
+`{ID}-CANDIDATES.md` is transient reviewer output. Overwrite or delete it after the ledger is updated.
 
-`review_gate.py` validates class/boundary consistency and material evidence fields. `history` validates contiguous completed rounds, streak, acceptance, and hard cap.
+## Hard-cap diagnosis
 
-## 6. Scope-change records
+Record:
 
-Path:
+- base/head and backup ref;
+- five repair waves;
+- open/root recurring causes;
+- rejected scope proposals separately;
+- current architecture/structural mechanisms;
+- `@sol_max` classification and rationale;
+- minimal plan changes;
+- preserved code/evidence;
+- restart base only when `RESTART_FROM_BASE`.
 
-```text
-.agent-work/scope-changes/SC-001.md
-```
+## Archival rules
 
-Required lifecycle:
-
-1. `PROPOSED`: records current boundary, proposed promise, evidence, cost, and alternatives.
-2. Owner decides `APPROVED` or `REJECTED`.
-3. If approved, update exact plan text, fingerprints/contracts, coverage, evidence, and invalidation state.
-4. If rejected, keep record non-authoritative and do not feed it to repair/recovery as a requirement.
-
-A raw reviewer comment cannot be marked approved by the main agent unless existing governance already grants that authority.
-
-## 7. Hard-cap records
-
-Path:
-
-```text
-.agent-work/replans/{ID}-g{generation}-HARD-CAP.md
-```
-
-Must distinguish:
-
-- five raw reviews;
-- five admission decisions;
-- material admitted root causes;
-- rejected/non-authoritative proposals;
-- code/check history;
-- diagnosis and recovery mode;
-- backup branch/failed tip/original base;
-- replacement/descendant plan and retry path.
-
-Do not say “five reviews found five defects” unless five defects were admitted.
-
-## 8. Archive lifecycle
-
-After final reporting:
-
-1. reconcile final feature head/state/verdict;
-2. ensure all active leaves and approved scope changes are represented;
-3. remove transient `PLAN.md` only after durable records exist;
-4. move `PLAN-FULL.md` to `.agent-work/plans/{YYYYMMDD-HHMM}_FULL.md`;
-5. preserve contracts, handoffs, raw/admission pairs, scope changes, hard-cap records, and named backup refs according to repository policy;
-6. exclude `.DS_Store`, `__MACOSX`, `__pycache__`, `.pyc`, temporary outputs, and unrelated artifacts from a distributed skill/package.
-
-## 9. Helper commands
-
-```bash
-# Validate plan markers, headings, hierarchical IDs, dependencies, and DAG
-python scripts/section_plan.py validate .agent-work/PLAN-FULL.md
-
-# List active section blocks
-python scripts/section_plan.py list .agent-work/PLAN-FULL.md
-
-# Extract one leaf
-python scripts/section_plan.py extract \
-  .agent-work/PLAN-FULL.md S03.1 --output .agent-work/PLAN.md
-
-# Fingerprint
-python scripts/section_plan.py fingerprint .agent-work/PLAN-FULL.md
-
-# Safe archive copy; add --move only after finalization
-python scripts/section_plan.py archive \
-  .agent-work/PLAN-FULL.md --dest-dir .agent-work/plans
-
-# Validate one admission
-python scripts/review_gate.py validate \
-  .agent-work/reviews/S03.1-SECTION-r01-ADMISSION.md
-
-# Validate one section history and compute status
-python scripts/review_gate.py history \
-  '.agent-work/reviews/S03.1-SECTION-r*-ADMISSION.md'
-```
-
-Scripts refuse malformed markers, missing required headings, duplicate/self/unknown dependencies, dependency cycles, inconsistent admission class/boundary combinations, invalid clean results, duplicate/noncontiguous completed rounds, and more than five completed rounds.
+- Archive PLAN-FULL at final feature completion.
+- Preserve accepted section contracts, handoffs, compact review ledgers, and hard-cap diagnoses.
+- Delete/overwrite transient candidates and extracted PLAN.md when safe.
+- Avoid per-round process commits. Commit/archive artifacts at section acceptance, hard-cap recovery, or final feature boundaries.
+- A newer artifact schema applies prospectively and does not require migration of completed work.
