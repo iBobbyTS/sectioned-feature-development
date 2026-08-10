@@ -1,6 +1,6 @@
 ---
 name: sectioned-feature-development
-description: "Plan, implement, review, and integrate large or high-risk software changes as minimal bounded sections without review-created scope creep. Use when expected behavioral edits may exceed roughly 300 lines; more than three modules, packages, services, pages, or workflows are affected; persistence, schema, security, permissions, concurrency, public API, deployment, routing, or state ownership changes; the impact cone is hard to bound; or a previous whole-change review failed to converge. The workflow freezes product scope, uses one initial bounded review, delta-only repair verification, one final bounded review, proportional testing, and evidence-preserving hard-cap recovery instead of repeated full scans or automatic clean-room rebuilds."
+description: "Plan, implement, review, and integrate large or high-risk software changes as minimal bounded sections without plan-created or review-created scope creep. Use when expected behavioral edits may exceed roughly 300 lines; more than three modules, packages, services, pages, or workflows are affected; persistence, schema, security, permissions, concurrency, public API, deployment, routing, or state ownership changes; the impact cone is hard to bound; or a previous whole-change review failed to converge. The workflow anchors every section to the original request or an unavoidable correctness/repository obligation, then uses one initial bounded review, delta-only repair verification, one final bounded review, proportional testing, and evidence-preserving hard-cap recovery."
 ---
 
 # Sectioned Feature Development
@@ -39,17 +39,18 @@ The thresholds only route work into this skill. Semantic ownership and reviewabi
 ## Non-negotiable anti-expansion rules
 
 1. **Current-diff causality:** a blocking finding must be caused by the current section diff, or be a pre-existing defect that the diff necessarily depends on, activates, serializes, or exposes on an acceptance path. Merely passing through the same entry point or discovering an old defect nearby is insufficient.
-2. **Monotonic scope:** after the feature/section contract is frozen, implementation and review may simplify or narrow it but may not enlarge it without an explicit owner decision. Repetition by multiple reviewers does not create authority.
-3. **No review-authored requirements:** reviewers cannot enlarge the feature contract, supported environment, threat model, compatibility promise, durability promise, or rollout obligation.
-4. **No automatic mechanism growth:** a new registry, service, persistence layer, background worker, parser framework, global analyzer, CI governance rule, security control, or public configuration surface requires an explicit plan/repository anchor. Reviewer preference is not an anchor.
-5. **No repeated full rediscovery:** each section gets one `INITIAL_BOUNDED` review. Repairs use `REPAIR_DELTA`. Acceptance uses one `FINAL_BOUNDED` review.
-6. **No process-only rework:** workflow schema, artifact format, fingerprint, review template, or skill-version changes do not invalidate accepted code, tests, or review evidence.
-7. **No evidence-only descendants:** do not create a new section solely to rebuild review lineage, move a test earlier in Git history, satisfy a new artifact format, or prove that accepted ancestors were “clean.”
-8. **No automatic clean-room retry:** preserve correct current work. Restart from an older base only after a concrete diagnosis proves the implementation direction itself is wrong and cannot be simplified in place.
-9. **Proportional validation:** targeted checks after repairs, section/package checks before final review, and broad repository/application checks at integration. Do not rerun the broadest suite after every local edit.
-10. **Review is not audit:** unchanged code may be inspected only to establish causality, reachability, contract reality, or direct regression risk. Unrelated repository defects are out of scope.
-11. **Inaction is valid:** a clean review may return no finding. Never manufacture work to justify a reviewer invocation.
-12. **Finite cumulative budgets:** section and integration repair waves count across initial, delta, final, and recovery phases. Entering a new review phase or choosing `CONTINUE_CURRENT` never resets a counter.
+2. **No contract bootstrapping:** a plan or section contract records authority; it does not create authority. Every new outcome, option, UI/config surface, compatibility promise, proof harness, or structural mechanism must trace to the original user request, a repository-required obligation/current production contract, or a demonstrably unavoidable correctness dependency. “The plan says so” is never sufficient.
+3. **Monotonic scope:** after the feature/section contract is frozen, implementation and review may simplify or narrow it but may not enlarge it without an explicit owner decision. Repetition by multiple reviewers does not create authority.
+4. **No review-authored requirements:** reviewers cannot enlarge the feature contract, supported environment, threat model, compatibility promise, durability promise, or rollout obligation.
+5. **No automatic mechanism growth:** a new registry, service, persistence layer, background worker, parser framework, global analyzer, CI governance rule, security control, public configuration surface, or standalone proof harness requires an external authority anchor. Reviewer preference or another plan section is not an anchor.
+6. **No repeated full rediscovery:** each section gets one `INITIAL_BOUNDED` review. Repairs use `REPAIR_DELTA`. Acceptance uses one `FINAL_BOUNDED` review.
+7. **No process-only rework:** workflow schema, artifact format, fingerprint, review template, or skill-version changes do not invalidate accepted code, tests, or review evidence.
+8. **No evidence-only descendants:** do not create a new section solely to rebuild review lineage, move a test earlier in Git history, satisfy a new artifact format, or prove that accepted ancestors were “clean.”
+9. **No automatic clean-room retry:** preserve correct current work. Restart from an older base only after a concrete diagnosis proves the implementation direction itself is wrong and cannot be simplified in place.
+10. **Proportional validation:** targeted checks after repairs, section/package checks before final review, and broad repository/application checks at integration. Do not rerun the broadest suite after every local edit.
+11. **Review is not audit:** unchanged code may be inspected only to establish causality, reachability, contract reality, or direct regression risk. Unrelated repository defects are out of scope.
+12. **Inaction is valid:** a clean review may return no finding. Never manufacture work to justify a reviewer invocation.
+13. **Finite cumulative budgets:** section and integration repair waves count across initial, delta, final, and recovery phases. Entering a new review phase or choosing `CONTINUE_CURRENT` never resets a counter.
 
 ## Durable artifacts
 
@@ -135,7 +136,13 @@ Advance only when the corresponding code-visible evidence exists. Agent declarat
 
 1. Inspect repository rules, architecture sources, current branch, `git status`, relevant recent commits, build/test entry points, and available environment.
 2. Freeze the exact `feature_base`.
-3. Create `PLAN-FULL.md` from the bundled template and record only:
+3. Record the original user request verbatim and define the smallest end-to-end observable outcome that satisfies it. Do not silently turn examples, implementation ideas, reviewer suggestions, or “future-proofing” into requirements.
+4. Before sectioning, build a compact authority map. Every proposed outcome, acceptance criterion, option/UI/config surface, support harness, compatibility promise, and structural change must cite one of:
+   - the original user request or a later explicit owner decision;
+   - a repository-required gate/rule or current production contract;
+   - an unavoidable correctness dependency, with a causal explanation of why the smaller existing path cannot satisfy the requested outcome.
+   Remove items whose only authority is the draft plan, another section, a reviewer, or a desire for stronger proof.
+5. Create `PLAN-FULL.md` from the bundled template and record only:
    - requested outcome and observable behavior;
    - existing repository invariants and authoritative constraints;
    - explicit non-goals and unsupported environments;
@@ -143,10 +150,11 @@ Advance only when the corresponding code-visible evidence exists. Agent declarat
    - compatibility, migration, rollout, rollback, and cleanup actually required;
    - feature acceptance criteria and tiered validation;
    - structural changes explicitly allowed by the requirement.
-4. Do not add a universal threat model or generalized durability model. Record risk boundaries only when the feature or repository already makes them relevant.
-5. If integration or an external seam is uncertain, schedule a minimal probe/walking skeleton before designing a complete registry, state machine, framework, or persistence system.
-6. When the feature is remediation of an audit, freeze the accepted audit finding IDs before implementation. Section review verifies those repairs and the repair diff; it does not continue the repository audit. New unrelated pre-existing concerns go to a separate audit backlog.
-7. In `EXECUTE_WITH_COMMITS`, create an isolated feature branch/worktree before product-code implementation.
+6. Apply a minimum-feature-closure check: if the user-visible result works without an optional setting/status surface, compatibility layer, standalone evidence publisher, generalized hardening, or repository-wide governance mechanism, omit it unless an authority anchor explicitly requires it.
+7. Do not add a universal threat model or generalized durability model. Record risk boundaries only when the feature or repository already makes them relevant.
+8. If integration or an external seam is uncertain, schedule a minimal probe/walking skeleton before designing a complete registry, state machine, framework, or persistence system.
+9. When the feature is remediation of an audit, freeze the accepted audit finding IDs before implementation. Section review verifies those repairs and the repair diff; it does not continue the repository audit. New unrelated pre-existing concerns go to a separate audit backlog.
+10. In `EXECUTE_WITH_COMMITS`, create an isolated feature branch/worktree before product-code implementation.
 
 ### Mid-feature adoption
 
@@ -173,6 +181,7 @@ Create the initial section graph before implementation. Prefer:
 Every section must define:
 
 - one coherent goal and observable increment;
+- an external authority anchor and a short necessity statement explaining why this section is required for the minimum end-to-end outcome and why a simpler existing owner/path is insufficient;
 - exact dependency/predecessor relationship;
 - a frozen scope manifest: allowed-to-edit owners/files/symbols/routes, inspect-only dependency paths, and explicitly excluded owners/mechanisms;
 - a direct impact cone starting from changed symbols and acceptance paths;
@@ -183,7 +192,7 @@ Every section must define:
 - targeted, section, and integration validation tiers;
 - reset triggers that would make the section materially different.
 
-A section is invalid when it is merely a directory/layer bucket, a generic governance initiative not requested by the feature, a test/evidence rehabilitation task whose tooling is not itself the user-requested outcome, or a vague “finish/integrate everything” bucket.
+A section is invalid when it is justified only by another plan/contract, is merely a directory/layer bucket, is a generic governance initiative not requested by the feature, is a test/evidence rehabilitation task whose tooling is not itself the user-requested outcome, or is a vague “finish/integrate everything” bucket.
 
 Use the helper when practical:
 

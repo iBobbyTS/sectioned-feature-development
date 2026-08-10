@@ -44,6 +44,9 @@ FEATURE_REQUIRED: tuple[tuple[str, ...], ...] = (
     ("Feature acceptance criteria", "Full-feature Acceptance Criteria", "完整功能验收标准"),
 )
 FEATURE_RECOMMENDED: tuple[tuple[str, ...], ...] = (
+    ("Original user request",),
+    ("Minimum sufficient end-to-end outcome",),
+    ("Scope authority map",),
     ("Constraints and invariants", "Global Invariants", "全局不变量"),
     ("Ownership and state boundaries", "Ownership / State Boundary"),
     ("Allowed structural changes",),
@@ -58,6 +61,7 @@ SECTION_REQUIRED: tuple[tuple[str, ...], ...] = (
     ("Validation tiers", "Validation Commands", "验证命令"),
 )
 SECTION_RECOMMENDED: tuple[tuple[str, ...], ...] = (
+    ("Authority and necessity",),
     ("Invariants", "Global Invariants", "全局不变量"),
     ("Allowed structural changes",),
     ("Reset triggers",),

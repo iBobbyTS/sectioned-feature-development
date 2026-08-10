@@ -10,6 +10,13 @@
 
 - Exact observable behavior this section adds or changes.
 
+## Authority and necessity
+
+- External authority anchor: user decision, repository/current-production obligation, or unavoidable correctness dependency.
+- Why this section is required for the minimum end-to-end feature outcome:
+- Why an existing owner/path or smaller local change cannot satisfy it:
+- A plan, another section, or reviewer suggestion alone is not an authority anchor.
+
 ## Direct impact cone
 
 ### Allowed-to-edit manifest

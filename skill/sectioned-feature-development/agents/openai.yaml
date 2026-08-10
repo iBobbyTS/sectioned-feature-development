@@ -1,4 +1,4 @@
 interface:
   display_name: "Sectioned Feature Development"
-  short_description: "Ship large changes without review scope creep"
-  default_prompt: "Use $sectioned-feature-development to implement this change as minimal reviewable sections with patchset-style review and bounded recovery."
+  short_description: "Ship large changes without scope creep"
+  default_prompt: "Use $sectioned-feature-development to anchor the minimum end-to-end scope to the original request, then implement and review it as bounded sections."

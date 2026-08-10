@@ -3,6 +3,18 @@
 <!-- FEATURE-CONTEXT:START -->
 ## Feature Context
 
+### Original user request
+
+- Copy the request verbatim or quote the exact approved outcome.
+
+### Minimum sufficient end-to-end outcome
+
+- Smallest observable result that satisfies the request without optional completeness work.
+
+### Scope authority map
+
+- For each proposed outcome, option/UI/config surface, compatibility promise, support harness, or structural change: cite user intent, repository/current-production obligation, or an unavoidable correctness dependency. A plan/section/reviewer is not an authority source.
+
 ### Goal
 
 One sentence describing the requested product outcome.
@@ -53,6 +65,12 @@ One sentence describing the requested product outcome.
 ### Goal
 
 One coherent observable behavior increment.
+
+### Authority and necessity
+
+- Authority anchor:
+- Why required for the minimum end-to-end outcome:
+- Why the existing owner/path cannot satisfy it more simply:
 
 ### Dependencies
 
@@ -105,6 +123,12 @@ One coherent observable behavior increment.
 ### Goal
 
 One coherent observable behavior increment.
+
+### Authority and necessity
+
+- Authority anchor:
+- Why required for the minimum end-to-end outcome:
+- Why the existing owner/path cannot satisfy it more simply:
 
 ### Dependencies
 

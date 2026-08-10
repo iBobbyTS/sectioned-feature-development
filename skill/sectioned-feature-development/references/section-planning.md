@@ -17,7 +17,10 @@ Sectioning reduces cognitive and integration risk only when each section represe
 
 The plan should answer:
 
+- What did the user actually request, in their own words?
+- What is the smallest end-to-end behavior that satisfies it?
 - What observable behavior becomes true after this section?
+- Which external authority makes this section necessary, and why is a smaller existing path insufficient?
 - Which existing owner is responsible?
 - What exact code and semantic impact cone may change?
 - Which behavior is deliberately not part of this section?
@@ -42,6 +45,7 @@ A section should normally have:
 
 - one primary behavior owner;
 - one coherent outcome;
+- one authority anchor outside the plan itself and a necessity statement tied to the minimum feature outcome;
 - one bounded changed contract;
 - one frozen scope manifest separating allowed-to-edit owners from inspect-only dependency paths and explicit exclusions;
 - one direct semantic impact cone;
@@ -50,6 +54,8 @@ A section should normally have:
 - no undocumented dependency on a future section for correctness.
 
 A section may touch multiple files and layers when those edits are required for one vertical behavior. File count alone does not define reviewability.
+
+The section graph is not allowed to create its own requirements. A downstream section cannot be justified only because an upstream plan promised a new UI, proof harness, compatibility layer, status surface, or generalized mechanism. Trace it back to user intent, a current repository/production obligation, or a demonstrated correctness dependency; otherwise remove it from the feature.
 
 Prefer sections such as:
 
@@ -151,6 +157,19 @@ Better sequence:
 4. Integrate with UI/status if requested.
 
 Do not start with a generalized scheduler, parser framework, persistent registry, or hostile-input model unless required.
+
+Settings/status UI belongs in the feature only when explicitly requested or required by an existing repository product convention. A backend switch mechanism does not automatically authorize a configuration surface or monitoring dashboard.
+
+### Hosted-search provider integration
+
+Better sequence:
+
+1. Exercise one official provider request/response seam.
+2. Normalize the minimum result/citation/error contract in the existing provider owner.
+3. Activate it through the existing configuration/public path required for actual use.
+4. Add focused behavior tests and the repository's existing integration gate.
+
+Do not create a standalone evidence publisher, hostile-object parser, credential-reconstruction proof system, custom compatibility program, or general provider framework unless an external authority independently requires it.
 
 ### URL state removal
 

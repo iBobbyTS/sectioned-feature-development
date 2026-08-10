@@ -29,6 +29,9 @@ Use these principles:
 
 Required feature fields:
 
+- original user request;
+- minimum sufficient end-to-end outcome;
+- scope authority map for proposed outcomes/mechanisms;
 - goal and observable behavior;
 - authoritative constraints/invariants;
 - non-goals/unsupported environments;
@@ -40,6 +43,7 @@ Required feature fields:
 Required section fields:
 
 - goal;
+- external authority anchor and necessity statement;
 - dependencies;
 - frozen scope manifest: allowed-to-edit owners/files/symbols/routes, inspect-only dependency paths, and excluded mechanisms;
 - direct impact cone;
@@ -86,6 +90,7 @@ Freeze:
 
 - section ID/title/base;
 - outcome and changed contract;
+- external authority anchor, minimum-outcome necessity, and why a smaller existing path is insufficient;
 - frozen allowed-to-edit owners, inspect-only dependency paths, excluded mechanisms, and direct impact cone;
 - explicit non-goals/deferred owner;
 - allowed structural changes;

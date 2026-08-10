@@ -3,14 +3,15 @@
 ## Contents
 
 1. [Authority hierarchy](#authority-hierarchy)
-2. [Active-contract sanitation](#active-contract-sanitation)
-3. [Minimum sufficient design](#minimum-sufficient-design)
-4. [Security and threat models](#security-and-threat-models)
-5. [Persistence and recovery](#persistence-and-recovery)
-6. [Generic governance and analyzers](#generic-governance-and-analyzers)
-7. [Testing infrastructure](#testing-infrastructure)
-8. [Scope-growth signals](#scope-growth-signals)
-9. [Correction protocol](#correction-protocol)
+2. [Initial-plan authority gate](#initial-plan-authority-gate)
+3. [Active-contract sanitation](#active-contract-sanitation)
+4. [Minimum sufficient design](#minimum-sufficient-design)
+5. [Security and threat models](#security-and-threat-models)
+6. [Persistence and recovery](#persistence-and-recovery)
+7. [Generic governance and analyzers](#generic-governance-and-analyzers)
+8. [Testing infrastructure](#testing-infrastructure)
+9. [Scope-growth signals](#scope-growth-signals)
+10. [Correction protocol](#correction-protocol)
 
 ## Authority hierarchy
 
@@ -18,11 +19,23 @@ Use this order:
 
 1. explicit user-approved behavior and decisions;
 2. repository-local rules and current production contracts;
-3. accepted feature and section contracts;
-4. current code/tests as evidence of established behavior;
-5. reviewer suggestions.
+3. current code/tests as evidence of established behavior that the requested change must preserve;
+4. accepted feature and section contracts as an index of the authority above, never as a source of new authority;
+5. reviewer or planner suggestions.
 
-Reviewer suggestions cannot override levels 1–4. They are candidates to classify, not requirements to implement. The approved scope is monotonic during implementation/review: it may be narrowed or simplified, but it may grow only through an explicit owner decision. Repeated reviewer agreement does not create authority.
+Plans and contracts cannot bootstrap scope by declaring a new behavior, option, proof obligation, or mechanism and then citing themselves. Reviewer/planner suggestions cannot override levels 1–3. They are candidates to classify, not requirements to implement. The approved scope is monotonic during implementation/review: it may be narrowed or simplified, but it may grow only through an explicit owner decision. Repeated agreement does not create authority.
+
+## Initial-plan authority gate
+
+Before writing the section graph, record the original user request verbatim and the smallest end-to-end observable outcome that satisfies it. For every proposed section, acceptance criterion, optional control/UI surface, compatibility promise, support harness, or structural mechanism, record:
+
+- its external authority anchor;
+- why it is necessary for that minimum outcome;
+- why the existing owner/path cannot satisfy the outcome more simply.
+
+Valid anchors are explicit owner intent, a repository-required rule/gate or current production contract, and a demonstrated correctness dependency on the requested acceptance path. A draft plan, another section, a reviewer suggestion, broader “completeness,” or future-proofing is not an anchor.
+
+When ambiguity remains, choose the narrower functional interpretation and surface the broader alternative as a non-blocking proposal. Do not silently add settings, status projections, UI, docs programs, compatibility ledgers, standalone evidence publishers, security wrappers, or generalized test infrastructure merely because they would make the feature feel more complete.
 
 ## Active-contract sanitation
 
@@ -51,6 +64,10 @@ Before adding a mechanism, ask:
 - Will the feature remain correct if the mechanism is omitted?
 
 If the last answer is yes, omit it.
+
+For unanchored support machinery already present in an active feature, deletion is the default. `SIMPLIFY_CURRENT` may retain only the smallest part required by a separately anchored acceptance criterion; it must not preserve a proof system merely because time was already spent building it.
+
+Before implementation and before the first review, compare the product outcome with the proposed product, test, harness, and process burden. There is no fixed LOC ratio, but a supporting harness/test/process surface that dominates the actual feature is a stop signal: re-check authority and remove unanchored work before asking reviewers to improve it.
 
 Complexity estimates are diagnostic, not validity gates. Exceeding an estimate triggers a simplification check, not automatic rollback or clean-room retry.
 

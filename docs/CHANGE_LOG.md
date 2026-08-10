@@ -25,3 +25,7 @@
 ## v3.1 — 20260809-161721
 
 收紧 MERGE_BLOCKING_DEPENDENCY 因果、EVIDENCE_GAP authority anchor 和 edit-vs-inspect manifest；section repair budget 跨 initial/delta/final/recovery 累计；每个 original lineage 只允许一次自动 hard-cap recovery；integration 复用同一 admission boundary。
+
+## v3.2 — 20260809-201037
+
+新增 plan-authority/minimum-delivery guard：PLAN 和 section contract 只能记录 authority，不能创造 authority；每个新增机制必须锚定原始要求、repo rule、production contract 或 unavoidable correctness。
