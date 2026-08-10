@@ -29,3 +29,7 @@
 ## v3.2 — 20260809-201037
 
 新增 plan-authority/minimum-delivery guard：PLAN 和 section contract 只能记录 authority，不能创造 authority；每个新增机制必须锚定原始要求、repo rule、production contract 或 unavoidable correctness。
+
+## v3.3 — 20260810-121928
+
+新增编码前单次、fresh、read-only PLAN-FULL semantic review；最多一次 PLAN_DELTA recheck；保留原代码 review 状态机，禁止 plan-review clean streak、递归 reviewer 或 plan-review-only section。

@@ -8,7 +8,7 @@
 4. [Structural allowance](#structural-allowance)
 5. [Boundaries and deferred work](#boundaries-and-deferred-work)
 6. [Invalid section patterns](#invalid-section-patterns)
-7. [Plan-review criteria](#plan-review-criteria)
+7. [Plan-review gate](#plan-review-gate)
 8. [Examples](#examples)
 
 ## Purpose
@@ -130,20 +130,60 @@ A test harness, local script, single-user tool, or private directory does not au
 
 Splitting “models,” “services,” and “UI” into separate sections may leave each section semantically incomplete. Prefer a vertical behavior slice unless compatibility staging requires a layer boundary.
 
-## Plan-review criteria
+## Plan-review gate
 
-Use one plan review only when architecture, state ownership, or a high-risk boundary is genuinely uncertain. The reviewer checks:
+Run one fresh, read-only plan review after `PLAN-FULL.md` passes mechanical validation and before product-code implementation. Its purpose is to catch the wrong plan at lower cost, not to add another design committee.
 
-- every requirement has an owner and acceptance oracle;
-- dependencies are acyclic;
-- the first slice falsifies uncertain seams early;
-- structural allowances are requirement-anchored;
-- non-goals exclude foreseeable scope expansion;
-- no section exists solely for process/evidence;
-- testing is tiered rather than full-suite-per-edit;
-- final integration covers only emergent cross-section behavior.
+### Review packet
 
-After local plan corrections, the main agent verifies them. Run another plan review only when the behavior contract or architecture materially changed.
+Provide only:
+
+- original user request and later explicit owner decisions;
+- minimum sufficient end-to-end outcome and authority map;
+- repository rules/current production contracts;
+- relevant source/architecture seams needed to verify buildability;
+- PLAN-FULL and explicit exclusions;
+- validation tiers and any unresolved external assumptions.
+
+Do not prime the reviewer with a desired verdict or proposed additional architecture.
+
+### Permitted checks
+
+The reviewer checks:
+
+1. **Traceability:** every behavior, section, mechanism, UI/config surface, compatibility promise, harness, and broad gate maps to an external authority or unavoidable correctness dependency.
+2. **Minimum closure:** the plan solves the full user-visible request without optional completeness work.
+3. **Buildability:** owners and seams exist; dependencies are acyclic; each predecessor produces what its consumer needs; uncertain external seams are probed before a larger design relies on them.
+4. **Scope proportionality:** no process/evidence-only section, generalized hardening, future-proofing, or proof system; validation is tiered rather than broad-suite-per-edit.
+5. **Contract integrity:** section boundaries preserve correct intermediate states and do not hide cross-section API/schema/state mismatches.
+
+It does not perform repository audit, propose a preferred architecture merely because it is cleaner, add unrequested edge cases, or write implementation details beyond the minimum correction needed to make the existing plan executable.
+
+### Candidate classes and admission
+
+Classify each candidate exactly once:
+
+- `PLAN_BLOCKER`: existing authority or source reality proves the plan is incomplete, contradictory, or unbuildable.
+- `PLAN_SCOPE_EXPANSION`: plan item lacks external authority or is not unavoidable; remove/defer it rather than implement it.
+- `OWNER_DECISION`: the user/repository owner must decide product semantics, compatibility, migration meaning, threat model, or rollout.
+- `PLAN_NIT`: non-blocking wording, formatting, or optional optimization.
+
+Every `PLAN_BLOCKER` must include:
+
+- authority/requirement ID;
+- concrete source or repository evidence;
+- expected failure if unchanged;
+- affected section/owner;
+- smallest plan-only correction;
+- confirmation that the correction adds no new product guarantee.
+
+The main agent owns admission. Record one compact ledger in `.agent-work/reviews/PLAN-REVIEW.md`; do not create RAW/ADMISSION pairs.
+
+### Finite recheck rule
+
+After ordinary corrections, rerun the plan validator and proceed. A second reviewer pass is allowed only as one fresh `PLAN_DELTA` recheck when admitted corrections materially change the feature outcome, section graph, primary owner, public contract, state/trust/persistence boundary, or external seam. It checks only changed plan text and dependency consequences.
+
+No clean streak, third pass, hard-cap recovery, recursive planning agent, evidence rehabilitation, or plan-review-only section is permitted. An unresolved material issue after `PLAN_DELTA` blocks implementation pending the real decision.
 
 ## Examples
 

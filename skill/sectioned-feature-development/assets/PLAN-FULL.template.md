@@ -59,6 +59,15 @@ One sentence describing the requested product outcome.
 - Record only what the requested feature actually requires.
 <!-- FEATURE-CONTEXT:END -->
 
+## Plan Review Gate
+
+- Status: `PENDING | APPROVED | BLOCKED`
+- Reviewed PLAN-FULL SHA-256:
+- Reviewer/profile/session:
+- Admitted `PLAN_BLOCKER` / `PLAN_SCOPE_EXPANSION` / `OWNER_DECISION` IDs:
+- Corrections applied:
+- `PLAN_DELTA` recheck: `not-required | pending | approved | blocked`
+
 <!-- SECTION:S01:START -->
 ## S01 — First behavior slice
 

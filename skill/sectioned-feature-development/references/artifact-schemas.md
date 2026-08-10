@@ -5,12 +5,13 @@
 1. [Design goals](#design-goals)
 2. [PLAN-FULL.md](#plan-fullmd)
 3. [PLAN.md](#planmd)
-4. [FEATURE-STATE.md](#feature-statemd)
-5. [Section contract](#section-contract)
-6. [Section handoff](#section-handoff)
-7. [Review ledger](#review-ledger)
-8. [Hard-cap diagnosis](#hard-cap-diagnosis)
-9. [Archival rules](#archival-rules)
+4. [Plan review ledger](#plan-review-ledger)
+5. [FEATURE-STATE.md](#feature-statemd)
+6. [Section contract](#section-contract)
+7. [Section handoff](#section-handoff)
+8. [Review ledger](#review-ledger)
+9. [Hard-cap diagnosis](#hard-cap-diagnosis)
+10. [Archival rules](#archival-rules)
 
 ## Design goals
 
@@ -38,7 +39,8 @@ Required feature fields:
 - ownership/state boundaries;
 - feature acceptance;
 - tiered validation;
-- explicitly allowed structural changes.
+- explicitly allowed structural changes;
+- one pre-implementation plan-review gate status and reviewed plan fingerprint.
 
 Required section fields:
 
@@ -67,11 +69,25 @@ Generated from `PLAN-FULL.md` for one current section. Include:
 
 A changed source hash does not invalidate completed work by itself.
 
+## Plan review ledger
+
+Keep one `.agent-work/reviews/PLAN-REVIEW.md` with:
+
+- original request, minimum outcome, plan path/fingerprint, reviewer identity, and review scope;
+- candidate table using `PLAN_BLOCKER`, `PLAN_SCOPE_EXPANSION`, `OWNER_DECISION`, or `PLAN_NIT`;
+- authority/source evidence, concrete failure, affected section, and minimum plan-only correction for blockers;
+- main-agent admission and corrections;
+- validator result and final `APPROVED | BLOCKED` verdict;
+- optional one-time `PLAN_DELTA` scope/result when a material plan boundary changed.
+
+Do not create RAW/ADMISSION pairs, a clean streak, or a section whose only output is plan-review evidence. The ledger records a gate; it does not create product authority.
+
 ## FEATURE-STATE.md
 
 Keep compact:
 
 - feature base/head and execution mode;
+- PLAN-FULL review status, reviewed fingerprint, optional PLAN_DELTA result, and open owner decisions;
 - current section/base/head/status and original lineage;
 - frozen scope manifest;
 - Clean A/Clean B status;
@@ -147,7 +163,7 @@ Record:
 
 ## Archival rules
 
-- Archive PLAN-FULL at final feature completion.
+- Archive PLAN-FULL and the compact plan-review ledger at final feature completion.
 - Preserve accepted section contracts, handoffs, compact review ledgers, and hard-cap diagnoses.
 - Delete/overwrite transient candidates and extracted PLAN.md when safe.
 - Avoid per-round process commits. Commit/archive artifacts at section acceptance, hard-cap recovery, or final feature boundaries.

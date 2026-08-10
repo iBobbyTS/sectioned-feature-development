@@ -1,9 +1,11 @@
 ---
 name: sectioned-feature-development
-description: "Plan, implement, review, and integrate large or high-risk software changes as minimal bounded sections without plan-created or review-created scope creep. Use when expected behavioral edits may exceed roughly 300 lines; more than three modules, packages, services, pages, or workflows are affected; persistence, schema, security, permissions, concurrency, public API, deployment, routing, or state ownership changes; the impact cone is hard to bound; or a previous whole-change review failed to converge. The workflow anchors every section to the original request or an unavoidable correctness/repository obligation, then uses one initial bounded review, delta-only repair verification, one final bounded review, proportional testing, and evidence-preserving hard-cap recovery."
+description: "Plan, pre-review, implement, review, and integrate large or high-risk software changes as minimal bounded sections without plan-created or review-created scope creep. Use when expected behavioral edits may exceed roughly 300 lines; more than three modules, packages, services, pages, or workflows are affected; persistence, schema, security, permissions, concurrency, public API, deployment, routing, or state ownership changes; the impact cone is hard to bound; or a previous whole-change review failed to converge. The workflow anchors every section to the original request or an unavoidable correctness/repository obligation, requires one fresh bounded PLAN-FULL review before implementation, then uses one initial code review, delta-only repair verification, one final bounded code review, proportional testing, and evidence-preserving hard-cap recovery."
 ---
 
 # Sectioned Feature Development
+
+**Workflow revision:** V3.3
 
 Deliver one non-trivial change as a sequence of minimal, reviewable behavior sections. The governing invariant is:
 
@@ -66,6 +68,7 @@ Use these paths unless repository rules define equivalents:
 │   ├── S01-HANDOFF.md
 │   └── ...
 ├── reviews/
+│   ├── PLAN-REVIEW.md
 │   ├── S01-REVIEW.md
 │   ├── S01-CANDIDATES.md       # transient; overwrite or delete
 │   └── ...
@@ -75,11 +78,11 @@ Use these paths unless repository rules define equivalents:
     └── {YYYYMMDD-HHMM}_FULL.md
 ```
 
-`PLAN-FULL.md`, the current section contract, and `FEATURE-STATE.md` are authoritative. `S01-REVIEW.md` is one compact ledger for initial findings, delta closures, final verification, and residual risk. Do not create separate durable RAW/ADMISSION/state commits for every reviewer call.
+`PLAN-FULL.md`, the current section contract, and `FEATURE-STATE.md` are authoritative. `PLAN-REVIEW.md` records the one pre-implementation plan gate; it does not create product authority. `S01-REVIEW.md` is one compact ledger for initial findings, delta closures, final verification, and residual risk. Do not create separate durable RAW/ADMISSION/state commits for every reviewer call.
 
 ## Load references progressively
 
-- Read [references/section-planning.md](references/section-planning.md) before creating or changing the section graph.
+- Read [references/section-planning.md](references/section-planning.md) before creating or changing the section graph and before the mandatory pre-implementation plan review.
 - Read [references/bounded-review.md](references/bounded-review.md) before the first section review or any repair loop.
 - Read [references/scope-control.md](references/scope-control.md) when security, persistence, compatibility, generalized tooling, test infrastructure, or over-design is possible.
 - Read [references/recovery-and-migration.md](references/recovery-and-migration.md) at a hard cap or when adopting this skill mid-feature.
@@ -92,8 +95,12 @@ Use these paths unless repository rules define equivalents:
 PREFLIGHT
   -> FEATURE_SCOPE
   -> SECTION_GRAPH
-  -> OPTIONAL_PLAN_CHECK
-  -> FREEZE_ONE_SECTION
+  -> PLAN_REVIEW_GATE
+       -> approved --------------------------┐
+       -> bounded correction -> optional PLAN_DELTA_RECHECK -> approved
+       -> owner decision/unresolved blocker -> BLOCK
+                                              v
+                                     FREEZE_ONE_SECTION
   -> IMPLEMENT_MINIMUM_CHANGE
   -> LOCAL_VALIDATE
   -> REVIEW_INTENSITY
@@ -205,13 +212,25 @@ python {skill-dir}/scripts/section_plan.py extract \
 
 The validator checks durable markers, minimum headings, unique IDs, and dependency cycles. Its fingerprint is informational; a changed fingerprint alone never invalidates evidence.
 
-### Plan check
+### Mandatory pre-implementation plan review
 
-Use at most one clean plan reviewer when the feature changes architecture/state ownership, crosses a genuinely high-risk boundary, or has an uncertain external seam. The reviewer checks contradictions, missing ownership, unbuildable ordering, and obvious over-design. It may not invent guarantees. Main-agent verification is sufficient for local corrections unless the behavior contract materially changes.
+After `PLAN-FULL.md` passes mechanical validation and before the first product-code section begins, dispatch one fresh read-only plan reviewer using the bundled request. This gate is mandatory for `EXECUTE_*`; in `PLAN_ONLY`, run it when the requested deliverable includes a reviewed plan. For mid-feature adoption, review only the active unaccepted and future remaining plan.
+
+The reviewer compares the original request, authority map, repository rules/current contracts, relevant source seams, PLAN-FULL, explicit exclusions, and validation tiers. It checks only:
+
+- requirement traceability and minimum sufficient closure;
+- missing or conflicting owners, contracts, dependency edges, and external seams;
+- unbuildable ordering or a necessary probe that must precede architecture;
+- unauthorized sections, mechanisms, guarantees, proof harnesses, or broad validation;
+- whether section and test granularity is proportional.
+
+Classify candidates as `PLAN_BLOCKER`, `PLAN_SCOPE_EXPANSION`, `OWNER_DECISION`, or `PLAN_NIT`. A blocker must cite existing authority, concrete repository/source evidence, the failure if unchanged, and the smallest plan-only correction. The reviewer may not edit code/tests, invent a requirement, design a larger replacement architecture, or start an implementation/review loop.
+
+The main agent admits or rejects candidates and records the result in `.agent-work/reviews/PLAN-REVIEW.md`. Apply ordinary plan-only corrections locally, rerun the mechanical validator, and proceed without another full plan review. Permit exactly one fresh `PLAN_DELTA` recheck only when an admitted correction materially changes the feature outcome, section graph, primary owner, public contract, state/trust/persistence boundary, or external seam. The recheck covers only the changed plan region and its dependency consequences. There is no clean streak, hard-cap recovery, recursive reviewer chain, or process-only section for plan review. If a material blocker remains after the delta recheck, stop for the real owner/technical decision rather than implementing speculatively.
 
 ## Phase 2: Freeze and implement one section
 
-For the next dependency-ready section:
+Only after the plan review gate is `APPROVED`, take the next dependency-ready section:
 
 1. Record exact `section_base` as the accepted predecessor head.
 2. Extract only that section into `PLAN.md`.
@@ -228,6 +247,7 @@ Review intensity:
 
 Default routing when available:
 
+- pre-implementation plan review: fresh [@sol_xhigh](subagent://sol_xhigh), or [@sol_high](subagent://sol_high) for clearly bounded non-high-risk plans;
 - ordinary implementation: [@sol_medium](subagent://sol_medium);
 - high-risk implementation or repair: [@sol_high](subagent://sol_high);
 - ordinary bounded initial/delta review: [@sol_high](subagent://sol_high);
@@ -446,6 +466,7 @@ Run the broadest deterministic suite/build/browser/application checks once at fi
 
 ## Final rules
 
+- One fresh bounded plan reviewer checks the complete PLAN-FULL before implementation; at most one delta-only plan recheck is permitted after a material admitted correction.
 - One implementer works on one current section at a time.
 - One initial bounded review, delta-only repair verification, one final bounded review.
 - Two evidence types are required: `Clean A` closure and `Clean B` independent final verification; two repeated full clean scans are not required.

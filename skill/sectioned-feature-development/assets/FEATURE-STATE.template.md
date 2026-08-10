@@ -9,6 +9,10 @@
 - Workflow adoption note: `new | legacy artifacts preserved prospectively`
 - Integration repair waves used: `0/5`
 - Integration automatic recovery used: `no | yes`
+- PLAN-FULL review status: `not-run | approved | blocked`
+- Reviewed plan SHA-256:
+- PLAN_DELTA recheck: `not-required | approved | blocked`
+- Open owner/plan decisions:
 
 ## Current section
 
@@ -16,7 +20,7 @@
 - Original section lineage:
 - Section base:
 - Current head:
-- Status: `PLANNED | IMPLEMENTING | INITIAL_REVIEW | REPAIR_DELTA | CLEAN_A | FINAL_REVIEW | ACCEPTED | HARD_CAP_DIAGNOSIS | BLOCKED`
+- Status: `PLANNED | PLAN_REVIEW | IMPLEMENTING | INITIAL_REVIEW | REPAIR_DELTA | CLEAN_A | FINAL_REVIEW | ACCEPTED | HARD_CAP_DIAGNOSIS | BLOCKED`
 - Allowed-to-edit owners/files/symbols/routes:
 - Inspect-only dependency paths/direct impact cone:
 - Explicitly excluded owners/mechanisms:

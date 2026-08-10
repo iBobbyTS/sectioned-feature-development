@@ -6,6 +6,7 @@
 - Source SHA-256: `<generated>`
 - Section: `<ID>`
 - Section base: `<commit>`
+- PLAN-FULL review gate: `APPROVED`
 
 ## Feature Context
 

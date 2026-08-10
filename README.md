@@ -1,4 +1,4 @@
-# Sectioned Feature Development v3.2
+# Sectioned Feature Development v3.3
 
 ## 设计理念
 
@@ -9,7 +9,7 @@
 
 ## 简要执行流程
 
-`PLAN → IMPLEMENT → INITIAL_BOUNDED → REPAIR_DELTA* → FINAL_BOUNDED → integration`
+`PLAN-FULL → PLAN review → section implement → INITIAL_BOUNDED → REPAIR_DELTA* → FINAL_BOUNDED → conditional integration → audit/report`
 
 ## 安装
 
@@ -17,6 +17,6 @@
 
 ## 历史资料
 
-`docs/version-history/` 包含从 v1 到 v3.2 的全部历史。每个历史版本包含原始 Prompt、Audit Pack 分析、外部研究、更新说明和按用户策略保留的 appendix。
+`docs/version-history/` 包含从 v1 到 v3.3 的全部历史。每个历史版本包含原始 Prompt、Audit Pack 分析、外部研究、更新说明和按用户策略保留的 appendix。
 
 `docs/CHANGE_LOG.md` 是截至本快照的累计流程变更记录。
