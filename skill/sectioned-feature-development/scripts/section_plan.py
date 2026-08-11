@@ -44,7 +44,9 @@ FEATURE_REQUIRED: tuple[tuple[str, ...], ...] = (
     ("Feature acceptance criteria", "Full-feature Acceptance Criteria", "完整功能验收标准"),
 )
 FEATURE_RECOMMENDED: tuple[tuple[str, ...], ...] = (
+    ("Feature identity",),
     ("Original user request",),
+    ("Requirement, example, and correction traceability",),
     ("Minimum sufficient end-to-end outcome",),
     ("Scope authority map",),
     ("Constraints and invariants", "Global Invariants", "全局不变量"),
@@ -66,6 +68,7 @@ SECTION_RECOMMENDED: tuple[tuple[str, ...], ...] = (
     ("Allowed structural changes",),
     ("Reset triggers",),
     ("Review intensity",),
+    ("Review assurance",),
 )
 
 

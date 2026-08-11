@@ -4,7 +4,10 @@ Review the current section using `$code-review` as a **single-pass reviewer**. D
 
 - Mode: `INITIAL_BOUNDED | REPAIR_DELTA | FINAL_BOUNDED`
 - Working tree/repository:
+- Feature ID:
 - Section:
+- Review intensity: `MECHANICAL | BOUNDED | HIGH_RISK`
+- Review assurance: `ONE | TWO`
 - Contract: `.agent-work/sections/<ID>-CONTRACT.md`
 - Feature plan: `.agent-work/PLAN-FULL.md`
 - Handoff: `.agent-work/sections/<ID>-HANDOFF.md`
@@ -35,8 +38,8 @@ The manifest bounds edits, not causal inspection. To inspect an unlisted depende
 
 ## Mode-specific boundary
 
-- `INITIAL_BOUNDED`: review the complete section diff once using only risk lenses triggered by the frozen contract; batch root causes and record coverage.
+- `INITIAL_BOUNDED`: review the complete section diff once using only risk lenses triggered by the frozen contract; batch root causes and record coverage. A clean result accepts an assurance-`ONE` bounded/high-risk section after required checks, but assurance `TWO` proceeds to final.
 - `REPAIR_DELTA`: review only the repair range, frozen findings, and invalidated impact cone. Do not rescan unchanged original scope.
-- `FINAL_BOUNDED`: this is not another open-ended discovery pass. Verify the current diff against the contract, highest-risk changed path, repair impact cones, and accidental scope growth. Do not audit the repository or strengthen the contract.
+- `FINAL_BOUNDED`: required after any repair, for assurance `TWO`, and for mechanical sections; omitted only after a clean initial assurance-`ONE` bounded/high-risk section. This is not another open-ended discovery pass. Verify the current diff against the contract, highest-risk changed path, repair impact cones, and accidental scope growth. Do not audit the repository or strengthen the contract.
 
 Any admitted repair from any mode counts toward the same cumulative five-wave section budget.

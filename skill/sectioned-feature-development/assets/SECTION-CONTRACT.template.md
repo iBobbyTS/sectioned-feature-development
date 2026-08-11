@@ -1,5 +1,6 @@
 # `<ID>` Section Contract
 
+- Feature ID:
 - Title:
 - Section base:
 - Plan source:
@@ -48,6 +49,12 @@
 ## Review intensity
 
 - `MECHANICAL | BOUNDED | HIGH_RISK`
+
+## Review assurance
+
+- Requested: `AUTO | ONE | TWO`
+- Resolved: `ONE | TWO`
+- Reasons / owner override / repository minimum:
 
 ## Acceptance criteria
 

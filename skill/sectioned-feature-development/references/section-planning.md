@@ -18,7 +18,8 @@ Sectioning reduces cognitive and integration risk only when each section represe
 The plan should answer:
 
 - What did the user actually request, in their own words?
-- What is the smallest end-to-end behavior that satisfies it?
+- Which explicit examples, failing cases, counterexamples, or later corrections constrain that request?
+- What is the smallest end-to-end behavior that satisfies the current, non-superseded request?
 - What observable behavior becomes true after this section?
 - Which external authority makes this section necessary, and why is a smaller existing path insufficient?
 - Which existing owner is responsible?
@@ -28,7 +29,7 @@ The plan should answer:
 
 ## Choose the first slice
 
-When an external seam or architecture assumption is uncertain, begin with the smallest real probe or walking skeleton that can falsify the assumption.
+When an external seam or architecture assumption is uncertain, begin with the smallest real probe or walking skeleton that can falsify the assumption. Authentication method, endpoint, response shape, protocol, or third-party semantics are not stable plan inputs unless repository source/docs make them authoritative.
 
 Examples:
 
@@ -50,6 +51,7 @@ A section should normally have:
 - one frozen scope manifest separating allowed-to-edit owners from inspect-only dependency paths and explicit exclusions;
 - one direct semantic impact cone;
 - one review intensity (`MECHANICAL`, `BOUNDED`, or `HIGH_RISK`);
+- one review assurance decision (`ONE`, `TWO`, or `AUTO -> resolved`) with reasons;
 - one set of targeted tests;
 - no undocumented dependency on a future section for correctness.
 
@@ -134,11 +136,20 @@ Splitting “models,” “services,” and “UI” into separate sections may 
 
 Run one fresh, read-only plan review after `PLAN-FULL.md` passes mechanical validation and before product-code implementation. Its purpose is to catch the wrong plan at lower cost, not to add another design committee.
 
+### Requirement/example traceability
+
+Before review, build a compact matrix:
+
+| ID | Current instruction/example/correction | Supersedes | Acceptance criterion | Test or probe |
+|---|---|---|---|---|
+
+Every named real-world failure and expected counterexample must be represented. If the user corrects an earlier implementation direction, mark the old one `SUPERSEDED`; it cannot remain an alternative requirement. This is especially important for bug reports where a generic contract can pass while the reported fixture still fails.
+
 ### Review packet
 
 Provide only:
 
-- original user request and later explicit owner decisions;
+- original user request, later explicit owner decisions, and the requirement/example matrix;
 - minimum sufficient end-to-end outcome and authority map;
 - repository rules/current production contracts;
 - relevant source/architecture seams needed to verify buildability;
@@ -151,11 +162,12 @@ Do not prime the reviewer with a desired verdict or proposed additional architec
 
 The reviewer checks:
 
-1. **Traceability:** every behavior, section, mechanism, UI/config surface, compatibility promise, harness, and broad gate maps to an external authority or unavoidable correctness dependency.
+1. **Traceability:** every current requirement/example/correction maps to acceptance evidence, and every behavior, section, mechanism, UI/config surface, compatibility promise, harness, and broad gate maps to an external authority or unavoidable correctness dependency.
 2. **Minimum closure:** the plan solves the full user-visible request without optional completeness work.
 3. **Buildability:** owners and seams exist; dependencies are acyclic; each predecessor produces what its consumer needs; uncertain external seams are probed before a larger design relies on them.
 4. **Scope proportionality:** no process/evidence-only section, generalized hardening, future-proofing, or proof system; validation is tiered rather than broad-suite-per-edit.
 5. **Contract integrity:** section boundaries preserve correct intermediate states and do not hide cross-section API/schema/state mismatches.
+6. **Assurance proportionality:** `ONE`/`TWO` is explicitly chosen or mechanically resolved from semantic risk; project size, test count, or “high-risk module” labels alone do not force dual evidence.
 
 It does not perform repository audit, propose a preferred architecture merely because it is cleaner, add unrequested edge cases, or write implementation details beyond the minimum correction needed to make the existing plan executable.
 
@@ -177,7 +189,7 @@ Every `PLAN_BLOCKER` must include:
 - smallest plan-only correction;
 - confirmation that the correction adds no new product guarantee.
 
-The main agent owns admission. Record one compact ledger in `.agent-work/reviews/PLAN-REVIEW.md`; do not create RAW/ADMISSION pairs.
+The main agent owns admission. Record one compact ledger in `.agent-work/reviews/PLAN-REVIEW.md`; do not create RAW/ADMISSION pairs. A missing original example/test mapping is a `PLAN_BLOCKER`; an obsolete instruction retained after a user correction is `PLAN_SCOPE_EXPANSION`.
 
 ### Finite recheck rule
 

@@ -1,17 +1,17 @@
 ---
 name: sectioned-feature-development
-description: "Plan, pre-review, implement, review, and integrate large or high-risk software changes as minimal bounded sections without plan-created or review-created scope creep. Use when expected behavioral edits may exceed roughly 300 lines; more than three modules, packages, services, pages, or workflows are affected; persistence, schema, security, permissions, concurrency, public API, deployment, routing, or state ownership changes; the impact cone is hard to bound; or a previous whole-change review failed to converge. The workflow anchors every section to the original request or an unavoidable correctness/repository obligation, requires one fresh bounded PLAN-FULL review before implementation, then uses one initial code review, delta-only repair verification, one final bounded code review, proportional testing, and evidence-preserving hard-cap recovery."
+description: "Plan, pre-review, implement, review, and integrate large or high-risk software changes as minimal bounded sections without plan-created or review-created scope creep. Use when expected behavioral edits may exceed roughly 300 lines; more than three modules, packages, services, pages, or workflows are affected; persistence, schema, security, permissions, concurrency, public API, deployment, routing, or state ownership changes; the impact cone is hard to bound; or a previous whole-change review failed to converge. The workflow anchors every section to the original request or an unavoidable correctness/repository obligation, requires one fresh bounded PLAN-FULL review before implementation, then selects one- or dual-evidence code-review assurance from explicit user choice or mechanical risk signals, uses delta-only repair verification, proportional testing, exact final-head evidence, and evidence-preserving hard-cap recovery."
 ---
 
 # Sectioned Feature Development
 
-**Workflow revision:** V3.3
+**Workflow revision:** V3.4
 
 Deliver one non-trivial change as a sequence of minimal, reviewable behavior sections. The governing invariant is:
 
 > Review may discover defects in the approved change; it may not create a larger product, threat model, compatibility promise, governance system, or proof bureaucracy.
 
-Use patchset-style review: one bounded discovery pass, repair-delta verification, then one independent bounded final pass. Preserve valid code and evidence across repairs, skill updates, and recovery.
+Use patchset-style review with proportional assurance: one bounded discovery pass, delta-only repair verification, and an independent final pass only when required by the selected assurance level or by a repair. Preserve valid code and evidence across repairs, skill updates, and recovery.
 
 ## Authority and safety
 
@@ -45,7 +45,7 @@ The thresholds only route work into this skill. Semantic ownership and reviewabi
 3. **Monotonic scope:** after the feature/section contract is frozen, implementation and review may simplify or narrow it but may not enlarge it without an explicit owner decision. Repetition by multiple reviewers does not create authority.
 4. **No review-authored requirements:** reviewers cannot enlarge the feature contract, supported environment, threat model, compatibility promise, durability promise, or rollout obligation.
 5. **No automatic mechanism growth:** a new registry, service, persistence layer, background worker, parser framework, global analyzer, CI governance rule, security control, public configuration surface, or standalone proof harness requires an external authority anchor. Reviewer preference or another plan section is not an anchor.
-6. **No repeated full rediscovery:** each section gets one `INITIAL_BOUNDED` review. Repairs use `REPAIR_DELTA`. Acceptance uses one `FINAL_BOUNDED` review.
+6. **No repeated full rediscovery:** each behavioral section gets at most one `INITIAL_BOUNDED` review. Repairs use `REPAIR_DELTA`. A fresh `FINAL_BOUNDED` is required after repair and for dual-evidence assurance, but is omitted when one-evidence assurance is satisfied by a clean initial review.
 7. **No process-only rework:** workflow schema, artifact format, fingerprint, review template, or skill-version changes do not invalidate accepted code, tests, or review evidence.
 8. **No evidence-only descendants:** do not create a new section solely to rebuild review lineage, move a test earlier in Git history, satisfy a new artifact format, or prove that accepted ancestors were “clean.”
 9. **No automatic clean-room retry:** preserve correct current work. Restart from an older base only after a concrete diagnosis proves the implementation direction itself is wrong and cannot be simplified in place.
@@ -53,6 +53,10 @@ The thresholds only route work into this skill. Semantic ownership and reviewabi
 11. **Review is not audit:** unchanged code may be inspected only to establish causality, reachability, contract reality, or direct regression risk. Unrelated repository defects are out of scope.
 12. **Inaction is valid:** a clean review may return no finding. Never manufacture work to justify a reviewer invocation.
 13. **Finite cumulative budgets:** section and integration repair waves count across initial, delta, final, and recovery phases. Entering a new review phase or choosing `CONTINUE_CURRENT` never resets a counter.
+14. **Exact requirement examples are contracts:** every user-supplied failing example, expected counterexample, and correction must map to an acceptance criterion and test/probe before plan approval. Later corrections mark conflicting earlier guidance `SUPERSEDED`; do not preserve both.
+15. **Final-head evidence:** the delivered product/test head must equal the head covered by required final review and validation. Later process/docs-only commits are harmless; later product/test changes require only bounded closure for the changed range.
+16. **Feature isolation:** one feature ID owns one active PLAN, state, review ledger, and audit range. Starting a new feature archives or resets the prior active artifacts; never append unrelated work to an old ledger.
+17. **Reusable validation evidence:** an unchanged code range may reuse an identical successful check. A fresh reviewer means independent analysis, not automatic rerunning of the same CI command.
 
 ## Durable artifacts
 
@@ -78,7 +82,7 @@ Use these paths unless repository rules define equivalents:
     └── {YYYYMMDD-HHMM}_FULL.md
 ```
 
-`PLAN-FULL.md`, the current section contract, and `FEATURE-STATE.md` are authoritative. `PLAN-REVIEW.md` records the one pre-implementation plan gate; it does not create product authority. `S01-REVIEW.md` is one compact ledger for initial findings, delta closures, final verification, and residual risk. Do not create separate durable RAW/ADMISSION/state commits for every reviewer call.
+`PLAN-FULL.md`, the current section contract, and `FEATURE-STATE.md` are authoritative for one recorded feature ID. `PLAN-REVIEW.md` records the one pre-implementation plan gate; it does not create product authority. `S01-REVIEW.md` is one compact ledger for initial findings, delta closures, final verification, and residual risk. Do not create separate durable RAW/ADMISSION/state commits for every reviewer call.
 
 ## Load references progressively
 
@@ -103,17 +107,13 @@ PREFLIGHT
                                      FREEZE_ONE_SECTION
   -> IMPLEMENT_MINIMUM_CHANGE
   -> LOCAL_VALIDATE
-  -> REVIEW_INTENSITY
-       -> MECHANICAL -> CLEAN_A_FROM_DETERMINISTIC_CHECKS
+  -> REVIEW_INTENSITY + REVIEW_ASSURANCE (`ONE | TWO`)
+       -> MECHANICAL -> deterministic checks -> FINAL_BOUNDED
        -> BOUNDED_OR_HIGH_RISK -> INITIAL_BOUNDED_REVIEW   # once per stable baseline
-            -> no blockers ----------------------┐
-            -> admitted blockers -> REPAIR_DELTA*│
-                                                  v
-                                         CLEAN_A_CLOSURE
-                                                  |
-                                                  v
-                                         FINAL_BOUNDED_REVIEW
-       -> clean --------------------------> SECTION_ACCEPTED
+            -> clean + ONE ----------------------> SECTION_ACCEPTED
+            -> clean + TWO ----------------------> FINAL_BOUNDED_REVIEW
+            -> admitted blockers -> REPAIR_DELTA* -> FINAL_BOUNDED_REVIEW
+       -> final clean --------------------> SECTION_ACCEPTED
        -> new diff-caused blocker -> REPAIR_DELTA -> FINAL_BOUNDED_REVIEW
        -> owner decision -> BLOCK
        -> more than 5 repair waves -> HARD_CAP_DIAGNOSIS
@@ -143,7 +143,7 @@ Advance only when the corresponding code-visible evidence exists. Agent declarat
 
 1. Inspect repository rules, architecture sources, current branch, `git status`, relevant recent commits, build/test entry points, and available environment.
 2. Freeze the exact `feature_base`.
-3. Record the original user request verbatim and define the smallest end-to-end observable outcome that satisfies it. Do not silently turn examples, implementation ideas, reviewer suggestions, or “future-proofing” into requirements.
+3. Record the original user request verbatim, later corrections, named failing examples/counterexamples, and the smallest end-to-end observable outcome. Build a requirement-example matrix mapping each current instruction/example to an acceptance criterion and test/probe. Mark conflicting earlier guidance `SUPERSEDED`; do not silently keep both or turn implementation ideas/reviewer suggestions into requirements.
 4. Before sectioning, build a compact authority map. Every proposed outcome, acceptance criterion, option/UI/config surface, support harness, compatibility promise, and structural change must cite one of:
    - the original user request or a later explicit owner decision;
    - a repository-required gate/rule or current production contract;
@@ -159,7 +159,7 @@ Advance only when the corresponding code-visible evidence exists. Agent declarat
    - structural changes explicitly allowed by the requirement.
 6. Apply a minimum-feature-closure check: if the user-visible result works without an optional setting/status surface, compatibility layer, standalone evidence publisher, generalized hardening, or repository-wide governance mechanism, omit it unless an authority anchor explicitly requires it.
 7. Do not add a universal threat model or generalized durability model. Record risk boundaries only when the feature or repository already makes them relevant.
-8. If integration or an external seam is uncertain, schedule a minimal probe/walking skeleton before designing a complete registry, state machine, framework, or persistence system.
+8. If authentication, endpoint, response shape, protocol, integration, or another external seam is not authoritative in repository docs/source, run the smallest real probe before freezing dependent sections. Do not design around an assumed API contract.
 9. When the feature is remediation of an audit, freeze the accepted audit finding IDs before implementation. Section review verifies those repairs and the repair diff; it does not continue the repository audit. New unrelated pre-existing concerns go to a separate audit backlog.
 10. In `EXECUTE_WITH_COMMITS`, create an isolated feature branch/worktree before product-code implementation.
 
@@ -197,7 +197,8 @@ Every section must define:
 - structural changes it is allowed to introduce;
 - falsifiable acceptance criteria;
 - targeted, section, and integration validation tiers;
-- reset triggers that would make the section materially different.
+- reset triggers that would make the section materially different;
+- review assurance: explicit `ONE`/`TWO` owner choice, or `AUTO` with the resolved value and reasons.
 
 A section is invalid when it is justified only by another plan/contract, is merely a directory/layer bucket, is a generic governance initiative not requested by the feature, is a test/evidence rehabilitation task whose tooling is not itself the user-requested outcome, or is a vague “finish/integrate everything” bucket.
 
@@ -218,7 +219,7 @@ After `PLAN-FULL.md` passes mechanical validation and before the first product-c
 
 The reviewer compares the original request, authority map, repository rules/current contracts, relevant source seams, PLAN-FULL, explicit exclusions, and validation tiers. It checks only:
 
-- requirement traceability and minimum sufficient closure;
+- requirement/example/correction traceability and minimum sufficient closure;
 - missing or conflicting owners, contracts, dependency edges, and external seams;
 - unbuildable ordering or a necessary probe that must precede architecture;
 - unauthorized sections, mechanisms, guarantees, proof harnesses, or broad validation;
@@ -234,12 +235,21 @@ Only after the plan review gate is `APPROVED`, take the next dependency-ready se
 
 1. Record exact `section_base` as the accepted predecessor head.
 2. Extract only that section into `PLAN.md`.
-3. Create `{ID}-CONTRACT.md` with goal, base, a frozen scope manifest, direct impact cone, allowed structural changes, non-goals, acceptance criteria, and validation tiers.
+3. Create `{ID}-CONTRACT.md` with goal, base, frozen scope manifest, direct impact cone, allowed structural changes, non-goals, acceptance criteria, validation tiers, and review assurance.
 4. Resolve real owner decisions before product code.
 5. Choose review intensity: `MECHANICAL`, `BOUNDED`, or `HIGH_RISK`.
-6. Update `FEATURE-STATE.md` with current section, base/head, status, review intensity, open findings, repair waves, and next action.
+6. Resolve review assurance: use explicit owner choice `ONE` or `TWO`; otherwise use `AUTO` as defined below. Record the resolved value and reasons.
+7. Update `FEATURE-STATE.md` with current section, base/head, status, intensity, assurance, open findings, repair waves, and next action.
 
 Review intensity:
+
+Review assurance controls independent evidence, not review breadth:
+
+- `ONE`: one clean independent bounded reviewer outcome is sufficient. For `BOUNDED/HIGH_RISK`, a clean `INITIAL_BOUNDED` accepts the section; if the initial review finds blockers, close them through `REPAIR_DELTA` and require one fresh `FINAL_BOUNDED`.
+- `TWO`: preserve dual evidence: `Clean A` from initial/closure evidence plus a fresh `FINAL_BOUNDED` (`Clean B`). It never means two repeated full scans after repair.
+- Explicit user choice overrides `AUTO` unless a repository-required rule mandates stronger assurance. Record the override and residual risk.
+- `AUTO` resolves to `TWO` when the section changes persistence/schema/migration; money/security/auth/permissions/credentials; shared-state concurrency, retry/replay/cancellation/background/process lifecycle; business-critical time/date eligibility; public API/protocol compatibility or irreversible external side effects; routing/failover/quota/sticky ownership; two or more runtime/process boundaries or three or more behavioral owners; or has a hard-to-bound impact cone/material incident risk. Otherwise use `ONE`.
+- A small local fix may resolve to `ONE` even inside a high-risk module when it changes at most two owners, adds no schema/public contract/persistence/state mutation/retry/concurrency, has an exact reproduction, and the behavioral diff is roughly at most 80 lines.
 
 - `MECHANICAL`: documentation/generated output/rename/local fixture or equally deterministic change with no behavioral, data, trust, concurrency, migration, public-contract, or state-owner boundary. Use deterministic checks plus one `FINAL_BOUNDED` review; skip separate initial discovery.
 - `BOUNDED`: one coherent behavior owner with a bounded impact cone. Use normal initial/delta/final flow.
@@ -270,7 +280,7 @@ In `EXECUTE_WITH_COMMITS`, commit the coherent implementation before review. Do 
 
 ## Phase 3: Patchset-style section review
 
-For `MECHANICAL`, use deterministic checks as Clean A and proceed directly to one `FINAL_BOUNDED` pass. If the reviewer finds a real semantic boundary, reclassify the section as `BOUNDED` or `HIGH_RISK` and run `INITIAL_BOUNDED`.
+For `MECHANICAL`, run deterministic checks and one `FINAL_BOUNDED`; mechanical review is always single-evidence. If it reveals a real semantic boundary, reclassify before acceptance. For `BOUNDED/HIGH_RISK`, follow the resolved `ONE`/`TWO` assurance semantics below.
 
 For delta verification, prefer reusing the initial reviewer session when available so reviewed coverage remains sticky. The repair agent must still be separate. If the reviewer session cannot be reused, pass the compact review ledger rather than reconstructing the whole feature. The final reviewer is always fresh.
 
@@ -317,7 +327,7 @@ Run exactly one initial full review over `section_base..section_head` plus the d
 
 Write the authoritative classification and coverage summary into `{ID}-REVIEW.md`. Use `{ID}-CANDIDATES.md` only as transient reviewer output; overwrite or delete it after triage.
 
-If no blocker is admitted, `Clean A` is satisfied by the implementation evidence and initial bounded review. Proceed to `FINAL_BOUNDED`.
+If no blocker is admitted, the implementation evidence plus initial review satisfies `Clean A`. Under `ONE`, mark the section accepted after required section checks; under `TWO`, proceed to `FINAL_BOUNDED`.
 
 ### 3.3 `REPAIR_DELTA`
 
@@ -342,7 +352,7 @@ A repair wave is one coherent batch of admitted root-cause classes plus its code
 
 ### 3.4 `FINAL_BOUNDED`
 
-Use one fresh reviewer after `Clean A`. Give it the current complete section diff, frozen contract/non-goals, direct impact cone, current checks, and a concise list of closed root-cause IDs. Do not give it rejected scope proposals or prior persuasive narratives.
+Use one fresh reviewer after any repair, or after clean initial evidence when assurance is `TWO`. Give it the current complete section diff, frozen contract/non-goals, direct impact cone, current checks, and a concise list of closed root-cause IDs. Do not give it rejected scope proposals or prior persuasive narratives.
 
 `FINAL_BOUNDED` is not a second open-ended discovery pass. It checks only:
 
@@ -358,7 +368,7 @@ It must not perform a repository audit or require a stronger contract. If it fin
 Clean B — independent final evidence satisfied
 ```
 
-Then mark the section `SECTION_ACCEPTED`.
+Then mark the section `SECTION_ACCEPTED`. This reviewer provides the single required clean outcome for repaired `ONE` sections and `Clean B` for `TWO` sections.
 
 If it finds a new admissible blocker, that repair uses the same cumulative section-wave budget. Repair it through `REPAIR_DELTA`, then rerun only `FINAL_BOUNDED`. Do not restart the entire initial discovery unless a reset trigger fires.
 
@@ -441,7 +451,7 @@ Run a targeted checkpoint only when a later section begins consuming a new publi
 
 Checkpoint review verifies composition and representative paths; it does not reopen every accepted local line. It uses the same finding classes, five-part blocking proof, scope authority, and cumulative repair accounting as section review. An accepted section is invalidated only when changed product code or observed combined behavior disproves its contract.
 
-After all sections are accepted, run one fresh `$code-review` integration pass over `feature_base..feature_head`, using the bundled integration request. Focus only on:
+After all sections are accepted, run one fresh `$code-review` integration pass over `feature_base..feature_head` when multiple sections or cross-section/runtime/process composition remains to be proven. For one section whose bounded review already covers the complete feature path, reuse that evidence and run only the required feature gate; do not add a redundant integration reviewer. Focus only on:
 
 - original feature outcome and non-goals;
 - emergent cross-section API/schema/state/permission/ordering/error behavior;
@@ -453,14 +463,14 @@ Integration composition creates no new authority to add product scope, deploymen
 
 Do not repeat local section review or upgrade the feature into a repository audit. Use one cumulative integration budget of at most five repair waves across checkpoint/final integration; it never resets when final evidence is rerun. After that, allow at most one bounded `@sol_max` diagnosis/recovery event for the feature integration boundary; if the next bounded repair/final pass does not close, stop as `not-mergeable` or for a genuine owner decision.
 
-Run the broadest deterministic suite/build/browser/application checks once at final integration unless repository rules require otherwise. These checks verify the already-listed feature acceptance criteria and repository-required gates; they do not create new acceptance scope. State readiness as `mergeable`, `not-mergeable`, or `insufficient-evidence`.
+Run the broadest deterministic suite/build/browser/application checks once at final integration unless repository rules require otherwise. Reuse identical successful evidence for the same code head; rerun only when the relevant product/test range changed or the prior run is not trustworthy. These checks verify the already-listed feature acceptance criteria and repository-required gates; they do not create new acceptance scope. State readiness as `mergeable`, `not-mergeable`, or `insufficient-evidence`.
 
 ## Phase 6: Archive and report
 
-1. Update `FEATURE-STATE.md` with section base/head, Clean A/Clean B, admitted findings, repair waves, recovery decisions, checks, and residual risk.
+1. Verify exact final-head equality: required review/check evidence covers the delivered product/test head. If later product/test changes exist, close only that range before readiness. Update `FEATURE-STATE.md` with section base/head, assurance, evidence, findings, waves, recovery, checks, and residual risk.
 2. Delete transient `PLAN.md` only after its section is accepted, replaced, or abandoned with durable state.
 3. Overwrite/delete transient `*-CANDIDATES.md`; preserve the compact authoritative `*-REVIEW.md` ledger.
-4. Archive `PLAN-FULL.md` to `.agent-work/plans/{YYYYMMDD-HHMM}_FULL.md` after final reporting.
+4. Archive the feature-ID-specific `PLAN-FULL.md` and compact ledgers to `.agent-work/plans/{YYYYMMDD-HHMM}_FULL.md` after final reporting; reset/archive active artifacts before a different feature starts.
 5. Do not create a separate commit for every review-state edit. Commit/archive process artifacts at coherent section acceptance, recovery, or final-feature boundaries.
 6. Report in Chinese by default: feature result, section status, admitted defects fixed, scope proposals rejected/deferred, checks, recovery events, residual risk, merge readiness, and maintainability judgment.
 
@@ -468,8 +478,8 @@ Run the broadest deterministic suite/build/browser/application checks once at fi
 
 - One fresh bounded plan reviewer checks the complete PLAN-FULL before implementation; at most one delta-only plan recheck is permitted after a material admitted correction.
 - One implementer works on one current section at a time.
-- One initial bounded review, delta-only repair verification, one final bounded review.
-- Two evidence types are required: `Clean A` closure and `Clean B` independent final verification; two repeated full clean scans are not required.
+- One initial bounded review, delta-only repair verification, and adaptive assurance: `ONE` accepts a clean initial result or a clean fresh final after repair; `TWO` adds independent final evidence.
+- Explicit user `ONE`/`TWO` choice wins unless repository policy requires stronger assurance; otherwise `AUTO` uses recorded semantic risk signals, never project size alone.
 - Only current-diff or newly depended-on material defects block.
 - Review-created scope proposals never enter repair prompts or descendant plans without owner approval.
 - Up to five cumulative section repair waves; final-review repairs count, and the fifth finding is repaired normally.
@@ -477,4 +487,5 @@ Run the broadest deterministic suite/build/browser/application checks once at fi
 - Integration uses the same admission boundary and its own finite cumulative repair budget.
 - Hard-cap recovery preserves valid current work and diagnoses before splitting or restarting.
 - Skill/artifact schema changes never retroactively invalidate product evidence.
-- Section acceptance is provisional; only the final cross-section gate establishes feature merge readiness.
+- A separate integration reviewer is required only when cross-section/runtime/process composition remains unproven; the final feature gate still establishes merge readiness.
+- Exact user examples/corrections must map to acceptance evidence, final evidence must match the delivered product/test head, and active artifacts must not mix features.

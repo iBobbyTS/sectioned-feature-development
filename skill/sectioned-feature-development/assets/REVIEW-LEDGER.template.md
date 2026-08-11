@@ -2,6 +2,7 @@
 
 ## Scope
 
+- Feature ID:
 - Section base:
 - Current head:
 - Contract:
@@ -12,6 +13,10 @@
 - Supported environment/non-goals:
 - Cumulative repair waves used:
 - Automatic recovery used:
+- Review intensity:
+- Review assurance requested/resolved:
+- Assurance reasons/override:
+- Exact product/test head covered by evidence:
 
 ## Initial bounded coverage
 
@@ -49,7 +54,7 @@
 - Required targeted/section checks pass: `yes/no`
 - Remaining evidence gaps:
 
-## Final bounded review
+## Final bounded review, when required
 
 - Reviewer/mode:
 - Range:
@@ -58,9 +63,11 @@
 - New admissible findings, if any:
 - Scope/mechanism drift check:
 
-## Clean B and acceptance
+## Clean evidence and acceptance
 
-- Clean B satisfied: `yes/no`
+- Required evidence under `ONE | TWO`:
+- Clean reviewer outcome(s) satisfied: `yes/no`
+- Clean B satisfied, if required: `yes/no`
 - Section status: `ACCEPTED | NOT_ACCEPTED | BLOCKED`
 - Residual risk:
 

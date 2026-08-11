@@ -2,10 +2,12 @@
 
 ## Feature
 
+- Feature ID / slug:
 - Goal:
 - Execution mode: `PLAN_ONLY | EXECUTE_NO_COMMIT | EXECUTE_WITH_COMMITS`
 - Feature base:
 - Current feature head:
+- Active artifact isolation: `clean | legacy-contaminated | needs-archive`
 - Workflow adoption note: `new | legacy artifacts preserved prospectively`
 - Integration repair waves used: `0/5`
 - Integration automatic recovery used: `no | yes`
@@ -17,6 +19,9 @@
 ## Current section
 
 - ID/title:
+- Review intensity: `MECHANICAL | BOUNDED | HIGH_RISK`
+- Review assurance requested/resolved: `AUTO | ONE | TWO` / `ONE | TWO`
+- Assurance reasons/override:
 - Original section lineage:
 - Section base:
 - Current head:
@@ -25,16 +30,17 @@
 - Inspect-only dependency paths/direct impact cone:
 - Explicitly excluded owners/mechanisms:
 - Allowed structural changes:
-- Review intensity: `MECHANICAL | BOUNDED | HIGH_RISK`
 
 ## Review state
 
 - Initial bounded review: `not-run | complete`
 - Open finding IDs:
 - Cumulative repair waves used: `0/5`
+- Exact product/test head covered by current evidence:
 - Clean A closure: `no | yes`
-- Final bounded review: `not-run | clean | findings`
-- Clean B final: `no | yes`
+- Final bounded review: `not-required | not-run | clean | findings`
+- Required assurance evidence satisfied: `no | yes`
+- Clean B final, if required: `not-required | no | yes`
 - Reset reason, if any:
 
 ## Validation

@@ -33,3 +33,7 @@
 ## v3.3 — 20260810-121928
 
 新增编码前单次、fresh、read-only PLAN-FULL semantic review；最多一次 PLAN_DELTA recheck；保留原代码 review 状态机，禁止 plan-review clean streak、递归 reviewer 或 plan-review-only section。
+
+## v3.4 — 20260811-125226
+
+加入自适应 review assurance：AUTO | ONE | TWO；按语义风险而非纯 LOC 决定独立 clean evidence；强化原始失败样例/后续纠正到 AC/test 的映射、final-head evidence、外部 seam probe、validation evidence reuse 与 feature artifact isolation。

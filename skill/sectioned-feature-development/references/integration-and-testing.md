@@ -6,7 +6,8 @@
 2. [Checkpoint triggers](#checkpoint-triggers)
 3. [Integration review boundary](#integration-review-boundary)
 4. [Evidence failures](#evidence-failures)
-5. [Merge readiness](#merge-readiness)
+5. [Final-head evidence](#final-head-evidence)
+6. [Merge readiness](#merge-readiness)
 
 ## Validation tiers
 
@@ -38,7 +39,7 @@ Run at final integration or when repository rules require:
 - deployment/migration dry run;
 - cross-service integration.
 
-Do not run Tier 3 after every local repair. A test-only local oracle change stays at Tier 1/2 unless it modifies shared/global test infrastructure. Tier 3 validates only the already-listed feature acceptance criteria and repository-required gates; it cannot create new routes, flows, analyzers, or governance obligations.
+Do not run Tier 3 after every local repair. Reuse an identical successful check when the relevant product/test head and environment are unchanged; agent handoff or a fresh reviewer does not itself invalidate CI evidence. A test-only local oracle change stays at Tier 1/2 unless it modifies shared/global test infrastructure. Tier 3 validates only the already-listed feature acceptance criteria and repository-required gates; it cannot create new routes, flows, analyzers, or governance obligations.
 
 ## Checkpoint triggers
 
@@ -56,7 +57,9 @@ A checkpoint verifies producer-consumer composition and representative behavior.
 
 ## Integration review boundary
 
-The final integration review asks what local section reviews could not prove:
+A separate integration reviewer is required when multiple sections, runtime/process boundaries, packaging, migrations, or public-path composition leave behavior that no section review proved. For a single section whose bounded review already covered the complete feature path, omit the redundant integration reviewer and run only the required Tier 3 gate.
+
+When required, the final integration review asks what local section reviews could not prove:
 
 - Does the original feature outcome work end to end?
 - Do section contracts compose correctly?
@@ -88,6 +91,10 @@ Respond proportionally:
 - defer environment-specific validation to final integration when necessary.
 
 Do not create a generic sandbox, network/process interceptor, or large test framework unless the feature contract already requires proving that property.
+
+## Final-head evidence
+
+The reviewed/tested product-and-test head must equal the delivered head used for readiness. Later process/docs-only commits do not invalidate evidence. Later product/test changes require a bounded closure of only that range plus affected checks; do not reopen accepted sections.
 
 ## Merge readiness
 

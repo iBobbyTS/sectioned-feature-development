@@ -3,15 +3,16 @@
 ## Contents
 
 1. [Review roles](#review-roles)
-2. [Causality boundary](#causality-boundary)
-3. [Finding classes](#finding-classes)
-4. [Blocking proof](#blocking-proof)
-5. [Initial bounded review](#initial-bounded-review)
-6. [Repair-delta review](#repair-delta-review)
-7. [Final bounded review](#final-bounded-review)
-8. [Sticky coverage](#sticky-coverage)
-9. [Reset rules](#reset-rules)
-10. [Review packets](#review-packets)
+2. [Review assurance](#review-assurance)
+3. [Causality boundary](#causality-boundary)
+4. [Finding classes](#finding-classes)
+5. [Blocking proof](#blocking-proof)
+6. [Initial bounded review](#initial-bounded-review)
+7. [Repair-delta review](#repair-delta-review)
+8. [Final bounded review](#final-bounded-review)
+9. [Sticky coverage](#sticky-coverage)
+10. [Reset rules](#reset-rules)
+11. [Review packets](#review-packets)
 
 ## Review roles
 
@@ -23,6 +24,28 @@ Use:
 - `REPAIR_DELTA`: closure of frozen findings and repair-caused risk.
 - `FINAL_BOUNDED`: one independent final pass over the current diff.
 - `INTEGRATION`: emergent cross-section behavior only.
+
+## Review assurance
+
+Review intensity selects breadth/model; review assurance selects how much independent evidence is required. Record `ONE`, `TWO`, or `AUTO -> <resolved>` in the plan, contract, state, request, and ledger.
+
+### `ONE`
+
+- One clean independent bounded reviewer outcome is sufficient.
+- A clean `INITIAL_BOUNDED` may accept a bounded/high-risk section after required checks.
+- If initial review finds blockers, close them with `REPAIR_DELTA`, then require one fresh clean `FINAL_BOUNDED`; the earlier non-clean initial does not force another clean pass.
+- Mechanical sections use deterministic checks plus one `FINAL_BOUNDED`.
+
+### `TWO`
+
+- Preserve two evidence types: `Clean A` from initial/closure evidence plus fresh `Clean B` from `FINAL_BOUNDED`.
+- It does not require two repeated full clean scans after a repair.
+
+### Choosing assurance
+
+An explicit owner `ONE`/`TWO` choice wins unless repository policy mandates stronger evidence. Otherwise `AUTO` resolves to `TWO` for persistence/schema/migration; money/security/auth/permissions/credentials; shared-state concurrency, retry/replay/cancellation/background/process lifecycle; business-critical time/date eligibility; public API/protocol compatibility or irreversible external side effects; routing/failover/quota/sticky ownership; two or more runtime/process boundaries or three or more behavioral owners; a hard-to-bound cone; or material incident risk. Use `ONE` otherwise.
+
+A small local fix can remain `ONE` inside a sensitive module when it touches at most two owners, adds no schema/public contract/persistence/state mutation/retry/concurrency, has an exact regression reproduction, and is roughly at most 80 behavioral lines. Record reasons; do not infer assurance from repository size or total test count.
 
 ## Causality boundary
 
@@ -101,7 +124,7 @@ Do not assume arbitrary same-UID attackers, malicious in-process Python objects,
 
 ## Initial bounded review
 
-Run once per stable section baseline.
+Run at most once per stable section baseline.
 
 The reviewer receives:
 
@@ -157,7 +180,7 @@ Do not rescan the original section. Do not reset because HEAD changed.
 
 ## Final bounded review
 
-Run after all admitted findings are closed and section/package checks pass.
+Run after all admitted findings are closed and section/package checks pass when any repair occurred, when assurance is `TWO`, or for a mechanical section. Omit it only when a bounded/high-risk `ONE` section has a clean initial review and no later product/test change.
 
 Use a fresh reviewer. Give it:
 
@@ -177,7 +200,7 @@ The final reviewer is not another open-ended discovery pass. It verifies only:
 - accidental mechanism/scope growth;
 - test sufficiency proportional to the section.
 
-It reports only a new `DIFF_CAUSED`, tightly proven `MERGE_BLOCKING_DEPENDENCY`, or acceptance-criterion-anchored `EVIDENCE_GAP`. Any resulting repair counts toward the same cumulative five-wave section budget. A clean final pass is sufficient; do not require a second full clean pass.
+It reports only a new `DIFF_CAUSED`, tightly proven `MERGE_BLOCKING_DEPENDENCY`, or acceptance-criterion-anchored `EVIDENCE_GAP`. Any resulting repair counts toward the same cumulative five-wave section budget. A clean final pass is sufficient. Under `ONE` after repair, it is the single required clean reviewer outcome; under `TWO`, it is `Clean B`. Do not require another full clean pass.
 
 ## Sticky coverage
 
@@ -192,7 +215,7 @@ Record reviewed coverage in the section ledger:
 
 Coverage remains valid until a repair changes the underlying evidence. Preserve unaffected entries across delta reviews and final review.
 
-A new reviewer does not invalidate existing coverage merely because it has a different context or may choose another lens.
+A new reviewer does not invalidate existing coverage merely because it has a different context or may choose another lens. A fresh reviewer also does not require rerunning identical successful validation against the same code head; independent analysis and CI rerun are separate decisions.
 
 ## Reset rules
 
@@ -216,6 +239,10 @@ Do not reset for:
 - skill updates;
 - different reviewer preference;
 - evidence files moving in Git history.
+
+## Final-head evidence
+
+Before section or feature readiness, record the exact product/test head covered by the required clean reviewer outcome and checks. Later process/docs-only commits do not invalidate it. Any later product/test change requires a bounded review/check closure for only the changed range; it does not reopen accepted predecessors or the full initial review.
 
 ## Review packets
 

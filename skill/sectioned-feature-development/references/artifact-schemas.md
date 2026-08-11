@@ -30,7 +30,9 @@ Use these principles:
 
 Required feature fields:
 
-- original user request;
+- feature ID;
+- original user request plus later corrections/superseded guidance;
+- requirement/example/correction traceability matrix;
 - minimum sufficient end-to-end outcome;
 - scope authority map for proposed outcomes/mechanisms;
 - goal and observable behavior;
@@ -54,7 +56,8 @@ Required section fields:
 - allowed structural changes;
 - acceptance criteria;
 - targeted/section/integration validation;
-- reset triggers.
+- reset triggers;
+- review intensity and review assurance (`ONE | TWO | AUTO -> resolved`) with reasons.
 
 Use durable `FEATURE-CONTEXT` and `SECTION:{ID}` markers so extraction is deterministic.
 
@@ -86,11 +89,11 @@ Do not create RAW/ADMISSION pairs, a clean streak, or a section whose only outpu
 
 Keep compact:
 
-- feature base/head and execution mode;
+- feature ID, base/head, execution mode, and artifact-isolation status;
 - PLAN-FULL review status, reviewed fingerprint, optional PLAN_DELTA result, and open owner decisions;
-- current section/base/head/status and original lineage;
+- current section/base/head/status, original lineage, intensity, and assurance;
 - frozen scope manifest;
-- Clean A/Clean B status;
+- required clean evidence for the resolved assurance and exact reviewed/tested head;
 - open finding IDs and cumulative repair-wave count;
 - current checks and evidence gaps;
 - recovery generation/backup and automatic-recovery-used flag;
@@ -104,7 +107,7 @@ Do not reproduce every reviewer narrative.
 
 Freeze:
 
-- section ID/title/base;
+- feature ID and section ID/title/base;
 - outcome and changed contract;
 - external authority anchor, minimum-outcome necessity, and why a smaller existing path is insufficient;
 - frozen allowed-to-edit owners, inspect-only dependency paths, excluded mechanisms, and direct impact cone;
@@ -112,7 +115,9 @@ Freeze:
 - allowed structural changes;
 - acceptance criteria;
 - validation tiers;
-- reset triggers.
+- review intensity/assurance and the AUTO/override rationale;
+- reset triggers;
+- review intensity and review assurance (`ONE | TWO | AUTO -> resolved`) with reasons.
 
 Ordinary repair does not modify the contract. A material contract change is a reset or owner decision.
 
@@ -135,12 +140,12 @@ Keep it concise enough for a reviewer to orient without reconstructing the whole
 One `{ID}-REVIEW.md` contains:
 
 1. scope/base/head/contract;
-2. initial coverage summary, including any causal inspection expansion outside the named cone;
+2. resolved assurance and initial coverage summary, including any causal inspection expansion outside the named cone;
 3. admitted findings table with acceptance-criterion/repository-gate authority and repair-owner decision;
 4. repair waves and delta closure;
 5. Clean A status;
-6. final bounded result;
-7. Clean B/acceptance status;
+6. final bounded result when required;
+7. clean evidence/acceptance status under `ONE` or `TWO`, with exact reviewed/tested head;
 8. residual risk and non-blocking proposals.
 
 Use stable IDs. Do not create separate durable admission files. The main agent's classification in this ledger is authoritative.
@@ -163,8 +168,9 @@ Record:
 
 ## Archival rules
 
-- Archive PLAN-FULL and the compact plan-review ledger at final feature completion.
+- Archive PLAN-FULL and compact ledgers at final feature completion under the recorded feature ID; reset/archive active artifacts before a different feature starts.
 - Preserve accepted section contracts, handoffs, compact review ledgers, and hard-cap diagnoses.
 - Delete/overwrite transient candidates and extracted PLAN.md when safe.
 - Avoid per-round process commits. Commit/archive artifacts at section acceptance, hard-cap recovery, or final feature boundaries.
 - A newer artifact schema applies prospectively and does not require migration of completed work.
+- Do not mix commits/findings/reviews from another feature ID into current state or audit metrics.

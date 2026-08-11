@@ -3,9 +3,22 @@
 <!-- FEATURE-CONTEXT:START -->
 ## Feature Context
 
+### Feature identity
+
+- Feature ID / slug:
+- Feature base:
+- Active artifacts belong only to this feature: `yes`
+
 ### Original user request
 
 - Copy the request verbatim or quote the exact approved outcome.
+- Later corrections and superseded earlier guidance:
+
+### Requirement, example, and correction traceability
+
+| ID | Current instruction/example/correction | Supersedes | Acceptance criterion | Test or probe |
+|---|---|---|---|---|
+| REQ-001 |  | none | AC-F-001 |  |
 
 ### Minimum sufficient end-to-end outcome
 
@@ -111,6 +124,12 @@ One coherent observable behavior increment.
 
 - `MECHANICAL | BOUNDED | HIGH_RISK`
 
+### Review assurance
+
+- Requested: `AUTO | ONE | TWO`
+- Resolved: `ONE | TWO`
+- Reasons / owner override / repository minimum:
+
 ### Acceptance criteria
 
 - Falsifiable behavior and edge/error outcomes.
@@ -167,6 +186,12 @@ One coherent observable behavior increment.
 ### Review intensity
 
 - `MECHANICAL | BOUNDED | HIGH_RISK`
+
+### Review assurance
+
+- Requested: `AUTO | ONE | TWO`
+- Resolved: `ONE | TWO`
+- Reasons / owner override / repository minimum:
 
 ### Acceptance criteria
 

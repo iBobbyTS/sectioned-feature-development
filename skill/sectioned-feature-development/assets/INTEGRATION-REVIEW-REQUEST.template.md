@@ -1,7 +1,8 @@
 # Feature Integration Review Request
 
-Use `$code-review` as one fresh `INTEGRATION` pass.
+Use `$code-review` as one fresh `INTEGRATION` pass only when cross-section/runtime/process composition remains unproven. A single-section feature whose bounded review covered the complete feature path should skip this reviewer and run only the required feature gate.
 
+- Feature ID:
 - Feature base:
 - Feature head:
 - Feature plan:

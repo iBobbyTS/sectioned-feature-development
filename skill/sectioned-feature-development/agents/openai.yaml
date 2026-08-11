@@ -1,4 +1,4 @@
 interface:
   display_name: "Sectioned Feature Development"
-  short_description: "Plan-review and ship large changes without scope creep"
-  default_prompt: "Use $sectioned-feature-development to review PLAN-FULL before implementation, then ship the minimum approved change as bounded sections."
+  short_description: "Adaptive review for large changes without scope creep"
+  default_prompt: "Use $sectioned-feature-development to review PLAN-FULL, select ONE or TWO review assurance from explicit choice or recorded risk, then ship the minimum approved change as bounded sections."
