@@ -37,3 +37,7 @@
 ## v3.4 — 20260811-125226
 
 加入自适应 review assurance：AUTO | ONE | TWO；按语义风险而非纯 LOC 决定独立 clean evidence；强化原始失败样例/后续纠正到 AC/test 的映射、final-head evidence、外部 seam probe、validation evidence reuse 与 feature artifact isolation。
+
+## v3.5 — 20260813-145021
+
+把流程 Audit 作为独立观测能力接入 Skill reference：记录 invocation source、LIVE/POST_HOC trace、feature artifact 隔离与审计一致性；Audit 不新增开发/review gate。

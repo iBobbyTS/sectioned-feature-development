@@ -1,11 +1,11 @@
 ---
 name: sectioned-feature-development
-description: "Plan, pre-review, implement, review, and integrate large or high-risk software changes as minimal bounded sections without plan-created or review-created scope creep. Use when expected behavioral edits may exceed roughly 300 lines; more than three modules, packages, services, pages, or workflows are affected; persistence, schema, security, permissions, concurrency, public API, deployment, routing, or state ownership changes; the impact cone is hard to bound; or a previous whole-change review failed to converge. The workflow anchors every section to the original request or an unavoidable correctness/repository obligation, requires one fresh bounded PLAN-FULL review before implementation, then selects one- or dual-evidence code-review assurance from explicit user choice or mechanical risk signals, uses delta-only repair verification, proportional testing, exact final-head evidence, and evidence-preserving hard-cap recovery."
+description: "Plan, pre-review, implement, review, and integrate large or high-risk software changes as minimal bounded sections without plan-created or review-created scope creep. Use when expected behavioral edits may exceed roughly 300 lines; more than three modules, packages, services, pages, or workflows are affected; persistence, schema, security, permissions, concurrency, public API, deployment, routing, or state ownership changes; the impact cone is hard to bound; or a previous whole-change review failed to converge. The workflow anchors every section to the original request or an unavoidable correctness/repository obligation, requires one fresh bounded PLAN-FULL review before implementation, then selects one- or dual-evidence code-review assurance from explicit user choice or mechanical risk signals, uses delta-only repair verification, proportional testing, exact final-head evidence, evidence-preserving hard-cap recovery, and an optional user-enabled process audit trace."
 ---
 
 # Sectioned Feature Development
 
-**Workflow revision:** V3.4
+**Workflow revision:** V3.5
 
 Deliver one non-trivial change as a sequence of minimal, reviewable behavior sections. The governing invariant is:
 
@@ -26,7 +26,6 @@ Use patchset-style review with proportional assurance: one bounded discovery pas
 - Technical hard-cap diagnosis and bounded recovery do not require continuation approval. Stop only for a genuine owner decision: product semantics, supported environment, compatibility, migration meaning, durability, threat model, acceptable risk, or rollout policy.
 
 ## Trigger
-
 Use this workflow when any condition holds:
 
 - Expected behavioral edits are roughly more than 300 lines.
@@ -37,6 +36,11 @@ Use this workflow when any condition holds:
 - A previous whole-change implementation or review loop failed to converge.
 
 The thresholds only route work into this skill. Semantic ownership and reviewability dominate raw line count.
+
+At activation, record `invocation_source` as `USER_EXPLICIT`, `CUSTOM_INSTRUCTIONS_AUTO`, or `AGENT_DISCRETION`, plus the exact trigger evidence and `FEATURE_START | MID_FEATURE` timing. Do not label a normal feature request as an explicit skill request unless the user named or directly requested this workflow.
+
+## Optional audit mode
+Audit is `OFF` by default and may be enabled only by an explicit user request. When enabled, read [references/audit-mode.md](references/audit-mode.md), initialize its append-only trace before planning or at the current adoption point, and record only major workflow events. Audit mode adds no reviewer, test, acceptance criterion, or implementation scope.
 
 ## Non-negotiable anti-expansion rules
 
@@ -59,7 +63,6 @@ The thresholds only route work into this skill. Semantic ownership and reviewabi
 17. **Reusable validation evidence:** an unchanged code range may reuse an identical successful check. A fresh reviewer means independent analysis, not automatic rerunning of the same CI command.
 
 ## Durable artifacts
-
 Use these paths unless repository rules define equivalents:
 
 ```text
@@ -78,6 +81,8 @@ Use these paths unless repository rules define equivalents:
 │   └── ...
 ├── replans/
 │   └── S01-g01-DIAGNOSIS.md
+├── audit/                         # only when explicitly enabled
+│   └── {feature-id}/TRACE.jsonl
 └── plans/
     └── {YYYYMMDD-HHMM}_FULL.md
 ```
@@ -85,13 +90,13 @@ Use these paths unless repository rules define equivalents:
 `PLAN-FULL.md`, the current section contract, and `FEATURE-STATE.md` are authoritative for one recorded feature ID. `PLAN-REVIEW.md` records the one pre-implementation plan gate; it does not create product authority. `S01-REVIEW.md` is one compact ledger for initial findings, delta closures, final verification, and residual risk. Do not create separate durable RAW/ADMISSION/state commits for every reviewer call.
 
 ## Load references progressively
-
 - Read [references/section-planning.md](references/section-planning.md) before creating or changing the section graph and before the mandatory pre-implementation plan review.
 - Read [references/bounded-review.md](references/bounded-review.md) before the first section review or any repair loop.
 - Read [references/scope-control.md](references/scope-control.md) when security, persistence, compatibility, generalized tooling, test infrastructure, or over-design is possible.
 - Read [references/recovery-and-migration.md](references/recovery-and-migration.md) at a hard cap or when adopting this skill mid-feature.
 - Read [references/integration-and-testing.md](references/integration-and-testing.md) before checkpoints, final integration, or broad validation.
 - Read [references/artifact-schemas.md](references/artifact-schemas.md) when creating or updating artifacts.
+- Read [references/audit-mode.md](references/audit-mode.md) only when the user explicitly enables a live or post-hoc process audit.
 
 ## Core state machine
 
@@ -141,8 +146,8 @@ Advance only when the corresponding code-visible evidence exists. Agent declarat
 
 ## Phase 0: Preflight and feature scope
 
-1. Inspect repository rules, architecture sources, current branch, `git status`, relevant recent commits, build/test entry points, and available environment.
-2. Freeze the exact `feature_base`.
+1. Inspect repository rules, architecture sources, current branch, `git status`, relevant recent commits, build/test entry points, and available environment. Record invocation source/timing and the exact rule or user statement that activated the skill.
+2. Before freezing `feature_base`, preserve the prior feature's active PLAN/state/review artifacts under its own archive and initialize clean active artifacts for the new feature, so prior-artifact deletion/replacement cannot enter the new feature range. Prefer a separate pre-feature process commit when commits are authorized; otherwise record the unresolved contamination. Never use Git reset or delete unrelated/user work for artifact isolation. Then freeze the exact base. If audit is enabled, initialize the live trace now; a mid-feature audit marks earlier events `RECONSTRUCTED`.
 3. Record the original user request verbatim, later corrections, named failing examples/counterexamples, and the smallest end-to-end observable outcome. Build a requirement-example matrix mapping each current instruction/example to an acceptance criterion and test/probe. Mark conflicting earlier guidance `SUPERSEDED`; do not silently keep both or turn implementation ideas/reviewer suggestions into requirements.
 4. Before sectioning, build a compact authority map. Every proposed outcome, acceptance criterion, option/UI/config surface, support harness, compatibility promise, and structural change must cite one of:
    - the original user request or a later explicit owner decision;
@@ -470,12 +475,12 @@ Run the broadest deterministic suite/build/browser/application checks once at fi
 1. Verify exact final-head equality: required review/check evidence covers the delivered product/test head. If later product/test changes exist, close only that range before readiness. Update `FEATURE-STATE.md` with section base/head, assurance, evidence, findings, waves, recovery, checks, and residual risk.
 2. Delete transient `PLAN.md` only after its section is accepted, replaced, or abandoned with durable state.
 3. Overwrite/delete transient `*-CANDIDATES.md`; preserve the compact authoritative `*-REVIEW.md` ledger.
-4. Archive the feature-ID-specific `PLAN-FULL.md` and compact ledgers to `.agent-work/plans/{YYYYMMDD-HHMM}_FULL.md` after final reporting; reset/archive active artifacts before a different feature starts.
+4. Archive the feature-ID-specific `PLAN-FULL.md` and compact ledgers to `.agent-work/plans/{YYYYMMDD-HHMM}_FULL.md` after final reporting; preserve/archive the old feature-owned active artifacts before initializing a different feature.
 5. Do not create a separate commit for every review-state edit. Commit/archive process artifacts at coherent section acceptance, recovery, or final-feature boundaries.
-6. Report in Chinese by default: feature result, section status, admitted defects fixed, scope proposals rejected/deferred, checks, recovery events, residual risk, merge readiness, and maintainability judgment.
+6. If audit was explicitly enabled, finalize the read-only audit pack from the live trace, Git, and original artifacts according to `references/audit-mode.md`; do not run new review/tests or fix audit findings.
+7. Report in Chinese by default: feature result, section status, admitted defects fixed, scope proposals rejected/deferred, checks, recovery events, residual risk, merge readiness, and maintainability judgment.
 
 ## Final rules
-
 - One fresh bounded plan reviewer checks the complete PLAN-FULL before implementation; at most one delta-only plan recheck is permitted after a material admitted correction.
 - One implementer works on one current section at a time.
 - One initial bounded review, delta-only repair verification, and adaptive assurance: `ONE` accepts a clean initial result or a clean fresh final after repair; `TWO` adds independent final evidence.
@@ -489,3 +494,4 @@ Run the broadest deterministic suite/build/browser/application checks once at fi
 - Skill/artifact schema changes never retroactively invalidate product evidence.
 - A separate integration reviewer is required only when cross-section/runtime/process composition remains unproven; the final feature gate still establishes merge readiness.
 - Exact user examples/corrections must map to acceptance evidence, final evidence must match the delivered product/test head, and active artifacts must not mix features.
+- Audit remains opt-in and observational: it records trigger provenance and costs but never changes review assurance, creates work, or authorizes fixes.

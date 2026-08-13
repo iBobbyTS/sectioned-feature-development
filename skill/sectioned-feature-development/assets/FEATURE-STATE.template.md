@@ -5,9 +5,14 @@
 - Feature ID / slug:
 - Goal:
 - Execution mode: `PLAN_ONLY | EXECUTE_NO_COMMIT | EXECUTE_WITH_COMMITS`
+- Skill invocation source: `USER_EXPLICIT | CUSTOM_INSTRUCTIONS_AUTO | AGENT_DISCRETION`
+- Invocation timing: `FEATURE_START | MID_FEATURE`
+- Trigger evidence / matched conditions:
+- Audit mode: `OFF | LIVE | POST_HOC`
+- Audit trace path, if enabled:
 - Feature base:
 - Current feature head:
-- Active artifact isolation: `clean | legacy-contaminated | needs-archive`
+- Active artifact isolation: `clean | archived-before-base | legacy-contaminated | needs-archive`
 - Workflow adoption note: `new | legacy artifacts preserved prospectively`
 - Integration repair waves used: `0/5`
 - Integration automatic recovery used: `no | yes`

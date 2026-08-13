@@ -11,7 +11,8 @@
 7. [Section handoff](#section-handoff)
 8. [Review ledger](#review-ledger)
 9. [Hard-cap diagnosis](#hard-cap-diagnosis)
-10. [Archival rules](#archival-rules)
+10. [Optional audit trace](#optional-audit-trace)
+11. [Archival rules](#archival-rules)
 
 ## Design goals
 
@@ -89,7 +90,7 @@ Do not create RAW/ADMISSION pairs, a clean streak, or a section whose only outpu
 
 Keep compact:
 
-- feature ID, base/head, execution mode, and artifact-isolation status;
+- feature ID, base/head, execution mode, artifact-isolation status, invocation source/timing, exact trigger evidence, and audit mode/path;
 - PLAN-FULL review status, reviewed fingerprint, optional PLAN_DELTA result, and open owner decisions;
 - current section/base/head/status, original lineage, intensity, and assurance;
 - frozen scope manifest;
@@ -166,9 +167,23 @@ Record:
 - preserved code/evidence;
 - restart base only when `RESTART_FROM_BASE`.
 
+## Optional audit trace
+
+Audit is disabled unless the user explicitly enables it. When enabled, keep one append-only `.agent-work/audit/{feature-id}/TRACE.jsonl` generated with `scripts/audit_trace.py`. Record major phase transitions, reviewer lifecycle, admitted/rejected findings, repairs, validation commands/results, owner decisions, functional/final heads, and scope changes. Each event carries the current Git head and tracked-diff fingerprint so unchanged evidence can be identified mechanically.
+
+The first event must record:
+
+- `invocation_source`: `USER_EXPLICIT`, `CUSTOM_INSTRUCTIONS_AUTO`, or `AGENT_DISCRETION`;
+- exact trigger evidence and matched conditions;
+- invocation timing: `FEATURE_START | MID_FEATURE`;
+- the user's explicit audit-enablement request;
+- feature ID, base, branch, and skill version.
+
+Do not log secrets, raw credentials, cookies, environment values, or full unrelated prompts. Audit events are observational and never create product authority, review findings, tests, repair waves, or acceptance gates. A late/post-hoc audit labels reconstructed events as such instead of pretending they were captured live. See `references/audit-mode.md` for the complete protocol and final pack schema.
+
 ## Archival rules
 
-- Archive PLAN-FULL and compact ledgers at final feature completion under the recorded feature ID; reset/archive active artifacts before a different feature starts.
+- Archive PLAN-FULL and compact ledgers at final feature completion under the recorded feature ID. Before freezing a different feature's base, preserve prior feature-owned active artifacts under their own archive and initialize clean active artifacts, preferably in a separate authorized pre-feature process commit. Never use Git reset or delete unrelated/user work for this isolation.
 - Preserve accepted section contracts, handoffs, compact review ledgers, and hard-cap diagnoses.
 - Delete/overwrite transient candidates and extracted PLAN.md when safe.
 - Avoid per-round process commits. Commit/archive artifacts at section acceptance, hard-cap recovery, or final feature boundaries.
