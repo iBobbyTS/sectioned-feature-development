@@ -1,273 +1,300 @@
-# Optional Process Audit Mode
+# Audit Mode
 
 ## Contents
 
-1. [Purpose and activation](#purpose-and-activation)
-2. [Invocation provenance](#invocation-provenance)
-3. [Live trace](#live-trace)
-4. [Events to record](#events-to-record)
+1. [Purpose and defaults](#purpose-and-defaults)
+2. [Evidence sources and session access](#evidence-sources-and-session-access)
+3. [Exact requirement record](#exact-requirement-record)
+4. [Live trace](#live-trace)
 5. [Observational boundary](#observational-boundary)
-6. [Final read-only audit](#final-read-only-audit)
-7. [Mechanical consistency gates](#mechanical-consistency-gates)
-8. [Required analyses](#required-analyses)
-9. [Audit pack layout](#audit-pack-layout)
-10. [Safety and final response](#safety-and-final-response)
+6. [Completion obligation](#completion-obligation)
+7. [Canonical pack workflow](#canonical-pack-workflow)
+8. [Status model](#status-model)
+9. [Conflict rules](#conflict-rules)
+10. [Required analyses and files](#required-analyses-and-files)
+11. [Mechanical consistency](#mechanical-consistency)
+12. [Safety](#safety)
+13. [Final response](#final-response)
 
-## Purpose and activation
+## Purpose and defaults
 
-Audit mode measures whether sectioned development was proportionate: why the skill was activated, what the user actually requested, what PLAN/review added or removed, where time/tokens/validation were spent, and whether the workflow created avoidable work.
+Audit mode measures whether sectioned development improved correctness without creating avoidable planning, review, validation, or process work.
 
-Audit is `OFF` by default. Enable it only when the user explicitly asks to audit, collect workflow data, or run with audit mode. The agent must not enable audit merely because the feature is complex.
+While this skill is under evaluation:
 
-Use one mode:
+- default mode is `LIVE`;
+- the user may explicitly request `audit off`;
+- a request after work started uses `POST_HOC` for earlier events and `LIVE` from adoption onward;
+- audit does not authorize or require more implementation, reviewers, tests, probes, or product scope.
 
-- `LIVE`: the user enables audit before or during development. Initialize an append-only trace and record major events as work proceeds.
-- `POST_HOC`: the user asks after the feature/stage ends. Do not invent live records; reconstruct from Git/artifacts/session evidence and label every reconstructed item.
+Record the mode in `FEATURE-STATE.md` before planning. Initialize:
 
-When the user enables `LIVE`, run:
-
-```bash
-python {skill-dir}/scripts/audit_trace.py init \
-  .agent-work/audit/{feature-id}/TRACE.jsonl \
-  --feature-id {feature-id} \
-  --skill-version V3.5 \
-  --invocation-source {USER_EXPLICIT|CUSTOM_INSTRUCTIONS_AUTO|AGENT_DISCRETION} \
-  --invocation-timing {FEATURE_START|MID_FEATURE} \
-  --trigger-evidence "{exact user statement or matched rule}" \
-  --audit-enabled-by "{exact user audit request}" \
-  --feature-base {sha} \
-  --repo .
+```text
+.agent-work/audit/{feature-id}/
+├── TRACE.jsonl
+├── REQUIREMENTS.md
+└── PACK-STATE.json
 ```
 
-Do not commit every trace append. Preserve it with coherent section/final process artifacts or leave it uncommitted when repository rules exclude audit data.
+The audit working pack lives at:
 
-## Invocation provenance
+```text
+.agent-work/audit-packs/{feature-id}/current/
+```
 
-The audit must distinguish how `$sectioned-feature-development` started:
+The one canonical ZIP lives at:
 
-- `USER_EXPLICIT`: the user named the skill or directly required this workflow.
-- `CUSTOM_INSTRUCTIONS_AUTO`: the user requested the feature normally, and a mandatory Custom Instructions trigger activated the skill.
-- `AGENT_DISCRETION`: no explicit user request or mandatory trigger required it; the agent chose the workflow.
+```text
+~/Desktop/audit-pack/{repo}-{feature-id}-sectioned-audit.zip
+```
 
-Also record:
+A repeat finalization for the same feature/product head replaces that canonical file atomically after validation; it must not create another timestamped candidate ZIP.
 
-- invocation timing: `FEATURE_START` or `MID_FEATURE`;
-- exact user text/rule that triggered it;
-- predicted signals at activation: estimated behavioral LOC, owner/module count, semantic boundaries, impact-cone uncertainty, prior review failure;
-- resolved review assurance and its reasons.
+## Evidence sources and session access
 
-At final audit, compare predicted signals with actual product/test diff and behavior. Classify activation:
+Use evidence in this order:
 
-- `JUSTIFIED` — actual scope/risk supported sectioned development;
-- `BORDERLINE` — useful but workflow burden was high relative to the change;
-- `OVER_TRIGGERED` — an automatically selected workflow made a small bounded task materially more complex without useful findings;
-- `UNDER_TRIGGERED` — the task was treated as small but later required sectioning/recovery;
-- `UNKNOWN` — evidence is insufficient.
+1. Git objects, source at exact base/head, and current tracked worktree;
+2. original PLAN/contracts/handoffs/review ledgers and validation output;
+3. live trace;
+4. relevant Codex session records;
+5. agent narrative summaries.
 
-Do not call explicit user selection an agent trigger error. You may still assess whether the resulting plan/review depth was proportionate.
+For audit reconstruction the agent may read relevant sessions under only:
+
+```text
+~/.codex/sessions
+~/.codex-multi-2/sessions
+```
+
+Select candidate sessions by repository root, feature time window, branch/feature ID, and task text. Do not copy or summarize unrelated sessions. Do not include raw session files in the pack by default. Produce redacted derived files such as:
+
+```text
+session/HUMAN-MESSAGES.md
+session/SESSION-TIMELINE.md
+session/SESSION-SOURCES.md
+```
+
+Preserve timestamps, user messages affecting scope, agent/subagent lifecycle, reviewer interruption, command families, context compaction, and observable idle gaps. Remove credentials, injected system/developer instructions, unrelated repository tasks, and raw secret-bearing payloads.
+
+Use `scripts/session_evidence.py` when its JSONL format matches the installed Codex session format. If it cannot parse a session, record the exact file and parser gap; do not fabricate reconstructed messages.
+
+## Exact requirement record
+
+An audit pack is not complete merely because `PLAN-FULL.md` summarizes the request. At feature activation maintain:
+
+```text
+.agent-work/audit/{feature-id}/REQUIREMENTS.md
+```
+
+It must contain:
+
+1. exact original user message(s) that define the feature;
+2. every later user correction or owner decision that changes scope or semantics;
+3. Grill Me questions and the user's answers, grouped by decision chain;
+4. a final resolved requirement list;
+5. every superseded instruction and the message that superseded it;
+6. named failing examples, counterexamples, expected outputs, and environment constraints;
+7. source provenance: live capture, session file/message ID, or post-hoc reconstruction.
+
+If Grill Me was not used, write `Grill Me: not used`. If the session source is unavailable, mark the missing verbatim evidence `UNKNOWN`; do not infer it from PLAN or code.
+
+`PLAN-FULL.md` must reference this record and contain the resolved requirement/example matrix. The audit pack includes both the exact record and PLAN history.
 
 ## Live trace
 
-The trace is a measurement log, not another workflow ledger. Record major events only. Do not log every file read, grep, status check, or conversational update.
+Use `scripts/audit_trace.py`. Record major events only:
 
-Append with:
+- audit/requirement initialization and user corrections;
+- branch-base choice;
+- plan frozen and reviewer lifecycle;
+- section start and implementation completion;
+- code reviewer lifecycle;
+- finding admission/rejection/reopening;
+- repair and delta closure;
+- validation command family/result/code fingerprint;
+- scope/owner decision;
+- hard cap/recovery;
+- first functionally complete head;
+- final product/test head and readiness;
+- audit finalization start/failure/success metadata.
 
-```bash
-python {skill-dir}/scripts/audit_trace.py append \
-  .agent-work/audit/{feature-id}/TRACE.jsonl \
-  --event {event} \
-  --phase {phase} \
-  --summary "{short factual summary}" \
-  --repo . \
-  --actor {main|implementer|reviewer|planner|user|tool} \
-  --profile {profile-or-none} \
-  --field key=value
-```
+Do not trace every file read, grep, status check, progress message, or plan wording edit.
 
-Validate periodically and before packing:
+The trace helper uses a lock and unique record IDs. Sequence gaps, duplicate legacy sequences, unknown future event vocabulary, or missing lifecycle events are telemetry warnings unless they create an unresolved substantive contradiction.
 
-```bash
-python {skill-dir}/scripts/audit_trace.py validate \
-  .agent-work/audit/{feature-id}/TRACE.jsonl
-
-python {skill-dir}/scripts/audit_trace.py summary \
-  .agent-work/audit/{feature-id}/TRACE.jsonl \
-  --output .agent-work/audit/{feature-id}/TRACE-SUMMARY.json
-```
-
-The script records current branch, HEAD, tracked-diff SHA-256, and status SHA-256. This allows repeated checks on unchanged code to be identified mechanically.
-
-## Events to record
-
-Record these when they occur:
-
-- `user_requirement` — original requirement or later explicit correction/decision;
-- `plan_frozen` — PLAN-FULL validated, including plan fingerprint and section count;
-- `plan_review_dispatched`, `plan_review_completed`, `review_cancelled`;
-- `section_started`, `implementation_completed`;
-- `review_dispatched`, `review_completed`;
-- `finding_admitted`, `finding_rejected`;
-- `repair_completed` — one coherent repair wave and finding IDs;
-- `validation_completed` — command family, result, duration if known, and whether targeted/section/broad;
-- `scope_change` — approved narrowing/expansion and authority;
-- `owner_decision`;
-- `hard_cap`, `recovery_completed`;
-- `functional_head` — first head where the original user-visible outcome was substantially complete;
-- `feature_completed` — final product/test head and readiness;
-- `audit_note` — bounded measurement caveat;
-- `audit_pack_generated`.
-
-For reviewer lifecycle, record dispatch ID/profile, mode, reviewed base/head, result, candidate/admitted counts, and interruption/timeout. For validation, record the exact command family and result but redact secret-bearing arguments and environment values.
+A missing trace field never blocks product work. Record the gap and continue.
 
 ## Observational boundary
 
 Audit mode must not:
 
 - add plan or code reviewers;
-- change `ONE`/`TWO` assurance;
-- add acceptance criteria, tests, probes, analyzers, or proof systems;
+- upgrade `ONE` to `TWO`;
+- add acceptance criteria, tests, probes, analyzers, harnesses, or proof systems;
 - rerun a command only to improve audit completeness;
 - create a section, repair wave, hard-cap event, or owner decision;
-- block implementation because a trace field is missing;
-- fix defects found during the final audit.
+- reopen accepted work;
+- fix a product defect found during final audit;
+- delay a product-ready conclusion except for generating the required audit artifact itself.
 
-A trace or audit-format failure is process metadata, not product evidence failure. Record the gap and continue the underlying workflow.
+Product readiness and audit delivery are separate. A feature may be `mergeable` while workflow delivery remains `AUDIT_PENDING`.
 
-## Final read-only audit
+## Completion obligation
 
-At the requested feature/stage stopping point, stop modifying product code, tests, plans, contracts, reviews, and Git history. Do not call implementers or reviewers. Do not rerun tests merely for the audit.
+When audit is active, the main agent must not send the final feature-completion response until one of these is true:
 
-Create:
+- `PACK-STATE.json` is `COMPLETE` and the canonical ZIP verifies; or
+- one bounded correction attempt failed and the response explicitly reports `AUDIT_PACK_INCOMPLETE`, the preserved working-pack path, and the validator error.
 
-```text
-.agent-work/audit-packs/{YYYYMMDD-HHMM}-sectioned-audit/
-```
-
-Then zip it as:
+Before implementation begins, set:
 
 ```text
-.agent-work/audit-packs/{YYYYMMDD-HHMM}-sectioned-audit.zip
+audit_pack_required = yes
+audit_pack_state = PENDING
 ```
 
-Use the live trace as the primary event source. Use Git and original artifacts as the source of truth for code ranges and review findings. If trace and source disagree, preserve the conflict; do not silently reconcile it.
+At `feature_completed`, immediately transition to audit finalization. Context compaction does not remove this obligation; reread `FEATURE-STATE.md` and `PACK-STATE.json` before final reporting.
 
-## Mechanical consistency gates
+Do not rely on memory or a final checklist buried in prior context.
 
-Before drawing conclusions, verify:
+## Canonical pack workflow
 
-### Feature range
+### 1. Prepare once
 
-Every feature commit cited must belong to:
+Populate the working pack under:
+
+```text
+.agent-work/audit-packs/{feature-id}/current/
+```
+
+Do not create a new timestamped directory for each correction.
+
+### 2. Deterministic preflight
+
+Run:
 
 ```bash
-git rev-list {feature_base}..HEAD
+python {skill-dir}/scripts/audit_finalize.py check \
+  --repo . \
+  --feature-id {feature-id} \
+  --pack-dir .agent-work/audit-packs/{feature-id}/current \
+  --trace .agent-work/audit/{feature-id}/TRACE.jsonl \
+  --feature-base {feature-base} \
+  --product-head {product-head}
 ```
 
-A commit outside that range is `OUT_OF_FEATURE_RANGE` and excluded from feature metrics.
+The checker verifies required files, feature/head identity, manifest inputs, unsafe filenames/content markers, trace status, and pack-local source references. It emits errors before any ZIP is published.
 
-### Findings and repair waves
+### 3. One bounded correction
 
-Every counted finding must point to an included original review artifact with reviewed base/head, class, admission, repair diff/commit, and closure. Missing evidence makes it `UNVERIFIED_FINDING`.
+Correct only audit artifacts or collection mistakes. Do not rerun product review/tests or change product code. Run `check` once more.
 
-A repair wave counts only when all three exist:
+If it still fails, stop as `AUDIT_PACK_INCOMPLETE`; do not generate a succession of partial ZIPs.
+
+### 4. Atomic finalization
+
+Run:
+
+```bash
+python {skill-dir}/scripts/audit_finalize.py finalize \
+  --repo . \
+  --feature-id {feature-id} \
+  --pack-dir .agent-work/audit-packs/{feature-id}/current \
+  --trace .agent-work/audit/{feature-id}/TRACE.jsonl \
+  --feature-base {feature-base} \
+  --product-head {product-head} \
+  --desktop-root ~/Desktop/audit-pack
+```
+
+The finalizer:
+
+- holds a feature-local lock;
+- creates `PACK-METADATA.json` and `PACK-MANIFEST.sha256`;
+- writes a temporary ZIP;
+- verifies its manifest;
+- atomically replaces the canonical ZIP;
+- writes the sidecar SHA-256 and `PACK-STATE.json`;
+- returns the existing canonical ZIP unchanged when the source fingerprint is identical.
+
+Do not append another “pack generated” event and rebuild solely to make that event appear inside the ZIP. `PACK-METADATA.json` and `PACK-STATE.json` are the authoritative finalization record.
+
+## Status model
+
+Report separate axes.
+
+### Pack status
 
 ```text
-admitted material finding + product/test repair diff + closure evidence
+COMPLETE
+COMPLETE_WITH_GAPS
+INCOMPLETE
+FAILED
 ```
 
-Process-document edits, fingerprint changes, or reviewer restarts are not repair waves.
-
-### Final-head evidence
-
-The delivered product/test head must equal the head covered by required review and validation. Later process/docs-only commits are listed separately.
-
-### Cross-feature isolation
-
-Every PLAN, review, finding, commit, and test result must belong to the current feature ID/range. If prior-feature artifacts entered the diff or audit:
+### Telemetry status
 
 ```text
-CROSS_FEATURE_CONTAMINATION
-AUDIT_STATUS = CONFLICTED
+VALID
+DEGRADED
+INVALID
 ```
 
-Exclude contaminated lines/events from isolated metrics while preserving raw values.
+### Evidence consistency
 
-### Counts
+```text
+CONSISTENT
+RESOLVABLE_DRIFT
+CONFLICTED
+```
 
-Mechanically derive commits, changed paths, LOC classes, reviewer artifacts, repair waves, validation commands, hard caps, retries, and branch/worktree events. If a narrative value conflicts with Git/trace/artifacts, report both values and mark the audit `CONFLICTED`.
+### Product/readiness status
 
-### Time and tokens
+Use the workflow's normal functional and merge-readiness verdict independently.
 
-Separate:
+A useful final combination is:
 
-- `WALL_CLOCK_SPAN`;
-- `ACTIVE_AGENT_TIME` when directly observable;
-- `IDLE_OR_USER_ABSENCE`;
-- `WAITING_FOR_USER`;
-- `WAITING_FOR_TOOL`;
-- `SUBAGENT_RUNTIME`;
-- `UNATTRIBUTED_GAP`.
+```text
+Pack: COMPLETE_WITH_GAPS
+Telemetry: DEGRADED
+Evidence consistency: CONSISTENT
+Product: MERGEABLE
+```
 
-Never treat a long gap between events as agent effort without evidence. Cumulative/compaction-sensitive token counters are retained as raw telemetry but not presented as exact feature cost.
+Do not collapse all axes into one global `CONFLICTED` label.
 
-## Required analyses
+## Conflict rules
 
-### Human requirements
+Use `CONFLICTED` only when an unresolved contradiction can change at least one substantive conclusion and cannot be mechanically isolated:
 
-Create `HUMAN-REQUIREMENTS.md` with original user text, later explicit corrections, superseded guidance, final behavior, owner, evidence, and `SATISFIED | PARTIAL | NOT_SATISFIED | UNKNOWN`. Do not infer human authority from PLAN or reviewers.
+- feature base/head/range identity;
+- exact human requirement or supersession state;
+- whether a material finding existed or was admitted;
+- whether a repair changed product/test code and closed that finding;
+- final product/test head covered by required evidence;
+- source snapshot/patch identity;
+- functional or merge-readiness verdict;
+- cross-feature contamination that cannot be excluded from the current feature.
 
-### Invocation audit
+Use `RESOLVABLE_DRIFT` or telemetry `DEGRADED`, not `CONFLICTED`, for:
 
-Create `INVOCATION-AUDIT.md` containing:
+- stable finding IDs renamed while root cause, repair, and closure agree;
+- trace sequence gaps/duplicates or unknown event names;
+- missing reviewer lifecycle events when original ledgers exist;
+- stale narrative counts when mechanical counts are available;
+- duplicate audit-pack attempts;
+- missing or compaction-sensitive token counters;
+- stale process-only state fields;
+- prior-feature artifacts that can be mechanically excluded;
+- timestamp or branch-display drift that does not alter exact Git objects.
 
-- invocation source/timing and exact evidence;
-- predicted trigger signals;
-- actual product/test LOC, behavioral owners, semantic boundaries, sections, assurance, findings, and repairs;
-- `JUSTIFIED | BORDERLINE | OVER_TRIGGERED | UNDER_TRIGGERED | UNKNOWN`;
-- for automatic invocation, whether the agent confused merely touching/reading a high-risk boundary with materially changing its semantics;
-- counterfactual normal-workflow cost for a small bounded task.
+When a narrative count differs from a mechanical count, preserve both, use the mechanical value, and record `METADATA_DRIFT`.
 
-### Counterfactual minimum
+Several completed audits in the evaluation set were falsely made globally conflicted by finding-ID renumbering, under-recorded trace events, duplicate sequences, or stale wave counts. V3.7 treats those as degraded telemetry unless product evidence itself is contradictory.
 
-Create `COUNTERFACTUAL-MINIMUM.md`: describe the smallest reasonable implementation from the feature base, then classify actual work as `REQUIRED_PRODUCT`, `UNAVOIDABLE_CORRECTNESS`, `REASONABLE_MAINTAINABILITY`, `OPTIONAL_IMPROVEMENT`, `PLAN_CREATED_SCOPE`, `REVIEW_CREATED_SCOPE`, `PROCESS_ONLY`, or `LEGACY_PREEXISTING`. Mark this analysis `ADVISORY_INFERENCE`.
+## Required analyses and files
 
-### PLAN audit
-
-Create `PLAN-AUDIT.md` covering requirement traceability, section proportionality, PLAN-created scope, plan-review findings, rework avoided, plan-review dispatch/retry cost, and whether a clean plan review added measurable value.
-
-### Review audit
-
-Create `REVIEW-AUDIT.md` covering each initial/delta/final/integration pass, finding causality/authority/materiality, repair and closure, repeated full rediscovery, accepted-section reopening, reviewer-created scope, repair budget, interrupted/duplicate reviewer dispatches, and unique defect yield from FINAL review.
-
-### Scope audit
-
-Create `SCOPE-AUDIT.md` listing every new service, registry, state machine, worker, persistence layer, parser/analyzer, CI rule, security control, proof/evidence harness, compatibility layer, public API/config/UI surface, and observability mechanism. Record who introduced it, authority, necessity, extra work caused, and whether it remains.
-
-### Validation audit
-
-Create `VALIDATION-AUDIT.md`. For each command family record count, exact code fingerprints, targeted/section/broad classification, result, duration if known, and whether it was `TARGETED_AFTER_CHANGE`, `SECTION_GATE`, `FEATURE_GATE`, `REPRODUCTION`, `DUPLICATE_UNCHANGED_EVIDENCE`, or `UNKNOWN`.
-
-At minimum count focused tests, full suites, lint/check/typecheck, formatter, build/package, browser/E2E, migration generation, `git diff --check`, and CodeGraph. Do not call repository-internal duplicate steps agent reruns unless the agent invoked the outer gate repeatedly.
-
-### Cost and functional-first audit
-
-Create `COST-METRICS.md` with product/test/harness/user-doc/process-doc LOC, ratios, commits, reviewer/repair/recovery counts, time/token evidence, and the first functionally complete head. Classify work after that head as correctness, integration, validation, maintenance, scope expansion, process-only, or audit-only.
-
-### Skill compliance and version signal
-
-Create `SKILL-COMPLIANCE.md` and `AUDIT-VERDICT.md`. Distinguish:
-
-- skill design defect;
-- execution deviation;
-- repository/environment issue;
-- feature implementation bug;
-- audit data conflict.
-
-Do not recommend a skill update from one ordinary implementation bug. Use `STRONG_SKILL_DEFECT_SIGNAL` only when the same workflow failure repeats across features, the skill explicitly requires the waste/error, or correct compliance still makes it unavoidable.
-
-## Audit pack layout
-
-Include at least:
+The working pack contains at least:
 
 ```text
 00-README.md
@@ -283,36 +310,84 @@ COST-METRICS.md
 SKILL-COMPLIANCE.md
 RECOMMENDATIONS.md
 
-trace/
-  TRACE.jsonl                  # live mode, when available
-  TRACE-SUMMARY.json
+requirements/
+  REQUIREMENTS.md
 planning/
 evidence/
 git/
 sources/base/
 sources/head/
-session/                       # redacted or derived timeline
+session/
+trace/
 ```
 
-`planning/` includes PLAN-FULL, PLAN, state, contracts, handoffs, and review ledgers. `git/` includes base/head/status/branch/log/diff-stat/numstat/name-status and binary feature/worktree patches. `sources/` includes changed product/test/harness files and direct correctness dependencies at base/head, preserving repository-relative paths.
+### Human requirements
 
-Do not copy an entire `.git` directory, unrelated session history, or all repository source.
+Include exact messages/decisions from `REQUIREMENTS.md`, final behavior, owner, evidence, and `SATISFIED | PARTIAL | NOT_SATISFIED | UNKNOWN`. Do not infer human authority from PLAN or reviewer prose.
 
-## Safety and final response
+### Invocation audit
 
-Never include `.env`, credentials, tokens, cookies, browser profiles, private keys, authentication state, secret command arguments, `node_modules`, virtual environments, build outputs, caches, downloaded data/models, or unrelated logs. Redact sensitive session material while preserving timestamps, lifecycle events, command families, result codes, token counters, interruptions, and idle gaps.
+Record `USER_EXPLICIT | CUSTOM_INSTRUCTIONS_AUTO | AGENT_DISCRETION`, exact trigger evidence, predicted versus actual scope/risk, and `JUSTIFIED | BORDERLINE | OVER_TRIGGERED | UNDER_TRIGGERED | UNKNOWN`. For automatic invocation, check whether merely touching a high-risk module was mistaken for changing its high-risk semantics.
 
-Before zipping, validate the trace, verify all cited commits/findings, run only read-only Git/file checks, and generate SHA-256. Do not fix audit-discovered product defects or start a new section.
+### Counterfactual minimum
 
-Final response must report only:
+Describe the smallest reasonable implementation from the feature base and classify actual work as product-required, unavoidable correctness, reasonable maintainability, optional, plan-created, review-created, process-only, or pre-existing. Mark it `ADVISORY_INFERENCE`.
+
+### PLAN audit
+
+Cover requirement/Grill Me traceability, section proportionality, plan-created scope, triggered representation/lifecycle/inventory lenses, plan-review findings, rework avoided, and reviewer dispatch failures.
+
+### Review audit
+
+Cover initial/delta/final/integration passes, finding causality/authority/materiality, repairs and closure, repeated rediscovery, reviewer-created scope, repair budget, and unique defect yield.
+
+### Validation and cost
+
+Mechanically group commands by code fingerprint. Separate targeted, section, feature, reproduction, and duplicate unchanged evidence. Separate wall-clock, active agent time, user absence, waiting, subagent runtime, and unattributed gaps. Do not present cumulative/compaction-sensitive token counters as exact feature cost.
+
+### First functionally complete head
+
+Identify it when evidence supports doing so, then classify later work as correctness, integration, required validation, maintenance, scope expansion, process-only, or audit-only.
+
+## Mechanical consistency
+
+Before conclusions verify:
+
+- cited commits are in `git rev-list {feature_base}..{current_head}` or are explicitly process-only after product head;
+- every counted finding points to an included original review artifact;
+- every repair wave has an admitted finding, product/test repair, and closure;
+- delivered product/test head equals required review/validation head;
+- current feature artifacts are isolated;
+- LOC, review calls, validations, branches, retries, and recovery are mechanically counted;
+- source snapshots match claimed base/head blobs;
+- requirement text provenance is present or marked missing;
+- the canonical ZIP manifest verifies.
+
+Do not mark the audit conflicted merely because trace telemetry is incomplete when Git and original ledgers establish the substantive facts.
+
+## Safety
+
+Never include:
+
+- `.env`, credentials, tokens, cookies, auth state, browser profiles, private keys;
+- secret-bearing command arguments or copied local configs containing secrets;
+- `node_modules`, virtual environments, build outputs, caches, downloaded models/data;
+- raw unrelated session history or full `.git` directories.
+
+A local config may be represented by a redacted schema/diff summary when it is part of the feature; do not copy secret values.
+
+## Final response
+
+Report only:
 
 ```text
-Audit status:
-Invocation source:
-Invocation assessment:
+Pack status:
+Telemetry status:
+Evidence consistency:
+Invocation source / assessment:
 Feature base:
 Final product/test head:
-Current HEAD:
+Current head:
 Functional result:
 Merge readiness:
 Scope result:
@@ -321,8 +396,7 @@ Validation efficiency:
 Skill result:
 
 Mechanical facts:
-- commits:
-- product/test/harness/process LOC:
+- commits and LOC classes:
 - plan/code review calls:
 - admitted defects / repair waves / hard caps:
 - broad validations / duplicate unchanged validations:
@@ -330,9 +404,9 @@ Mechanical facts:
 - active agent time / unattributed gaps:
 
 Known evidence gaps:
-Known conflicts:
-Audit pack:
+Known substantive conflicts:
+Canonical audit pack:
 SHA-256:
 ```
 
-Then stop.
+Then stop. Do not fix an audit-discovered product issue or begin another section.

@@ -9,6 +9,7 @@
 5. [Automatic recovery limit](#automatic-recovery-limit)
 6. [Adopting a new skill version mid-feature](#adopting-a-new-skill-version-mid-feature)
 7. [Legacy evidence](#legacy-evidence)
+8. [Branch-base authority](#branch-base-authority)
 
 ## What the hard cap measures
 
@@ -124,3 +125,14 @@ Evidence remains valid when:
 Legacy evidence may be summarized in the compact review ledger. It does not need to be copied into a new RAW/ADMISSION format or recommitted.
 
 Only actual product/contract changes invalidate evidence.
+
+
+## Branch-base authority
+
+In `EXECUTE_WITH_COMMITS`, creating an isolated feature branch/worktree from `main` requires no additional approval. When the current branch is not `main`, do not silently inherit it. Ask the user to choose exactly one:
+
+1. branch from `main`;
+2. branch from the current branch;
+3. first merge the current branch into `main`, then branch from updated `main`.
+
+Record the starting branch, selected base, and explicit authority in `FEATURE-STATE.md` and the audit trace. Preserve uncommitted work. If the repository has no clear `main` equivalent, ask rather than guessing. This branch-base choice does not authorize merge, push, cleanup, or deletion of the source branch.

@@ -7,11 +7,16 @@
 
 - Feature ID / slug:
 - Feature base:
+- Starting branch and selected branch origin:
+- Non-main branch choice authority, if applicable:
 - Active artifacts belong only to this feature: `yes`
+- Audit mode / trace / exact-requirements record:
 
-### Original user request
+### Original user request and clarification evidence
 
+- Exact request record: `.agent-work/audit/{feature-id}/REQUIREMENTS.md`
 - Copy the request verbatim or quote the exact approved outcome.
+- Grill Me / equivalent clarification questions and answers, or `not used`:
 - Later corrections and superseded earlier guidance:
 
 ### Requirement, example, and correction traceability

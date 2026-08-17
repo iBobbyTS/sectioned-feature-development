@@ -41,3 +41,9 @@
 ## v3.5 — 20260813-145021
 
 把流程 Audit 作为独立观测能力接入 Skill reference：记录 invocation source、LIVE/POST_HOC trace、feature artifact 隔离与审计一致性；Audit 不新增开发/review gate。
+
+## v3.7 — 20260817-092709
+
+合并本地 Audit 改动：默认 LIVE audit、允许读取 Codex sessions、工作目录保留 .agent-work 且 canonical ZIP 输出到 Desktop；增加原始需求/Grill Me 记录、多轴 audit status、原子幂等 finalizer、branch-base authority、PLAN representation/lifecycle/inventory lenses 与验证证据复用。
+
+> 注：没有独立可归档的 v3.6 snapshot；本地修改后来并入 v3.7，因此历史中不伪造 v3.6。

@@ -5,11 +5,18 @@
 - Feature ID / slug:
 - Goal:
 - Execution mode: `PLAN_ONLY | EXECUTE_NO_COMMIT | EXECUTE_WITH_COMMITS`
+- Starting branch / selected branch base: `main | current-non-main | current-merged-into-main | repo-default-equivalent` / exact commit
+- Non-main branch choice authority: user message or `not-applicable`
 - Skill invocation source: `USER_EXPLICIT | CUSTOM_INSTRUCTIONS_AUTO | AGENT_DISCRETION`
 - Invocation timing: `FEATURE_START | MID_FEATURE`
 - Trigger evidence / matched conditions:
-- Audit mode: `OFF | LIVE | POST_HOC`
-- Audit trace path, if enabled:
+- Audit mode: `LIVE | POST_HOC | OFF` (default `LIVE` while skill is under evaluation)
+- Audit trace path:
+- Exact requirements / Grill Me record path:
+- Audit pack required: `yes | no`
+- Audit pack state: `PENDING | BUILDING | COMPLETE | INCOMPLETE | FAILED | disabled`
+- Canonical audit ZIP / SHA-256:
+- Audit pack status / telemetry status / evidence consistency:
 - Feature base:
 - Current feature head:
 - Active artifact isolation: `clean | archived-before-base | legacy-contaminated | needs-archive`

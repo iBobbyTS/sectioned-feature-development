@@ -1,11 +1,11 @@
 ---
 name: sectioned-feature-development
-description: "Plan, pre-review, implement, review, and integrate large or high-risk software changes as minimal bounded sections without plan-created or review-created scope creep. Use when expected behavioral edits may exceed roughly 300 lines; more than three modules, packages, services, pages, or workflows are affected; persistence, schema, security, permissions, concurrency, public API, deployment, routing, or state ownership changes; the impact cone is hard to bound; or a previous whole-change review failed to converge. The workflow anchors every section to the original request or an unavoidable correctness/repository obligation, requires one fresh bounded PLAN-FULL review before implementation, then selects one- or dual-evidence code-review assurance from explicit user choice or mechanical risk signals, uses delta-only repair verification, proportional testing, exact final-head evidence, evidence-preserving hard-cap recovery, and an optional user-enabled process audit trace."
+description: "Plan, pre-review, implement, review, integrate, and audit large or high-risk software changes as minimal bounded sections without plan-created or review-created scope creep. Use when behavioral edits may exceed roughly 300 lines; more than three modules, services, pages, or workflows are affected; persistence, schema, security, permissions, concurrency, public API, deployment, routing, or state ownership changes; the impact cone is hard to bound; or a whole-change review failed to converge. The workflow anchors sections to the original request or an unavoidable correctness/repository obligation, requires one bounded PLAN-FULL review before implementation, selects ONE or TWO code-review assurance from explicit choice or semantic risk, uses delta-only repair verification, proportional testing, exact final-head evidence, bounded hard-cap recovery, and—while under evaluation—a default-on live audit with canonical atomic pack finalization."
 ---
 
 # Sectioned Feature Development
 
-**Workflow revision:** V3.5
+**Workflow revision:** V3.7
 
 Deliver one non-trivial change as a sequence of minimal, reviewable behavior sections. The governing invariant is:
 
@@ -23,6 +23,8 @@ Use patchset-style review with proportional assurance: one bounded discovery pas
 - A planning or review request alone does not authorize commits.
 - If governing Custom Instructions explicitly delegate branch/commit authority to `$sectioned-feature-development`, that scoped delegation overrides a general no-commit rule only for this workflow's bounded feature/retry branches and coherent implementation, repair, and recovery commits.
 - Never push, merge, create a pull request, rewrite published history, clean, delete user work, or discard unrelated changes unless separately authorized.
+- In `EXECUTE_WITH_COMMITS`, creating/switching to an isolated feature branch or worktree **from `main`** needs no additional approval. If the current branch is not `main`, do not branch from it without an explicit user choice: branch from `main`; branch from the current branch; or first merge the current branch into `main` and then branch from updated `main`. Preserve uncommitted user work and do not infer that choice. If the repository has no `main`, use a repository-declared default branch only when local rules make it the clear main-equivalent; otherwise ask.
+- Branch creation authority does not authorize merge, push, PR creation, history rewriting, or disposal of the source branch/worktree.
 - Technical hard-cap diagnosis and bounded recovery do not require continuation approval. Stop only for a genuine owner decision: product semantics, supported environment, compatibility, migration meaning, durability, threat model, acceptable risk, or rollout policy.
 
 ## Trigger
@@ -39,8 +41,10 @@ The thresholds only route work into this skill. Semantic ownership and reviewabi
 
 At activation, record `invocation_source` as `USER_EXPLICIT`, `CUSTOM_INSTRUCTIONS_AUTO`, or `AGENT_DISCRETION`, plus the exact trigger evidence and `FEATURE_START | MID_FEATURE` timing. Do not label a normal feature request as an explicit skill request unless the user named or directly requested this workflow.
 
-## Optional audit mode
-Audit is `OFF` by default and may be enabled only by an explicit user request. When enabled, read [references/audit-mode.md](references/audit-mode.md), initialize its append-only trace before planning or at the current adoption point, and record only major workflow events. Audit mode adds no reviewer, test, acceptance criterion, or implementation scope.
+## Development audit mode
+While this skill is under evaluation, audit is `LIVE` by default. Disable it only when the user explicitly requests `audit off`; a late request uses `POST_HOC`. At activation read [references/audit-mode.md](references/audit-mode.md), initialize the append-only trace and exact requirement record, and keep audit observational: it adds no reviewer, test, acceptance criterion, repair, or implementation scope.
+
+For audit reconstruction, the agent is authorized to read only the relevant Codex session files under `~/.codex/sessions` and `~/.codex-multi-2/sessions`. Select by repository path, feature time window, and feature/task evidence; do not copy unrelated sessions or raw secret-bearing payloads. The working pack remains under `.agent-work`; the one canonical ZIP is finalized atomically under `~/Desktop/audit-pack/`.
 
 ## Non-negotiable anti-expansion rules
 
@@ -61,6 +65,9 @@ Audit is `OFF` by default and may be enabled only by an explicit user request. W
 15. **Final-head evidence:** the delivered product/test head must equal the head covered by required final review and validation. Later process/docs-only commits are harmless; later product/test changes require only bounded closure for the changed range.
 16. **Feature isolation:** one feature ID owns one active PLAN, state, review ledger, and audit range. Starting a new feature archives or resets the prior active artifacts; never append unrelated work to an old ledger.
 17. **Reusable validation evidence:** an unchanged code range may reuse an identical successful check. A fresh reviewer means independent analysis, not automatic rerunning of the same CI command.
+18. **Exact requirement provenance:** retain the original user messages, Grill Me questions/answers or equivalent requirement clarification, later corrections, and superseded guidance as audit evidence. A summarized PLAN is not a substitute for the original request record.
+19. **Audit status is multi-axis:** telemetry gaps, sequence gaps, stale counts, renumbered finding IDs, or other process metadata drift do not make product evidence conflicted when Git/source/review conclusions remain mechanically reconcilable. Reserve `CONFLICTED` for unresolved contradictions that can change scope, finding/repair identity, final-head evidence, or readiness.
+20. **One canonical audit pack:** when audit is active, finalization is idempotent and atomic. Never emit a series of timestamped candidate ZIPs; update the canonical feature/head ZIP only after validation succeeds.
 
 ## Durable artifacts
 Use these paths unless repository rules define equivalents:
@@ -81,8 +88,13 @@ Use these paths unless repository rules define equivalents:
 │   └── ...
 ├── replans/
 │   └── S01-g01-DIAGNOSIS.md
-├── audit/                         # only when explicitly enabled
-│   └── {feature-id}/TRACE.jsonl
+├── audit/
+│   └── {feature-id}/
+│       ├── TRACE.jsonl
+│       ├── REQUIREMENTS.md
+│       └── PACK-STATE.json
+├── audit-packs/
+│   └── {feature-id}/current/      # validated working pack; ZIP is external
 └── plans/
     └── {YYYYMMDD-HHMM}_FULL.md
 ```
@@ -96,7 +108,7 @@ Use these paths unless repository rules define equivalents:
 - Read [references/recovery-and-migration.md](references/recovery-and-migration.md) at a hard cap or when adopting this skill mid-feature.
 - Read [references/integration-and-testing.md](references/integration-and-testing.md) before checkpoints, final integration, or broad validation.
 - Read [references/artifact-schemas.md](references/artifact-schemas.md) when creating or updating artifacts.
-- Read [references/audit-mode.md](references/audit-mode.md) only when the user explicitly enables a live or post-hoc process audit.
+- Read [references/audit-mode.md](references/audit-mode.md) at activation while default audit is on, again before canonical pack finalization, or when the user requests post-hoc audit.
 
 ## Core state machine
 
@@ -139,6 +151,7 @@ ALL_SECTIONS_ACCEPTED
   -> CROSS_SECTION_INTEGRATION_REVIEW
   -> FULL_FEATURE_VALIDATE
   -> MERGE_READINESS
+  -> AUDIT_FINALIZE (unless explicitly disabled)
   -> ARCHIVE
 ```
 
@@ -147,14 +160,15 @@ Advance only when the corresponding code-visible evidence exists. Agent declarat
 ## Phase 0: Preflight and feature scope
 
 1. Inspect repository rules, architecture sources, current branch, `git status`, relevant recent commits, build/test entry points, and available environment. Record invocation source/timing and the exact rule or user statement that activated the skill.
-2. Before freezing `feature_base`, preserve the prior feature's active PLAN/state/review artifacts under its own archive and initialize clean active artifacts for the new feature, so prior-artifact deletion/replacement cannot enter the new feature range. Prefer a separate pre-feature process commit when commits are authorized; otherwise record the unresolved contamination. Never use Git reset or delete unrelated/user work for artifact isolation. Then freeze the exact base. If audit is enabled, initialize the live trace now; a mid-feature audit marks earlier events `RECONSTRUCTED`.
-3. Record the original user request verbatim, later corrections, named failing examples/counterexamples, and the smallest end-to-end observable outcome. Build a requirement-example matrix mapping each current instruction/example to an acceptance criterion and test/probe. Mark conflicting earlier guidance `SUPERSEDED`; do not silently keep both or turn implementation ideas/reviewer suggestions into requirements.
-4. Before sectioning, build a compact authority map. Every proposed outcome, acceptance criterion, option/UI/config surface, support harness, compatibility promise, and structural change must cite one of:
+2. Resolve branch provenance before product implementation. In `EXECUTE_WITH_COMMITS`, branch directly from `main` without another approval. When currently on a non-`main` branch and the user has not already chosen, stop and ask exactly which base to use: `main`, the current branch, or current branch merged into `main` first. Record the answer and exact base; never silently inherit an unrelated feature branch.
+3. Before freezing `feature_base`, preserve the prior feature's active PLAN/state/review artifacts under its own archive and initialize clean active artifacts for the new feature, so prior-artifact deletion/replacement cannot enter the new feature range. Prefer a separate pre-feature process commit when commits are authorized; otherwise record the unresolved contamination. Never use Git reset or delete unrelated/user work for artifact isolation. Then freeze the exact base and initialize the default live audit unless explicitly disabled.
+4. Record the original user request verbatim, every Grill Me or equivalent clarification question/answer, later corrections, named failing examples/counterexamples, and the smallest end-to-end observable outcome in the feature audit requirement record. Build a requirement-example matrix mapping each current instruction/example to an acceptance criterion and test/probe. Mark conflicting earlier guidance `SUPERSEDED`; do not silently keep both or turn implementation ideas/reviewer suggestions into requirements.
+5. Before sectioning, build a compact authority map. Every proposed outcome, acceptance criterion, option/UI/config surface, support harness, compatibility promise, and structural change must cite one of:
    - the original user request or a later explicit owner decision;
    - a repository-required gate/rule or current production contract;
    - an unavoidable correctness dependency, with a causal explanation of why the smaller existing path cannot satisfy the requested outcome.
    Remove items whose only authority is the draft plan, another section, a reviewer, or a desire for stronger proof.
-5. Create `PLAN-FULL.md` from the bundled template and record only:
+6. Create `PLAN-FULL.md` from the bundled template and record only:
    - requested outcome and observable behavior;
    - existing repository invariants and authoritative constraints;
    - explicit non-goals and unsupported environments;
@@ -162,11 +176,11 @@ Advance only when the corresponding code-visible evidence exists. Agent declarat
    - compatibility, migration, rollout, rollback, and cleanup actually required;
    - feature acceptance criteria and tiered validation;
    - structural changes explicitly allowed by the requirement.
-6. Apply a minimum-feature-closure check: if the user-visible result works without an optional setting/status surface, compatibility layer, standalone evidence publisher, generalized hardening, or repository-wide governance mechanism, omit it unless an authority anchor explicitly requires it.
-7. Do not add a universal threat model or generalized durability model. Record risk boundaries only when the feature or repository already makes them relevant.
-8. If authentication, endpoint, response shape, protocol, integration, or another external seam is not authoritative in repository docs/source, run the smallest real probe before freezing dependent sections. Do not design around an assumed API contract.
-9. When the feature is remediation of an audit, freeze the accepted audit finding IDs before implementation. Section review verifies those repairs and the repair diff; it does not continue the repository audit. New unrelated pre-existing concerns go to a separate audit backlog.
-10. In `EXECUTE_WITH_COMMITS`, create an isolated feature branch/worktree before product-code implementation.
+7. Apply a minimum-feature-closure check: if the user-visible result works without an optional setting/status surface, compatibility layer, standalone evidence publisher, generalized hardening, or repository-wide governance mechanism, omit it unless an authority anchor explicitly requires it.
+8. Do not add a universal threat model or generalized durability model. Record risk boundaries only when the feature or repository already makes them relevant.
+9. If authentication, endpoint, response shape, protocol, integration, or another external seam is not authoritative in repository docs/source, run the smallest real probe before freezing dependent sections. Do not design around an assumed API contract.
+10. When the feature is remediation of an audit, freeze the accepted audit finding IDs before implementation. Section review verifies those repairs and the repair diff; it does not continue the repository audit. New unrelated pre-existing concerns go to a separate audit backlog.
+11. In `EXECUTE_WITH_COMMITS`, create an isolated feature branch/worktree before product-code implementation.
 
 ### Mid-feature adoption
 
@@ -228,7 +242,8 @@ The reviewer compares the original request, authority map, repository rules/curr
 - missing or conflicting owners, contracts, dependency edges, and external seams;
 - unbuildable ordering or a necessary probe that must precede architecture;
 - unauthorized sections, mechanisms, guarantees, proof harnesses, or broad validation;
-- whether section and test granularity is proportional.
+- whether section and test granularity is proportional;
+- the triggered planning lenses in `references/section-planning.md`: representation/precedence propagation for data/config shape changes, lifecycle/failure-state closure for async/retry/process work, and mechanically supported owner-inventory completeness for adaptation/migration/inventory tasks.
 
 Classify candidates as `PLAN_BLOCKER`, `PLAN_SCOPE_EXPANSION`, `OWNER_DECISION`, or `PLAN_NIT`. A blocker must cite existing authority, concrete repository/source evidence, the failure if unchanged, and the smallest plan-only correction. The reviewer may not edit code/tests, invent a requirement, design a larger replacement architecture, or start an implementation/review loop.
 
@@ -287,7 +302,7 @@ In `EXECUTE_WITH_COMMITS`, commit the coherent implementation before review. Do 
 
 For `MECHANICAL`, run deterministic checks and one `FINAL_BOUNDED`; mechanical review is always single-evidence. If it reveals a real semantic boundary, reclassify before acceptance. For `BOUNDED/HIGH_RISK`, follow the resolved `ONE`/`TWO` assurance semantics below.
 
-For delta verification, prefer reusing the initial reviewer session when available so reviewed coverage remains sticky. The repair agent must still be separate. If the reviewer session cannot be reused, pass the compact review ledger rather than reconstructing the whole feature. The final reviewer is always fresh.
+For delta verification, prefer reusing the initial reviewer session when available so reviewed coverage remains sticky. The repair agent must still be separate. If the reviewer session cannot be reused, pass the compact review ledger rather than reconstructing the whole feature. The final reviewer is always fresh. A reviewer dispatch that returns no usable artifact may be retried once with the same bounded packet or an approved fallback profile; repeated dispatches do not create evidence and must stop as `insufficient-evidence` rather than forming a wait/retry loop.
 
 ### 3.1 Finding admission boundary
 
@@ -456,7 +471,7 @@ Run a targeted checkpoint only when a later section begins consuming a new publi
 
 Checkpoint review verifies composition and representative paths; it does not reopen every accepted local line. It uses the same finding classes, five-part blocking proof, scope authority, and cumulative repair accounting as section review. An accepted section is invalidated only when changed product code or observed combined behavior disproves its contract.
 
-After all sections are accepted, run one fresh `$code-review` integration pass over `feature_base..feature_head` when multiple sections or cross-section/runtime/process composition remains to be proven. For one section whose bounded review already covers the complete feature path, reuse that evidence and run only the required feature gate; do not add a redundant integration reviewer. Focus only on:
+After all sections are accepted, record an `unproven_composition` list before dispatching any integration reviewer. Run one fresh `$code-review` integration pass over `feature_base..feature_head` only when that list contains a concrete cross-section/runtime/process behavior not already proven by exact-head section/package/consumer evidence. If the list is empty—including after exact package publication plus consumer install/tests/build—reuse the evidence and run only the required feature gate; do not add a redundant integration reviewer. Focus only on:
 
 - original feature outcome and non-goals;
 - emergent cross-section API/schema/state/permission/ordering/error behavior;
@@ -477,21 +492,5 @@ Run the broadest deterministic suite/build/browser/application checks once at fi
 3. Overwrite/delete transient `*-CANDIDATES.md`; preserve the compact authoritative `*-REVIEW.md` ledger.
 4. Archive the feature-ID-specific `PLAN-FULL.md` and compact ledgers to `.agent-work/plans/{YYYYMMDD-HHMM}_FULL.md` after final reporting; preserve/archive the old feature-owned active artifacts before initializing a different feature.
 5. Do not create a separate commit for every review-state edit. Commit/archive process artifacts at coherent section acceptance, recovery, or final-feature boundaries.
-6. If audit was explicitly enabled, finalize the read-only audit pack from the live trace, Git, and original artifacts according to `references/audit-mode.md`; do not run new review/tests or fix audit findings.
-7. Report in Chinese by default: feature result, section status, admitted defects fixed, scope proposals rejected/deferred, checks, recovery events, residual risk, merge readiness, and maintainability judgment.
-
-## Final rules
-- One fresh bounded plan reviewer checks the complete PLAN-FULL before implementation; at most one delta-only plan recheck is permitted after a material admitted correction.
-- One implementer works on one current section at a time.
-- One initial bounded review, delta-only repair verification, and adaptive assurance: `ONE` accepts a clean initial result or a clean fresh final after repair; `TWO` adds independent final evidence.
-- Explicit user `ONE`/`TWO` choice wins unless repository policy requires stronger assurance; otherwise `AUTO` uses recorded semantic risk signals, never project size alone.
-- Only current-diff or newly depended-on material defects block.
-- Review-created scope proposals never enter repair prompts or descendant plans without owner approval.
-- Up to five cumulative section repair waves; final-review repairs count, and the fifth finding is repaired normally.
-- One automatic hard-cap recovery event per original section lineage; recovery never silently resets the loop.
-- Integration uses the same admission boundary and its own finite cumulative repair budget.
-- Hard-cap recovery preserves valid current work and diagnoses before splitting or restarting.
-- Skill/artifact schema changes never retroactively invalidate product evidence.
-- A separate integration reviewer is required only when cross-section/runtime/process composition remains unproven; the final feature gate still establishes merge readiness.
-- Exact user examples/corrections must map to acceptance evidence, final evidence must match the delivered product/test head, and active artifacts must not mix features.
-- Audit remains opt-in and observational: it records trigger provenance and costs but never changes review assurance, creates work, or authorizes fixes.
+6. Unless audit was explicitly disabled, finalize the read-only pack from the live trace, exact requirement/Grill Me record, Git, sessions, and original artifacts according to `references/audit-mode.md`. Product readiness remains independent, but workflow delivery is `AUDIT_PENDING` until the canonical pack validates and `PACK-STATE.json` is `COMPLETE`. Use the deterministic finalizer; do not create multiple timestamped ZIPs, rerun review/tests, or fix audit-discovered product defects.
+7. Report in Chinese by default: feature result, section status, admitted defects fixed, scope proposals rejected/deferred, checks, recovery events, residual risk, merge readiness, maintainability judgment, and the canonical audit-pack path/SHA-256. If finalization fails after one bounded correction attempt, report `AUDIT_PACK_INCOMPLETE` with the preserved work directory instead of improvising more packs.

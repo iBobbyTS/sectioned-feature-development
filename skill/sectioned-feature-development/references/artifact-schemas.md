@@ -11,7 +11,7 @@
 7. [Section handoff](#section-handoff)
 8. [Review ledger](#review-ledger)
 9. [Hard-cap diagnosis](#hard-cap-diagnosis)
-10. [Optional audit trace](#optional-audit-trace)
+10. [Development audit records](#development-audit-records)
 11. [Archival rules](#archival-rules)
 
 ## Design goals
@@ -90,7 +90,7 @@ Do not create RAW/ADMISSION pairs, a clean streak, or a section whose only outpu
 
 Keep compact:
 
-- feature ID, base/head, execution mode, artifact-isolation status, invocation source/timing, exact trigger evidence, and audit mode/path;
+- feature ID, base/head, starting branch/chosen branch base, execution mode, artifact isolation, invocation source/timing, exact trigger evidence, and audit mode/requirement/trace/pack-state paths;
 - PLAN-FULL review status, reviewed fingerprint, optional PLAN_DELTA result, and open owner decisions;
 - current section/base/head/status, original lineage, intensity, and assurance;
 - frozen scope manifest;
@@ -167,19 +167,24 @@ Record:
 - preserved code/evidence;
 - restart base only when `RESTART_FROM_BASE`.
 
-## Optional audit trace
+## Development audit records
 
-Audit is disabled unless the user explicitly enables it. When enabled, keep one append-only `.agent-work/audit/{feature-id}/TRACE.jsonl` generated with `scripts/audit_trace.py`. Record major phase transitions, reviewer lifecycle, admitted/rejected findings, repairs, validation commands/results, owner decisions, functional/final heads, and scope changes. Each event carries the current Git head and tracked-diff fingerprint so unchanged evidence can be identified mechanically.
+While this skill is under evaluation, audit defaults to `LIVE`; only an explicit `audit off` disables it. Keep:
 
-The first event must record:
+```text
+.agent-work/audit/{feature-id}/
+├── TRACE.jsonl
+├── REQUIREMENTS.md
+└── PACK-STATE.json
+```
 
-- `invocation_source`: `USER_EXPLICIT`, `CUSTOM_INSTRUCTIONS_AUTO`, or `AGENT_DISCRETION`;
-- exact trigger evidence and matched conditions;
-- invocation timing: `FEATURE_START | MID_FEATURE`;
-- the user's explicit audit-enablement request;
-- feature ID, base, branch, and skill version.
+`REQUIREMENTS.md` preserves exact original user messages, Grill Me questions/answers or equivalent clarification, later corrections, named examples, final resolved requirements, and `SUPERSEDED` guidance with provenance. PLAN summaries are not substitutes.
 
-Do not log secrets, raw credentials, cookies, environment values, or full unrelated prompts. Audit events are observational and never create product authority, review findings, tests, repair waves, or acceptance gates. A late/post-hoc audit labels reconstructed events as such instead of pretending they were captured live. See `references/audit-mode.md` for the complete protocol and final pack schema.
+`TRACE.jsonl`, generated with `scripts/audit_trace.py`, records only major phase/reviewer/finding/repair/validation/finalization events and the current Git/diff identity. Its first record includes invocation source/timing, exact trigger evidence, feature base/branch, skill version, and audit activation source. Sequence gaps or unknown future events degrade telemetry but do not invalidate product evidence.
+
+`PACK-STATE.json` is the durable delivery gate for the one canonical pack. The working pack remains under `.agent-work/audit-packs/{feature-id}/current/`; `scripts/audit_finalize.py` atomically publishes one deterministic ZIP under `~/Desktop/audit-pack/` and is idempotent for unchanged source evidence.
+
+Audit records are observational: they create no product authority, review finding, test, repair wave, or acceptance gate. A late audit labels reconstructed events `POST_HOC`. Never log secrets or copy unrelated/raw session history. See `references/audit-mode.md`.
 
 ## Archival rules
 

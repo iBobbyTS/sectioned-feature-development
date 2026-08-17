@@ -9,7 +9,8 @@
 5. [Boundaries and deferred work](#boundaries-and-deferred-work)
 6. [Invalid section patterns](#invalid-section-patterns)
 7. [Plan-review gate](#plan-review-gate)
-8. [Examples](#examples)
+8. [Triggered plan-review lenses](#triggered-plan-review-lenses)
+9. [Examples](#examples)
 
 ## Purpose
 
@@ -170,6 +171,38 @@ The reviewer checks:
 6. **Assurance proportionality:** `ONE`/`TWO` is explicitly chosen or mechanically resolved from semantic risk; project size, test count, or “high-risk module” labels alone do not force dual evidence.
 
 It does not perform repository audit, propose a preferred architecture merely because it is cleaner, add unrequested edge cases, or write implementation details beyond the minimum correction needed to make the existing plan executable.
+
+## Triggered plan-review lenses
+
+Apply these only when the planned change activates the corresponding semantic risk. They sharpen the existing plan review; they do not add a second reviewer or broaden the product.
+
+### Representation and precedence lens
+
+For a data/config/schema/model-shape change, enumerate the existing representations that can produce, normalize, persist, override, project, edit, or default the value. Freeze:
+
+- authoritative producer and fallback/default producers;
+- persisted override and merge/shadow precedence;
+- serializer/projection/UI round-trip paths;
+- compatibility/removal behavior actually requested;
+- one acceptance case proving every newly required field survives the authoritative path.
+
+This catches plans that update the canonical resource but omit saved overrides, materialized defaults, third-party presets, or editor merge semantics. Do not turn the matrix into a repository-wide schema inventory.
+
+### Lifecycle and failure-state lens
+
+For async requests, retries, replay, cancellation, process restarts, background work, or UI drafts, write the smallest transition table covering:
+
+- start/in-flight/success/failure/cancel/retry states;
+- late or stale result ownership;
+- partial side effects and replay eligibility;
+- persisted-but-not-applied or stopped-but-recoverable states;
+- exact state that a user retry resumes.
+
+The reviewer checks that each accepted failure state has an owner and observable outcome. It must not require a generalized state-machine framework.
+
+### Inventory completeness lens
+
+For version adaptation, migration, source inventory, provider/catalog propagation, or a field rename across representations, require a bounded machine-assisted inventory of the relevant owner class before implementation. The plan reviewer verifies that the inventory method and exclusions are credible and that every discovered owner is assigned or explicitly excluded. It does not conduct an open-ended repository audit or require proof beyond the named owner class.
 
 ### Candidate classes and admission
 

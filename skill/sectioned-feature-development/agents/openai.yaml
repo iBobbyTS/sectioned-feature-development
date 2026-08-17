@@ -1,4 +1,4 @@
 interface:
   display_name: "Sectioned Feature Development"
-  short_description: "Bounded large changes with adaptive review and opt-in audit"
-  default_prompt: "Use $sectioned-feature-development to review PLAN-FULL, choose ONE or TWO assurance, implement bounded sections, and enable audit mode only if I explicitly request it."
+  short_description: "Bounded large changes with adaptive review and live audit"
+  default_prompt: "Use $sectioned-feature-development to capture exact requirements, review PLAN-FULL once, implement bounded sections with adaptive assurance, and finalize the default live audit pack."

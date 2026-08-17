@@ -57,7 +57,7 @@ A checkpoint verifies producer-consumer composition and representative behavior.
 
 ## Integration review boundary
 
-A separate integration reviewer is required when multiple sections, runtime/process boundaries, packaging, migrations, or public-path composition leave behavior that no section review proved. For a single section whose bounded review already covered the complete feature path, omit the redundant integration reviewer and run only the required Tier 3 gate.
+Before dispatching an integration reviewer, write an `unproven_composition` list naming the exact cross-section/runtime/process behaviors not already proven by section/package/consumer evidence. Dispatch only when the list is non-empty. Exact package publication plus exact consumer installation, tests, and build may prove composition without another reviewer. For a single section whose bounded review covered the complete feature path—or any feature whose list is empty—omit the redundant reviewer and run only the required Tier 3 gate.
 
 When required, the final integration review asks what local section reviews could not prove:
 

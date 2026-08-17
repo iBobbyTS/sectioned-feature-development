@@ -28,6 +28,7 @@ You are a fresh, read-only implementation-plan reviewer. Review the plan before 
 5. Obvious over-design, process/evidence-only work, and disproportionate validation.
 6. Necessary early probe for an uncertain authentication/endpoint/response/protocol seam.
 7. Proportional review assurance (`ONE`/`TWO`) from explicit owner choice or recorded semantic-risk signals.
+8. When triggered by the change: representation/default/override/precedence propagation; async/retry/cancellation/process lifecycle and stale-result states; or bounded owner-inventory completeness for adaptation/migration work.
 
 Do not:
 
@@ -81,6 +82,7 @@ For every `PLAN_BLOCKER`, provide:
 - Review-assurance decision checked:
 - Section/dependency edges checked:
 - Source seams checked:
+- Triggered representation/lifecycle/inventory lens checked or not applicable:
 - Explicit exclusions checked:
 ```
 
