@@ -46,4 +46,8 @@
 
 合并本地 Audit 改动：默认 LIVE audit、允许读取 Codex sessions、工作目录保留 .agent-work 且 canonical ZIP 输出到 Desktop；增加原始需求/Grill Me 记录、多轴 audit status、原子幂等 finalizer、branch-base authority、PLAN representation/lifecycle/inventory lenses 与验证证据复用。
 
+## v3.8 — 20260820-084405
+
+基于 27 个 feature audit 收紧自动触发：non-trivial prerequisite + bounded-local negative rules；区分用户显式/自动调用审批；增加 late activation、orchestrator-only 角色隔离、单 mutable-stage barrier、.agent-work 禁止入 Git、necessity-first PLAN review 和 foundation-choice gate。
+
 > 注：没有独立可归档的 v3.6 snapshot；本地修改后来并入 v3.7，因此历史中不伪造 v3.6。

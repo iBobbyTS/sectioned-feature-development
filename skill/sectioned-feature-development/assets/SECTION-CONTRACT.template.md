@@ -17,6 +17,8 @@
 - Why this section is required for the minimum end-to-end feature outcome:
 - Why an existing owner/path or smaller local change cannot satisfy it:
 - A plan, another section, or reviewer suggestion alone is not an authority anchor.
+- Local-patch versus shared-foundational-owner decision: `not-applicable | local patch authorized | shared owner authorized | owner decision required`
+- Decision authority / why sibling callers remain correct:
 
 ## Direct impact cone
 

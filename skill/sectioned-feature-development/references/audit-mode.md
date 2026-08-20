@@ -106,17 +106,20 @@ If Grill Me was not used, write `Grill Me: not used`. If the session source is u
 Use `scripts/audit_trace.py`. Record major events only:
 
 - audit/requirement initialization and user corrections;
-- branch-base choice;
-- plan frozen and reviewer lifecycle;
-- section start and implementation completion;
-- code reviewer lifecycle;
+- invocation source, trigger/negative evidence, activation announcement, and automatic-plan approval outcome;
+- branch-base choice or late-trigger branch transition;
+- stable agent/session role assignments;
+- plan frozen and plan-review lifecycle;
+- section start, implementation completion, and current section barrier;
+- code-review lifecycle, cancellation, and any sequence-gate violation;
 - finding admission/rejection/reopening;
 - repair and delta closure;
 - validation command family/result/code fingerprint;
-- scope/owner decision;
+- scope/foundational-owner decision;
 - hard cap/recovery;
 - first functionally complete head;
 - final product/test head and readiness;
+- `.agent-work` tracking/exclusion state;
 - audit finalization start/failure/success metadata.
 
 Do not trace every file read, grep, status check, progress message, or plan wording edit.
@@ -290,7 +293,7 @@ Use `RESOLVABLE_DRIFT` or telemetry `DEGRADED`, not `CONFLICTED`, for:
 
 When a narrative count differs from a mechanical count, preserve both, use the mechanical value, and record `METADATA_DRIFT`.
 
-Several completed audits in the evaluation set were falsely made globally conflicted by finding-ID renumbering, under-recorded trace events, duplicate sequences, or stale wave counts. V3.7 treats those as degraded telemetry unless product evidence itself is contradictory.
+Several completed audits in the evaluation set were falsely made globally conflicted by finding-ID renumbering, under-recorded trace events, duplicate sequences, or stale wave counts. V3.8 treats those as degraded telemetry unless product evidence itself is contradictory.
 
 ## Required analyses and files
 
@@ -327,7 +330,7 @@ Include exact messages/decisions from `REQUIREMENTS.md`, final behavior, owner, 
 
 ### Invocation audit
 
-Record `USER_EXPLICIT | CUSTOM_INSTRUCTIONS_AUTO | AGENT_DISCRETION`, exact trigger evidence, predicted versus actual scope/risk, and `JUSTIFIED | BORDERLINE | OVER_TRIGGERED | UNDER_TRIGGERED | UNKNOWN`. For automatic invocation, check whether merely touching a high-risk module was mistaken for changing its high-risk semantics.
+Record `USER_EXPLICIT | CUSTOM_INSTRUCTIONS_AUTO | AGENT_DISCRETION`, exact trigger and negative evidence, predicted versus actual scope/risk, activation timing, user approval checkpoint when automatic, and `JUSTIFIED | BORDERLINE | OVER_TRIGGERED | UNDER_TRIGGERED | UNKNOWN`. For automatic invocation, check whether merely touching a high-risk module was mistaken for changing its high-risk semantics or whether the plan predicted far more sections/mechanisms than the final minimum implementation.
 
 ### Counterfactual minimum
 
@@ -335,11 +338,11 @@ Describe the smallest reasonable implementation from the feature base and classi
 
 ### PLAN audit
 
-Cover requirement/Grill Me traceability, section proportionality, plan-created scope, triggered representation/lifecycle/inventory lenses, plan-review findings, rework avoided, and reviewer dispatch failures.
+Cover requirement/Grill Me traceability, section proportionality, necessity-first rejection of plan-created mechanisms, triggered representation/lifecycle/inventory/foundation lenses, plan-review findings, rework avoided, and reviewer dispatch failures.
 
 ### Review audit
 
-Cover initial/delta/final/integration passes, finding causality/authority/materiality, repairs and closure, repeated rediscovery, reviewer-created scope, repair budget, and unique defect yield.
+Cover initial/delta/final/integration passes, stable reviewer IDs and role separation, section sequencing, finding causality/authority/materiality, repairs and closure, repeated rediscovery, reviewer-created scope, repair budget, and unique defect yield.
 
 ### Validation and cost
 

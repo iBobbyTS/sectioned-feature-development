@@ -161,14 +161,16 @@ Do not prime the reviewer with a desired verdict or proposed additional architec
 
 ### Permitted checks
 
-The reviewer checks:
+Review in this order; do not spend time making an unnecessary mechanism internally perfect:
 
-1. **Traceability:** every current requirement/example/correction maps to acceptance evidence, and every behavior, section, mechanism, UI/config surface, compatibility promise, harness, and broad gate maps to an external authority or unavoidable correctness dependency.
-2. **Minimum closure:** the plan solves the full user-visible request without optional completeness work.
-3. **Buildability:** owners and seams exist; dependencies are acyclic; each predecessor produces what its consumer needs; uncertain external seams are probed before a larger design relies on them.
-4. **Scope proportionality:** no process/evidence-only section, generalized hardening, future-proofing, or proof system; validation is tiered rather than broad-suite-per-edit.
-5. **Contract integrity:** section boundaries preserve correct intermediate states and do not hide cross-section API/schema/state mismatches.
-6. **Assurance proportionality:** `ONE`/`TWO` is explicitly chosen or mechanically resolved from semantic risk; project size, test count, or “high-risk module” labels alone do not force dual evidence.
+1. **Necessity:** for every new marker, migration representation, backup/rollback contract, registry, shared abstraction, proof harness, analyzer, or validation obligation, first prove it is required by external authority or unavoidable correctness. Otherwise classify the whole item `PLAN_SCOPE_EXPANSION` and do not generate secondary blockers about its edge cases.
+2. **Traceability:** every current requirement/example/correction maps to acceptance evidence, and every behavior/section/UI/config/compatibility surface maps to authority.
+3. **Minimum closure:** the plan solves the full user-visible request without optional completeness work.
+4. **Buildability:** owners/seams exist, dependencies are acyclic, predecessors produce what consumers need, and uncertain external seams are probed before architecture depends on them.
+5. **Ownership coherence:** the plan does not duplicate one semantic rule across owners or stack local guards around a shared defect without an explicit foundational-vs-local owner decision.
+6. **Scope proportionality:** no process/evidence-only section, generalized hardening, future-proofing, or proof system; validation is tiered rather than broad-suite-per-edit.
+7. **Contract integrity:** section boundaries preserve correct intermediate states and do not hide cross-section API/schema/state mismatches.
+8. **Assurance proportionality:** `ONE`/`TWO` is explicit or resolved from actual semantic risk; module labels, repository size, or test count alone do not force dual evidence.
 
 It does not perform repository audit, propose a preferred architecture merely because it is cleaner, add unrequested edge cases, or write implementation details beyond the minimum correction needed to make the existing plan executable.
 
@@ -178,15 +180,30 @@ Apply these only when the planned change activates the corresponding semantic ri
 
 ### Representation and precedence lens
 
-For a data/config/schema/model-shape change, enumerate the existing representations that can produce, normalize, persist, override, project, edit, or default the value. Freeze:
+For a data/config/schema/model-shape change, enumerate the existing representations that produce, normalize, persist, override, project, edit, or default the value. Freeze:
 
+- missing vs explicit `null`, zero, empty, masked, sentinel, placeholder, and legacy-absent states when they have distinct semantics;
 - authoritative producer and fallback/default producers;
+- whether fallback depends on **presence** or **validity/eligibility**;
 - persisted override and merge/shadow precedence;
-- serializer/projection/UI round-trip paths;
+- server -> serialized JSON -> browser/runtime representation -> input/editor -> save round-trip, including numeric range/precision limits;
 - compatibility/removal behavior actually requested;
 - one acceptance case proving every newly required field survives the authoritative path.
 
-This catches plans that update the canonical resource but omit saved overrides, materialized defaults, third-party presets, or editor merge semantics. Do not turn the matrix into a repository-wide schema inventory.
+This catches plans that update the canonical resource but omit saved overrides, materialized defaults, third-party presets, explicit-null semantics, fallback ordering, or browser representation. Do not turn the matrix into a repository-wide schema inventory.
+
+### Foundation-versus-local-patch lens
+
+Apply when a plan would implement the same validation, normalization, routing, persistence, selection, or state-transition rule in more than one owner, or when local guards are being stacked around a defect owned by a shared component.
+
+The reviewer must identify:
+
+- the existing authoritative owner, if one exists;
+- which sibling callers remain wrong under the local-patch option;
+- the smallest bounded foundational correction;
+- the smallest local correction and its explicit residual duplication/risk.
+
+When changing the foundation materially widens scope, classify this as `OWNER_DECISION` and present only those two bounded alternatives. Do not silently choose the wider foundation change, and do not create a service/framework. A cosmetic helper extraction, one-field dictionary wrapper, or single-use abstraction is `PLAN_NIT`, not a blocker.
 
 ### Lifecycle and failure-state lens
 

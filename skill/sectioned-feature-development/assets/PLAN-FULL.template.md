@@ -6,13 +6,16 @@
 ### Feature identity
 
 - Feature ID / slug:
-- Feature base:
+- Feature base or mid-feature adoption head:
 - Starting branch and selected branch origin:
 - Non-main branch choice authority, if applicable:
-- Active artifacts belong only to this feature: `yes`
+- Skill invocation source / timing:
+- Trigger evidence, negative evidence, predicted owners/sections/behavioral LOC:
+- Automatic invocation announcement / approval: `not-applicable | pending | approved | rejected | narrowed`
+- Active artifacts belong only to this feature and remain untracked: `yes`
 - Audit mode / trace / exact-requirements record:
 
-### Original user request and clarification evidence
+### Original user request
 
 - Exact request record: `.agent-work/audit/{feature-id}/REQUIREMENTS.md`
 - Copy the request verbatim or quote the exact approved outcome.
@@ -32,6 +35,12 @@
 ### Scope authority map
 
 - For each proposed outcome, option/UI/config surface, compatibility promise, support harness, or structural change: cite user intent, repository/current-production obligation, or an unavoidable correctness dependency. A plan/section/reviewer is not an authority source.
+
+### Foundational-owner decisions
+
+- Identify any requested behavior whose smallest correct implementation could be either a local patch or a bounded change to an existing shared owner.
+- Record the current choice and authority: `not-applicable | local patch approved | shared owner approved | owner decision pending`.
+- Do not propose a new generalized component merely to avoid the decision.
 
 ### Goal
 
@@ -81,7 +90,7 @@ One sentence describing the requested product outcome.
 
 - Status: `PENDING | APPROVED | BLOCKED`
 - Reviewed PLAN-FULL SHA-256:
-- Reviewer/profile/session:
+- Reviewer profile and stable task/session ID:
 - Admitted `PLAN_BLOCKER` / `PLAN_SCOPE_EXPANSION` / `OWNER_DECISION` IDs:
 - Corrections applied:
 - `PLAN_DELTA` recheck: `not-required | pending | approved | blocked`
@@ -98,6 +107,7 @@ One coherent observable behavior increment.
 - Authority anchor:
 - Why required for the minimum end-to-end outcome:
 - Why the existing owner/path cannot satisfy it more simply:
+- Local-patch versus foundational-owner choice: `not-applicable | local patch | shared owner | owner decision pending`
 
 ### Dependencies
 
@@ -162,6 +172,7 @@ One coherent observable behavior increment.
 - Authority anchor:
 - Why required for the minimum end-to-end outcome:
 - Why the existing owner/path cannot satisfy it more simply:
+- Local-patch versus foundational-owner choice: `not-applicable | local patch | shared owner | owner decision pending`
 
 ### Dependencies
 

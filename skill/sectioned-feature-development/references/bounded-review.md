@@ -18,6 +18,10 @@
 
 The parent `$sectioned-feature-development` orchestrator owns scope, admission, repair waves, and acceptance. Each `$code-review` invocation is a **single review pass**. Do not let the child reviewer start its own repair loop, ask to continue after a cap, rewrite the section contract, or delegate the same review again.
 
+The plan reviewer must never code-review the same feature. The initial reviewer is distinct from the implementer/repairer and may be reused only for delta closure. The final reviewer is fresh and distinct from the plan reviewer, implementer, repairer, and initial/delta reviewer. Record stable task/session IDs; a profile label alone is not identity. The main agent may admit findings but may not implement or repair product code.
+
+A reviewer runs against a frozen product/test head. No writer may edit the reviewed range until the reviewer completes or is explicitly cancelled. Do not start a later section until the current section is accepted, blocked, or abandoned.
+
 Use:
 
 - `INITIAL_BOUNDED`: one discovery pass over the stable section diff.
@@ -109,7 +113,7 @@ A blocking finding must include:
 | Materiality | Correctness, security, data, reliability, compatibility, or maintainability consequence |
 | Bounded repair | Smallest fix remains inside the frozen allowed-to-edit owners and adds no unapproved guarantee |
 
-Discard or downgrade a candidate when one field is missing. If a genuine blocker requires editing a new owner, the reviewer reports the causal chain and stops; only the main agent may amend the manifest or rebound ownership.
+Discard or downgrade a candidate when one field is missing. If a genuine blocker requires editing a new owner, the reviewer reports the causal chain and stops; only the main agent may amend the manifest or rebound ownership. If the repair would create a second authoritative semantic rule or leave sibling callers wrong, report a bounded foundational-versus-local owner decision rather than silently widening. Cosmetic helper extraction remains non-blocking.
 
 For security findings also require:
 

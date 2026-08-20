@@ -2,6 +2,20 @@
 
 Review the current section using `$code-review` as a **single-pass reviewer**. Do not repair code, start a review loop, delegate the review again, or change the section contract.
 
+## Identity and sequence barrier
+
+- Reviewer task/session ID:
+- Main/orchestrator task/session ID:
+- Plan reviewer task/session ID:
+- Implementer task/session ID:
+- Repairer task/session ID, if any:
+- Reviewer is role-distinct as required for this mode: `yes`
+- No product writer is active: `yes`
+- Frozen reviewed product/test head:
+- Next allowed phase after this reviewer completes:
+
+## Review packet
+
 - Mode: `INITIAL_BOUNDED | REPAIR_DELTA | FINAL_BOUNDED`
 - Working tree/repository:
 - Feature ID:
@@ -35,6 +49,8 @@ Incidental traversal through a shared entry point, proximity to changed code, un
 Every blocker must prove changed-hunk causality, reachable trigger, existing authority, material consequence, and a bounded repair. For security findings, also prove the current asset, actor/capability, entry point, trust boundary, and preconditions.
 
 The manifest bounds edits, not causal inspection. To inspect an unlisted dependency, record the exact data/control/serialization/contract chain from a changed symbol and stop at the candidate; do not fan out recursively. Inspection does not authorize changing a new owner. Report that need to the main agent.
+
+For maintainability findings, identify whether the diff creates a second authoritative implementation or leaves sibling callers inconsistent. A shared foundational fix is an owner decision, not automatic scope. Cosmetic helper extraction or a one-use abstraction preference is `NIT_DEBT`.
 
 ## Mode-specific boundary
 

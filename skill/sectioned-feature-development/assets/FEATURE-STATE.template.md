@@ -9,7 +9,11 @@
 - Non-main branch choice authority: user message or `not-applicable`
 - Skill invocation source: `USER_EXPLICIT | CUSTOM_INSTRUCTIONS_AUTO | AGENT_DISCRETION`
 - Invocation timing: `FEATURE_START | MID_FEATURE`
-- Trigger evidence / matched conditions:
+- Trigger evidence / negative evidence / predicted owners-sections-LOC:
+- Automatic invocation announced: `not-applicable | yes | no`
+- Automatic PLAN-FULL approval: `not-applicable | pending | approved | rejected | narrowed`
+- Approval message / timestamp:
+- Late-adoption head and preserved pre-skill work: `not-applicable` or exact head/diff summary
 - Audit mode: `LIVE | POST_HOC | OFF` (default `LIVE` while skill is under evaluation)
 - Audit trace path:
 - Exact requirements / Grill Me record path:
@@ -20,13 +24,29 @@
 - Feature base:
 - Current feature head:
 - Active artifact isolation: `clean | archived-before-base | legacy-contaminated | needs-archive`
-- Workflow adoption note: `new | legacy artifacts preserved prospectively`
+- `.agent-work` tracking state: `untracked-local-excluded | already-tracked-owner-decision-required | unknown`
+- Workflow adoption note: `new | prospective-mid-feature | legacy artifacts preserved prospectively`
 - Integration repair waves used: `0/5`
 - Integration automatic recovery used: `no | yes`
 - PLAN-FULL review status: `not-run | approved | blocked`
 - Reviewed plan SHA-256:
 - PLAN_DELTA recheck: `not-required | approved | blocked`
 - Open owner/plan decisions:
+
+## Orchestration identities and barrier
+
+- Main/orchestrator session ID:
+- Plan reviewer task/session ID:
+- Active implementer task/session ID:
+- Active repairer task/session ID:
+- Initial/delta reviewer task/session ID:
+- Final reviewer task/session ID:
+- Active section:
+- Active writer ID: `none` or stable ID
+- Active reviewer ID: `none` or stable ID
+- Frozen reviewed product/test head: `none` or exact commit/worktree fingerprint
+- Next allowed phase:
+- Sequence-gate violations: `none` or event IDs/details
 
 ## Current section
 
@@ -42,6 +62,7 @@
 - Inspect-only dependency paths/direct impact cone:
 - Explicitly excluded owners/mechanisms:
 - Allowed structural changes:
+- Foundational-vs-local decision: `not-applicable | local-patch-authorized | shared-owner-authorized | owner-decision-required`
 
 ## Review state
 

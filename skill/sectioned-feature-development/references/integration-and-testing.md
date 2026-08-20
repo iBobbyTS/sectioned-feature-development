@@ -59,7 +59,7 @@ A checkpoint verifies producer-consumer composition and representative behavior.
 
 Before dispatching an integration reviewer, write an `unproven_composition` list naming the exact cross-section/runtime/process behaviors not already proven by section/package/consumer evidence. Dispatch only when the list is non-empty. Exact package publication plus exact consumer installation, tests, and build may prove composition without another reviewer. For a single section whose bounded review covered the complete feature path—or any feature whose list is empty—omit the redundant reviewer and run only the required Tier 3 gate.
 
-When required, the final integration review asks what local section reviews could not prove:
+When required, freeze the exact feature product/test head, assert that no product writer/reviewer is active, and dispatch one fresh reviewer with a stable task/session ID distinct from the plan reviewer and every product writer. The final integration review asks what local section reviews could not prove:
 
 - Does the original feature outcome work end to end?
 - Do section contracts compose correctly?

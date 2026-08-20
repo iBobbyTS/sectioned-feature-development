@@ -22,6 +22,16 @@ INVOCATION_SOURCES = {"USER_EXPLICIT", "CUSTOM_INSTRUCTIONS_AUTO", "AGENT_DISCRE
 INVOCATION_TIMINGS = {"FEATURE_START", "MID_FEATURE"}
 KNOWN_EVENTS = {
     "audit_init",
+    "skill_activation_announced",
+    "auto_plan_approval_requested",
+    "auto_plan_approved",
+    "auto_plan_rejected",
+    "late_trigger_detected",
+    "branch_transition_selected",
+    "agent_role_assigned",
+    "orchestration_blocked",
+    "sequence_gate_violation",
+    "agent_work_tracking_checked",
     "branch_decision",
     "requirements_frozen",
     "user_requirement",

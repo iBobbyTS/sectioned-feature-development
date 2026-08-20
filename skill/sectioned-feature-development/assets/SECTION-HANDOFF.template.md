@@ -2,7 +2,10 @@
 
 - Section base:
 - Implementation head:
-- Implementer:
+- Implementer profile:
+- Implementer task/session ID:
+- Main/orchestrator task/session ID:
+- Product writer was the delegated implementer, not the main agent: `yes`
 
 ## Behavior implemented
 
@@ -19,6 +22,7 @@
 - Mechanism:
 - Requirement/repository anchor:
 - Simpler existing path considered:
+- Foundational-versus-local decision and authority:
 
 Use `none` when no new mechanism was introduced.
 

@@ -1,12 +1,21 @@
 # `<ID>` Review Ledger
 
-## Scope
+## Scope and identities
 
 - Feature ID:
 - Section base:
 - Current head:
 - Contract:
 - Original section lineage:
+- Main/orchestrator task/session ID:
+- Plan reviewer task/session ID:
+- Implementer task/session ID:
+- Repairer task/session ID(s):
+- Initial/delta reviewer task/session ID:
+- Final reviewer task/session ID:
+- Role-separation check: `pass | fail | unknown`
+- Sequence-barrier check: `pass | violation-recorded | unknown`
+- Frozen reviewed product/test head:
 - Allowed-to-edit owners/files/symbols/routes:
 - Inspect-only dependency paths/direct impact cone:
 - Explicitly excluded owners/mechanisms:
@@ -20,7 +29,7 @@
 
 ## Initial bounded coverage
 
-- Reviewer/mode:
+- Reviewer task/session ID and mode:
 - Range:
 - Changed files/symbols reviewed:
 - Critical changed paths traced:
@@ -42,10 +51,11 @@
 
 - Origin phase: `INITIAL_BOUNDED | REPAIR_DELTA | FINAL_BOUNDED | CHECKPOINT | INTEGRATION | RECOVERY`
 - Finding IDs:
+- Repairer task/session ID:
 - Frozen repair owners:
 - Repair range:
 - Targeted checks:
-- Delta review result:
+- Delta reviewer task/session ID and result:
 - Coverage invalidated/re-established:
 
 ## Clean A — closure evidence
@@ -56,8 +66,9 @@
 
 ## Final bounded review, when required
 
-- Reviewer/mode:
-- Range:
+- Final reviewer task/session ID and mode:
+- Reviewer is distinct from plan reviewer, writers, and initial/delta reviewer: `yes/no/unknown`
+- Range / frozen head:
 - Highest-risk changed path:
 - Result: `clean | findings | insufficient-evidence`
 - New admissible findings, if any:

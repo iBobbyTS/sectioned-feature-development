@@ -2,6 +2,10 @@
 
 Use `$code-review` as one fresh `INTEGRATION` pass only when cross-section/runtime/process composition remains unproven. A single-section feature whose bounded review covered the complete feature path should skip this reviewer and run only the required feature gate.
 
+- Reviewer task/session ID:
+- Reviewer is distinct from plan reviewer and all product writers: `yes`
+- No product writer/reviewer is active: `yes`
+- Frozen feature product/test head:
 - Feature ID:
 - Feature base:
 - Feature head:

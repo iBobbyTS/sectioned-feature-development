@@ -25,17 +25,18 @@ Use these principles:
 - product behavior, not workflow formatting, determines validity;
 - hashes/fingerprints aid orientation only;
 - transient reviewer candidates are disposable;
-- commit evidence at coherent boundaries, not after every edit.
+- keep all workflow/process artifacts local and untracked; product-history commits contain only intended product, test, migration, and user-facing documentation changes.
 
 ## PLAN-FULL.md
 
 Required feature fields:
 
-- feature ID;
+- feature ID, invocation source/timing, exact trigger/negative evidence, predicted scale, and automatic-invocation approval state;
 - original user request plus later corrections/superseded guidance;
 - requirement/example/correction traceability matrix;
 - minimum sufficient end-to-end outcome;
 - scope authority map for proposed outcomes/mechanisms;
+- foundational-owner decisions where a local patch and bounded shared-owner fix are both plausible;
 - goal and observable behavior;
 - authoritative constraints/invariants;
 - non-goals/unsupported environments;
@@ -43,12 +44,13 @@ Required feature fields:
 - feature acceptance;
 - tiered validation;
 - explicitly allowed structural changes;
-- one pre-implementation plan-review gate status and reviewed plan fingerprint.
+- one pre-implementation plan-review gate status, stable reviewer task/session ID, and reviewed plan fingerprint.
 
 Required section fields:
 
 - goal;
 - external authority anchor and necessity statement;
+- local-patch versus shared-foundational-owner decision when applicable;
 - dependencies;
 - frozen scope manifest: allowed-to-edit owners/files/symbols/routes, inspect-only dependency paths, and excluded mechanisms;
 - direct impact cone;
@@ -77,8 +79,8 @@ A changed source hash does not invalidate completed work by itself.
 
 Keep one `.agent-work/reviews/PLAN-REVIEW.md` with:
 
-- original request, minimum outcome, plan path/fingerprint, reviewer identity, and review scope;
-- candidate table using `PLAN_BLOCKER`, `PLAN_SCOPE_EXPANSION`, `OWNER_DECISION`, or `PLAN_NIT`;
+- original request, minimum outcome, plan path/fingerprint, stable reviewer task/session ID, and review scope;
+- necessity-first disposition for every proposed section/mechanism, then a candidate table using `PLAN_BLOCKER`, `PLAN_SCOPE_EXPANSION`, `OWNER_DECISION`, or `PLAN_NIT`;
 - authority/source evidence, concrete failure, affected section, and minimum plan-only correction for blockers;
 - main-agent admission and corrections;
 - validator result and final `APPROVED | BLOCKED` verdict;
@@ -90,14 +92,15 @@ Do not create RAW/ADMISSION pairs, a clean streak, or a section whose only outpu
 
 Keep compact:
 
-- feature ID, base/head, starting branch/chosen branch base, execution mode, artifact isolation, invocation source/timing, exact trigger evidence, and audit mode/requirement/trace/pack-state paths;
-- PLAN-FULL review status, reviewed fingerprint, optional PLAN_DELTA result, and open owner decisions;
-- current section/base/head/status, original lineage, intensity, and assurance;
+- feature ID, base/adoption head, starting branch/chosen branch base, execution mode, artifact isolation, `.agent-work` tracking state, invocation source/timing, exact trigger and negative evidence, predicted scale, automatic-invocation announcement/approval, and audit mode/requirement/trace/pack-state paths;
+- PLAN-FULL review status, stable plan-reviewer ID, reviewed fingerprint, optional PLAN_DELTA result, and open owner decisions;
+- current section/base/head/status, original lineage, intensity, assurance, and foundational-vs-local decision;
 - frozen scope manifest;
 - required clean evidence for the resolved assurance and exact reviewed/tested head;
 - open finding IDs and cumulative repair-wave count;
 - current checks and evidence gaps;
 - recovery generation/backup and automatic-recovery-used flag;
+- stable main/implementer/repairer/initial-delta/final reviewer task/session IDs, active writer/reviewer, frozen reviewed head, next allowed phase, and any sequence-gate violation;
 - integration repair-wave/recovery counters;
 - next action and owner decisions;
 - accepted/deferred sections summary.
@@ -127,6 +130,7 @@ Ordinary repair does not modify the contract. A material contract change is a re
 Record:
 
 - base/head;
+- stable implementer and orchestrator task/session IDs;
 - changed files/symbols;
 - behavior implemented;
 - tests/checks with results;
@@ -140,12 +144,12 @@ Keep it concise enough for a reviewer to orient without reconstructing the whole
 
 One `{ID}-REVIEW.md` contains:
 
-1. scope/base/head/contract;
+1. scope/base/head/contract plus stable role task/session IDs and role-separation/sequence-barrier result;
 2. resolved assurance and initial coverage summary, including any causal inspection expansion outside the named cone;
 3. admitted findings table with acceptance-criterion/repository-gate authority and repair-owner decision;
-4. repair waves and delta closure;
+4. repair waves, repairer/delta-reviewer IDs, and delta closure;
 5. Clean A status;
-6. final bounded result when required;
+6. final bounded result, frozen head, and final-reviewer identity/distinctness when required;
 7. clean evidence/acceptance status under `ONE` or `TWO`, with exact reviewed/tested head;
 8. residual risk and non-blocking proposals.
 
@@ -188,9 +192,9 @@ Audit records are observational: they create no product authority, review findin
 
 ## Archival rules
 
-- Archive PLAN-FULL and compact ledgers at final feature completion under the recorded feature ID. Before freezing a different feature's base, preserve prior feature-owned active artifacts under their own archive and initialize clean active artifacts, preferably in a separate authorized pre-feature process commit. Never use Git reset or delete unrelated/user work for this isolation.
+- Archive PLAN-FULL and compact ledgers locally at final feature completion under the recorded feature ID. Before freezing a different feature's base, preserve prior feature-owned active artifacts under their own local archive and initialize clean active artifacts. Never use Git reset or delete unrelated/user work for this isolation.
 - Preserve accepted section contracts, handoffs, compact review ledgers, and hard-cap diagnoses.
 - Delete/overwrite transient candidates and extracted PLAN.md when safe.
-- Avoid per-round process commits. Commit/archive artifacts at section acceptance, hard-cap recovery, or final feature boundaries.
+- Never stage or commit `.agent-work/**`; archive/update it locally at section acceptance, hard-cap recovery, or final feature boundaries.
 - A newer artifact schema applies prospectively and does not require migration of completed work.
 - Do not mix commits/findings/reviews from another feature ID into current state or audit metrics.

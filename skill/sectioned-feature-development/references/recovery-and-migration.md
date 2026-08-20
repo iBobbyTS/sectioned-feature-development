@@ -7,7 +7,7 @@
 3. [Recovery classifications](#recovery-classifications)
 4. [Preservation rules](#preservation-rules)
 5. [Automatic recovery limit](#automatic-recovery-limit)
-6. [Adopting a new skill version mid-feature](#adopting-a-new-skill-version-mid-feature)
+6. [Adopting or activating mid-feature](#adopting-or-activating-mid-feature)
 7. [Legacy evidence](#legacy-evidence)
 8. [Branch-base authority](#branch-base-authority)
 
@@ -96,20 +96,23 @@ One automatic hard-cap recovery event is allowed per original section lineage, r
 
 This limit prevents technical recovery from becoming a new feature graph or a hidden sequence of five-wave cycles.
 
-## Adopting a new skill version mid-feature
+## Adopting or activating mid-feature
 
-A skill update is a workflow change, not a product change.
+A skill update is a workflow change, not a product change. An initially local task may also activate this workflow late when its actual owners, diff, or semantic boundary cross the trigger.
 
-When adopting mid-feature:
+When adopting/activating mid-feature:
 
-1. Read existing PLAN/state/review artifacts and current Git state.
-2. Map the current section into the closest new state without rewriting history.
-3. Preserve accepted sections and closed findings.
-4. Continue with delta review when a repair is already in progress.
-5. Use one final bounded review if prior coverage is unclear.
-6. Sanitize only the active, unaccepted contract: trace each guarantee, oracle, and structural allowance to user intent, repository rules, or established product behavior; downgrade unanchored reviewer-authored items to `SCOPE_PROPOSAL`.
-7. Add only the minimum fields needed for future continuation.
-8. Do not create migration sections, plan-review loops, legacy admission copies, or “clean lineage” worktrees.
+1. Stop product/test edits at a safe point and record `adoption_head`, changed owners, current validation, open work, and invocation timing `MID_FEATURE`.
+2. Preserve correct code, accepted sections, tests, closed findings, and applicable review coverage; do not rewrite history or restart from base merely for workflow purity.
+3. Resolve branch transition before continuing:
+   - on `main` with uncommitted work, create/switch to the feature branch and carry the worktree changes;
+   - on non-`main`, ask the three-way base choice;
+   - when feature commits already exist on local `main`, create a safety branch at current HEAD and ask before restoring/rewriting `main`.
+4. Build/review a prospective plan only for active unaccepted and remaining work. If activation was automatic, stop before plan review for user approval.
+5. Continue with delta review when a repair is already in progress; otherwise use one bounded final review if prior coverage cannot be reconstructed economically.
+6. Sanitize only the active, unaccepted contract: trace every guarantee/oracle/structural allowance to user intent, repository rules, or established behavior; downgrade unanchored reviewer-authored items to `SCOPE_PROPOSAL`.
+7. Add only the minimum fields needed for future continuation. Do not create migration sections, plan-review loops, legacy admission copies, evidence rehabilitation, or clean-lineage worktrees.
+8. Assign distinct delegated implementer/reviewer roles for all remaining work; prior main-thread code remains valid evidence but the main agent does not continue product coding after activation.
 
 If an old plan lacks new optional headings, note them in current state and continue. Do not run a strict validator that retroactively fails accepted work.
 
@@ -135,4 +138,4 @@ In `EXECUTE_WITH_COMMITS`, creating an isolated feature branch/worktree from `ma
 2. branch from the current branch;
 3. first merge the current branch into `main`, then branch from updated `main`.
 
-Record the starting branch, selected base, and explicit authority in `FEATURE-STATE.md` and the audit trace. Preserve uncommitted work. If the repository has no clear `main` equivalent, ask rather than guessing. This branch-base choice does not authorize merge, push, cleanup, or deletion of the source branch.
+Record the starting branch, selected base, explicit authority, and any late-adoption head in `FEATURE-STATE.md` and the audit trace. Preserve uncommitted work. If the repository has no clear `main` equivalent, ask rather than guessing. This branch-base choice does not authorize merge, push, cleanup, or deletion of the source branch.

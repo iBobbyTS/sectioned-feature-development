@@ -71,6 +71,16 @@ Before implementation and before the first review, compare the product outcome w
 
 Complexity estimates are diagnostic, not validity gates. Exceeding an estimate triggers a simplification check, not automatic rollback or clean-room retry.
 
+### Foundational owner versus local patch
+
+Do not automatically prefer either the narrowest file edit or the widest foundational refactor. Surface one bounded owner decision only when all are true:
+
+- the local patch would create a second authoritative implementation of validation, normalization, routing, persistence, selection, or state-transition semantics; or it would leave sibling callers wrong;
+- an existing shared owner can fix the root rule coherently;
+- changing that owner materially expands the allowed-to-edit manifest or impact cone.
+
+Present the smallest shared-owner fix and the smallest local patch with their residual risks. Do not propose a framework, service, or unrelated cleanup. Cosmetic deduplication, a single-use helper, or a one-field dictionary wrapper is non-blocking and should not interrupt the user.
+
 ## Security and threat models
 
 Security review must match the actual artifact and deployment.
