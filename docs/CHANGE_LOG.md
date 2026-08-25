@@ -50,4 +50,8 @@
 
 基于 27 个 feature audit 收紧自动触发：non-trivial prerequisite + bounded-local negative rules；区分用户显式/自动调用审批；增加 late activation、orchestrator-only 角色隔离、单 mutable-stage barrier、.agent-work 禁止入 Git、necessity-first PLAN review 和 foundation-choice gate。
 
+## v3.9 — 20260825-005020
+
+面向 ZCode/GLM 外部 subagent：高复杂度 PLAN 增加独立 ZCode challenge；code review 在 Sol/ZCode full pass 间交替；记录外部 reviewer identity/exact-head/integrity；增加低频 External Advisor escalation；同时保留 current-MCP 与 enhanced-ZCode-MCP 两个 Skill 变体。
+
 > 注：没有独立可归档的 v3.6 snapshot；本地修改后来并入 v3.7，因此历史中不伪造 v3.6。

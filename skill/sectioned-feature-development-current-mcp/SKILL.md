@@ -1,15 +1,11 @@
 ---
 name: sectioned-feature-development
-description: "Plan, pre-review, delegate, review, integrate, and audit non-trivial software changes as minimal bounded sections without plan-created or review-created scope creep. Use when the work is non-trivial and likely exceeds roughly 300 behavioral lines, affects more than three behavioral owners, materially changes persistence/schema/security/auth/concurrency/routing/public-API/process-lifecycle/state semantics, has a hard-to-bound impact cone, or previously failed to converge. Merely touching a high-risk module is insufficient for a local calculation, narrow exact-reproduction fix, bounded one-off script, or mechanical change. Also activate prospectively when initially small work grows beyond these bounds. User-explicit invocation proceeds without routine approval pauses; automatic invocation must be announced and pause after the first PLAN-FULL, before plan review, for user approval."
+description: "Plan, pre-review, delegate, review, integrate, and audit non-trivial software changes as minimal bounded sections without plan-created or review-created scope creep. Use when the work is non-trivial and likely exceeds roughly 300 behavioral lines, affects more than three behavioral owners, materially changes persistence/schema/security/auth/concurrency/routing/public-API/process-lifecycle/state semantics, has a hard-to-bound impact cone, or previously failed to converge. Merely touching a high-risk module is insufficient for a local calculation, narrow exact-reproduction fix, bounded one-off script, or mechanical change. Also activate prospectively when initially small work grows beyond these bounds. User-explicit invocation proceeds without routine approval pauses; automatic invocation must be announced and pause after the first PLAN-FULL, before plan review, for user approval. Supports bounded Sol/ZCode reviewer alternation, late external review capability, and low-frequency external Advisor escalation for unresolved high-impact decisions."
 ---
 
-# Sectioned Feature Development
-**Workflow revision:** V3.8
-Deliver one non-trivial change as a sequence of minimal, reviewable behavior sections. The governing invariant is:
+## V3.9 External reviewers and Advisor
 
-> Review may discover defects in the approved change; it may not create a larger product, threat model, compatibility promise, governance system, or proof bureaucracy.
-
-Use patchset-style review with proportional assurance: one bounded discovery pass, delta-only repair verification, and an independent final pass only when required by the selected assurance level or by a repair. Preserve valid code and evidence across repairs, skill updates, and recovery.
+Use stable review-session identities, Sol/ZCode alternation, stage barriers, and low-frequency Advisor escalation according to [external reviewer orchestration](references/external-reviewer-orchestration.md) and [Advisor escalation](references/advisor-escalation.md); Audit records these events but never authorizes them.
 
 ## Authority and safety
 

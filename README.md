@@ -1,4 +1,4 @@
-# Sectioned Feature Development v3.8
+# Sectioned Feature Development v3.9
 
 ## 设计理念
 
@@ -9,14 +9,19 @@
 
 ## 简要执行流程
 
-`PLAN-FULL → PLAN review → section implement → INITIAL_BOUNDED → REPAIR_DELTA* → FINAL_BOUNDED → conditional integration → audit/report`
+`PLAN-FULL → Sol PLAN review → (high complexity: ZCode challenge) → section implement → Sol/ZCode alternating full reviews with same-reviewer delta closure → conditional integration → audit/advisor if triggered`
 
 ## 安装
 
-将 `skill/sectioned-feature-development/` 整体复制到 Codex Skill 目录（例如 `~/.codex/skills/sectioned-feature-development/`），完整替换同名旧目录，不要把不同版本的 references/assets 混合。
+该版本保留两个历史 Skill 变体：
+
+- `skill/sectioned-feature-development-current-mcp/`：适配当时已有 review-only ZCode MCP。
+- `skill/sectioned-feature-development-enhanced-zcode-mcp/`：面向建议中的通用 ZCode subagent MCP。
+
+选择需要的目录复制到 Codex Skill 目录，并按实际环境决定安装哪一版。目录名用于历史区分；Skill 内部文件保持当时交付内容。
 
 ## 历史资料
 
-`docs/version-history/` 包含从 v1 到 v3.8 的全部历史。每个历史版本包含原始 Prompt、Audit Pack 分析、外部研究、更新说明和按用户策略保留的 appendix。
+`docs/version-history/` 包含从 v1 到 v3.9 的全部历史。每个历史版本包含原始 Prompt、Audit Pack 分析、外部研究、更新说明和按用户策略保留的 appendix。
 
 `docs/CHANGE_LOG.md` 是截至本快照的累计流程变更记录。

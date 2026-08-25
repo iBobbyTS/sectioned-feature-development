@@ -413,3 +413,10 @@ SHA-256:
 ```
 
 Then stop. Do not fix an audit-discovered product issue or begin another section.
+
+
+## V3.9 External reviewer and Advisor evidence
+
+For every external review event record: provider (`SOL` or `ZCODE`), stable agent/session/review IDs, daemon instance, base/head, review kind, dispatch/completion/cancellation timestamps, continuation relationship, artifact hash, and differentiated MCP/daemon/ZCode/model error class.
+
+For every Advisor escalation record: trigger ID, evidence predicate, freeze head/status, package path/hash, human handoff timestamp, Advisor result verbatim/provenance, human adoption decision, and resulting bounded action. Advisor recording is required when Audit is on; escalation itself remains available when Audit is off.

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Sectioned Feature Development"
+  short_description: "Bounded non-trivial changes with strict agent roles"
+  default_prompt: "Use $sectioned-feature-development for this non-trivial change. Respect explicit-versus-automatic activation, delegate implementation and review to distinct subagents, keep .agent-work untracked, and finalize the default live audit pack."
