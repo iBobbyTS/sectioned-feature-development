@@ -1,3 +1,21 @@
+# Change Log
+
+## 4.0 — 2026-09-04
+
+- 单一当前 Skill 替代两套过时 MCP variant；配套八个 agent TOML、六个 model/effort组合。
+- 多 section 强制 commits+feature branch；完成后请求重新评估，显式 reopen 才创建新revision。
+- 保留 advisor 请求合同原字节，改成有限上下文的 native advisor；没有 fresh-context 能力不伪称隔离。
+- 用依赖/资源/语义冲突图替代全局串行锁；独立工作树并行、候选冻结、串行集成。
+- 只采用当前九个 ZCode 工具，明确终态 continuation 缺失、Git caller ownership与 plan-mode 边界。
+- PLAN 加入可执行调度块、任务结构/模型选择证据和必要失败轨迹，保留 scope/repair门禁。
+- Audit 采用 purpose+producer+identity+manifest鉴别；记录模型全流程成本、并行、advisor、continuity与跟进请求边界。
+- AGENTS 保留政策，删除重复推理提示；借鉴 skill-doctor 的分维度证据，不优化 skill usage coverage 分数。
+- 历史 docs 保留但不进入默认运行上下文。没有为了升级重开旧 section 或迁移旧产品证据。
+
+---
+
+## Historical changelog (as supplied)
+
 # CHANGE LOG
 
 记录 `sectioned-feature-development` 各历史版本在流程上的变化。时间采用“该版本最终纳入的最后一条用户指令时间”。

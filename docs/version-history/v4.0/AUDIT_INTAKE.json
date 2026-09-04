@@ -1,0 +1,2909 @@
+[
+  {
+    "pack": "API-sol-usage-export-sectioned-audit.zip",
+    "sha256": "b42abfbb8ea2f330f9be348b9461c239e19cdebd3f71b4cf394b81abf6ca0818",
+    "files": 29,
+    "crc_error": null,
+    "classification": "PROCESS_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [
+        "AUDIT-VERDICT.md"
+      ],
+      "INVOCATION-AUDIT.md": [
+        "INVOCATION-AUDIT.md"
+      ],
+      "REVIEW-AUDIT.md": [
+        "REVIEW-AUDIT.md"
+      ],
+      "PLAN-AUDIT.md": [
+        "PLAN-AUDIT.md"
+      ],
+      "HUMAN-REQUIREMENTS.md": [
+        "HUMAN-REQUIREMENTS.md"
+      ],
+      "SKILL-COMPLIANCE.md": [
+        "SKILL-COMPLIANCE.md"
+      ],
+      "PACK-METADATA.json": [
+        "PACK-METADATA.json"
+      ],
+      "PLAN-FULL.md": [
+        "PLAN-FULL.md",
+        "planning/PLAN-FULL.md"
+      ]
+    },
+    "intake_class": "LEGACY_PROCESS",
+    "evidence_hashes": [
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "b5b23ff14af34435dc8bf36851337841edd4b6616e625c2826ef723d1dd1c0f9"
+      },
+      {
+        "path": "INVOCATION-AUDIT.md",
+        "sha256": "4330a258046b7dfba5afc80e03e8ee6e4cb59b3460676a63d98684e7f18697b1"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "c6f541bb508f93236bfcda0aeb672c7a4506704e26b16debfa45162a20e2128d"
+      },
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "ff4e3cfac22167f10229f6314c7d59940058bf5c71a5a17e775be5ef0a8307f1"
+      },
+      {
+        "path": "HUMAN-REQUIREMENTS.md",
+        "sha256": "e41320cfb15d02899e89c90ffc42c4a67f31a01500e421e3e98685efde5fdbb4"
+      },
+      {
+        "path": "SKILL-COMPLIANCE.md",
+        "sha256": "8eea1342b2791065415923a175340aa547a89a572d4f7a8646d0d4db7164d418"
+      },
+      {
+        "path": "PACK-METADATA.json",
+        "sha256": "e08f617f2d1a66da2354edc6b5a2a918e598eb795bd2343c57106ea3c29a13a0"
+      },
+      {
+        "path": "PLAN-FULL.md",
+        "sha256": "bdbc91d2d7e34b211e92545d55eaa22f42edf38758e5e372bf7bdcb7da84995b"
+      },
+      {
+        "path": "planning/PLAN-FULL.md",
+        "sha256": "bdbc91d2d7e34b211e92545d55eaa22f42edf38758e5e372bf7bdcb7da84995b"
+      }
+    ]
+  },
+  {
+    "pack": "AnyUpright-debug-app-flow-deescalation-sectioned-audit.zip",
+    "sha256": "c8fef84562fb5efea6448a36f1ac5be411dcd7abd3a574537d983f15db9aeba0",
+    "files": 17,
+    "crc_error": null,
+    "classification": "PROCESS_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [
+        "AUDIT-VERDICT.md"
+      ],
+      "INVOCATION-AUDIT.md": [
+        "INVOCATION-AUDIT.md"
+      ],
+      "REVIEW-AUDIT.md": [
+        "REVIEW-AUDIT.md"
+      ],
+      "PLAN-AUDIT.md": [
+        "PLAN-AUDIT.md"
+      ],
+      "HUMAN-REQUIREMENTS.md": [
+        "HUMAN-REQUIREMENTS.md"
+      ],
+      "SKILL-COMPLIANCE.md": [
+        "SKILL-COMPLIANCE.md"
+      ],
+      "PACK-METADATA.json": [
+        "PACK-METADATA.json"
+      ],
+      "PLAN-FULL.md": []
+    },
+    "intake_class": "LEGACY_PROCESS",
+    "evidence_hashes": [
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "4cd7f26c89fafd57bf1c9f981235e25052a986a11b56154787eb087cc7d7150a"
+      },
+      {
+        "path": "INVOCATION-AUDIT.md",
+        "sha256": "f70999cd79c594e3a91e3043716980d775206d3ed686f67c0ebef462c0d8b3e9"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "b22f1c0da614c826999a99b317682a5f9b58501d7af9a0f2b45194bed20a38af"
+      },
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "bfee04d1937aa9c0f14073b0b0a8b2c1d48bdeb7ac76443642c41b8e7d8c1cf6"
+      },
+      {
+        "path": "HUMAN-REQUIREMENTS.md",
+        "sha256": "47f1a2e79621b5cd00ad57b69d3f03759396787b35d1371dc151cef5b82aeb31"
+      },
+      {
+        "path": "SKILL-COMPLIANCE.md",
+        "sha256": "ad94d41f3df1c58f8aac6b4673e9f5e27778306f7646369db6d733d411d2a61f"
+      },
+      {
+        "path": "PACK-METADATA.json",
+        "sha256": "3cfc041c347bbca43a3d86117b47dde2b1ce6cf07c931b3a4bfeca26282ed48e"
+      }
+    ]
+  },
+  {
+    "pack": "AnyUpright-fcp-motion-analysis-time-domain-sectioned-audit.zip",
+    "sha256": "0eef1c0be0fa8b4b87833dc2173a5e9f5259890e176f1a095e1af8dc8515b418",
+    "files": 18,
+    "crc_error": null,
+    "classification": "PROCESS_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [
+        "AUDIT-VERDICT.md"
+      ],
+      "INVOCATION-AUDIT.md": [
+        "INVOCATION-AUDIT.md"
+      ],
+      "REVIEW-AUDIT.md": [
+        "REVIEW-AUDIT.md"
+      ],
+      "PLAN-AUDIT.md": [
+        "PLAN-AUDIT.md"
+      ],
+      "HUMAN-REQUIREMENTS.md": [
+        "HUMAN-REQUIREMENTS.md"
+      ],
+      "SKILL-COMPLIANCE.md": [
+        "SKILL-COMPLIANCE.md"
+      ],
+      "PACK-METADATA.json": [
+        "PACK-METADATA.json"
+      ],
+      "PLAN-FULL.md": []
+    },
+    "intake_class": "LEGACY_PROCESS",
+    "evidence_hashes": [
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "c64024433488d28d081b877bac8d49dcc1e94d6d3b0301cc277f5ed5272df9a2"
+      },
+      {
+        "path": "INVOCATION-AUDIT.md",
+        "sha256": "f4f87847f042630dff72b6532927adc808f695343d3dbb114182564a728960f8"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "05e03e9d8dbe73cbcf43363c96995bc81f6e38a883ffffdf3591b2e62a0a4694"
+      },
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "679a57aad1a24508b727aa61130acaf44c147a8373b2cd678df639c8f9f49965"
+      },
+      {
+        "path": "HUMAN-REQUIREMENTS.md",
+        "sha256": "887a7b235f869b18748c6c42d77ac3371d4f358ec87e6f82f4c8ed1311bd0319"
+      },
+      {
+        "path": "SKILL-COMPLIANCE.md",
+        "sha256": "9a40a887a7f9eec118d409befc774d825be12ea3d28f6e23605692ae8c465d4e"
+      },
+      {
+        "path": "PACK-METADATA.json",
+        "sha256": "22fea25281f49c31608eb71188860ba0ced5db722f4e5b37c22c232ef0569f24"
+      }
+    ]
+  },
+  {
+    "pack": "codex-rosetta-availability-snapshot-cooldown-recovery-20260901-sectioned-audit.zip",
+    "sha256": "2b45369549ca07ccf265871fd1d3d7e4268d32f919678fab8584d26f9d6c037a",
+    "files": 18,
+    "crc_error": null,
+    "classification": "PROCESS_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [
+        "AUDIT-VERDICT.md"
+      ],
+      "INVOCATION-AUDIT.md": [
+        "INVOCATION-AUDIT.md"
+      ],
+      "REVIEW-AUDIT.md": [
+        "REVIEW-AUDIT.md"
+      ],
+      "PLAN-AUDIT.md": [
+        "PLAN-AUDIT.md"
+      ],
+      "HUMAN-REQUIREMENTS.md": [
+        "HUMAN-REQUIREMENTS.md"
+      ],
+      "SKILL-COMPLIANCE.md": [
+        "SKILL-COMPLIANCE.md"
+      ],
+      "PACK-METADATA.json": [
+        "PACK-METADATA.json"
+      ],
+      "PLAN-FULL.md": [
+        "planning/PLAN-FULL.md"
+      ]
+    },
+    "intake_class": "LEGACY_PROCESS",
+    "evidence_hashes": [
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "12dec35b22e93d881945f4ce8e2af4df485872f9d8e0ad610dab6604608ee233"
+      },
+      {
+        "path": "INVOCATION-AUDIT.md",
+        "sha256": "26e4642ec38fe669a6f0273b10a7b803201d3c1013ecdff99b612a1305a6a8e4"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "6c65021a96cd1faee3c0950ce05a40ca34ea99e3c82e27c6eed43bd0eff9ea7d"
+      },
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "60251bb8ad936711b09e338098f74269aa971733889255737b5fd16bca5f1362"
+      },
+      {
+        "path": "HUMAN-REQUIREMENTS.md",
+        "sha256": "d65f52fb891e69e94d12513e78c6a4a7b132936189773cc4025fe51c0a535258"
+      },
+      {
+        "path": "SKILL-COMPLIANCE.md",
+        "sha256": "269701d1dc12b8cc8de764370b33bb273048b236a917cd69ff97f320dbd99242"
+      },
+      {
+        "path": "PACK-METADATA.json",
+        "sha256": "d645bec089a6e75552829d67283ef38d273618778a380c4a64b3949e80d473e3"
+      },
+      {
+        "path": "planning/PLAN-FULL.md",
+        "sha256": "6b04957ce3891369894c58d0d16fdb66d9b3a4f14723587789af8211d25a1591"
+      }
+    ]
+  },
+  {
+    "pack": "codex-rosetta-codex-cockpit-provider-health-sectioned-audit.zip",
+    "sha256": "f1ecbc7a1f206bc0d5b5d4325feac97e5116c06b2ef7e25eb71b2c560615a482",
+    "files": 31,
+    "crc_error": null,
+    "classification": "PROCESS_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [
+        "AUDIT-VERDICT.md"
+      ],
+      "INVOCATION-AUDIT.md": [
+        "INVOCATION-AUDIT.md"
+      ],
+      "REVIEW-AUDIT.md": [
+        "REVIEW-AUDIT.md"
+      ],
+      "PLAN-AUDIT.md": [
+        "PLAN-AUDIT.md"
+      ],
+      "HUMAN-REQUIREMENTS.md": [
+        "HUMAN-REQUIREMENTS.md"
+      ],
+      "SKILL-COMPLIANCE.md": [
+        "SKILL-COMPLIANCE.md"
+      ],
+      "PACK-METADATA.json": [
+        "PACK-METADATA.json"
+      ],
+      "PLAN-FULL.md": [
+        "PLAN-FULL.md",
+        "planning/PLAN-FULL.md"
+      ]
+    },
+    "intake_class": "LEGACY_PROCESS",
+    "evidence_hashes": [
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "365603043136ac2178e499ce449c7b04b60ee783b080d21f04784e2578ded1e3"
+      },
+      {
+        "path": "INVOCATION-AUDIT.md",
+        "sha256": "01cbf113f812d2f4e684fe9e01da0736895bcb9391b653c48be4489fa70f06e3"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "15bac94c58d6b6a71bcd09fb9713b82e149746643431098bcad4dcb497fc1308"
+      },
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "aef162d98321383eb6268bcd0fc8caf11aece7191ffe10fcb17fe46c13b133df"
+      },
+      {
+        "path": "HUMAN-REQUIREMENTS.md",
+        "sha256": "7a1d1f4e6cfef74930677db48ff51ffad2188d973f24b5e0ddf99762050ca5e7"
+      },
+      {
+        "path": "SKILL-COMPLIANCE.md",
+        "sha256": "f6914e6a1a7a7a392454fff4f8e390915f33919b2434d93e12e6f1f40974b4be"
+      },
+      {
+        "path": "PACK-METADATA.json",
+        "sha256": "ddc234242752179cf02d0c713095a31940075ee9fe7c9426a362aeddfa6a48b5"
+      },
+      {
+        "path": "PLAN-FULL.md",
+        "sha256": "7d73a0c3ee4bcb658206ee5762a6e789ad9f875636bc7b01706226c512923c42"
+      },
+      {
+        "path": "planning/PLAN-FULL.md",
+        "sha256": "7d73a0c3ee4bcb658206ee5762a6e789ad9f875636bc7b01706226c512923c42"
+      }
+    ]
+  },
+  {
+    "pack": "codex-rosetta-failover-429-cooldown-20260826-sectioned-audit.zip",
+    "sha256": "378c30a5b817325a5482114dc04398208da99d95d7571e6a011de26c357d8a3a",
+    "files": 20,
+    "crc_error": null,
+    "classification": "PROCESS_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [
+        "AUDIT-VERDICT.md"
+      ],
+      "INVOCATION-AUDIT.md": [
+        "INVOCATION-AUDIT.md"
+      ],
+      "REVIEW-AUDIT.md": [
+        "REVIEW-AUDIT.md"
+      ],
+      "PLAN-AUDIT.md": [
+        "PLAN-AUDIT.md"
+      ],
+      "HUMAN-REQUIREMENTS.md": [
+        "HUMAN-REQUIREMENTS.md"
+      ],
+      "SKILL-COMPLIANCE.md": [
+        "SKILL-COMPLIANCE.md"
+      ],
+      "PACK-METADATA.json": [
+        "PACK-METADATA.json"
+      ],
+      "PLAN-FULL.md": [
+        "planning/PLAN-FULL.md"
+      ]
+    },
+    "intake_class": "LEGACY_PROCESS",
+    "evidence_hashes": [
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "746bc1dcc578d548d418c8392be62a0b749285fd473c33b04abedac57698b9f0"
+      },
+      {
+        "path": "INVOCATION-AUDIT.md",
+        "sha256": "88ea42854e32e9d471c393d2af2db38ddabc86222ac52c217e763192d04e22bf"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "d0efa4fca073c21fdafb59a9701f3d206e4439a39e4dd1e0fbfc261a8723bf94"
+      },
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "d841d19089e699e5ae05a08ee0f739f6fa5cbdc14115808679309ca0e1561830"
+      },
+      {
+        "path": "HUMAN-REQUIREMENTS.md",
+        "sha256": "4658396d0a1bf2ac95b058aa3a87680d607a715868e0ec8d656b70186d1aa3ef"
+      },
+      {
+        "path": "SKILL-COMPLIANCE.md",
+        "sha256": "c099cc8d6851bdf54cd6cd85ea47c0c32ea31c73077b7e778f2d29d80b028986"
+      },
+      {
+        "path": "PACK-METADATA.json",
+        "sha256": "ff973f83a4ce79e0354ad64c89a99099cfe3da8556c6e6230f7fefeda9721b89"
+      },
+      {
+        "path": "planning/PLAN-FULL.md",
+        "sha256": "07920a86d0d2f003bec4669485ab730f94dadbe393743e4f783f7ca0d9f10489"
+      }
+    ]
+  },
+  {
+    "pack": "codex-rosetta-failover-connectivity-cooldown-20260826-sectioned-audit.zip",
+    "sha256": "82ad0943ad4f08880896a881c1d47c4653437fd5e311a87e666eda503d9768c3",
+    "files": 19,
+    "crc_error": null,
+    "classification": "PROCESS_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [
+        "AUDIT-VERDICT.md"
+      ],
+      "INVOCATION-AUDIT.md": [
+        "INVOCATION-AUDIT.md"
+      ],
+      "REVIEW-AUDIT.md": [
+        "REVIEW-AUDIT.md"
+      ],
+      "PLAN-AUDIT.md": [
+        "PLAN-AUDIT.md"
+      ],
+      "HUMAN-REQUIREMENTS.md": [
+        "HUMAN-REQUIREMENTS.md"
+      ],
+      "SKILL-COMPLIANCE.md": [
+        "SKILL-COMPLIANCE.md"
+      ],
+      "PACK-METADATA.json": [
+        "PACK-METADATA.json"
+      ],
+      "PLAN-FULL.md": [
+        "planning/PLAN-FULL.md"
+      ]
+    },
+    "intake_class": "LEGACY_PROCESS",
+    "evidence_hashes": [
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "746bc1dcc578d548d418c8392be62a0b749285fd473c33b04abedac57698b9f0"
+      },
+      {
+        "path": "INVOCATION-AUDIT.md",
+        "sha256": "88ea42854e32e9d471c393d2af2db38ddabc86222ac52c217e763192d04e22bf"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "d0efa4fca073c21fdafb59a9701f3d206e4439a39e4dd1e0fbfc261a8723bf94"
+      },
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "d841d19089e699e5ae05a08ee0f739f6fa5cbdc14115808679309ca0e1561830"
+      },
+      {
+        "path": "HUMAN-REQUIREMENTS.md",
+        "sha256": "17744b259c8e1f99ae86e63018976d26fd4d922d01a5dcc51c83492520b9d12a"
+      },
+      {
+        "path": "SKILL-COMPLIANCE.md",
+        "sha256": "c099cc8d6851bdf54cd6cd85ea47c0c32ea31c73077b7e778f2d29d80b028986"
+      },
+      {
+        "path": "PACK-METADATA.json",
+        "sha256": "e02d19ac12143b6bd54d5b094c538c2d7cbe3b1dac3dceed35716ec1988e79a0"
+      },
+      {
+        "path": "planning/PLAN-FULL.md",
+        "sha256": "0d370d924a65d7bd9b3431c9fec9a89d95ee7d131a1bb8f4ea70dc20331bb8cc"
+      }
+    ]
+  },
+  {
+    "pack": "codex-rosetta-glm53-catalog-update-20260902-sectioned-audit.zip",
+    "sha256": "c4e6b177fe203a8df55ed6126d286c361e6b0235f684976f9b4743f139cee278",
+    "files": 35,
+    "crc_error": null,
+    "classification": "PROCESS_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [
+        "AUDIT-VERDICT.md"
+      ],
+      "INVOCATION-AUDIT.md": [
+        "INVOCATION-AUDIT.md"
+      ],
+      "REVIEW-AUDIT.md": [
+        "REVIEW-AUDIT.md"
+      ],
+      "PLAN-AUDIT.md": [
+        "PLAN-AUDIT.md"
+      ],
+      "HUMAN-REQUIREMENTS.md": [
+        "HUMAN-REQUIREMENTS.md"
+      ],
+      "SKILL-COMPLIANCE.md": [
+        "SKILL-COMPLIANCE.md"
+      ],
+      "PACK-METADATA.json": [
+        "PACK-METADATA.json"
+      ],
+      "PLAN-FULL.md": [
+        "PLAN-FULL.md"
+      ]
+    },
+    "intake_class": "LEGACY_PROCESS",
+    "evidence_hashes": [
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "0a4c19f4cb24807a624c740fc23c576621587fcbdbfa05d87ff0f72f572bf95a"
+      },
+      {
+        "path": "INVOCATION-AUDIT.md",
+        "sha256": "4a822fc21e2712ae56a848553429ffbe7a3017c52b375e12b2594422d3896819"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "406a313cbbf0f2bcf5b02f666baa547b3f90418a7b826a27b1cbab9f8632cfdd"
+      },
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "7e7dc2a1276cba9282501232f6593a1e03afa1afdc4040bdad6d50ea2ecaa34a"
+      },
+      {
+        "path": "HUMAN-REQUIREMENTS.md",
+        "sha256": "2370fca0333a5372e91089c5760a9c27ca02fa6afc9598b53bcb68779255f1e2"
+      },
+      {
+        "path": "SKILL-COMPLIANCE.md",
+        "sha256": "f2ac733c323f0481142c3a4f6c83193bc03705af4fa21237813857f6d2e1d156"
+      },
+      {
+        "path": "PACK-METADATA.json",
+        "sha256": "185eea5a7c147d36ed73594eeef0dd28a8277c8aae17811e4b001d00312d3cc3"
+      },
+      {
+        "path": "PLAN-FULL.md",
+        "sha256": "7ba572d9c52243b938e867fda2edb8a1b57b882133af63384bb5de5862d8eb7e"
+      }
+    ]
+  },
+  {
+    "pack": "codex-rosetta-remove-observability-diagnostics-sectioned-audit.zip",
+    "sha256": "6211b724b5af909e88d07fbf5af601cf4b598c30932369c183b04c525852c73f",
+    "files": 28,
+    "crc_error": null,
+    "classification": "PROCESS_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [
+        "AUDIT-VERDICT.md"
+      ],
+      "INVOCATION-AUDIT.md": [
+        "INVOCATION-AUDIT.md"
+      ],
+      "REVIEW-AUDIT.md": [
+        "REVIEW-AUDIT.md"
+      ],
+      "PLAN-AUDIT.md": [
+        "PLAN-AUDIT.md"
+      ],
+      "HUMAN-REQUIREMENTS.md": [
+        "HUMAN-REQUIREMENTS.md"
+      ],
+      "SKILL-COMPLIANCE.md": [
+        "SKILL-COMPLIANCE.md"
+      ],
+      "PACK-METADATA.json": [
+        "PACK-METADATA.json"
+      ],
+      "PLAN-FULL.md": [
+        "planning/PLAN-FULL.md"
+      ]
+    },
+    "intake_class": "LEGACY_PROCESS",
+    "evidence_hashes": [
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "bc722a2e01f15284bed73324ab611ff7541da198dfc5003864d0f20e523a506a"
+      },
+      {
+        "path": "INVOCATION-AUDIT.md",
+        "sha256": "f8410252845b2d7c02ee6cc6658be70e83d11cd3bcf1fb1e67ec4f9078bf6ecf"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "ff0c307950044e2e64a58b8e57cdc32e4b44067e5770a5605db896696cbd5729"
+      },
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "d7efab9cfcf3bada688c9b9d6e220619218cb0eba73ec9b8916350318b58571c"
+      },
+      {
+        "path": "HUMAN-REQUIREMENTS.md",
+        "sha256": "d0e8857642ddecede76452985cef9dd0c8457a000e61ce5b92bfc00d98602ea7"
+      },
+      {
+        "path": "SKILL-COMPLIANCE.md",
+        "sha256": "102fe64fb878b86951dd91e36b5bd419cc2d820dd89e461295c570c015512978"
+      },
+      {
+        "path": "PACK-METADATA.json",
+        "sha256": "b330c9449992a908ec4bc9228d8d70cc451d560a3928274e49b40eccadb28d37"
+      },
+      {
+        "path": "planning/PLAN-FULL.md",
+        "sha256": "873f5e65f1a42eab8f7859e8da12a5a6f192767421030c4de8a9d8e1c85126ff"
+      }
+    ]
+  },
+  {
+    "pack": "lmdo-website-create-project-needs-score-sectioned-audit.zip",
+    "sha256": "db7cf8b405b32e87c8ad3f3942874fc51c06cb45f8661a5e584b7be328cf6f63",
+    "files": 20,
+    "crc_error": null,
+    "classification": "PROCESS_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [
+        "AUDIT-VERDICT.md"
+      ],
+      "INVOCATION-AUDIT.md": [
+        "INVOCATION-AUDIT.md"
+      ],
+      "REVIEW-AUDIT.md": [
+        "REVIEW-AUDIT.md"
+      ],
+      "PLAN-AUDIT.md": [
+        "PLAN-AUDIT.md"
+      ],
+      "HUMAN-REQUIREMENTS.md": [
+        "HUMAN-REQUIREMENTS.md"
+      ],
+      "SKILL-COMPLIANCE.md": [
+        "SKILL-COMPLIANCE.md"
+      ],
+      "PACK-METADATA.json": [
+        "PACK-METADATA.json"
+      ],
+      "PLAN-FULL.md": []
+    },
+    "intake_class": "LEGACY_PROCESS",
+    "evidence_hashes": [
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "940e03b76753291a632b6ad81ec55188e406a47acd861d4dff0f80b4d47bda16"
+      },
+      {
+        "path": "INVOCATION-AUDIT.md",
+        "sha256": "4a320f557bb7e5c24d913ef28ac5095e817609435ac37c6307ecd6fcb57802f7"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "9fa09b271d85baaa486b1270069e2d730106a6b683e32f62216d497af7fa65ce"
+      },
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "050ad7d59b96326e809f905fb71e7ba71881434a6b6a70efa4bd18002564eb87"
+      },
+      {
+        "path": "HUMAN-REQUIREMENTS.md",
+        "sha256": "88a24fd506698183137a99683b3db1a62eb8edb244316aff3f9debc3101912c6"
+      },
+      {
+        "path": "SKILL-COMPLIANCE.md",
+        "sha256": "22e9669cf0706042b40199675e5e9c1bfc3d0079296a85dc1b7e20e3dadde422"
+      },
+      {
+        "path": "PACK-METADATA.json",
+        "sha256": "cb75ad08dfd8de6ae76b166aab727a828a8da5f6aacd37926bc2ea19ebcb1f15"
+      }
+    ]
+  },
+  {
+    "pack": "lmdo-website-dynamic-performance-groups-20260831-sectioned-audit.zip",
+    "sha256": "0eb2f382935cc41c0f713899588128ce73768936ef69122f5a72f9a0cc676505",
+    "files": 61,
+    "crc_error": null,
+    "classification": "PROCESS_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [
+        "AUDIT-VERDICT.md"
+      ],
+      "INVOCATION-AUDIT.md": [
+        "INVOCATION-AUDIT.md"
+      ],
+      "REVIEW-AUDIT.md": [
+        "REVIEW-AUDIT.md"
+      ],
+      "PLAN-AUDIT.md": [
+        "PLAN-AUDIT.md"
+      ],
+      "HUMAN-REQUIREMENTS.md": [
+        "HUMAN-REQUIREMENTS.md"
+      ],
+      "SKILL-COMPLIANCE.md": [
+        "SKILL-COMPLIANCE.md"
+      ],
+      "PACK-METADATA.json": [
+        "PACK-METADATA.json"
+      ],
+      "PLAN-FULL.md": [
+        "planning/PLAN-FULL.md"
+      ]
+    },
+    "intake_class": "LEGACY_PROCESS",
+    "evidence_hashes": [
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "35ae3ad02b81227e60fd3f8110cd663035157b11a6ec8692e6c721463e70c156"
+      },
+      {
+        "path": "INVOCATION-AUDIT.md",
+        "sha256": "96a121013e640181fd29000ca548671f414259c2c556243bb5b2f3643fff3457"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "ef0ba29c04b031cff9fa1fd82834fa4b6eda803fdb8f123f07eb20607c305919"
+      },
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "990d8b631de03f3eac660fa226e1376c67805fdd8959f86ad28e98408411201f"
+      },
+      {
+        "path": "HUMAN-REQUIREMENTS.md",
+        "sha256": "0fd50814e7c32ae22aca50dbcdd816961ae441d042395248bc75cdb1d923e08f"
+      },
+      {
+        "path": "SKILL-COMPLIANCE.md",
+        "sha256": "c0aad3b7bb627c6e867da204185c9ed979375742369c5e4a1a78d0f06d91c734"
+      },
+      {
+        "path": "PACK-METADATA.json",
+        "sha256": "7712571c274fbaf9fac96d9c8222e4b482dafc900d2af783cd0d3fe51d8338aa"
+      },
+      {
+        "path": "planning/PLAN-FULL.md",
+        "sha256": "c394aeaa69faab89c982361107ab53ecc4eaf0fea3909224f84bfb8334474d57"
+      }
+    ]
+  },
+  {
+    "pack": "lmdo-website-group-instrument-inline-management-20260903-sectioned-audit.zip",
+    "sha256": "b8442280d6372adc77d6911aef5b065ec77cd0964683aae767cc911ae98061af",
+    "files": 27,
+    "crc_error": null,
+    "classification": "PROCESS_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [
+        "AUDIT-VERDICT.md"
+      ],
+      "INVOCATION-AUDIT.md": [
+        "INVOCATION-AUDIT.md"
+      ],
+      "REVIEW-AUDIT.md": [
+        "REVIEW-AUDIT.md"
+      ],
+      "PLAN-AUDIT.md": [
+        "PLAN-AUDIT.md"
+      ],
+      "HUMAN-REQUIREMENTS.md": [
+        "HUMAN-REQUIREMENTS.md"
+      ],
+      "SKILL-COMPLIANCE.md": [
+        "SKILL-COMPLIANCE.md"
+      ],
+      "PACK-METADATA.json": [
+        "PACK-METADATA.json"
+      ],
+      "PLAN-FULL.md": [
+        "planning/PLAN-FULL.md"
+      ]
+    },
+    "intake_class": "LEGACY_PROCESS",
+    "evidence_hashes": [
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "7831ee93b022b2fc8601fa56a3f8b9f2393c4f0d13f27de025c00dab02fbc331"
+      },
+      {
+        "path": "INVOCATION-AUDIT.md",
+        "sha256": "891a222f1fd25882f71b5d77d64cb7cb09a780670aa884a3f555d7b6440f0a1e"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "7f557ff66c15a64d0a5eca0a504dffe6edee1779472fc3de51e1d63e215710ff"
+      },
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "1539bf27cf186ea077267675eaeecf631cff2e6f2453b9c991603cd254f641d8"
+      },
+      {
+        "path": "HUMAN-REQUIREMENTS.md",
+        "sha256": "809a91fdd73efdfe9b9202925cf607864f61776a19f83cf05a5352b2c898ae97"
+      },
+      {
+        "path": "SKILL-COMPLIANCE.md",
+        "sha256": "1e602203a7a7702832722c397fb00871dfdbdb612d24a4fa927b6bbfc651e120"
+      },
+      {
+        "path": "PACK-METADATA.json",
+        "sha256": "c2d3b2061dd14a1952f10822c3ef0e9b4f0dc884b9990e24423544b7ab41c5a3"
+      },
+      {
+        "path": "planning/PLAN-FULL.md",
+        "sha256": "b688afd8adff0bb29725fdd1ca06990695397ef2bd13a594129b77ec1cf1e27f"
+      }
+    ]
+  },
+  {
+    "pack": "lmdo-website-group-to-lead-category-sectioned-audit.zip",
+    "sha256": "b6257bab00fb188f6497ba64a740d245ce776faf3fe349c943f13f81cd597a31",
+    "files": 42,
+    "crc_error": null,
+    "classification": "PROCESS_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [
+        "AUDIT-VERDICT.md"
+      ],
+      "INVOCATION-AUDIT.md": [
+        "INVOCATION-AUDIT.md"
+      ],
+      "REVIEW-AUDIT.md": [
+        "REVIEW-AUDIT.md"
+      ],
+      "PLAN-AUDIT.md": [
+        "PLAN-AUDIT.md"
+      ],
+      "HUMAN-REQUIREMENTS.md": [
+        "HUMAN-REQUIREMENTS.md"
+      ],
+      "SKILL-COMPLIANCE.md": [
+        "SKILL-COMPLIANCE.md"
+      ],
+      "PACK-METADATA.json": [
+        "PACK-METADATA.json"
+      ],
+      "PLAN-FULL.md": [
+        "planning/PLAN-FULL.md"
+      ]
+    },
+    "intake_class": "LEGACY_PROCESS",
+    "evidence_hashes": [
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "a0e7ca1b515d9c078f8d645544242a0e17f41a9c7fe8c0b3a51c1a2677e282d4"
+      },
+      {
+        "path": "INVOCATION-AUDIT.md",
+        "sha256": "fdc04b7cf23c0ff8a3e3a16e67d8450d42105f31b6e9035c48ac7332445db2df"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "194aad284946d216747167be2aff239bb77cc3b1d34563ce3e6e04ae8271ca53"
+      },
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "0f0423f7ac56d0f8a98a0c72f8e3510c9cd49ba382f423f4ddf3c2e7751bd4bf"
+      },
+      {
+        "path": "HUMAN-REQUIREMENTS.md",
+        "sha256": "7c90b45fb603322531e9321bf6ac173b1452c2228585ab5e8a73f1b3c6a06d9a"
+      },
+      {
+        "path": "SKILL-COMPLIANCE.md",
+        "sha256": "b73cb078647f49e506523e701298eb1891fd92402444ea8e73863e58992b4d49"
+      },
+      {
+        "path": "PACK-METADATA.json",
+        "sha256": "c8b7b050b82066dd3219f31bf59e38596acf5fb92bfeecd50e6c2a7517fed75e"
+      },
+      {
+        "path": "planning/PLAN-FULL.md",
+        "sha256": "694b843e4fe45d9e77005bdf03c6f695ffd0a7db920fcbc751b8e4089c6cdc39"
+      }
+    ]
+  },
+  {
+    "pack": "lmdo-website-management-list-ui-20260826-sectioned-audit.zip",
+    "sha256": "c3b203d11219d7bd6521d39663e689777c0fe279c49bfc07ea04a3bbd47abe16",
+    "files": 84,
+    "crc_error": null,
+    "classification": "PROCESS_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [
+        "AUDIT-VERDICT.md"
+      ],
+      "INVOCATION-AUDIT.md": [
+        "INVOCATION-AUDIT.md"
+      ],
+      "REVIEW-AUDIT.md": [
+        "REVIEW-AUDIT.md"
+      ],
+      "PLAN-AUDIT.md": [
+        "PLAN-AUDIT.md"
+      ],
+      "HUMAN-REQUIREMENTS.md": [
+        "HUMAN-REQUIREMENTS.md"
+      ],
+      "SKILL-COMPLIANCE.md": [
+        "SKILL-COMPLIANCE.md"
+      ],
+      "PACK-METADATA.json": [
+        "PACK-METADATA.json"
+      ],
+      "PLAN-FULL.md": [
+        "planning/PLAN-FULL.md"
+      ]
+    },
+    "intake_class": "LEGACY_PROCESS",
+    "evidence_hashes": [
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "791364e10a816184f75c7e722b687607f181363521d8c60c086fbb08bfafb39c"
+      },
+      {
+        "path": "INVOCATION-AUDIT.md",
+        "sha256": "096a178f57f96cd463367357150f1b07c8cd021cc337b4cf4a65283e3e7c5ca5"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "218986a0f4cd50fda0c97ce99541e1aa9c2948dfccfe610c5ec050c5eeeccee1"
+      },
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "cde32eea898aaeda3acef71ec970427e4bb92b3bf64e66bfc636e71e62373cde"
+      },
+      {
+        "path": "HUMAN-REQUIREMENTS.md",
+        "sha256": "833060475fa851f8ce821d167021642b8966f7c0ca4fb6ce3e939bac1cd326d1"
+      },
+      {
+        "path": "SKILL-COMPLIANCE.md",
+        "sha256": "c26223895bd837f2d221bf73fedd39e20cda464d4f796f9a92dcf62ef39b98df"
+      },
+      {
+        "path": "PACK-METADATA.json",
+        "sha256": "47a6939a5c568e558dc4ec4dc2432bc3d9fef1a2d8bd9f6865997161583ba094"
+      },
+      {
+        "path": "planning/PLAN-FULL.md",
+        "sha256": "62a9b368db9119e18e094f4c95715414c735d53d017dcdc69b124259f73d073a"
+      }
+    ]
+  },
+  {
+    "pack": "lmdo-website-pinyin-user-search-sectioned-audit.zip",
+    "sha256": "daaef55f82b8edfdadda8241453885d7bd538a9f0cdb0bc7cfd0235ac6debbe5",
+    "files": 38,
+    "crc_error": null,
+    "classification": "PROCESS_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [
+        "AUDIT-VERDICT.md"
+      ],
+      "INVOCATION-AUDIT.md": [
+        "INVOCATION-AUDIT.md"
+      ],
+      "REVIEW-AUDIT.md": [
+        "REVIEW-AUDIT.md"
+      ],
+      "PLAN-AUDIT.md": [
+        "PLAN-AUDIT.md"
+      ],
+      "HUMAN-REQUIREMENTS.md": [
+        "HUMAN-REQUIREMENTS.md"
+      ],
+      "SKILL-COMPLIANCE.md": [
+        "SKILL-COMPLIANCE.md"
+      ],
+      "PACK-METADATA.json": [
+        "PACK-METADATA.json"
+      ],
+      "PLAN-FULL.md": [
+        "planning/PLAN-FULL.md"
+      ]
+    },
+    "intake_class": "LEGACY_PROCESS",
+    "evidence_hashes": [
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "1b3c26b76258847c1ae856312ac76767748a69d38f7a9b3d0291961f37a0cc72"
+      },
+      {
+        "path": "INVOCATION-AUDIT.md",
+        "sha256": "370bd5314490ffc08eb14ac750cec0e563cc358774d51fc355357f139dec5824"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "c49520eb94be6208c08d5980bca2bbc9cb41e83020e5a9263212be039724417b"
+      },
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "11e7aebdaf0c513b454043dc31fc2fc655256881c62b4b796ed73c9221340d93"
+      },
+      {
+        "path": "HUMAN-REQUIREMENTS.md",
+        "sha256": "72a4f7836e5b6e0a41be83c8c67d311a1c1e3d3f7ca16e737e1b85607030ec97"
+      },
+      {
+        "path": "SKILL-COMPLIANCE.md",
+        "sha256": "895a3ecd842d62ebdb238bfb33717dcd8812ea508455b9b560989e9dddd79b56"
+      },
+      {
+        "path": "PACK-METADATA.json",
+        "sha256": "bdafe869e8d7108826027608b329ed3bcc0ad225135030389a5348ba28adef51"
+      },
+      {
+        "path": "planning/PLAN-FULL.md",
+        "sha256": "7255233c4f60421ed62ef8f55361c841da7982cec3da72a047b722dd88ea2d7d"
+      }
+    ]
+  },
+  {
+    "pack": "lmdo-website-pr104-must-fix-sectioned-audit.zip",
+    "sha256": "95f61953f707a37dedf0885748690720ebf311455c040f2b0075841bbfc9c821",
+    "files": 334,
+    "crc_error": null,
+    "classification": "PROCESS_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [
+        "AUDIT-VERDICT.md"
+      ],
+      "INVOCATION-AUDIT.md": [
+        "INVOCATION-AUDIT.md"
+      ],
+      "REVIEW-AUDIT.md": [
+        "REVIEW-AUDIT.md"
+      ],
+      "PLAN-AUDIT.md": [
+        "PLAN-AUDIT.md"
+      ],
+      "HUMAN-REQUIREMENTS.md": [
+        "HUMAN-REQUIREMENTS.md"
+      ],
+      "SKILL-COMPLIANCE.md": [
+        "SKILL-COMPLIANCE.md"
+      ],
+      "PACK-METADATA.json": [
+        "PACK-METADATA.json"
+      ],
+      "PLAN-FULL.md": [
+        "planning/PLAN-FULL.md"
+      ]
+    },
+    "intake_class": "LEGACY_PROCESS",
+    "evidence_hashes": [
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "19984fbf6e571febb416ea4ed6ad27784e51b503fd691b4cfc775e2d53ba9746"
+      },
+      {
+        "path": "INVOCATION-AUDIT.md",
+        "sha256": "027b6e471a3d98361a8a0d8eda838d98f5cd875fea460c4bf2483cef5a4b89b8"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "c102297ee6d41a1feaf6720e59b073cc0893118797584a3ffca0bd954be5512b"
+      },
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "a667439f126fa494c66c6b16c74a0e882fe0a1c1cd728a28fa70b9a00b254e49"
+      },
+      {
+        "path": "HUMAN-REQUIREMENTS.md",
+        "sha256": "b047694941ca89096f72c627391085e6321f5e01adef401d24b713e18c0647bd"
+      },
+      {
+        "path": "SKILL-COMPLIANCE.md",
+        "sha256": "e0d4ed89b8d6183626f130a09eaaefdc1c35b8633f530a5e0b92bf0738123b9b"
+      },
+      {
+        "path": "PACK-METADATA.json",
+        "sha256": "b6dec71bfe2f18bd6acbdcfda6d3316a6cd45251181590eb9ee81d09832c2cc8"
+      },
+      {
+        "path": "planning/PLAN-FULL.md",
+        "sha256": "c4ecc5b8b8d00e60c3a6644e87feb3b90985f2c640357e4a3b5905ea39d31d96"
+      }
+    ]
+  },
+  {
+    "pack": "lmdo-website-project-detail-multipage-sectioned-audit.zip",
+    "sha256": "bc779d5167017ecfcc778d69c04bb0e9566b7d9bf79cd27607577194b0f59351",
+    "files": 19,
+    "crc_error": null,
+    "classification": "PROCESS_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [
+        "AUDIT-VERDICT.md"
+      ],
+      "INVOCATION-AUDIT.md": [
+        "INVOCATION-AUDIT.md"
+      ],
+      "REVIEW-AUDIT.md": [
+        "REVIEW-AUDIT.md"
+      ],
+      "PLAN-AUDIT.md": [
+        "PLAN-AUDIT.md"
+      ],
+      "HUMAN-REQUIREMENTS.md": [
+        "HUMAN-REQUIREMENTS.md"
+      ],
+      "SKILL-COMPLIANCE.md": [
+        "SKILL-COMPLIANCE.md"
+      ],
+      "PACK-METADATA.json": [
+        "PACK-METADATA.json"
+      ],
+      "PLAN-FULL.md": []
+    },
+    "intake_class": "LEGACY_PROCESS",
+    "evidence_hashes": [
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "d7d30b4345372b11c274317cbf7bb3d67ddd8c6f3ac605fb4aa15daa082db033"
+      },
+      {
+        "path": "INVOCATION-AUDIT.md",
+        "sha256": "6c4c952b1cfaca9e4ab22b5612af24bdb09b5fdff0145d979e77fa12f98fa9cb"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "cffe0fdd7e6ab8a7130452617ca507031e0ad5d69c0d52bc98ca68ffe4390c20"
+      },
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "a5b3ba1c359757df9bb57fc160ef098d1fd97e240ea68683bff03e4fc5ff9913"
+      },
+      {
+        "path": "HUMAN-REQUIREMENTS.md",
+        "sha256": "6843505a12da1cad81383a896c5e348bfef4a3c5006ba72bdd7941adbcd1cd77"
+      },
+      {
+        "path": "SKILL-COMPLIANCE.md",
+        "sha256": "b56d2005ea8a70fb86040673d4affd12f14f588d29d24c47f7a56f91c8225dfc"
+      },
+      {
+        "path": "PACK-METADATA.json",
+        "sha256": "d9c71d39b5d728718588afcf130bc66b0e24a3c25f782dd525034c12db391db8"
+      }
+    ]
+  },
+  {
+    "pack": "lmdo-website-project-summary-inline-autosave-sectioned-audit.zip",
+    "sha256": "58b747d2c2581e26278ac105b52a98a704fe667249b4b4f2e39e51a6af9e7a4d",
+    "files": 21,
+    "crc_error": null,
+    "classification": "PROCESS_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [
+        "AUDIT-VERDICT.md"
+      ],
+      "INVOCATION-AUDIT.md": [
+        "INVOCATION-AUDIT.md"
+      ],
+      "REVIEW-AUDIT.md": [
+        "REVIEW-AUDIT.md"
+      ],
+      "PLAN-AUDIT.md": [
+        "PLAN-AUDIT.md"
+      ],
+      "HUMAN-REQUIREMENTS.md": [
+        "HUMAN-REQUIREMENTS.md"
+      ],
+      "SKILL-COMPLIANCE.md": [
+        "SKILL-COMPLIANCE.md"
+      ],
+      "PACK-METADATA.json": [
+        "PACK-METADATA.json"
+      ],
+      "PLAN-FULL.md": [
+        "planning/PLAN-FULL.md"
+      ]
+    },
+    "intake_class": "LEGACY_PROCESS",
+    "evidence_hashes": [
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "983adc26d9cb72b33bb4b56f6961cd745da50aa6a9cb54362a38057dd388a83c"
+      },
+      {
+        "path": "INVOCATION-AUDIT.md",
+        "sha256": "15a740bca87cbdbb108e8c3ac1d43678bae38114d709fa075b785063f1800983"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "73da8560ff87c5b9ac356f3eef4ecb1414696c09eaf52cc185bd1ccef961e829"
+      },
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "3eeb6f190f8be5b2fabca7b9531cbcd2164e8c2d893150f109bf6fdd08af2e0a"
+      },
+      {
+        "path": "HUMAN-REQUIREMENTS.md",
+        "sha256": "b045ff09347cefabc40ad29a9b29e32addd0cddc5f341a64b8ead788ec89d52f"
+      },
+      {
+        "path": "SKILL-COMPLIANCE.md",
+        "sha256": "07c0ab1242580cb090f807ab3773f0afcf089709e58f89b5caaa07234ab6dd5f"
+      },
+      {
+        "path": "PACK-METADATA.json",
+        "sha256": "a540a933b6b2792fec033d142c12adf5047ba835409cd8bf98b878829868530d"
+      },
+      {
+        "path": "planning/PLAN-FULL.md",
+        "sha256": "7a3bf3aca5f036a021a9f8a1b7fd1c4ebbb8aeafb2a8f418e45cb64a7a743d6b"
+      }
+    ]
+  },
+  {
+    "pack": "lmdo-website-remove-unassigned-performance-group-20260902-sectioned-audit.zip",
+    "sha256": "4f9b86eda1bdf2742d2adc8f107f5edb6989beb4385a6265df5c56beb193074b",
+    "files": 47,
+    "crc_error": null,
+    "classification": "PROCESS_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [
+        "AUDIT-VERDICT.md"
+      ],
+      "INVOCATION-AUDIT.md": [
+        "INVOCATION-AUDIT.md"
+      ],
+      "REVIEW-AUDIT.md": [
+        "REVIEW-AUDIT.md"
+      ],
+      "PLAN-AUDIT.md": [
+        "PLAN-AUDIT.md"
+      ],
+      "HUMAN-REQUIREMENTS.md": [
+        "HUMAN-REQUIREMENTS.md"
+      ],
+      "SKILL-COMPLIANCE.md": [
+        "SKILL-COMPLIANCE.md"
+      ],
+      "PACK-METADATA.json": [
+        "PACK-METADATA.json"
+      ],
+      "PLAN-FULL.md": [
+        "planning/PLAN-FULL.md"
+      ]
+    },
+    "intake_class": "LEGACY_PROCESS",
+    "evidence_hashes": [
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "2b977dd8f9b16b334360ff58474af2038fd55cb764ef1b41f3c6861ac5625886"
+      },
+      {
+        "path": "INVOCATION-AUDIT.md",
+        "sha256": "1b48190722d341b7f51301060d7f4f9e7160a0d4565997b130e5dc68fb23887d"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "0b82974c2da47aa89a99f4326a0851b84f23908e98ad5c0d5e1e026c1578dfaa"
+      },
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "5ea512bdcc69060392e1096cf5908d19daba5acaf3b628c95cb628eb40235308"
+      },
+      {
+        "path": "HUMAN-REQUIREMENTS.md",
+        "sha256": "28f1fe3e704445ac7a628d4ee7969d8cc607a680585d3820539484785d31c9ee"
+      },
+      {
+        "path": "SKILL-COMPLIANCE.md",
+        "sha256": "07097fb959e19648742999c2ac88b42c790dc30ed3861d3ef1c00fbfd532852b"
+      },
+      {
+        "path": "PACK-METADATA.json",
+        "sha256": "79240efc813be49ed407df819a5dbfb660e3bdc08703eeb8bbc447e2e63db84a"
+      },
+      {
+        "path": "planning/PLAN-FULL.md",
+        "sha256": "0607cd0e75fbc04901e22abfe3eb80445a1565df9e576dc893660d72ccdd3064"
+      }
+    ]
+  },
+  {
+    "pack": "lmdo-website-shared-personnel-management-20260825-sectioned-audit.zip",
+    "sha256": "b88ae2302e4d7fce10256988fe869b10a1c30f7d9c23ff8fcea87ae6885645b3",
+    "files": 37,
+    "crc_error": null,
+    "classification": "PROCESS_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [
+        "AUDIT-VERDICT.md"
+      ],
+      "INVOCATION-AUDIT.md": [
+        "INVOCATION-AUDIT.md"
+      ],
+      "REVIEW-AUDIT.md": [
+        "REVIEW-AUDIT.md"
+      ],
+      "PLAN-AUDIT.md": [
+        "PLAN-AUDIT.md"
+      ],
+      "HUMAN-REQUIREMENTS.md": [
+        "HUMAN-REQUIREMENTS.md"
+      ],
+      "SKILL-COMPLIANCE.md": [
+        "SKILL-COMPLIANCE.md"
+      ],
+      "PACK-METADATA.json": [
+        "PACK-METADATA.json"
+      ],
+      "PLAN-FULL.md": [
+        "planning/PLAN-FULL.md"
+      ]
+    },
+    "intake_class": "LEGACY_PROCESS",
+    "evidence_hashes": [
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "6f28238553e94b29f192526aa057a4845810bd839cab402cc5287d5db5c52c6e"
+      },
+      {
+        "path": "INVOCATION-AUDIT.md",
+        "sha256": "4701b425997facf4b724a50473cdc4124b8af238460e640b4f427ba517a410cf"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "61ce658b060c1b249ea775a87d9611d95c0b47790043511c6727ee934e2471a2"
+      },
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "7678036345e1234686ba4afce91f7cf040ce429fcd3aa85fc0ee8d8af27859f3"
+      },
+      {
+        "path": "HUMAN-REQUIREMENTS.md",
+        "sha256": "8ae0d76339d3cdccde30f450715d25a4d5fbae408a75d7c5057a3f0b2c83ea9f"
+      },
+      {
+        "path": "SKILL-COMPLIANCE.md",
+        "sha256": "3e077f570c7b39b812c447d603ef2dd4eb9f789b351f10c37aa0d0c287b58dda"
+      },
+      {
+        "path": "PACK-METADATA.json",
+        "sha256": "b59b1889165d9b45698053a5d7c5d5768f04bf8ccc04a8a983a39e9408a9f32f"
+      },
+      {
+        "path": "planning/PLAN-FULL.md",
+        "sha256": "95ab74a7342d45b7a9ed3e516591cefc225374168779496536218d9f021375f5"
+      }
+    ]
+  },
+  {
+    "pack": "[保密内容]",
+    "sha256": "5b1eb1758f78d3ced39cf9f55302ef2c663885b498ea8139fc98ae03dc41e697",
+    "files": 74,
+    "crc_error": null,
+    "classification": "PROCESS_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [
+        "AUDIT-VERDICT.md"
+      ],
+      "INVOCATION-AUDIT.md": [
+        "INVOCATION-AUDIT.md"
+      ],
+      "REVIEW-AUDIT.md": [
+        "REVIEW-AUDIT.md"
+      ],
+      "PLAN-AUDIT.md": [
+        "PLAN-AUDIT.md"
+      ],
+      "HUMAN-REQUIREMENTS.md": [
+        "HUMAN-REQUIREMENTS.md"
+      ],
+      "SKILL-COMPLIANCE.md": [
+        "SKILL-COMPLIANCE.md"
+      ],
+      "PACK-METADATA.json": [
+        "PACK-METADATA.json"
+      ],
+      "PLAN-FULL.md": [
+        "planning/PLAN-FULL.md"
+      ]
+    },
+    "intake_class": "LEGACY_PROCESS",
+    "evidence_hashes": [
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "c32634cb91c53dfa1ce594769ab4b80ce008dd8426218eba54c5e7c48a22c4d4"
+      },
+      {
+        "path": "INVOCATION-AUDIT.md",
+        "sha256": "44d70847f0e746dbce86c1af8e597254925ce1654f7570f252f2bd89b92e46e8"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "958db10e43a06a663045b5734e49189ed2155d81b70268525e26d8d775e2e1d6"
+      },
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "9cf4499a2307d7c42ab59ae0630d608b44d5888b6441ba64afc5c5e56f6987b6"
+      },
+      {
+        "path": "HUMAN-REQUIREMENTS.md",
+        "sha256": "0f34979befdb6fc87ec9c76018bc10a8875a83086f1334333b45418da190f081"
+      },
+      {
+        "path": "SKILL-COMPLIANCE.md",
+        "sha256": "a22571a9715b2b0af5f835e3fb43d98569cb53ee1beda4f348fffc56cbd74cd9"
+      },
+      {
+        "path": "PACK-METADATA.json",
+        "sha256": "b449b553f26be7a52f974a4fe44e674a62001c9bc554615307b7da2a996c6036"
+      },
+      {
+        "path": "planning/PLAN-FULL.md",
+        "sha256": "625b841ce101ccf117c1b0edbbe76f25d416c73297a1d5c0d44bdd9262a2fe92"
+      }
+    ]
+  },
+  {
+    "pack": "[保密内容]",
+    "sha256": "6a2a224648a4788e29e762d0e742108762050ff700aa8e24eee5a35de6cc7922",
+    "files": 63,
+    "crc_error": null,
+    "classification": "PROCESS_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [
+        "AUDIT-VERDICT.md"
+      ],
+      "INVOCATION-AUDIT.md": [
+        "INVOCATION-AUDIT.md"
+      ],
+      "REVIEW-AUDIT.md": [
+        "REVIEW-AUDIT.md"
+      ],
+      "PLAN-AUDIT.md": [
+        "PLAN-AUDIT.md"
+      ],
+      "HUMAN-REQUIREMENTS.md": [
+        "HUMAN-REQUIREMENTS.md"
+      ],
+      "SKILL-COMPLIANCE.md": [
+        "SKILL-COMPLIANCE.md"
+      ],
+      "PACK-METADATA.json": [
+        "PACK-METADATA.json"
+      ],
+      "PLAN-FULL.md": [
+        "planning/PLAN-FULL.md"
+      ]
+    },
+    "intake_class": "LEGACY_PROCESS",
+    "evidence_hashes": [
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "86c67dc0c1b2781ea3416339cd6c46097596bcf47b8ab5aafaf37d01f52d457c"
+      },
+      {
+        "path": "INVOCATION-AUDIT.md",
+        "sha256": "a67d2db8865d026cce619e7c5ed837d623ff226823031c199a587ab2cf7b24f0"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "3b898a3574d7bed151159ab736b54017d20b85a7561597906ab6d880ad381548"
+      },
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "a3d0a9a08ea44803945e17c794d4652d9c80d631f3908ecaefd85b53cbbd767d"
+      },
+      {
+        "path": "HUMAN-REQUIREMENTS.md",
+        "sha256": "bd38792068e74ecef5ef862ae7f8134ef5e2ceaf4bf9faf8c0f7f6f54aacb9db"
+      },
+      {
+        "path": "SKILL-COMPLIANCE.md",
+        "sha256": "f7407e6002af2fa6f9428002d1b250231813200a9bfb13fa14d3d344bb58f026"
+      },
+      {
+        "path": "PACK-METADATA.json",
+        "sha256": "7effb5d4f925144738c807dc9529168c69b9e02a9b082d0e106096ff43958a21"
+      },
+      {
+        "path": "planning/PLAN-FULL.md",
+        "sha256": "5b172ea88a4f6b782947f0852413cadaf8dcddf685a2b326eda5773bf69846b4"
+      }
+    ]
+  },
+  {
+    "pack": "[保密内容]",
+    "sha256": "f40529506e43b6f633ad173727550f2d8f89a083cf601a1db1e3344869760b41",
+    "files": 50,
+    "crc_error": null,
+    "classification": "PROCESS_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [
+        "AUDIT-VERDICT.md"
+      ],
+      "INVOCATION-AUDIT.md": [
+        "INVOCATION-AUDIT.md"
+      ],
+      "REVIEW-AUDIT.md": [
+        "REVIEW-AUDIT.md"
+      ],
+      "PLAN-AUDIT.md": [
+        "PLAN-AUDIT.md"
+      ],
+      "HUMAN-REQUIREMENTS.md": [
+        "HUMAN-REQUIREMENTS.md"
+      ],
+      "SKILL-COMPLIANCE.md": [
+        "SKILL-COMPLIANCE.md"
+      ],
+      "PACK-METADATA.json": [
+        "PACK-METADATA.json"
+      ],
+      "PLAN-FULL.md": [
+        "planning/PLAN-FULL.md"
+      ]
+    },
+    "intake_class": "LEGACY_PROCESS",
+    "evidence_hashes": [
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "8ab8c26bd1a2e50ee69816e37e4660c196fee9a9fd3e8fa7bc57ac0f3998ed25"
+      },
+      {
+        "path": "INVOCATION-AUDIT.md",
+        "sha256": "2aac266ff46f01d0f69faf3c16d7203680118b21495993cf09d37f277c4b87a4"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "19df6445622e4c5d008c4815b93225945f4ceec02c022c19c09a745de111103f"
+      },
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "e5220f78074fc492bfc80d0b9e766f4096d696bc4e33e02546e1287c8399094a"
+      },
+      {
+        "path": "HUMAN-REQUIREMENTS.md",
+        "sha256": "1cb9ce7715f432862f593e798264be69895a460dd2f31593a8325cd0aa0c66bb"
+      },
+      {
+        "path": "SKILL-COMPLIANCE.md",
+        "sha256": "7b2825c563d9ed42d52b84acce1fbcd50fe43d1a3e999da762ed4679e5358e7c"
+      },
+      {
+        "path": "PACK-METADATA.json",
+        "sha256": "479bfddb84d7233837abc3870f09a97d66810cf2b5a25cf8c3bf30ce72ea05d4"
+      },
+      {
+        "path": "planning/PLAN-FULL.md",
+        "sha256": "e4f3866b7c8a85114981a850e264453b3d8f2d0a75a1606c31f8ee54b6260644"
+      }
+    ]
+  },
+  {
+    "pack": "[保密内容]",
+    "sha256": "881d5aeeece41d165907f2f0bc69b83468033991422c163a4ee43e131308f57d",
+    "files": 30,
+    "crc_error": null,
+    "classification": "PROCESS_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [
+        "AUDIT-VERDICT.md"
+      ],
+      "INVOCATION-AUDIT.md": [
+        "INVOCATION-AUDIT.md"
+      ],
+      "REVIEW-AUDIT.md": [
+        "REVIEW-AUDIT.md"
+      ],
+      "PLAN-AUDIT.md": [
+        "PLAN-AUDIT.md"
+      ],
+      "HUMAN-REQUIREMENTS.md": [
+        "HUMAN-REQUIREMENTS.md"
+      ],
+      "SKILL-COMPLIANCE.md": [
+        "SKILL-COMPLIANCE.md"
+      ],
+      "PACK-METADATA.json": [
+        "PACK-METADATA.json"
+      ],
+      "PLAN-FULL.md": [
+        "planning/PLAN-FULL.md"
+      ]
+    },
+    "intake_class": "LEGACY_PROCESS",
+    "evidence_hashes": [
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "136e2dce9df78f9e89b650f0e0eae8b8a0f091c1c857b863b2eb1f1413009d41"
+      },
+      {
+        "path": "INVOCATION-AUDIT.md",
+        "sha256": "94271f0af3d5ab735c4059fbf787cd3a756fa03a2ee4b740ab3728e3213830ef"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "bed23ff2662f058c0e0158fd45e25ca022360c31c6cacb8a9ab34b373fff34fe"
+      },
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "c8a9eab8da444cffd43c611d9097aa3a04a1886e8b6bb449d743e9db8a868ee8"
+      },
+      {
+        "path": "HUMAN-REQUIREMENTS.md",
+        "sha256": "0953cd7fd8e7938aad1e2dbe6069e3345f67cfd79214f529c3fcf8220f46ca79"
+      },
+      {
+        "path": "SKILL-COMPLIANCE.md",
+        "sha256": "a5e31a7673a3558efa8a0309f755d1d0f26aee7704ec2e4289f0f3f76f01232e"
+      },
+      {
+        "path": "PACK-METADATA.json",
+        "sha256": "ef4234408e234b4e0651beee1eef873be3efa6bab0e80c92628b8c3e59f3d700"
+      },
+      {
+        "path": "planning/PLAN-FULL.md",
+        "sha256": "133de5ac0468d6ed166d84b916d905f085ab525ae487499a4c88b5ef06e2bb5e"
+      }
+    ]
+  },
+  {
+    "pack": "[保密内容]",
+    "sha256": "2827e42bafc95054108c0201d04b21a69994541aebb2e0b148c0d284dfeabfcb",
+    "files": 155,
+    "crc_error": null,
+    "classification": "PROCESS_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [
+        "AUDIT-VERDICT.md"
+      ],
+      "INVOCATION-AUDIT.md": [
+        "INVOCATION-AUDIT.md"
+      ],
+      "REVIEW-AUDIT.md": [
+        "REVIEW-AUDIT.md"
+      ],
+      "PLAN-AUDIT.md": [
+        "PLAN-AUDIT.md"
+      ],
+      "HUMAN-REQUIREMENTS.md": [
+        "HUMAN-REQUIREMENTS.md"
+      ],
+      "SKILL-COMPLIANCE.md": [
+        "SKILL-COMPLIANCE.md"
+      ],
+      "PACK-METADATA.json": [
+        "PACK-METADATA.json"
+      ],
+      "PLAN-FULL.md": [
+        "planning/PLAN-FULL.md"
+      ]
+    },
+    "intake_class": "LEGACY_PROCESS",
+    "evidence_hashes": [
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "facf9ac83084a41a7b2ee6db267f40848c40ae85a51c35416f49246a3d478dcb"
+      },
+      {
+        "path": "INVOCATION-AUDIT.md",
+        "sha256": "6fab54f585e8405425ba436f87009025123a71537ad1156f95b8724a2b0cfbf8"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "0fd5d7d218382f7ae039707ddcfeb5845af65a1285c3a298faecab314b94eee4"
+      },
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "5e26ab670f089003374691993500acf2de984f7508ad0b74532ba739727c2884"
+      },
+      {
+        "path": "HUMAN-REQUIREMENTS.md",
+        "sha256": "e14348b17bd5c36d8bff6130f1b8c82887589ac5302482e765f9d585837e2f49"
+      },
+      {
+        "path": "SKILL-COMPLIANCE.md",
+        "sha256": "1acd06f15072c756756349e20b8bb1091336c7e624baf691c801fda0fe8ac4f0"
+      },
+      {
+        "path": "PACK-METADATA.json",
+        "sha256": "8ef7e88442b7221bc1cd6ce43aac8548c66139437bb77e093b3c08bfd810736d"
+      },
+      {
+        "path": "planning/PLAN-FULL.md",
+        "sha256": "1f2fe742336a2107263f909f1398a64d0ed62ec211f1c105e0a2aac8cefc23a8"
+      }
+    ]
+  },
+  {
+    "pack": "[保密内容]",
+    "sha256": "86a492970d0460210d03a81082675859f47af06b1624ffc944d217ea5dea6727",
+    "files": 25,
+    "crc_error": null,
+    "classification": "PROCESS_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [
+        "AUDIT-VERDICT.md"
+      ],
+      "INVOCATION-AUDIT.md": [
+        "INVOCATION-AUDIT.md"
+      ],
+      "REVIEW-AUDIT.md": [
+        "REVIEW-AUDIT.md"
+      ],
+      "PLAN-AUDIT.md": [
+        "PLAN-AUDIT.md"
+      ],
+      "HUMAN-REQUIREMENTS.md": [
+        "HUMAN-REQUIREMENTS.md"
+      ],
+      "SKILL-COMPLIANCE.md": [
+        "SKILL-COMPLIANCE.md"
+      ],
+      "PACK-METADATA.json": [
+        "PACK-METADATA.json"
+      ],
+      "PLAN-FULL.md": [
+        "planning/PLAN-FULL.md"
+      ]
+    },
+    "intake_class": "LEGACY_PROCESS",
+    "evidence_hashes": [
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "7ed6eb3e04d437fb88ec6cefaa2c488da2a509048d29ad180f8f1c1c47f228f9"
+      },
+      {
+        "path": "INVOCATION-AUDIT.md",
+        "sha256": "ab0ec53df30941f744902a93bb97b07fde64ecdc654fce59cc154e74eb200135"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "3605a5369450fc0cdca0223f095be3d9799c2dc9a31817d846618d136a574a21"
+      },
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "ac4525307910f4c836416eb64b52ba6cd7fca1d64966421e9ec7c90bb2b7d3aa"
+      },
+      {
+        "path": "HUMAN-REQUIREMENTS.md",
+        "sha256": "32486099f4c48156091bb9d969fd70970b4d06c08942c4ce7d202832fee69375"
+      },
+      {
+        "path": "SKILL-COMPLIANCE.md",
+        "sha256": "006ca4d89768b877bae6e63e23b8a7200f52ba9d7e72c478af9205bd9b4f64bf"
+      },
+      {
+        "path": "PACK-METADATA.json",
+        "sha256": "cfaf72ae12a74b8bca857cc72cb55c53d865e8beaa915a74f6081fc49765d4f1"
+      },
+      {
+        "path": "planning/PLAN-FULL.md",
+        "sha256": "126be4e652f33e1a50409d386c175b353c02fa129201c2d43d37b37a0de363f7"
+      }
+    ]
+  },
+  {
+    "pack": "[保密内容]",
+    "sha256": "aaa113340470161ecc607a1674f221ee488e3edcb97803446955e7bc0ff11c76",
+    "files": 33,
+    "crc_error": null,
+    "classification": "PROCESS_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [
+        "AUDIT-VERDICT.md"
+      ],
+      "INVOCATION-AUDIT.md": [
+        "INVOCATION-AUDIT.md"
+      ],
+      "REVIEW-AUDIT.md": [
+        "REVIEW-AUDIT.md"
+      ],
+      "PLAN-AUDIT.md": [
+        "PLAN-AUDIT.md"
+      ],
+      "HUMAN-REQUIREMENTS.md": [
+        "HUMAN-REQUIREMENTS.md"
+      ],
+      "SKILL-COMPLIANCE.md": [
+        "SKILL-COMPLIANCE.md"
+      ],
+      "PACK-METADATA.json": [
+        "PACK-METADATA.json"
+      ],
+      "PLAN-FULL.md": [
+        "planning/PLAN-FULL.md"
+      ]
+    },
+    "intake_class": "LEGACY_PROCESS",
+    "evidence_hashes": [
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "7c6f46e96d1bfa140f2af7c423df2dce8de738cc7ef36224adf2759ad92aa012"
+      },
+      {
+        "path": "INVOCATION-AUDIT.md",
+        "sha256": "7ab0136a793cbbf3e3fe9d7c6667c22cff2e41191ddddee8ef85bcc58a71b576"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "54de35ef365089a7f54fbebc7299a2699c29f769917f221cf562ca2055e16672"
+      },
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "e69c3614646f0a9a1bea8882b4518de3c719ffe4b59bff9464b332bf89809243"
+      },
+      {
+        "path": "HUMAN-REQUIREMENTS.md",
+        "sha256": "13de1d3bcb0b5390f25948868b0a445064bc1990b2c9a8548cbf5ce9235be5ba"
+      },
+      {
+        "path": "SKILL-COMPLIANCE.md",
+        "sha256": "8395d598438206ee2ea432f40dccb71dbd46cf7f12968d8b1bfa53c0cb8083dc"
+      },
+      {
+        "path": "PACK-METADATA.json",
+        "sha256": "c23b45eea10482a5f5ace4420ed592118dba4845e5a1a2a6e16294dd6c91e783"
+      },
+      {
+        "path": "planning/PLAN-FULL.md",
+        "sha256": "6a37947b15482a14558ff53dee26daefb30a1f929ff68587d5376d5bbc850e20"
+      }
+    ]
+  },
+  {
+    "pack": "[保密内容]",
+    "sha256": "f504d80d1216ea47a0a3c956c3623ae4e45408f776b02ebef532fd0aff41adbc",
+    "files": 57,
+    "crc_error": null,
+    "classification": "PROCESS_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [
+        "AUDIT-VERDICT.md"
+      ],
+      "INVOCATION-AUDIT.md": [
+        "INVOCATION-AUDIT.md"
+      ],
+      "REVIEW-AUDIT.md": [
+        "REVIEW-AUDIT.md"
+      ],
+      "PLAN-AUDIT.md": [
+        "PLAN-AUDIT.md"
+      ],
+      "HUMAN-REQUIREMENTS.md": [
+        "HUMAN-REQUIREMENTS.md"
+      ],
+      "SKILL-COMPLIANCE.md": [
+        "SKILL-COMPLIANCE.md"
+      ],
+      "PACK-METADATA.json": [
+        "PACK-METADATA.json"
+      ],
+      "PLAN-FULL.md": [
+        "planning/PLAN-FULL.md",
+        "sources/base/PLAN-FULL.md",
+        "sources/head/PLAN-FULL.md"
+      ]
+    },
+    "intake_class": "LEGACY_PROCESS",
+    "evidence_hashes": [
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "57742cfa5bc2f982461289bc925b0a9bd2c36f40b378141a3247fb447d1ec91e"
+      },
+      {
+        "path": "INVOCATION-AUDIT.md",
+        "sha256": "bf9c387f62a552b07ce9b0b8c62ff2835a5ecaa8aed077e63c6b2f3c3195f480"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "65de41f7b3fcd612dc224098ab53a0626bec66e0636e918c986f6808f128d3cb"
+      },
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "44d5b82b711ce79400e254d7ac9401ee4c25ddf91f6fc64694c79c2d41a769a4"
+      },
+      {
+        "path": "HUMAN-REQUIREMENTS.md",
+        "sha256": "26dce2c8e14d6bf67229b8b4b08c37cbfa78d4d36e0c0781dd2d5728cb3f1a57"
+      },
+      {
+        "path": "SKILL-COMPLIANCE.md",
+        "sha256": "f2b95116ab73213f091def01a9df6029a9324f5807c7108119b07d20d5edb125"
+      },
+      {
+        "path": "PACK-METADATA.json",
+        "sha256": "5d1288726208da72de659d142bf8520beabce0ec7d2009b990a928b1dae3ded7"
+      },
+      {
+        "path": "planning/PLAN-FULL.md",
+        "sha256": "e352e90f64554de3c1038d200a7645623d36ab33e4eb11d8e3c600cc48f49649"
+      },
+      {
+        "path": "sources/base/PLAN-FULL.md",
+        "sha256": "e352e90f64554de3c1038d200a7645623d36ab33e4eb11d8e3c600cc48f49649"
+      },
+      {
+        "path": "sources/head/PLAN-FULL.md",
+        "sha256": "e352e90f64554de3c1038d200a7645623d36ab33e4eb11d8e3c600cc48f49649"
+      }
+    ]
+  },
+  {
+    "pack": "[保密内容]",
+    "sha256": "3f8fbab2584c8829ead5a399f24482deb1b03247af7708556d6308a0482e59e3",
+    "files": 33,
+    "crc_error": null,
+    "classification": "PROCESS_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [
+        "AUDIT-VERDICT.md"
+      ],
+      "INVOCATION-AUDIT.md": [
+        "INVOCATION-AUDIT.md"
+      ],
+      "REVIEW-AUDIT.md": [
+        "REVIEW-AUDIT.md"
+      ],
+      "PLAN-AUDIT.md": [
+        "PLAN-AUDIT.md"
+      ],
+      "HUMAN-REQUIREMENTS.md": [
+        "HUMAN-REQUIREMENTS.md"
+      ],
+      "SKILL-COMPLIANCE.md": [
+        "SKILL-COMPLIANCE.md"
+      ],
+      "PACK-METADATA.json": [
+        "PACK-METADATA.json"
+      ],
+      "PLAN-FULL.md": [
+        "PLAN-FULL.md",
+        "planning/PLAN-FULL.md"
+      ]
+    },
+    "intake_class": "LEGACY_PROCESS",
+    "evidence_hashes": [
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "7e04015571961b07f88a06c8d3f6d3954ab6d4b2556f792b73fb6f8ead362683"
+      },
+      {
+        "path": "INVOCATION-AUDIT.md",
+        "sha256": "067522d9a95379d1bb0e968a79a2a9c4001f57d9c2752a22d3768a9cb244809a"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "2891ffc06d6c693f57ecb77cb123d4a98887fcf7e03db57284c6ca78a13cc9fe"
+      },
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "d2352b4d2679274a1a331f593c1f9bd199e3c15ad049f0471d436d0402297389"
+      },
+      {
+        "path": "HUMAN-REQUIREMENTS.md",
+        "sha256": "e61ef05ea5fb9b6b6ba85a062ff563f4ad7af1c5fc8c9fe2a5674937524ca688"
+      },
+      {
+        "path": "SKILL-COMPLIANCE.md",
+        "sha256": "8f8e70c53010c910cc8c02eb3f9c2568f1cd03ce257fd81adbb43487e8616cc4"
+      },
+      {
+        "path": "PACK-METADATA.json",
+        "sha256": "f774514525dc22d2d1ed50f633bec87aba640fef6e232756320d70450df0d973"
+      },
+      {
+        "path": "PLAN-FULL.md",
+        "sha256": "d5e573a0bed7fa2c30f3267dfff590be836bebdefc9ce23c9a53f39eb9f9a872"
+      },
+      {
+        "path": "planning/PLAN-FULL.md",
+        "sha256": "1d26fcc820d809d2a08bd0020fa264c638a6ae9c5da68b5a97abeaef4aeb74e7"
+      }
+    ]
+  },
+  {
+    "pack": "[保密内容]",
+    "sha256": "0b0db941670684ed085cab6e07e340b5644aef2a7439c51a37559eb012a5317a",
+    "files": 40,
+    "crc_error": null,
+    "classification": "PROCESS_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [
+        "AUDIT-VERDICT.md"
+      ],
+      "INVOCATION-AUDIT.md": [
+        "INVOCATION-AUDIT.md"
+      ],
+      "REVIEW-AUDIT.md": [
+        "REVIEW-AUDIT.md"
+      ],
+      "PLAN-AUDIT.md": [
+        "PLAN-AUDIT.md"
+      ],
+      "HUMAN-REQUIREMENTS.md": [
+        "HUMAN-REQUIREMENTS.md"
+      ],
+      "SKILL-COMPLIANCE.md": [
+        "SKILL-COMPLIANCE.md"
+      ],
+      "PACK-METADATA.json": [
+        "PACK-METADATA.json"
+      ],
+      "PLAN-FULL.md": [
+        "planning/PLAN-FULL.md"
+      ]
+    },
+    "intake_class": "LEGACY_PROCESS",
+    "evidence_hashes": [
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "428842782a5dd5335a15afd131733d1e0bae314cf7e1d2833493d28012497346"
+      },
+      {
+        "path": "INVOCATION-AUDIT.md",
+        "sha256": "a11fcf85fc9252df828ede75858eded6423b80f0d9093c7a3c8488b0cbc1a8f0"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "77da0559515172b3d3bdff5558ce6836045f087c224ecd6651fc539f271c5362"
+      },
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "d372b2052c9ed02fc329c3ef1cd2c8c2623770915ad499074adf9a7a9efd0ebf"
+      },
+      {
+        "path": "HUMAN-REQUIREMENTS.md",
+        "sha256": "299037c0a3cff4a6bb7c8358dcc26d4584aceec9bd169975b2b6b20d0dba4ddb"
+      },
+      {
+        "path": "SKILL-COMPLIANCE.md",
+        "sha256": "7d8071f462b1a95fc1a75fe2bb38695cc66327144d5bdc995f957b3406f6ac39"
+      },
+      {
+        "path": "PACK-METADATA.json",
+        "sha256": "1abe151aeef909cb9f220f5154e2b05dd470b79742da95dc022852b828da7781"
+      },
+      {
+        "path": "planning/PLAN-FULL.md",
+        "sha256": "9b6453e6b3cb0f5c685d0924cf55cf8c45a7e905b1826aeb2ec4f21175e39153"
+      }
+    ]
+  },
+  {
+    "pack": "[保密内容]",
+    "sha256": "3f83e52ddbd9fc01aea8ed54ee824ac5ef7d5040c8fd3f1fa8211002e1de34d0",
+    "files": 49,
+    "crc_error": null,
+    "classification": "PROCESS_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [
+        "AUDIT-VERDICT.md"
+      ],
+      "INVOCATION-AUDIT.md": [
+        "INVOCATION-AUDIT.md"
+      ],
+      "REVIEW-AUDIT.md": [
+        "REVIEW-AUDIT.md"
+      ],
+      "PLAN-AUDIT.md": [
+        "PLAN-AUDIT.md"
+      ],
+      "HUMAN-REQUIREMENTS.md": [
+        "HUMAN-REQUIREMENTS.md"
+      ],
+      "SKILL-COMPLIANCE.md": [
+        "SKILL-COMPLIANCE.md"
+      ],
+      "PACK-METADATA.json": [
+        "PACK-METADATA.json"
+      ],
+      "PLAN-FULL.md": [
+        "planning/PLAN-FULL.md"
+      ]
+    },
+    "intake_class": "LEGACY_PROCESS",
+    "evidence_hashes": [
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "f30418223c562b9377f26905aab187d7a315ab9799449e4c77e25b68014593f8"
+      },
+      {
+        "path": "INVOCATION-AUDIT.md",
+        "sha256": "efab40f3625fca7f8cd3d6fa2598be16e7272109d5d555f212deceab46c7c6e0"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "672cafd60f94aefd2a04c073864284870b3ff39feedace0065ee03a99a4d28e1"
+      },
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "b61fe343939d01712967399abb66c856ee89089e89d1d8b012fe15070f164684"
+      },
+      {
+        "path": "HUMAN-REQUIREMENTS.md",
+        "sha256": "fd04d38c78abcc70cbc1cbaad67c37d7dfc61624dcb8cd869294c78daa216026"
+      },
+      {
+        "path": "SKILL-COMPLIANCE.md",
+        "sha256": "6b21e5e730a0600eea04f8165e6f874236415fadb2a50029763e48793c857295"
+      },
+      {
+        "path": "PACK-METADATA.json",
+        "sha256": "3b27cc4fb05bbc9fd8c1cb85a49737a4d69ce79e7e3af26aad0afd792a9107cb"
+      },
+      {
+        "path": "planning/PLAN-FULL.md",
+        "sha256": "c211db76b5db497b624c122a768da8c386a2ddf13a3e4e82c5746675ee9f72c0"
+      }
+    ]
+  },
+  {
+    "pack": "[保密内容]",
+    "sha256": "da71718a99318ba66ffa5049787415be6307ac9ce467b4ab2fa553e395c6ba73",
+    "files": 36,
+    "crc_error": null,
+    "classification": "PROCESS_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [
+        "AUDIT-VERDICT.md"
+      ],
+      "INVOCATION-AUDIT.md": [
+        "INVOCATION-AUDIT.md"
+      ],
+      "REVIEW-AUDIT.md": [
+        "REVIEW-AUDIT.md"
+      ],
+      "PLAN-AUDIT.md": [
+        "PLAN-AUDIT.md"
+      ],
+      "HUMAN-REQUIREMENTS.md": [
+        "HUMAN-REQUIREMENTS.md"
+      ],
+      "SKILL-COMPLIANCE.md": [
+        "SKILL-COMPLIANCE.md"
+      ],
+      "PACK-METADATA.json": [
+        "PACK-METADATA.json"
+      ],
+      "PLAN-FULL.md": [
+        "planning/PLAN-FULL.md"
+      ]
+    },
+    "intake_class": "LEGACY_PROCESS",
+    "evidence_hashes": [
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "8d4d02bed6fdc2e7ea8ec3269a32a59f7b677f52d5c8bc352d1b657a38fb1e6f"
+      },
+      {
+        "path": "INVOCATION-AUDIT.md",
+        "sha256": "74f3496c62548feb4e93905f2a10344c025e9dc15b2f972115cb581bed506b9f"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "241ddc6762ce063afe44b8b2256c6f5c56a649648627728ef088159d98e6abca"
+      },
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "3cbb3af182e831ea55bcfef5337598f0b6d2e40ce89dc75888d79dbdd086f02c"
+      },
+      {
+        "path": "HUMAN-REQUIREMENTS.md",
+        "sha256": "85865a9cc01c789277aa6953b62ee79137e5d62d8f9172a8be146b7ba164deb2"
+      },
+      {
+        "path": "SKILL-COMPLIANCE.md",
+        "sha256": "177a5d6462cfece804af8bf1282c87f1db7e311565d4460b8aa43e02bd009542"
+      },
+      {
+        "path": "PACK-METADATA.json",
+        "sha256": "f2342d821b7c37c13b73cd7cc6d70446fad47627eb7bc566d7216de6735a3103"
+      },
+      {
+        "path": "planning/PLAN-FULL.md",
+        "sha256": "57ac99394fb75b7bdd08e67c9f28fa858dd57c0c743434fe498519f4f6b6779e"
+      }
+    ]
+  },
+  {
+    "pack": "[保密内容]",
+    "sha256": "18d83de49238f99bec8f5ea913f94faf352306760192a2174573576af6780075",
+    "files": 38,
+    "crc_error": null,
+    "classification": "PROCESS_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [
+        "AUDIT-VERDICT.md"
+      ],
+      "INVOCATION-AUDIT.md": [
+        "INVOCATION-AUDIT.md"
+      ],
+      "REVIEW-AUDIT.md": [
+        "REVIEW-AUDIT.md"
+      ],
+      "PLAN-AUDIT.md": [
+        "PLAN-AUDIT.md"
+      ],
+      "HUMAN-REQUIREMENTS.md": [
+        "HUMAN-REQUIREMENTS.md"
+      ],
+      "SKILL-COMPLIANCE.md": [
+        "SKILL-COMPLIANCE.md"
+      ],
+      "PACK-METADATA.json": [
+        "PACK-METADATA.json"
+      ],
+      "PLAN-FULL.md": [
+        "planning/PLAN-FULL.md"
+      ]
+    },
+    "intake_class": "LEGACY_PROCESS",
+    "evidence_hashes": [
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "1363e84fde5e5644f5fdacac2db76f6988ef23077acc51845d58346649bbf7bb"
+      },
+      {
+        "path": "INVOCATION-AUDIT.md",
+        "sha256": "c541e93ce88753fc31c06f8d1eb49f4070ffbffa8ec1d7133bb33c70b63d987d"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "afdf35349c8556abbbb2575e1080638b6accb71c0b7e1e3fc9de1f65937cca72"
+      },
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "b4821af5b38b3b15efa320915f30eaecedc90eb4595b8dbaf633c747142cad10"
+      },
+      {
+        "path": "HUMAN-REQUIREMENTS.md",
+        "sha256": "ffb8b70c809327c5d6e4714c9e888b37a7dc57fa62a8166c699b83170269ff29"
+      },
+      {
+        "path": "SKILL-COMPLIANCE.md",
+        "sha256": "d3e6ed919ecb71257a4f334c55f0b021a811f4cc04a539c7ffb6e7ed80926b06"
+      },
+      {
+        "path": "PACK-METADATA.json",
+        "sha256": "109f4d85c330309db61cdef4be3bd22dd4cbecaf5c2b8f711c68e427455b6572"
+      },
+      {
+        "path": "planning/PLAN-FULL.md",
+        "sha256": "3fa2bca9e0ae8ec4a4cc013f4675c4ac40666b9e2d0debc6c4932e7e9170c832"
+      }
+    ]
+  },
+  {
+    "pack": "zcode-mcp-advisor-three-case-evidence-final.zip",
+    "sha256": "3c5e49e31916b06bdbf1ac3c739a242e7025e36bd47d89a9b5b0eec4a6ce4cf2",
+    "files": 187,
+    "crc_error": null,
+    "classification": "AUXILIARY_OR_PRODUCT_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [],
+      "INVOCATION-AUDIT.md": [],
+      "REVIEW-AUDIT.md": [],
+      "PLAN-AUDIT.md": [],
+      "HUMAN-REQUIREMENTS.md": [],
+      "SKILL-COMPLIANCE.md": [],
+      "PACK-METADATA.json": [],
+      "PLAN-FULL.md": []
+    },
+    "intake_class": "EXCLUDED_AUXILIARY",
+    "evidence_hashes": []
+  },
+  {
+    "pack": "zcode-mcp-case3-complete-event-logs-auth-redacted.zip",
+    "sha256": "2152501e69b9cfbbf0002dd11952cf904f67e92f4c5d823d8907b470c3cfdfe5",
+    "files": 129,
+    "crc_error": null,
+    "classification": "AUXILIARY_OR_PRODUCT_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [],
+      "INVOCATION-AUDIT.md": [],
+      "REVIEW-AUDIT.md": [],
+      "PLAN-AUDIT.md": [],
+      "HUMAN-REQUIREMENTS.md": [],
+      "SKILL-COMPLIANCE.md": [],
+      "PACK-METADATA.json": [],
+      "PLAN-FULL.md": []
+    },
+    "intake_class": "EXCLUDED_AUXILIARY",
+    "evidence_hashes": []
+  },
+  {
+    "pack": "zcode-mcp-case3-review-tool-guidance-sectioned-audit.zip",
+    "sha256": "5cafce66093aed57df8c00a207262baa86fbd0d3ca152ffe6237139fad73f8b8",
+    "files": 80,
+    "crc_error": null,
+    "classification": "PROCESS_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [
+        "AUDIT-VERDICT.md"
+      ],
+      "INVOCATION-AUDIT.md": [
+        "INVOCATION-AUDIT.md"
+      ],
+      "REVIEW-AUDIT.md": [
+        "REVIEW-AUDIT.md"
+      ],
+      "PLAN-AUDIT.md": [
+        "PLAN-AUDIT.md"
+      ],
+      "HUMAN-REQUIREMENTS.md": [
+        "HUMAN-REQUIREMENTS.md"
+      ],
+      "SKILL-COMPLIANCE.md": [
+        "SKILL-COMPLIANCE.md"
+      ],
+      "PACK-METADATA.json": [
+        "PACK-METADATA.json"
+      ],
+      "PLAN-FULL.md": [
+        "planning/PLAN-FULL.md"
+      ]
+    },
+    "intake_class": "LEGACY_PROCESS",
+    "evidence_hashes": [
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "45000743d57e366f60b0ebed370c488443ec5984f72cf3681f0fd2b8b16123e4"
+      },
+      {
+        "path": "INVOCATION-AUDIT.md",
+        "sha256": "c9eb85173dfc3476bc744fe9c0d93e55e8c891076896182d296d6d81641854dd"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "830f7e8b86aba5acafb19a0795b83744408e63e43c4c1fa3cf91405cf928c7a5"
+      },
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "ad9fe3c56d4a5574ba70e1cb678914f166785af86946cb23c0e609e0cc057330"
+      },
+      {
+        "path": "HUMAN-REQUIREMENTS.md",
+        "sha256": "ea5f07a842c982b1fb26433c74fa8f59ff9718cfd0eb76b144291c723614fe7a"
+      },
+      {
+        "path": "SKILL-COMPLIANCE.md",
+        "sha256": "a950ee6667c10e17bb55c8441c1a7faeb3b9d8807d5b821a7d568e1c577757dc"
+      },
+      {
+        "path": "PACK-METADATA.json",
+        "sha256": "dd0ebb65d8a514eb7c97aa071ac82254a76b8fe4f8569cf54955997d72dc348d"
+      },
+      {
+        "path": "planning/PLAN-FULL.md",
+        "sha256": "dfcdfe077a7c88a6ba49c95078de7c6fe7fa6918a84c13272bfaf3b02c89fe86"
+      }
+    ]
+  },
+  {
+    "pack": "zcode-mcp-case3-semantic-900s-full-analysis-logs-auth-redacted.zip",
+    "sha256": "56d2c4a176d133766e493f133b6423e295213068134d3919fd641f5ecde8a04e",
+    "files": 87,
+    "crc_error": null,
+    "classification": "AUXILIARY_OR_PRODUCT_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [],
+      "INVOCATION-AUDIT.md": [],
+      "REVIEW-AUDIT.md": [],
+      "PLAN-AUDIT.md": [],
+      "HUMAN-REQUIREMENTS.md": [],
+      "SKILL-COMPLIANCE.md": [],
+      "PACK-METADATA.json": [],
+      "PLAN-FULL.md": []
+    },
+    "intake_class": "EXCLUDED_AUXILIARY",
+    "evidence_hashes": []
+  },
+  {
+    "pack": "zcode-mcp-official-runtime-conformance-case-b.zip",
+    "sha256": "f66925388cccd302decf6646e85117ee8e982f0e74893d357e4d3c2d9f803ab2",
+    "files": 19,
+    "crc_error": null,
+    "classification": "AUXILIARY_OR_PRODUCT_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [],
+      "INVOCATION-AUDIT.md": [],
+      "REVIEW-AUDIT.md": [],
+      "PLAN-AUDIT.md": [],
+      "HUMAN-REQUIREMENTS.md": [],
+      "SKILL-COMPLIANCE.md": [],
+      "PACK-METADATA.json": [],
+      "PLAN-FULL.md": []
+    },
+    "intake_class": "EXCLUDED_AUXILIARY",
+    "evidence_hashes": []
+  },
+  {
+    "pack": "zcode-mcp-official-runtime-conformance-case-c-final.zip",
+    "sha256": "08406f138af3deef4ee701a0a972a680eef2878f7ed9d13062f8c66561458aef",
+    "files": 20,
+    "crc_error": null,
+    "classification": "AUXILIARY_OR_PRODUCT_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [],
+      "INVOCATION-AUDIT.md": [],
+      "REVIEW-AUDIT.md": [],
+      "PLAN-AUDIT.md": [],
+      "HUMAN-REQUIREMENTS.md": [],
+      "SKILL-COMPLIANCE.md": [],
+      "PACK-METADATA.json": [],
+      "PLAN-FULL.md": []
+    },
+    "intake_class": "EXCLUDED_AUXILIARY",
+    "evidence_hashes": []
+  },
+  {
+    "pack": "zcode-mcp-official-runtime-conformance-case-c-prompt-repaired.zip",
+    "sha256": "727ac10bbe336867cca2a3bdafec5d665460bf2eb68c2dd4aa5063c70e525a9b",
+    "files": 20,
+    "crc_error": null,
+    "classification": "AUXILIARY_OR_PRODUCT_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [],
+      "INVOCATION-AUDIT.md": [],
+      "REVIEW-AUDIT.md": [],
+      "PLAN-AUDIT.md": [],
+      "HUMAN-REQUIREMENTS.md": [],
+      "SKILL-COMPLIANCE.md": [],
+      "PACK-METADATA.json": [],
+      "PLAN-FULL.md": []
+    },
+    "intake_class": "EXCLUDED_AUXILIARY",
+    "evidence_hashes": []
+  },
+  {
+    "pack": "zcode-mcp-official-runtime-conformance-case-c-retry.zip",
+    "sha256": "5b04b7cb22f4ce9a35b52df72d7ea8e12e3fdc522f36127497eecdf164b017ba",
+    "files": 20,
+    "crc_error": null,
+    "classification": "AUXILIARY_OR_PRODUCT_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [],
+      "INVOCATION-AUDIT.md": [],
+      "REVIEW-AUDIT.md": [],
+      "PLAN-AUDIT.md": [],
+      "HUMAN-REQUIREMENTS.md": [],
+      "SKILL-COMPLIANCE.md": [],
+      "PACK-METADATA.json": [],
+      "PLAN-FULL.md": []
+    },
+    "intake_class": "EXCLUDED_AUXILIARY",
+    "evidence_hashes": []
+  },
+  {
+    "pack": "zcode-mcp-official-runtime-conformance-case-c.zip",
+    "sha256": "f620f3a63be3182958516c6a8bafe7dcc6862ff17645f5dabc366a049d6c6db8",
+    "files": 20,
+    "crc_error": null,
+    "classification": "AUXILIARY_OR_PRODUCT_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [],
+      "INVOCATION-AUDIT.md": [],
+      "REVIEW-AUDIT.md": [],
+      "PLAN-AUDIT.md": [],
+      "HUMAN-REQUIREMENTS.md": [],
+      "SKILL-COMPLIANCE.md": [],
+      "PACK-METADATA.json": [],
+      "PLAN-FULL.md": []
+    },
+    "intake_class": "EXCLUDED_AUXILIARY",
+    "evidence_hashes": []
+  },
+  {
+    "pack": "zcode-mcp-official-runtime-conformance.zip",
+    "sha256": "c16ee73c052a796a92a40bf2c063e70f83716d887e84cb5a16f9f5f1d50c43ea",
+    "files": 22,
+    "crc_error": null,
+    "classification": "AUXILIARY_OR_PRODUCT_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [],
+      "INVOCATION-AUDIT.md": [],
+      "REVIEW-AUDIT.md": [],
+      "PLAN-AUDIT.md": [],
+      "HUMAN-REQUIREMENTS.md": [],
+      "SKILL-COMPLIANCE.md": [],
+      "PACK-METADATA.json": [],
+      "PLAN-FULL.md": []
+    },
+    "intake_class": "EXCLUDED_AUXILIARY",
+    "evidence_hashes": []
+  },
+  {
+    "pack": "zcode-mcp-operational-general-agent-closure-20260827-sectioned-audit.zip",
+    "sha256": "dc7511d2218f590b9ad875b3b4ee2eeb19673dc15fca63fc4e9c33e7bf272ddd",
+    "files": 86,
+    "crc_error": null,
+    "classification": "PROCESS_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [
+        "AUDIT-VERDICT.md"
+      ],
+      "INVOCATION-AUDIT.md": [
+        "INVOCATION-AUDIT.md"
+      ],
+      "REVIEW-AUDIT.md": [
+        "REVIEW-AUDIT.md"
+      ],
+      "PLAN-AUDIT.md": [
+        "PLAN-AUDIT.md"
+      ],
+      "HUMAN-REQUIREMENTS.md": [
+        "HUMAN-REQUIREMENTS.md"
+      ],
+      "SKILL-COMPLIANCE.md": [
+        "SKILL-COMPLIANCE.md"
+      ],
+      "PACK-METADATA.json": [
+        "PACK-METADATA.json"
+      ],
+      "PLAN-FULL.md": [
+        "planning/PLAN-FULL.md"
+      ]
+    },
+    "intake_class": "LEGACY_PROCESS",
+    "evidence_hashes": [
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "00754656abcb29d555ed0428a235d7f28ff3ebb115dfaa01d048dde7a14f1593"
+      },
+      {
+        "path": "INVOCATION-AUDIT.md",
+        "sha256": "11fb3bf840d404c7edf80982054103eecd080476b6348481bb305ca4a757dad7"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "a77589cc995533b98d3e14f388c1e7f7b44bd2d6c849ea20f8a56f37b8821aee"
+      },
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "f43666e11278458c63665921585f9567d171d12d0b2a2e04d24ef0ad293740cd"
+      },
+      {
+        "path": "HUMAN-REQUIREMENTS.md",
+        "sha256": "82c6377079a6e98fc235e1c3256a36f64af521cad8175340fa7d745792329005"
+      },
+      {
+        "path": "SKILL-COMPLIANCE.md",
+        "sha256": "e284edb35c10cb21b25d45921b859af0a12de86fc432ebd0eebeceb2ecaa55fa"
+      },
+      {
+        "path": "PACK-METADATA.json",
+        "sha256": "acce2d632bfa8351c9984a473463ed0447c3bfff190c6d0732f39bae46e9f2ad"
+      },
+      {
+        "path": "planning/PLAN-FULL.md",
+        "sha256": "7890e1714f36700ff3eacd04b41433238d79949031cc77681b49725a2d2954e7"
+      }
+    ]
+  },
+  {
+    "pack": "zcode-mcp-review-safety-progress-evidence-review-safety-progress-evidence-sectioned-audit.zip",
+    "sha256": "991d5dd40974cb53ab9cfb5af00421b5fdbb16a6948b8d35cd7a7d2ffa7a1d93",
+    "files": 30,
+    "crc_error": null,
+    "classification": "PROCESS_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [
+        "AUDIT-VERDICT.md"
+      ],
+      "INVOCATION-AUDIT.md": [
+        "INVOCATION-AUDIT.md"
+      ],
+      "REVIEW-AUDIT.md": [
+        "REVIEW-AUDIT.md"
+      ],
+      "PLAN-AUDIT.md": [
+        "PLAN-AUDIT.md"
+      ],
+      "HUMAN-REQUIREMENTS.md": [
+        "HUMAN-REQUIREMENTS.md"
+      ],
+      "SKILL-COMPLIANCE.md": [
+        "SKILL-COMPLIANCE.md"
+      ],
+      "PACK-METADATA.json": [
+        "PACK-METADATA.json"
+      ],
+      "PLAN-FULL.md": [
+        "planning/PLAN-FULL.md"
+      ]
+    },
+    "intake_class": "LEGACY_PROCESS",
+    "evidence_hashes": [
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "f4f135e484c78a830eba8b62a3cd8c8a3c214a3288980aa9da7bed27022e2a45"
+      },
+      {
+        "path": "INVOCATION-AUDIT.md",
+        "sha256": "3f940500cce292128c5832b81e0e10f6a4f471a4a8cf179cccd8f949b07cb8b2"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "cea98632522fd8c63d8903df3ad572a86499897bb0e57c59b61ab8c04f56a30b"
+      },
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "ad8fc7b94078cd6c61f7c3c96b1b12fdfacfffb454d3bd53202c19ea745d5e19"
+      },
+      {
+        "path": "HUMAN-REQUIREMENTS.md",
+        "sha256": "e0ece0269dfe5fb0d7516fc32e401d1f12344655494ca85619b13b1d87038571"
+      },
+      {
+        "path": "SKILL-COMPLIANCE.md",
+        "sha256": "7e1019d6388106197e8bade97166be8b59400f51c3910120ba0c97240f419eb7"
+      },
+      {
+        "path": "PACK-METADATA.json",
+        "sha256": "fa88e51265c798ce13f2908ddb24524d0ca5b3fddea942c3170fbc70550b71f7"
+      },
+      {
+        "path": "planning/PLAN-FULL.md",
+        "sha256": "a511b22d21da089f611dee7c7a97ed57f2880986f7559bfb69f6d528a253c6e7"
+      }
+    ]
+  },
+  {
+    "pack": "zcode-mcp-zcode-final-generic-agent-convergence-sectioned-audit.zip",
+    "sha256": "c4a81bd442b508145500746d5bb6efca6954ff8d81b6955689b8abc1184a7d66",
+    "files": 41,
+    "crc_error": null,
+    "classification": "PROCESS_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [
+        "AUDIT-VERDICT.md"
+      ],
+      "INVOCATION-AUDIT.md": [
+        "INVOCATION-AUDIT.md"
+      ],
+      "REVIEW-AUDIT.md": [
+        "REVIEW-AUDIT.md"
+      ],
+      "PLAN-AUDIT.md": [
+        "PLAN-AUDIT.md"
+      ],
+      "HUMAN-REQUIREMENTS.md": [
+        "HUMAN-REQUIREMENTS.md"
+      ],
+      "SKILL-COMPLIANCE.md": [
+        "SKILL-COMPLIANCE.md"
+      ],
+      "PACK-METADATA.json": [
+        "PACK-METADATA.json"
+      ],
+      "PLAN-FULL.md": [
+        "planning/PLAN-FULL.md",
+        "sources/head/PLAN-FULL.md"
+      ]
+    },
+    "intake_class": "LEGACY_PROCESS",
+    "evidence_hashes": [
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "ab1fccd0fecae5c7367527fcb2dcced762bc34efc75145c328dff1883ce09872"
+      },
+      {
+        "path": "INVOCATION-AUDIT.md",
+        "sha256": "673b3b32010c4357227d502b35727000d2a21253cf9485f5657aa593c3009c0d"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "b1e68b3a04a6011dbe217d43ee3670bb7b47628661e534ddf79534a6a257e245"
+      },
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "79a97f8d118baffa7824025fe297aee0dbc94ee4e6a357ed30929b04ed63e414"
+      },
+      {
+        "path": "HUMAN-REQUIREMENTS.md",
+        "sha256": "d43d0e28228ac18e2d59ab60e680c76fe4412689a348d9a66280baf936edbc06"
+      },
+      {
+        "path": "SKILL-COMPLIANCE.md",
+        "sha256": "6e75ff73536abecc1f2debc8baa7923c3806bd9e05a8ce9fc891844cd4450f0f"
+      },
+      {
+        "path": "PACK-METADATA.json",
+        "sha256": "f96741b6e298b04d11c33fe43386674dcc467b73866c80acb316d76262df1bfc"
+      },
+      {
+        "path": "planning/PLAN-FULL.md",
+        "sha256": "911c2db4c27515c03f3e9af62cd7e8521b0c88e380fbe1063f9febf7b8c5f1cb"
+      },
+      {
+        "path": "sources/head/PLAN-FULL.md",
+        "sha256": "911c2db4c27515c03f3e9af62cd7e8521b0c88e380fbe1063f9febf7b8c5f1cb"
+      }
+    ]
+  },
+  {
+    "pack": "zcode-mcp-zcode-generic-subagent-simplification-sectioned-audit.zip",
+    "sha256": "6619e5fef731eda83290f662e806ae49bc40cc27bda16b5844929761f535182a",
+    "files": 24,
+    "crc_error": null,
+    "classification": "PROCESS_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [
+        "AUDIT-VERDICT.md"
+      ],
+      "INVOCATION-AUDIT.md": [
+        "INVOCATION-AUDIT.md"
+      ],
+      "REVIEW-AUDIT.md": [
+        "REVIEW-AUDIT.md"
+      ],
+      "PLAN-AUDIT.md": [
+        "PLAN-AUDIT.md"
+      ],
+      "HUMAN-REQUIREMENTS.md": [
+        "HUMAN-REQUIREMENTS.md"
+      ],
+      "SKILL-COMPLIANCE.md": [
+        "SKILL-COMPLIANCE.md"
+      ],
+      "PACK-METADATA.json": [
+        "PACK-METADATA.json"
+      ],
+      "PLAN-FULL.md": [
+        "planning/PLAN-FULL.md",
+        "sources/head/PLAN-FULL.md"
+      ]
+    },
+    "intake_class": "LEGACY_PROCESS",
+    "evidence_hashes": [
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "d94c220dd452e5608fdd7f9668533df73e57b55a92924aaedb84c00a10d8f648"
+      },
+      {
+        "path": "INVOCATION-AUDIT.md",
+        "sha256": "673b3b32010c4357227d502b35727000d2a21253cf9485f5657aa593c3009c0d"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "b9e2aa7d115c97acd6acaaedae4d3ea05dc0a3e6931dda223b58315aaca075ac"
+      },
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "79a97f8d118baffa7824025fe297aee0dbc94ee4e6a357ed30929b04ed63e414"
+      },
+      {
+        "path": "HUMAN-REQUIREMENTS.md",
+        "sha256": "ae634c8363d090fe156c1370981e8b77788799cbbe59963913f203569fa95b15"
+      },
+      {
+        "path": "SKILL-COMPLIANCE.md",
+        "sha256": "6e75ff73536abecc1f2debc8baa7923c3806bd9e05a8ce9fc891844cd4450f0f"
+      },
+      {
+        "path": "PACK-METADATA.json",
+        "sha256": "de3229aa96071d08656ce576616ad63cc5f7b5ad6a3b749e030621e5cbf26cd6"
+      },
+      {
+        "path": "planning/PLAN-FULL.md",
+        "sha256": "6e26944122696d00662713cdd053286dee84c192793364a5d914d4779e40b47b"
+      },
+      {
+        "path": "sources/head/PLAN-FULL.md",
+        "sha256": "c353cc6b8bfc6df60bdc3829b4f7fe201aaa3b2d1d42c8d7c8898b6333612830"
+      }
+    ]
+  },
+  {
+    "pack": "zcode-mcp-zcode-runtime-cancellation-late-event-fencing-sectioned-audit.zip",
+    "sha256": "7fb1e3176eb0ef2d0c5e79b5d3f1556e86d1110b16bac6731b1d16a33306164c",
+    "files": 68,
+    "crc_error": null,
+    "classification": "PROCESS_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [
+        "AUDIT-VERDICT.md"
+      ],
+      "INVOCATION-AUDIT.md": [
+        "INVOCATION-AUDIT.md"
+      ],
+      "REVIEW-AUDIT.md": [
+        "REVIEW-AUDIT.md"
+      ],
+      "PLAN-AUDIT.md": [
+        "PLAN-AUDIT.md"
+      ],
+      "HUMAN-REQUIREMENTS.md": [
+        "HUMAN-REQUIREMENTS.md"
+      ],
+      "SKILL-COMPLIANCE.md": [
+        "SKILL-COMPLIANCE.md"
+      ],
+      "PACK-METADATA.json": [
+        "PACK-METADATA.json"
+      ],
+      "PLAN-FULL.md": [
+        "planning/PLAN-FULL.md",
+        "plan/PLAN-FULL.md"
+      ]
+    },
+    "intake_class": "LEGACY_PROCESS",
+    "evidence_hashes": [
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "79123649e65443f1a47fe0ff3017a3b650edaa6e74ebd55a9249530eddcb696e"
+      },
+      {
+        "path": "INVOCATION-AUDIT.md",
+        "sha256": "79123649e65443f1a47fe0ff3017a3b650edaa6e74ebd55a9249530eddcb696e"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "4bc240a22cb4c39ae7d922ddfa22d0ec7c89491841f3ff15e65f805f57d14907"
+      },
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "7f85fb9a9e8d2f8cd8d86c3fccffc832ba2767ca7e64d1dad9f0be7f9ccb9489"
+      },
+      {
+        "path": "HUMAN-REQUIREMENTS.md",
+        "sha256": "285f9bf849d124751877634229744edd674a3849a15e96e064d0270622dc5995"
+      },
+      {
+        "path": "SKILL-COMPLIANCE.md",
+        "sha256": "7f85fb9a9e8d2f8cd8d86c3fccffc832ba2767ca7e64d1dad9f0be7f9ccb9489"
+      },
+      {
+        "path": "PACK-METADATA.json",
+        "sha256": "98cc682f0baf000424182e73563bd5ba2ed13f0b3fb1634216e22db4fb5f310d"
+      },
+      {
+        "path": "planning/PLAN-FULL.md",
+        "sha256": "7f85fb9a9e8d2f8cd8d86c3fccffc832ba2767ca7e64d1dad9f0be7f9ccb9489"
+      },
+      {
+        "path": "plan/PLAN-FULL.md",
+        "sha256": "7f85fb9a9e8d2f8cd8d86c3fccffc832ba2767ca7e64d1dad9f0be7f9ccb9489"
+      }
+    ]
+  },
+  {
+    "pack": "zcode-mcp-zcode-subagent-mcp-20260825-sectioned-audit.zip",
+    "sha256": "5cbb4cd9dfce3b9a78a6ac1ee2ed395ffcd4437cc8992704ec2501339f274747",
+    "files": 168,
+    "crc_error": null,
+    "classification": "PROCESS_AUDIT",
+    "evidence": {
+      "AUDIT-VERDICT.md": [
+        "AUDIT-VERDICT.md"
+      ],
+      "INVOCATION-AUDIT.md": [
+        "INVOCATION-AUDIT.md"
+      ],
+      "REVIEW-AUDIT.md": [
+        "REVIEW-AUDIT.md"
+      ],
+      "PLAN-AUDIT.md": [
+        "PLAN-AUDIT.md"
+      ],
+      "HUMAN-REQUIREMENTS.md": [
+        "HUMAN-REQUIREMENTS.md"
+      ],
+      "SKILL-COMPLIANCE.md": [
+        "SKILL-COMPLIANCE.md"
+      ],
+      "PACK-METADATA.json": [
+        "PACK-METADATA.json"
+      ],
+      "PLAN-FULL.md": [
+        "planning/PLAN-FULL.md"
+      ]
+    },
+    "intake_class": "LEGACY_PROCESS",
+    "evidence_hashes": [
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "86576946036bbbe48638e94543e326d59b0982a69de88c224fafc26ba5c986a8"
+      },
+      {
+        "path": "INVOCATION-AUDIT.md",
+        "sha256": "441257db63c939b20628a91db6ac0c7325ce0ad978fe82ab4aaf3faab2ced22a"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "296d047088bc056c2aedc0078ebcd1b4295f197b74c864b2333727563ba677f9"
+      },
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "0eef4f6e3ec48f5725f88368b9de1717ef1823560643a110328caa611f7d7201"
+      },
+      {
+        "path": "HUMAN-REQUIREMENTS.md",
+        "sha256": "fa331864a5583816021920c703b65d0ca4f61b13317d3dc13bef6826f7ad1c17"
+      },
+      {
+        "path": "SKILL-COMPLIANCE.md",
+        "sha256": "d9b725ce2e18b43443c01cabce0d942979ef3114b3ca69deb77fdd29b128c514"
+      },
+      {
+        "path": "PACK-METADATA.json",
+        "sha256": "30107c14760a501db67188a4cc63e2fabc7272e19b5f3a787ebc2d42fbb264b1"
+      },
+      {
+        "path": "planning/PLAN-FULL.md",
+        "sha256": "000307d7a59792d8d1d2838bd7325a9f505e66fe36765a21ce2fff4ef02147b2"
+      }
+    ]
+  }
+]

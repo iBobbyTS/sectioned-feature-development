@@ -1,0 +1,4 @@
+interface:
+  display_name: "Sectioned Feature Development"
+  short_description: "Bounded delivery with model routing and isolated parallel work"
+  default_prompt: "Use $sectioned-feature-development to deliver this feature with a confirmed contract, bounded reviews and verified integration."

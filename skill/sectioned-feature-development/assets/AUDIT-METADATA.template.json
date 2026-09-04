@@ -1,0 +1,21 @@
+{
+  "artifact_type": "sectioned-development-process-audit",
+  "producer": {
+    "name": "sectioned-feature-development",
+    "version": "4.0"
+  },
+  "schema_version": 4,
+  "repo": "example",
+  "feature_id": "example-feature",
+  "run_id": "example-run",
+  "source_head": "0000000000000000000000000000000000000000",
+  "coverage": "COMPLETE_WITH_GAPS",
+  "secret_review": "PENDING",
+  "identity": {
+    "requirements_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "plan_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "evidence_consistency": "CONSISTENT",
+  "telemetry_status": "DEGRADED",
+  "product_status": "INSUFFICIENT_EVIDENCE"
+}

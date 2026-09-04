@@ -1,0 +1,31 @@
+{
+  "schema_version": 4,
+  "feature_id": "example-feature",
+  "run_id": "example-run",
+  "status": "ACTIVE",
+  "plan_sha256": "REPLACE",
+  "plan_review_status": "PENDING",
+  "user_plan_approval": "NOT_APPLICABLE",
+  "advisor_state": "NOT_REQUIRED",
+  "full_review_cursor": 0,
+  "full_reviews": {},
+  "active": [],
+  "sections": {
+    "S01": {
+      "status": "PENDING",
+      "integrated": false,
+      "repair_waves": 0
+    },
+    "S02": {
+      "status": "PENDING",
+      "integrated": false,
+      "repair_waves": 0
+    },
+    "S03": {
+      "status": "PENDING",
+      "integrated": false,
+      "repair_waves": 0
+    }
+  },
+  "completion": null
+}

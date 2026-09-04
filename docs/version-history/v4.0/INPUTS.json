@@ -1,0 +1,32 @@
+[
+  {
+    "filename": "sectioned-feature-development(1).zip",
+    "bytes": 1824128,
+    "sha256": "06df4d578a940e8b17e72872d023c9fe626cbec7f24f3f57c4dba615d705bda8"
+  },
+  {
+    "filename": "grill-me.zip",
+    "bytes": 7092,
+    "sha256": "233d500f48bb5e7aec76fa864a0c351bda8f707d64c130c4e18f5b6b599a8ace"
+  },
+  {
+    "filename": "audit-packs.zip",
+    "bytes": 22225233,
+    "sha256": "b830bf6657db3f371584c67b89fb0b2a0e825d81fa01f7857333f7e4c1a1df92"
+  },
+  {
+    "filename": "zcode-as-subagent功能说明.md",
+    "bytes": 18759,
+    "sha256": "1f58bb44e7c3d4839f506bf90d277244f6783e3fcec4d3e0afdebd13f4ff476a"
+  },
+  {
+    "filename": "skill-doctor.zip",
+    "bytes": 416919,
+    "sha256": "71cfaa4fea91dff17089947a79260c496f3fef18bf76fd9028b2be53800d1d10"
+  },
+  {
+    "filename": "AGENTS.md",
+    "bytes": 7501,
+    "sha256": "411bc415fe70adf75771cedac40b25af838716cb23e3436954aa2832f40a5aba"
+  }
+]
