@@ -9,7 +9,7 @@
 分析本轮audit pack里每阶段的review结果，有没有可以在section划分或plan review部分提前避免的。
 
 ## 人工确认的必要修改
-1. >1 section必须使用EXECUTE_WITH_COMMITS和单独分支。
+1. \>1 section必须使用EXECUTE_WITH_COMMITS和单独分支。
 2. 完成后如果用户有提出修改，不得重新打开之前的PLAN-FULL补section，除非用户明确要求，否则直接重新评估是否需要开新的sectioned-development还是可以直接修的小改动。
 
 ## grill-me
@@ -47,11 +47,12 @@ https://platform.claude.com/docs/en/about-claude/models/optimizing-for-cost-and-
 ## 并行开发
 上网搜索coding场景多subagent并行开发的技术报告、博客等，学习并行开发的原理原则（传统人工开发的并行开发可以参考，但需要考虑到agent-native的执行状况），在PLAN阶段分析可并行执行的步骤，如果可并行的话，`mkdir -p ./git-worktree`，并确保它在.gitignore里；把每阶段是否可并行、互相依赖关系完整写在PLAN-FULL里，确保可执行。
 
-##Audit流程
+## Audit流程
 新加入的流程也都要进入审计包，用于下次分析。
 
 ## 输出
 按照项目形式，不再是单个skill。接下来是4.0版本。
+```
 sectioned-feature-development
 	skill/sectioned-feature-development
 	docs/
@@ -64,3 +65,4 @@ sectioned-feature-development
 	agents/
 		所有定义的subagent
 	README.md 简要的执行流程、设计理念、和安装方法。
+```
