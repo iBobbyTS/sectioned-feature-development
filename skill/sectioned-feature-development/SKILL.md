@@ -15,7 +15,7 @@ Deliver the approved outcome, not a larger system. The main agent owns admission
 - Branches, dependency scheduling and integration: [execution.md](references/execution.md)
 - Bounded review and finding closure: [reviews.md](references/reviews.md)
 - Exact current ZCode MCP: [zcode.md](references/zcode.md)
-- Rare, isolated native advisor: [advisor.md](references/advisor.md)
+- Rare, isolated native [@advisor](subagent://advisor): [advisor.md](references/advisor.md)
 - Default-on process audit: [audit.md](references/audit.md)
 
 Use `assets/PLAN-FULL.template.md`; its marked JSON block is the executable schedule. Use `scripts/workflow.py validate` and `ready` to check it. These are workflow checks, not a sandbox or proof of correctness.
@@ -45,9 +45,9 @@ If a local task grows, stop new writes, preserve existing work, establish the au
 
 ## 2. Explore and plan
 
-Use `sfd_explorer` only when a bounded search would materially reduce expensive context loading. It returns source pointers, facts, unknowns and direct owner paths, not a design or acceptance verdict. Skip it for obvious local edits.
+Use [@sfd_explorer](subagent://sfd_explorer) only when a bounded search would materially reduce expensive context loading. It returns source pointers, facts, unknowns and direct owner paths, not a design or acceptance verdict. Skip it for obvious local edits.
 
-Use `astra_xhigh` as a plan author, and a **fresh** `astra_xhigh` as plan reviewer. Give each a bounded packet rather than the whole chat. Plan by atomic behavior first, then by materially different reasoning difficulty where a real interface permits separation. Never split an atomic migration/state transition simply to assign a cheaper model.
+Use [@astra_xhigh](subagent://astra_xhigh) as a plan author, and a **fresh** [@astra_xhigh](subagent://astra_xhigh) as plan reviewer. Give each a bounded packet rather than the whole chat. Plan by atomic behavior first, then by materially different reasoning difficulty where a real interface permits separation. Never split an atomic migration/state transition simply to assign a cheaper model.
 
 A section is the acceptance boundary, not a LOC bucket. Before assigning a large section to an implementer, check for meaningful internal product increments. Use optional one-level subsections with targeted checkpoint review and a shared parent contract, budget and final acceptance; do not split cross-cases of one rule or turn test-only steps into product nodes. See [subsections.md](references/subsections.md).
 
@@ -63,7 +63,7 @@ For a parallel plan, ensure `/git-worktree/` is in repository `.gitignore`, then
 
 Start with at most two concurrent writers as a rollout setting, not a proven optimum. Use more only after explicit local capacity/evidence supports it. If no independent ready pair exists, run serially; do not manufacture parallelism.
 
-Select one implementation profile per section: `luna_xhigh`, `terra_high`, `sol_medium`, or `astra_medium`. Selection is based on source-grounded task structure and oracle strength, not an assumed benchmark hierarchy. Unknown complexity defaults to `sol_medium` or further bounded discovery; novel unresolved structural reasoning may justify `astra_medium`.
+Select one implementation profile per section: [@luna_xhigh](subagent://luna_xhigh), [@terra_high](subagent://terra_high), [@sol_medium](subagent://sol_medium), or [@astra_medium](subagent://astra_medium). Selection is based on source-grounded task structure and oracle strength, not an assumed benchmark hierarchy. Unknown complexity defaults to [@sol_medium](subagent://sol_medium) or further bounded discovery; novel unresolved structural reasoning may justify [@astra_medium](subagent://astra_medium).
 
 Main agent writes workflow state and integrates; it does not silently replace a failed delegated implementer. Distinguish service/environment failure from semantic implementation failure. If one bounded attempt demonstrates under-routing, jump to a suitable model rather than trying all tiers in sequence. Preserve good code; changing models does not reset repair budgets.
 
@@ -73,7 +73,7 @@ Dispatch only ready DAG nodes with their task packet. Run targeted checks before
 
 Decomposed sections run each child as implement + targeted tests + scoped review (`SUBSECTION_DELTA`) on the parent branch. One parent primary reviewer accumulates coverage; after the last child, `PARENT_RECONCILIATION` must close the whole invariant matrix at the final candidate. Child status is CHECKPOINT_VERIFIED, never section acceptance or a new budget. The fresh final review remains at parent level. Atomic sections keep their existing path.
 
-Code review uses `astra_high` and external `glm-5.3`, alternating **feature-wide full-pass reservations**, beginning with Astra. Reserve a pass index before dispatch so concurrent reviews cannot race. PLAN and advisor calls have separate counters; delta checks and infrastructure retries do not advance the full-pass counter.
+Code review uses [@astra_high](subagent://astra_high) and external `glm-5.3`, alternating **feature-wide full-pass reservations**, beginning with Astra. Reserve a pass index before dispatch so concurrent reviews cannot race. PLAN and [@advisor](subagent://advisor) calls have separate counters; delta checks and infrastructure retries do not advance the full-pass counter.
 
 `ONE`: a clean initial full review accepts the section; if it finds material defects, close repairs through bounded delta verification and require one fresh final full review. `TWO`: one covered baseline/closure plus a fresh independent final full pass. Choose TWO where hidden failure states, weak oracles or composition risk justify independence; a high-risk filename or zero findings alone decides nothing. User/repository assurance requirements remain authoritative.
 
@@ -83,7 +83,7 @@ The reviewer invokes the bundled `$code-review` with `context=DELEGATED_PASS` an
 
 Main admits findings. Same-review verification goes back to its reviewer when the actual session supports it. The current ZCode API cannot resume a terminal agent; follow its explicit continuity policy rather than inventing a continuation tool. New full passes use fresh instances.
 
-At most five admitted material repair waves per original section lineage, shared by every child checkpoint and parent reconciliation/final. Subdivision never resets that count. At the limit, diagnose once: simplify current work, repair within the real owner, split only remaining independent work, or request the rare advisor. No automatic chain of new five-wave budgets and no evidence-only section.
+At most five admitted material repair waves per original section lineage, shared by every child checkpoint and parent reconciliation/final. Subdivision never resets that count. At the limit, diagnose once: simplify current work, repair within the real owner, split only remaining independent work, or request the rare [@advisor](subagent://advisor). No automatic chain of new five-wave budgets and no evidence-only section.
 
 ## 5. Integrate and complete
 
@@ -95,9 +95,9 @@ Record `COMPLETED` and freeze the final plan/hash, or accurately stop as `BLOCKE
 
 ## 6. Advisor and audit
 
-`advisor` is a fresh `gpt-6-astra` subagent, not a manual Pro chat. It receives only the unchanged Advisor Request contract, a small evidence manifest and access to the relevant frozen source. It never inherits the full parent conversation. Lack of a verifiable fresh-context launch is `ADVISOR_CONTEXT_BLOCKED`, not permission to fake isolation. See advisor reference for rare triggers and decision admission.
+[@advisor](subagent://advisor) is a fresh `gpt-6-astra` subagent, not a manual Pro chat. It receives only the unchanged Advisor Request contract, a small evidence manifest and access to the relevant frozen source. It never inherits the full parent conversation. Lack of a verifiable fresh-context launch is `ADVISOR_CONTEXT_BLOCKED`, not permission to fake isolation. See advisor reference for rare triggers and decision admission.
 
-Process audit is LIVE by default, disable only on explicit `audit off`. Capture lifecycle/model/routing/cost facts at existing boundaries, not every read. Missing audit details do not add product gates. Only this skill's typed process-audit ZIPs may be published to `~/Desktop/audit-pack/`; runtime/conformance/product/advisor evidence stays elsewhere and is referenced by sanitized hash.
+Process audit is LIVE by default, disable only on explicit `audit off`. Capture lifecycle/model/routing/cost facts at existing boundaries, not every read. Missing audit details do not add product gates. Only this skill's typed process-audit ZIPs may be published to `~/Desktop/audit-pack/`; runtime/conformance/product/[@advisor](subagent://advisor) evidence stays elsewhere and is referenced by sanitized hash.
 
 Before the final response, publish one canonical process pack, or report an audit-only failure after one bounded correction. Report product readiness, model/context/continuity gaps, maintainability and the audit path separately. Never claim actual model/runtime validation from script tests alone.
 
