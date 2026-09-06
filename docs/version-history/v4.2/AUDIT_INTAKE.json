@@ -1,0 +1,1394 @@
+[
+  {
+    "pack": "API-sol-usage-export-sectioned-audit",
+    "sha256": "b42abfbb8ea2f330f9be348b9461c239e19cdebd3f71b4cf394b81abf6ca0818",
+    "kind": "PROCESS_AUDIT",
+    "basis": "verdict + review/plan analysis + requirement/plan evidence",
+    "files": 29,
+    "documents": {
+      "AUDIT-VERDICT.md": "AUDIT-VERDICT.md",
+      "HUMAN-REQUIREMENTS.md": "HUMAN-REQUIREMENTS.md",
+      "INVOCATION-AUDIT.md": "INVOCATION-AUDIT.md",
+      "PLAN-AUDIT.md": "PLAN-AUDIT.md",
+      "REVIEW-AUDIT.md": "REVIEW-AUDIT.md",
+      "VALIDATION-AUDIT.md": "VALIDATION-AUDIT.md",
+      "SKILL-COMPLIANCE.md": "SKILL-COMPLIANCE.md",
+      "COST-METRICS.md": "COST-METRICS.md",
+      "RECOMMENDATIONS.md": "RECOMMENDATIONS.md"
+    },
+    "evidence_refs": [
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "ff4e3cfac22167f10229f6314c7d59940058bf5c71a5a17e775be5ef0a8307f1"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "c6f541bb508f93236bfcda0aeb672c7a4506704e26b16debfa45162a20e2128d"
+      },
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "b5b23ff14af34435dc8bf36851337841edd4b6616e625c2826ef723d1dd1c0f9"
+      }
+    ],
+    "analysis_id": "P01"
+  },
+  {
+    "pack": "AnyUpright-debug-app-flow-deescalation-sectioned-audit",
+    "sha256": "c8fef84562fb5efea6448a36f1ac5be411dcd7abd3a574537d983f15db9aeba0",
+    "kind": "PROCESS_AUDIT",
+    "basis": "verdict + review/plan analysis + requirement/plan evidence",
+    "files": 17,
+    "documents": {
+      "AUDIT-VERDICT.md": "AUDIT-VERDICT.md",
+      "HUMAN-REQUIREMENTS.md": "HUMAN-REQUIREMENTS.md",
+      "INVOCATION-AUDIT.md": "INVOCATION-AUDIT.md",
+      "PLAN-AUDIT.md": "PLAN-AUDIT.md",
+      "REVIEW-AUDIT.md": "REVIEW-AUDIT.md",
+      "VALIDATION-AUDIT.md": "VALIDATION-AUDIT.md",
+      "SKILL-COMPLIANCE.md": "SKILL-COMPLIANCE.md",
+      "COST-METRICS.md": "COST-METRICS.md",
+      "RECOMMENDATIONS.md": "RECOMMENDATIONS.md"
+    },
+    "evidence_refs": [
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "bfee04d1937aa9c0f14073b0b0a8b2c1d48bdeb7ac76443642c41b8e7d8c1cf6"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "b22f1c0da614c826999a99b317682a5f9b58501d7af9a0f2b45194bed20a38af"
+      },
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "4cd7f26c89fafd57bf1c9f981235e25052a986a11b56154787eb087cc7d7150a"
+      }
+    ],
+    "analysis_id": "P02"
+  },
+  {
+    "pack": "AnyUpright-fcp-motion-analysis-time-domain-sectioned-audit",
+    "sha256": "0eef1c0be0fa8b4b87833dc2173a5e9f5259890e176f1a095e1af8dc8515b418",
+    "kind": "PROCESS_AUDIT",
+    "basis": "verdict + review/plan analysis + requirement/plan evidence",
+    "files": 18,
+    "documents": {
+      "AUDIT-VERDICT.md": "AUDIT-VERDICT.md",
+      "HUMAN-REQUIREMENTS.md": "HUMAN-REQUIREMENTS.md",
+      "INVOCATION-AUDIT.md": "INVOCATION-AUDIT.md",
+      "PLAN-AUDIT.md": "PLAN-AUDIT.md",
+      "REVIEW-AUDIT.md": "REVIEW-AUDIT.md",
+      "VALIDATION-AUDIT.md": "VALIDATION-AUDIT.md",
+      "SKILL-COMPLIANCE.md": "SKILL-COMPLIANCE.md",
+      "COST-METRICS.md": "COST-METRICS.md",
+      "RECOMMENDATIONS.md": "RECOMMENDATIONS.md"
+    },
+    "evidence_refs": [
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "679a57aad1a24508b727aa61130acaf44c147a8373b2cd678df639c8f9f49965"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "05e03e9d8dbe73cbcf43363c96995bc81f6e38a883ffffdf3591b2e62a0a4694"
+      },
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "c64024433488d28d081b877bac8d49dcc1e94d6d3b0301cc277f5ed5272df9a2"
+      }
+    ],
+    "analysis_id": "P03"
+  },
+  {
+    "pack": "codex-rosetta-availability-snapshot-cooldown-recovery-20260901-sectioned-audit",
+    "sha256": "2b45369549ca07ccf265871fd1d3d7e4268d32f919678fab8584d26f9d6c037a",
+    "kind": "PROCESS_AUDIT",
+    "basis": "verdict + review/plan analysis + requirement/plan evidence",
+    "files": 18,
+    "documents": {
+      "AUDIT-VERDICT.md": "AUDIT-VERDICT.md",
+      "HUMAN-REQUIREMENTS.md": "HUMAN-REQUIREMENTS.md",
+      "INVOCATION-AUDIT.md": "INVOCATION-AUDIT.md",
+      "PLAN-AUDIT.md": "PLAN-AUDIT.md",
+      "REVIEW-AUDIT.md": "REVIEW-AUDIT.md",
+      "VALIDATION-AUDIT.md": "VALIDATION-AUDIT.md",
+      "SKILL-COMPLIANCE.md": "SKILL-COMPLIANCE.md",
+      "COST-METRICS.md": "COST-METRICS.md",
+      "RECOMMENDATIONS.md": "RECOMMENDATIONS.md"
+    },
+    "evidence_refs": [
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "60251bb8ad936711b09e338098f74269aa971733889255737b5fd16bca5f1362"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "6c65021a96cd1faee3c0950ce05a40ca34ea99e3c82e27c6eed43bd0eff9ea7d"
+      },
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "12dec35b22e93d881945f4ce8e2af4df485872f9d8e0ad610dab6604608ee233"
+      }
+    ],
+    "analysis_id": "P04"
+  },
+  {
+    "pack": "codex-rosetta-codex-cockpit-provider-health-sectioned-audit",
+    "sha256": "f1ecbc7a1f206bc0d5b5d4325feac97e5116c06b2ef7e25eb71b2c560615a482",
+    "kind": "PROCESS_AUDIT",
+    "basis": "verdict + review/plan analysis + requirement/plan evidence",
+    "files": 31,
+    "documents": {
+      "AUDIT-VERDICT.md": "AUDIT-VERDICT.md",
+      "HUMAN-REQUIREMENTS.md": "HUMAN-REQUIREMENTS.md",
+      "INVOCATION-AUDIT.md": "INVOCATION-AUDIT.md",
+      "PLAN-AUDIT.md": "PLAN-AUDIT.md",
+      "REVIEW-AUDIT.md": "REVIEW-AUDIT.md",
+      "VALIDATION-AUDIT.md": "VALIDATION-AUDIT.md",
+      "SKILL-COMPLIANCE.md": "SKILL-COMPLIANCE.md",
+      "COST-METRICS.md": "COST-METRICS.md",
+      "RECOMMENDATIONS.md": "RECOMMENDATIONS.md"
+    },
+    "evidence_refs": [
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "aef162d98321383eb6268bcd0fc8caf11aece7191ffe10fcb17fe46c13b133df"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "15bac94c58d6b6a71bcd09fb9713b82e149746643431098bcad4dcb497fc1308"
+      },
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "365603043136ac2178e499ce449c7b04b60ee783b080d21f04784e2578ded1e3"
+      }
+    ],
+    "analysis_id": "P05"
+  },
+  {
+    "pack": "codex-rosetta-failover-429-cooldown-20260826-sectioned-audit",
+    "sha256": "378c30a5b817325a5482114dc04398208da99d95d7571e6a011de26c357d8a3a",
+    "kind": "PROCESS_AUDIT",
+    "basis": "verdict + review/plan analysis + requirement/plan evidence",
+    "files": 20,
+    "documents": {
+      "AUDIT-VERDICT.md": "AUDIT-VERDICT.md",
+      "HUMAN-REQUIREMENTS.md": "HUMAN-REQUIREMENTS.md",
+      "INVOCATION-AUDIT.md": "INVOCATION-AUDIT.md",
+      "PLAN-AUDIT.md": "PLAN-AUDIT.md",
+      "REVIEW-AUDIT.md": "REVIEW-AUDIT.md",
+      "VALIDATION-AUDIT.md": "VALIDATION-AUDIT.md",
+      "SKILL-COMPLIANCE.md": "SKILL-COMPLIANCE.md",
+      "COST-METRICS.md": "COST-METRICS.md",
+      "RECOMMENDATIONS.md": "RECOMMENDATIONS.md"
+    },
+    "evidence_refs": [
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "d841d19089e699e5ae05a08ee0f739f6fa5cbdc14115808679309ca0e1561830"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "d0efa4fca073c21fdafb59a9701f3d206e4439a39e4dd1e0fbfc261a8723bf94"
+      },
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "746bc1dcc578d548d418c8392be62a0b749285fd473c33b04abedac57698b9f0"
+      }
+    ],
+    "analysis_id": "P06"
+  },
+  {
+    "pack": "codex-rosetta-failover-connectivity-cooldown-20260826-sectioned-audit",
+    "sha256": "82ad0943ad4f08880896a881c1d47c4653437fd5e311a87e666eda503d9768c3",
+    "kind": "PROCESS_AUDIT",
+    "basis": "verdict + review/plan analysis + requirement/plan evidence",
+    "files": 19,
+    "documents": {
+      "AUDIT-VERDICT.md": "AUDIT-VERDICT.md",
+      "HUMAN-REQUIREMENTS.md": "HUMAN-REQUIREMENTS.md",
+      "INVOCATION-AUDIT.md": "INVOCATION-AUDIT.md",
+      "PLAN-AUDIT.md": "PLAN-AUDIT.md",
+      "REVIEW-AUDIT.md": "REVIEW-AUDIT.md",
+      "VALIDATION-AUDIT.md": "VALIDATION-AUDIT.md",
+      "SKILL-COMPLIANCE.md": "SKILL-COMPLIANCE.md",
+      "COST-METRICS.md": "COST-METRICS.md",
+      "RECOMMENDATIONS.md": "RECOMMENDATIONS.md"
+    },
+    "evidence_refs": [
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "d841d19089e699e5ae05a08ee0f739f6fa5cbdc14115808679309ca0e1561830"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "d0efa4fca073c21fdafb59a9701f3d206e4439a39e4dd1e0fbfc261a8723bf94"
+      },
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "746bc1dcc578d548d418c8392be62a0b749285fd473c33b04abedac57698b9f0"
+      }
+    ],
+    "analysis_id": "P07"
+  },
+  {
+    "pack": "codex-rosetta-glm53-catalog-update-20260902-sectioned-audit",
+    "sha256": "c4e6b177fe203a8df55ed6126d286c361e6b0235f684976f9b4743f139cee278",
+    "kind": "PROCESS_AUDIT",
+    "basis": "verdict + review/plan analysis + requirement/plan evidence",
+    "files": 35,
+    "documents": {
+      "AUDIT-VERDICT.md": "AUDIT-VERDICT.md",
+      "HUMAN-REQUIREMENTS.md": "HUMAN-REQUIREMENTS.md",
+      "INVOCATION-AUDIT.md": "INVOCATION-AUDIT.md",
+      "PLAN-AUDIT.md": "PLAN-AUDIT.md",
+      "REVIEW-AUDIT.md": "REVIEW-AUDIT.md",
+      "VALIDATION-AUDIT.md": "VALIDATION-AUDIT.md",
+      "SKILL-COMPLIANCE.md": "SKILL-COMPLIANCE.md",
+      "COST-METRICS.md": "COST-METRICS.md",
+      "RECOMMENDATIONS.md": "RECOMMENDATIONS.md"
+    },
+    "evidence_refs": [
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "7e7dc2a1276cba9282501232f6593a1e03afa1afdc4040bdad6d50ea2ecaa34a"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "406a313cbbf0f2bcf5b02f666baa547b3f90418a7b826a27b1cbab9f8632cfdd"
+      },
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "0a4c19f4cb24807a624c740fc23c576621587fcbdbfa05d87ff0f72f572bf95a"
+      }
+    ],
+    "analysis_id": "P08"
+  },
+  {
+    "pack": "codex-rosetta-remove-observability-diagnostics-sectioned-audit",
+    "sha256": "6211b724b5af909e88d07fbf5af601cf4b598c30932369c183b04c525852c73f",
+    "kind": "PROCESS_AUDIT",
+    "basis": "verdict + review/plan analysis + requirement/plan evidence",
+    "files": 28,
+    "documents": {
+      "AUDIT-VERDICT.md": "AUDIT-VERDICT.md",
+      "HUMAN-REQUIREMENTS.md": "HUMAN-REQUIREMENTS.md",
+      "INVOCATION-AUDIT.md": "INVOCATION-AUDIT.md",
+      "PLAN-AUDIT.md": "PLAN-AUDIT.md",
+      "REVIEW-AUDIT.md": "REVIEW-AUDIT.md",
+      "VALIDATION-AUDIT.md": "VALIDATION-AUDIT.md",
+      "SKILL-COMPLIANCE.md": "SKILL-COMPLIANCE.md",
+      "COST-METRICS.md": "COST-METRICS.md",
+      "RECOMMENDATIONS.md": "RECOMMENDATIONS.md"
+    },
+    "evidence_refs": [
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "d7efab9cfcf3bada688c9b9d6e220619218cb0eba73ec9b8916350318b58571c"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "ff0c307950044e2e64a58b8e57cdc32e4b44067e5770a5605db896696cbd5729"
+      },
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "bc722a2e01f15284bed73324ab611ff7541da198dfc5003864d0f20e523a506a"
+      }
+    ],
+    "analysis_id": "P09"
+  },
+  {
+    "pack": "lmdo-website-create-project-needs-score-sectioned-audit",
+    "sha256": "db7cf8b405b32e87c8ad3f3942874fc51c06cb45f8661a5e584b7be328cf6f63",
+    "kind": "PROCESS_AUDIT",
+    "basis": "verdict + review/plan analysis + requirement/plan evidence",
+    "files": 20,
+    "documents": {
+      "AUDIT-VERDICT.md": "AUDIT-VERDICT.md",
+      "HUMAN-REQUIREMENTS.md": "HUMAN-REQUIREMENTS.md",
+      "INVOCATION-AUDIT.md": "INVOCATION-AUDIT.md",
+      "PLAN-AUDIT.md": "PLAN-AUDIT.md",
+      "REVIEW-AUDIT.md": "REVIEW-AUDIT.md",
+      "VALIDATION-AUDIT.md": "VALIDATION-AUDIT.md",
+      "SKILL-COMPLIANCE.md": "SKILL-COMPLIANCE.md",
+      "COST-METRICS.md": "COST-METRICS.md",
+      "RECOMMENDATIONS.md": "RECOMMENDATIONS.md"
+    },
+    "evidence_refs": [
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "050ad7d59b96326e809f905fb71e7ba71881434a6b6a70efa4bd18002564eb87"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "9fa09b271d85baaa486b1270069e2d730106a6b683e32f62216d497af7fa65ce"
+      },
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "940e03b76753291a632b6ad81ec55188e406a47acd861d4dff0f80b4d47bda16"
+      }
+    ],
+    "analysis_id": "P10"
+  },
+  {
+    "pack": "lmdo-website-dynamic-performance-groups-20260831-sectioned-audit",
+    "sha256": "0eb2f382935cc41c0f713899588128ce73768936ef69122f5a72f9a0cc676505",
+    "kind": "PROCESS_AUDIT",
+    "basis": "verdict + review/plan analysis + requirement/plan evidence",
+    "files": 61,
+    "documents": {
+      "AUDIT-VERDICT.md": "AUDIT-VERDICT.md",
+      "HUMAN-REQUIREMENTS.md": "HUMAN-REQUIREMENTS.md",
+      "INVOCATION-AUDIT.md": "INVOCATION-AUDIT.md",
+      "PLAN-AUDIT.md": "PLAN-AUDIT.md",
+      "REVIEW-AUDIT.md": "REVIEW-AUDIT.md",
+      "VALIDATION-AUDIT.md": "VALIDATION-AUDIT.md",
+      "SKILL-COMPLIANCE.md": "SKILL-COMPLIANCE.md",
+      "COST-METRICS.md": "COST-METRICS.md",
+      "RECOMMENDATIONS.md": "RECOMMENDATIONS.md"
+    },
+    "evidence_refs": [
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "990d8b631de03f3eac660fa226e1376c67805fdd8959f86ad28e98408411201f"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "ef0ba29c04b031cff9fa1fd82834fa4b6eda803fdb8f123f07eb20607c305919"
+      },
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "35ae3ad02b81227e60fd3f8110cd663035157b11a6ec8692e6c721463e70c156"
+      }
+    ],
+    "analysis_id": "P11"
+  },
+  {
+    "pack": "lmdo-website-group-instrument-inline-management-20260903-sectioned-audit",
+    "sha256": "b8442280d6372adc77d6911aef5b065ec77cd0964683aae767cc911ae98061af",
+    "kind": "PROCESS_AUDIT",
+    "basis": "verdict + review/plan analysis + requirement/plan evidence",
+    "files": 27,
+    "documents": {
+      "AUDIT-VERDICT.md": "AUDIT-VERDICT.md",
+      "HUMAN-REQUIREMENTS.md": "HUMAN-REQUIREMENTS.md",
+      "INVOCATION-AUDIT.md": "INVOCATION-AUDIT.md",
+      "PLAN-AUDIT.md": "PLAN-AUDIT.md",
+      "REVIEW-AUDIT.md": "REVIEW-AUDIT.md",
+      "VALIDATION-AUDIT.md": "VALIDATION-AUDIT.md",
+      "SKILL-COMPLIANCE.md": "SKILL-COMPLIANCE.md",
+      "COST-METRICS.md": "COST-METRICS.md",
+      "RECOMMENDATIONS.md": "RECOMMENDATIONS.md"
+    },
+    "evidence_refs": [
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "1539bf27cf186ea077267675eaeecf631cff2e6f2453b9c991603cd254f641d8"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "7f557ff66c15a64d0a5eca0a504dffe6edee1779472fc3de51e1d63e215710ff"
+      },
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "7831ee93b022b2fc8601fa56a3f8b9f2393c4f0d13f27de025c00dab02fbc331"
+      }
+    ],
+    "analysis_id": "P12"
+  },
+  {
+    "pack": "lmdo-website-group-to-lead-category-sectioned-audit",
+    "sha256": "b6257bab00fb188f6497ba64a740d245ce776faf3fe349c943f13f81cd597a31",
+    "kind": "PROCESS_AUDIT",
+    "basis": "verdict + review/plan analysis + requirement/plan evidence",
+    "files": 42,
+    "documents": {
+      "AUDIT-VERDICT.md": "AUDIT-VERDICT.md",
+      "HUMAN-REQUIREMENTS.md": "HUMAN-REQUIREMENTS.md",
+      "INVOCATION-AUDIT.md": "INVOCATION-AUDIT.md",
+      "PLAN-AUDIT.md": "PLAN-AUDIT.md",
+      "REVIEW-AUDIT.md": "REVIEW-AUDIT.md",
+      "VALIDATION-AUDIT.md": "VALIDATION-AUDIT.md",
+      "SKILL-COMPLIANCE.md": "SKILL-COMPLIANCE.md",
+      "COST-METRICS.md": "COST-METRICS.md",
+      "RECOMMENDATIONS.md": "RECOMMENDATIONS.md"
+    },
+    "evidence_refs": [
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "0f0423f7ac56d0f8a98a0c72f8e3510c9cd49ba382f423f4ddf3c2e7751bd4bf"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "194aad284946d216747167be2aff239bb77cc3b1d34563ce3e6e04ae8271ca53"
+      },
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "a0e7ca1b515d9c078f8d645544242a0e17f41a9c7fe8c0b3a51c1a2677e282d4"
+      }
+    ],
+    "analysis_id": "P13"
+  },
+  {
+    "pack": "lmdo-website-management-list-ui-20260826-sectioned-audit",
+    "sha256": "c3b203d11219d7bd6521d39663e689777c0fe279c49bfc07ea04a3bbd47abe16",
+    "kind": "PROCESS_AUDIT",
+    "basis": "verdict + review/plan analysis + requirement/plan evidence",
+    "files": 84,
+    "documents": {
+      "AUDIT-VERDICT.md": "AUDIT-VERDICT.md",
+      "HUMAN-REQUIREMENTS.md": "HUMAN-REQUIREMENTS.md",
+      "INVOCATION-AUDIT.md": "INVOCATION-AUDIT.md",
+      "PLAN-AUDIT.md": "PLAN-AUDIT.md",
+      "REVIEW-AUDIT.md": "REVIEW-AUDIT.md",
+      "VALIDATION-AUDIT.md": "VALIDATION-AUDIT.md",
+      "SKILL-COMPLIANCE.md": "SKILL-COMPLIANCE.md",
+      "COST-METRICS.md": "COST-METRICS.md",
+      "RECOMMENDATIONS.md": "RECOMMENDATIONS.md"
+    },
+    "evidence_refs": [
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "cde32eea898aaeda3acef71ec970427e4bb92b3bf64e66bfc636e71e62373cde"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "218986a0f4cd50fda0c97ce99541e1aa9c2948dfccfe610c5ec050c5eeeccee1"
+      },
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "791364e10a816184f75c7e722b687607f181363521d8c60c086fbb08bfafb39c"
+      }
+    ],
+    "analysis_id": "P14"
+  },
+  {
+    "pack": "lmdo-website-pinyin-user-search-sectioned-audit",
+    "sha256": "daaef55f82b8edfdadda8241453885d7bd538a9f0cdb0bc7cfd0235ac6debbe5",
+    "kind": "PROCESS_AUDIT",
+    "basis": "verdict + review/plan analysis + requirement/plan evidence",
+    "files": 38,
+    "documents": {
+      "AUDIT-VERDICT.md": "AUDIT-VERDICT.md",
+      "HUMAN-REQUIREMENTS.md": "HUMAN-REQUIREMENTS.md",
+      "INVOCATION-AUDIT.md": "INVOCATION-AUDIT.md",
+      "PLAN-AUDIT.md": "PLAN-AUDIT.md",
+      "REVIEW-AUDIT.md": "REVIEW-AUDIT.md",
+      "VALIDATION-AUDIT.md": "VALIDATION-AUDIT.md",
+      "SKILL-COMPLIANCE.md": "SKILL-COMPLIANCE.md",
+      "COST-METRICS.md": "COST-METRICS.md",
+      "RECOMMENDATIONS.md": "RECOMMENDATIONS.md"
+    },
+    "evidence_refs": [
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "11e7aebdaf0c513b454043dc31fc2fc655256881c62b4b796ed73c9221340d93"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "c49520eb94be6208c08d5980bca2bbc9cb41e83020e5a9263212be039724417b"
+      },
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "1b3c26b76258847c1ae856312ac76767748a69d38f7a9b3d0291961f37a0cc72"
+      }
+    ],
+    "analysis_id": "P15"
+  },
+  {
+    "pack": "lmdo-website-pr104-must-fix-sectioned-audit",
+    "sha256": "95f61953f707a37dedf0885748690720ebf311455c040f2b0075841bbfc9c821",
+    "kind": "PROCESS_AUDIT",
+    "basis": "verdict + review/plan analysis + requirement/plan evidence",
+    "files": 334,
+    "documents": {
+      "AUDIT-VERDICT.md": "AUDIT-VERDICT.md",
+      "HUMAN-REQUIREMENTS.md": "HUMAN-REQUIREMENTS.md",
+      "INVOCATION-AUDIT.md": "INVOCATION-AUDIT.md",
+      "PLAN-AUDIT.md": "PLAN-AUDIT.md",
+      "REVIEW-AUDIT.md": "REVIEW-AUDIT.md",
+      "VALIDATION-AUDIT.md": "VALIDATION-AUDIT.md",
+      "SKILL-COMPLIANCE.md": "SKILL-COMPLIANCE.md",
+      "COST-METRICS.md": "COST-METRICS.md",
+      "RECOMMENDATIONS.md": "RECOMMENDATIONS.md"
+    },
+    "evidence_refs": [
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "a667439f126fa494c66c6b16c74a0e882fe0a1c1cd728a28fa70b9a00b254e49"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "c102297ee6d41a1feaf6720e59b073cc0893118797584a3ffca0bd954be5512b"
+      },
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "19984fbf6e571febb416ea4ed6ad27784e51b503fd691b4cfc775e2d53ba9746"
+      }
+    ],
+    "analysis_id": "P16"
+  },
+  {
+    "pack": "lmdo-website-project-detail-multipage-sectioned-audit",
+    "sha256": "bc779d5167017ecfcc778d69c04bb0e9566b7d9bf79cd27607577194b0f59351",
+    "kind": "PROCESS_AUDIT",
+    "basis": "verdict + review/plan analysis + requirement/plan evidence",
+    "files": 19,
+    "documents": {
+      "AUDIT-VERDICT.md": "AUDIT-VERDICT.md",
+      "HUMAN-REQUIREMENTS.md": "HUMAN-REQUIREMENTS.md",
+      "INVOCATION-AUDIT.md": "INVOCATION-AUDIT.md",
+      "PLAN-AUDIT.md": "PLAN-AUDIT.md",
+      "REVIEW-AUDIT.md": "REVIEW-AUDIT.md",
+      "VALIDATION-AUDIT.md": "VALIDATION-AUDIT.md",
+      "SKILL-COMPLIANCE.md": "SKILL-COMPLIANCE.md",
+      "COST-METRICS.md": "COST-METRICS.md",
+      "RECOMMENDATIONS.md": "RECOMMENDATIONS.md"
+    },
+    "evidence_refs": [
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "a5b3ba1c359757df9bb57fc160ef098d1fd97e240ea68683bff03e4fc5ff9913"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "cffe0fdd7e6ab8a7130452617ca507031e0ad5d69c0d52bc98ca68ffe4390c20"
+      },
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "d7d30b4345372b11c274317cbf7bb3d67ddd8c6f3ac605fb4aa15daa082db033"
+      }
+    ],
+    "analysis_id": "P17"
+  },
+  {
+    "pack": "lmdo-website-project-summary-inline-autosave-sectioned-audit",
+    "sha256": "58b747d2c2581e26278ac105b52a98a704fe667249b4b4f2e39e51a6af9e7a4d",
+    "kind": "PROCESS_AUDIT",
+    "basis": "verdict + review/plan analysis + requirement/plan evidence",
+    "files": 21,
+    "documents": {
+      "AUDIT-VERDICT.md": "AUDIT-VERDICT.md",
+      "HUMAN-REQUIREMENTS.md": "HUMAN-REQUIREMENTS.md",
+      "INVOCATION-AUDIT.md": "INVOCATION-AUDIT.md",
+      "PLAN-AUDIT.md": "PLAN-AUDIT.md",
+      "REVIEW-AUDIT.md": "REVIEW-AUDIT.md",
+      "VALIDATION-AUDIT.md": "VALIDATION-AUDIT.md",
+      "SKILL-COMPLIANCE.md": "SKILL-COMPLIANCE.md",
+      "COST-METRICS.md": "COST-METRICS.md",
+      "RECOMMENDATIONS.md": "RECOMMENDATIONS.md"
+    },
+    "evidence_refs": [
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "3eeb6f190f8be5b2fabca7b9531cbcd2164e8c2d893150f109bf6fdd08af2e0a"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "73da8560ff87c5b9ac356f3eef4ecb1414696c09eaf52cc185bd1ccef961e829"
+      },
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "983adc26d9cb72b33bb4b56f6961cd745da50aa6a9cb54362a38057dd388a83c"
+      }
+    ],
+    "analysis_id": "P18"
+  },
+  {
+    "pack": "lmdo-website-remove-unassigned-performance-group-20260902-sectioned-audit",
+    "sha256": "4f9b86eda1bdf2742d2adc8f107f5edb6989beb4385a6265df5c56beb193074b",
+    "kind": "PROCESS_AUDIT",
+    "basis": "verdict + review/plan analysis + requirement/plan evidence",
+    "files": 47,
+    "documents": {
+      "AUDIT-VERDICT.md": "AUDIT-VERDICT.md",
+      "HUMAN-REQUIREMENTS.md": "HUMAN-REQUIREMENTS.md",
+      "INVOCATION-AUDIT.md": "INVOCATION-AUDIT.md",
+      "PLAN-AUDIT.md": "PLAN-AUDIT.md",
+      "REVIEW-AUDIT.md": "REVIEW-AUDIT.md",
+      "VALIDATION-AUDIT.md": "VALIDATION-AUDIT.md",
+      "SKILL-COMPLIANCE.md": "SKILL-COMPLIANCE.md",
+      "COST-METRICS.md": "COST-METRICS.md",
+      "RECOMMENDATIONS.md": "RECOMMENDATIONS.md"
+    },
+    "evidence_refs": [
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "5ea512bdcc69060392e1096cf5908d19daba5acaf3b628c95cb628eb40235308"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "0b82974c2da47aa89a99f4326a0851b84f23908e98ad5c0d5e1e026c1578dfaa"
+      },
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "2b977dd8f9b16b334360ff58474af2038fd55cb764ef1b41f3c6861ac5625886"
+      }
+    ],
+    "analysis_id": "P19"
+  },
+  {
+    "pack": "lmdo-website-shared-personnel-management-20260825-sectioned-audit",
+    "sha256": "b88ae2302e4d7fce10256988fe869b10a1c30f7d9c23ff8fcea87ae6885645b3",
+    "kind": "PROCESS_AUDIT",
+    "basis": "verdict + review/plan analysis + requirement/plan evidence",
+    "files": 37,
+    "documents": {
+      "AUDIT-VERDICT.md": "AUDIT-VERDICT.md",
+      "HUMAN-REQUIREMENTS.md": "HUMAN-REQUIREMENTS.md",
+      "INVOCATION-AUDIT.md": "INVOCATION-AUDIT.md",
+      "PLAN-AUDIT.md": "PLAN-AUDIT.md",
+      "REVIEW-AUDIT.md": "REVIEW-AUDIT.md",
+      "VALIDATION-AUDIT.md": "VALIDATION-AUDIT.md",
+      "SKILL-COMPLIANCE.md": "SKILL-COMPLIANCE.md",
+      "COST-METRICS.md": "COST-METRICS.md",
+      "RECOMMENDATIONS.md": "RECOMMENDATIONS.md"
+    },
+    "evidence_refs": [
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "7678036345e1234686ba4afce91f7cf040ce429fcd3aa85fc0ee8d8af27859f3"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "61ce658b060c1b249ea775a87d9611d95c0b47790043511c6727ee934e2471a2"
+      },
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "6f28238553e94b29f192526aa057a4845810bd839cab402cc5287d5db5c52c6e"
+      }
+    ],
+    "analysis_id": "P20"
+  },
+  {
+    "pack": "pppms-portal-native-acquisition-closeout-cleanup-sectioned-audit",
+    "sha256": "5b1eb1758f78d3ced39cf9f55302ef2c663885b498ea8139fc98ae03dc41e697",
+    "kind": "PROCESS_AUDIT",
+    "basis": "verdict + review/plan analysis + requirement/plan evidence",
+    "files": 74,
+    "documents": {
+      "AUDIT-VERDICT.md": "AUDIT-VERDICT.md",
+      "HUMAN-REQUIREMENTS.md": "HUMAN-REQUIREMENTS.md",
+      "INVOCATION-AUDIT.md": "INVOCATION-AUDIT.md",
+      "PLAN-AUDIT.md": "PLAN-AUDIT.md",
+      "REVIEW-AUDIT.md": "REVIEW-AUDIT.md",
+      "VALIDATION-AUDIT.md": "VALIDATION-AUDIT.md",
+      "SKILL-COMPLIANCE.md": "SKILL-COMPLIANCE.md",
+      "COST-METRICS.md": "COST-METRICS.md",
+      "RECOMMENDATIONS.md": "RECOMMENDATIONS.md"
+    },
+    "evidence_refs": [
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "9cf4499a2307d7c42ab59ae0630d608b44d5888b6441ba64afc5c5e56f6987b6"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "958db10e43a06a663045b5734e49189ed2155d81b70268525e26d8d775e2e1d6"
+      },
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "c32634cb91c53dfa1ce594769ab4b80ce008dd8426218eba54c5e7c48a22c4d4"
+      }
+    ],
+    "analysis_id": "P21"
+  },
+  {
+    "pack": "pppms-portal-native-acquisition-dead-path-cleanup-sectioned-audit",
+    "sha256": "6a2a224648a4788e29e762d0e742108762050ff700aa8e24eee5a35de6cc7922",
+    "kind": "PROCESS_AUDIT",
+    "basis": "verdict + review/plan analysis + requirement/plan evidence",
+    "files": 63,
+    "documents": {
+      "AUDIT-VERDICT.md": "AUDIT-VERDICT.md",
+      "HUMAN-REQUIREMENTS.md": "HUMAN-REQUIREMENTS.md",
+      "INVOCATION-AUDIT.md": "INVOCATION-AUDIT.md",
+      "PLAN-AUDIT.md": "PLAN-AUDIT.md",
+      "REVIEW-AUDIT.md": "REVIEW-AUDIT.md",
+      "VALIDATION-AUDIT.md": "VALIDATION-AUDIT.md",
+      "SKILL-COMPLIANCE.md": "SKILL-COMPLIANCE.md",
+      "COST-METRICS.md": "COST-METRICS.md",
+      "RECOMMENDATIONS.md": "RECOMMENDATIONS.md"
+    },
+    "evidence_refs": [
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "a3d0a9a08ea44803945e17c794d4652d9c80d631f3908ecaefd85b53cbbd767d"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "3b898a3574d7bed151159ab736b54017d20b85a7561597906ab6d880ad381548"
+      },
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "86c67dc0c1b2781ea3416339cd6c46097596bcf47b8ab5aafaf37d01f52d457c"
+      }
+    ],
+    "analysis_id": "P22"
+  },
+  {
+    "pack": "pppms-portal-native-acquisition-performance-sectioned-audit",
+    "sha256": "f40529506e43b6f633ad173727550f2d8f89a083cf601a1db1e3344869760b41",
+    "kind": "PROCESS_AUDIT",
+    "basis": "verdict + review/plan analysis + requirement/plan evidence",
+    "files": 50,
+    "documents": {
+      "AUDIT-VERDICT.md": "AUDIT-VERDICT.md",
+      "HUMAN-REQUIREMENTS.md": "HUMAN-REQUIREMENTS.md",
+      "INVOCATION-AUDIT.md": "INVOCATION-AUDIT.md",
+      "PLAN-AUDIT.md": "PLAN-AUDIT.md",
+      "REVIEW-AUDIT.md": "REVIEW-AUDIT.md",
+      "VALIDATION-AUDIT.md": "VALIDATION-AUDIT.md",
+      "SKILL-COMPLIANCE.md": "SKILL-COMPLIANCE.md",
+      "COST-METRICS.md": "COST-METRICS.md",
+      "RECOMMENDATIONS.md": "RECOMMENDATIONS.md"
+    },
+    "evidence_refs": [
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "e5220f78074fc492bfc80d0b9e766f4096d696bc4e33e02546e1287c8399094a"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "19df6445622e4c5d008c4815b93225945f4ceec02c022c19c09a745de111103f"
+      },
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "8ab8c26bd1a2e50ee69816e37e4660c196fee9a9fd3e8fa7bc57ac0f3998ed25"
+      }
+    ],
+    "analysis_id": "P23"
+  },
+  {
+    "pack": "pppms-portal-top-banner-only-operational-errors-sectioned-audit",
+    "sha256": "881d5aeeece41d165907f2f0bc69b83468033991422c163a4ee43e131308f57d",
+    "kind": "PROCESS_AUDIT",
+    "basis": "verdict + review/plan analysis + requirement/plan evidence",
+    "files": 30,
+    "documents": {
+      "AUDIT-VERDICT.md": "AUDIT-VERDICT.md",
+      "HUMAN-REQUIREMENTS.md": "HUMAN-REQUIREMENTS.md",
+      "INVOCATION-AUDIT.md": "INVOCATION-AUDIT.md",
+      "PLAN-AUDIT.md": "PLAN-AUDIT.md",
+      "REVIEW-AUDIT.md": "REVIEW-AUDIT.md",
+      "VALIDATION-AUDIT.md": "VALIDATION-AUDIT.md",
+      "SKILL-COMPLIANCE.md": "SKILL-COMPLIANCE.md",
+      "COST-METRICS.md": "COST-METRICS.md",
+      "RECOMMENDATIONS.md": "RECOMMENDATIONS.md"
+    },
+    "evidence_refs": [
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "c8a9eab8da444cffd43c611d9097aa3a04a1886e8b6bb449d743e9db8a868ee8"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "bed23ff2662f058c0e0158fd45e25ca022360c31c6cacb8a9ab34b373fff34fe"
+      },
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "136e2dce9df78f9e89b650f0e0eae8b8a0f091c1c857b863b2eb1f1413009d41"
+      }
+    ],
+    "analysis_id": "P24"
+  },
+  {
+    "pack": "pppms-portal-unified-operator-ui-sectioned-audit",
+    "sha256": "2827e42bafc95054108c0201d04b21a69994541aebb2e0b148c0d284dfeabfcb",
+    "kind": "PROCESS_AUDIT",
+    "basis": "verdict + review/plan analysis + requirement/plan evidence",
+    "files": 155,
+    "documents": {
+      "AUDIT-VERDICT.md": "AUDIT-VERDICT.md",
+      "HUMAN-REQUIREMENTS.md": "HUMAN-REQUIREMENTS.md",
+      "INVOCATION-AUDIT.md": "INVOCATION-AUDIT.md",
+      "PLAN-AUDIT.md": "PLAN-AUDIT.md",
+      "REVIEW-AUDIT.md": "REVIEW-AUDIT.md",
+      "VALIDATION-AUDIT.md": "VALIDATION-AUDIT.md",
+      "SKILL-COMPLIANCE.md": "SKILL-COMPLIANCE.md",
+      "COST-METRICS.md": "COST-METRICS.md",
+      "RECOMMENDATIONS.md": "RECOMMENDATIONS.md"
+    },
+    "evidence_refs": [
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "5e26ab670f089003374691993500acf2de984f7508ad0b74532ba739727c2884"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "0fd5d7d218382f7ae039707ddcfeb5845af65a1285c3a298faecab314b94eee4"
+      },
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "facf9ac83084a41a7b2ee6db267f40848c40ae85a51c35416f49246a3d478dcb"
+      }
+    ],
+    "analysis_id": "P25"
+  },
+  {
+    "pack": "scsc-mms-datatable-041-migration-sectioned-audit",
+    "sha256": "86a492970d0460210d03a81082675859f47af06b1624ffc944d217ea5dea6727",
+    "kind": "PROCESS_AUDIT",
+    "basis": "verdict + review/plan analysis + requirement/plan evidence",
+    "files": 25,
+    "documents": {
+      "AUDIT-VERDICT.md": "AUDIT-VERDICT.md",
+      "HUMAN-REQUIREMENTS.md": "HUMAN-REQUIREMENTS.md",
+      "INVOCATION-AUDIT.md": "INVOCATION-AUDIT.md",
+      "PLAN-AUDIT.md": "PLAN-AUDIT.md",
+      "REVIEW-AUDIT.md": "REVIEW-AUDIT.md",
+      "VALIDATION-AUDIT.md": "VALIDATION-AUDIT.md",
+      "SKILL-COMPLIANCE.md": "SKILL-COMPLIANCE.md",
+      "COST-METRICS.md": "COST-METRICS.md",
+      "RECOMMENDATIONS.md": "RECOMMENDATIONS.md"
+    },
+    "evidence_refs": [
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "ac4525307910f4c836416eb64b52ba6cd7fca1d64966421e9ec7c90bb2b7d3aa"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "3605a5369450fc0cdca0223f095be3d9799c2dc9a31817d846618d136a574a21"
+      },
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "7ed6eb3e04d437fb88ec6cefaa2c488da2a509048d29ad180f8f1c1c47f228f9"
+      }
+    ],
+    "analysis_id": "P26"
+  },
+  {
+    "pack": "scsc-mms-dropdown-typeahead-member-select-20260827-sectioned-audit",
+    "sha256": "aaa113340470161ecc607a1674f221ee488e3edcb97803446955e7bc0ff11c76",
+    "kind": "PROCESS_AUDIT",
+    "basis": "verdict + review/plan analysis + requirement/plan evidence",
+    "files": 33,
+    "documents": {
+      "AUDIT-VERDICT.md": "AUDIT-VERDICT.md",
+      "HUMAN-REQUIREMENTS.md": "HUMAN-REQUIREMENTS.md",
+      "INVOCATION-AUDIT.md": "INVOCATION-AUDIT.md",
+      "PLAN-AUDIT.md": "PLAN-AUDIT.md",
+      "REVIEW-AUDIT.md": "REVIEW-AUDIT.md",
+      "VALIDATION-AUDIT.md": "VALIDATION-AUDIT.md",
+      "SKILL-COMPLIANCE.md": "SKILL-COMPLIANCE.md",
+      "COST-METRICS.md": "COST-METRICS.md",
+      "RECOMMENDATIONS.md": "RECOMMENDATIONS.md"
+    },
+    "evidence_refs": [
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "e69c3614646f0a9a1bea8882b4518de3c719ffe4b59bff9464b332bf89809243"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "54de35ef365089a7f54fbebc7299a2699c29f769917f221cf562ca2055e16672"
+      },
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "7c6f46e96d1bfa140f2af7c423df2dce8de738cc7ef36224adf2759ad92aa012"
+      }
+    ],
+    "analysis_id": "P27"
+  },
+  {
+    "pack": "scsc-mms-fixed-project-catalog-20260825-sectioned-audit",
+    "sha256": "f504d80d1216ea47a0a3c956c3623ae4e45408f776b02ebef532fd0aff41adbc",
+    "kind": "PROCESS_AUDIT",
+    "basis": "verdict + review/plan analysis + requirement/plan evidence",
+    "files": 57,
+    "documents": {
+      "AUDIT-VERDICT.md": "AUDIT-VERDICT.md",
+      "HUMAN-REQUIREMENTS.md": "HUMAN-REQUIREMENTS.md",
+      "INVOCATION-AUDIT.md": "INVOCATION-AUDIT.md",
+      "PLAN-AUDIT.md": "PLAN-AUDIT.md",
+      "REVIEW-AUDIT.md": "REVIEW-AUDIT.md",
+      "VALIDATION-AUDIT.md": "VALIDATION-AUDIT.md",
+      "SKILL-COMPLIANCE.md": "SKILL-COMPLIANCE.md",
+      "COST-METRICS.md": "COST-METRICS.md",
+      "RECOMMENDATIONS.md": "RECOMMENDATIONS.md"
+    },
+    "evidence_refs": [
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "44d5b82b711ce79400e254d7ac9401ee4c25ddf91f6fc64694c79c2d41a769a4"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "65de41f7b3fcd612dc224098ab53a0626bec66e0636e918c986f6808f128d3cb"
+      },
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "57742cfa5bc2f982461289bc925b0a9bd2c36f40b378141a3247fb447d1ec91e"
+      }
+    ],
+    "analysis_id": "P28"
+  },
+  {
+    "pack": "scsc-mms-fsii-member-nonmember-parity-sectioned-audit",
+    "sha256": "3f8fbab2584c8829ead5a399f24482deb1b03247af7708556d6308a0482e59e3",
+    "kind": "PROCESS_AUDIT",
+    "basis": "verdict + review/plan analysis + requirement/plan evidence",
+    "files": 33,
+    "documents": {
+      "AUDIT-VERDICT.md": "AUDIT-VERDICT.md",
+      "HUMAN-REQUIREMENTS.md": "HUMAN-REQUIREMENTS.md",
+      "INVOCATION-AUDIT.md": "INVOCATION-AUDIT.md",
+      "PLAN-AUDIT.md": "PLAN-AUDIT.md",
+      "REVIEW-AUDIT.md": "REVIEW-AUDIT.md",
+      "VALIDATION-AUDIT.md": "VALIDATION-AUDIT.md",
+      "SKILL-COMPLIANCE.md": "SKILL-COMPLIANCE.md",
+      "COST-METRICS.md": "COST-METRICS.md",
+      "RECOMMENDATIONS.md": "RECOMMENDATIONS.md"
+    },
+    "evidence_refs": [
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "d2352b4d2679274a1a331f593c1f9bd199e3c15ad049f0471d436d0402297389"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "2891ffc06d6c693f57ecb77cb123d4a98887fcf7e03db57284c6ca78a13cc9fe"
+      },
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "7e04015571961b07f88a06c8d3f6d3954ab6d4b2556f792b73fb6f8ead362683"
+      }
+    ],
+    "analysis_id": "P29"
+  },
+  {
+    "pack": "scsc-mms-fsii-survey-filter-data-table-20260828-sectioned-audit",
+    "sha256": "0b0db941670684ed085cab6e07e340b5644aef2a7439c51a37559eb012a5317a",
+    "kind": "PROCESS_AUDIT",
+    "basis": "verdict + review/plan analysis + requirement/plan evidence",
+    "files": 40,
+    "documents": {
+      "AUDIT-VERDICT.md": "AUDIT-VERDICT.md",
+      "HUMAN-REQUIREMENTS.md": "HUMAN-REQUIREMENTS.md",
+      "INVOCATION-AUDIT.md": "INVOCATION-AUDIT.md",
+      "PLAN-AUDIT.md": "PLAN-AUDIT.md",
+      "REVIEW-AUDIT.md": "REVIEW-AUDIT.md",
+      "VALIDATION-AUDIT.md": "VALIDATION-AUDIT.md",
+      "SKILL-COMPLIANCE.md": "SKILL-COMPLIANCE.md",
+      "COST-METRICS.md": "COST-METRICS.md",
+      "RECOMMENDATIONS.md": "RECOMMENDATIONS.md"
+    },
+    "evidence_refs": [
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "d372b2052c9ed02fc329c3ef1cd2c8c2623770915ad499074adf9a7a9efd0ebf"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "77da0559515172b3d3bdff5558ce6836045f087c224ecd6651fc539f271c5362"
+      },
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "428842782a5dd5335a15afd131733d1e0bae314cf7e1d2833493d28012497346"
+      }
+    ],
+    "analysis_id": "P30"
+  },
+  {
+    "pack": "scsc-mms-fsii-survey-modal-multiselect-20260903-sectioned-audit",
+    "sha256": "3f83e52ddbd9fc01aea8ed54ee824ac5ef7d5040c8fd3f1fa8211002e1de34d0",
+    "kind": "PROCESS_AUDIT",
+    "basis": "verdict + review/plan analysis + requirement/plan evidence",
+    "files": 49,
+    "documents": {
+      "AUDIT-VERDICT.md": "AUDIT-VERDICT.md",
+      "HUMAN-REQUIREMENTS.md": "HUMAN-REQUIREMENTS.md",
+      "INVOCATION-AUDIT.md": "INVOCATION-AUDIT.md",
+      "PLAN-AUDIT.md": "PLAN-AUDIT.md",
+      "REVIEW-AUDIT.md": "REVIEW-AUDIT.md",
+      "VALIDATION-AUDIT.md": "VALIDATION-AUDIT.md",
+      "SKILL-COMPLIANCE.md": "SKILL-COMPLIANCE.md",
+      "COST-METRICS.md": "COST-METRICS.md",
+      "RECOMMENDATIONS.md": "RECOMMENDATIONS.md"
+    },
+    "evidence_refs": [
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "b61fe343939d01712967399abb66c856ee89089e89d1d8b012fe15070f164684"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "672cafd60f94aefd2a04c073864284870b3ff39feedace0065ee03a99a4d28e1"
+      },
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "f30418223c562b9377f26905aab187d7a315ab9799449e4c77e25b68014593f8"
+      }
+    ],
+    "analysis_id": "P31"
+  },
+  {
+    "pack": "scsc-mms-member-nonmember-unification-20260902-sectioned-audit",
+    "sha256": "da71718a99318ba66ffa5049787415be6307ac9ce467b4ab2fa553e395c6ba73",
+    "kind": "PROCESS_AUDIT",
+    "basis": "verdict + review/plan analysis + requirement/plan evidence",
+    "files": 36,
+    "documents": {
+      "AUDIT-VERDICT.md": "AUDIT-VERDICT.md",
+      "HUMAN-REQUIREMENTS.md": "HUMAN-REQUIREMENTS.md",
+      "INVOCATION-AUDIT.md": "INVOCATION-AUDIT.md",
+      "PLAN-AUDIT.md": "PLAN-AUDIT.md",
+      "REVIEW-AUDIT.md": "REVIEW-AUDIT.md",
+      "VALIDATION-AUDIT.md": "VALIDATION-AUDIT.md",
+      "SKILL-COMPLIANCE.md": "SKILL-COMPLIANCE.md",
+      "COST-METRICS.md": "COST-METRICS.md",
+      "RECOMMENDATIONS.md": "RECOMMENDATIONS.md"
+    },
+    "evidence_refs": [
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "3cbb3af182e831ea55bcfef5337598f0b6d2e40ce89dc75888d79dbdd086f02c"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "241ddc6762ce063afe44b8b2256c6f5c56a649648627728ef088159d98e6abca"
+      },
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "8d4d02bed6fdc2e7ea8ec3269a32a59f7b677f52d5c8bc352d1b657a38fb1e6f"
+      }
+    ],
+    "analysis_id": "P32"
+  },
+  {
+    "pack": "scsc-mms-remove-child-member-website-contact-20260825-sectioned-audit",
+    "sha256": "18d83de49238f99bec8f5ea913f94faf352306760192a2174573576af6780075",
+    "kind": "PROCESS_AUDIT",
+    "basis": "verdict + review/plan analysis + requirement/plan evidence",
+    "files": 38,
+    "documents": {
+      "AUDIT-VERDICT.md": "AUDIT-VERDICT.md",
+      "HUMAN-REQUIREMENTS.md": "HUMAN-REQUIREMENTS.md",
+      "INVOCATION-AUDIT.md": "INVOCATION-AUDIT.md",
+      "PLAN-AUDIT.md": "PLAN-AUDIT.md",
+      "REVIEW-AUDIT.md": "REVIEW-AUDIT.md",
+      "VALIDATION-AUDIT.md": "VALIDATION-AUDIT.md",
+      "SKILL-COMPLIANCE.md": "SKILL-COMPLIANCE.md",
+      "COST-METRICS.md": "COST-METRICS.md",
+      "RECOMMENDATIONS.md": "RECOMMENDATIONS.md"
+    },
+    "evidence_refs": [
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "b4821af5b38b3b15efa320915f30eaecedc90eb4595b8dbaf633c747142cad10"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "afdf35349c8556abbbb2575e1080638b6accb71c0b7e1e3fc9de1f65937cca72"
+      },
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "1363e84fde5e5644f5fdacac2db76f6988ef23077acc51845d58346649bbf7bb"
+      }
+    ],
+    "analysis_id": "P33"
+  },
+  {
+    "pack": "zcode-mcp-advisor-three-case-evidence-final",
+    "sha256": "3c5e49e31916b06bdbf1ac3c739a242e7025e36bd47d89a9b5b0eec4a6ce4cf2",
+    "kind": "AUXILIARY_EVIDENCE",
+    "basis": "missing process-audit identity/required artifacts; runtime/conformance evidence only",
+    "files": 187,
+    "documents": {}
+  },
+  {
+    "pack": "zcode-mcp-case3-complete-event-logs-auth-redacted",
+    "sha256": "2152501e69b9cfbbf0002dd11952cf904f67e92f4c5d823d8907b470c3cfdfe5",
+    "kind": "AUXILIARY_EVIDENCE",
+    "basis": "missing process-audit identity/required artifacts; runtime/conformance evidence only",
+    "files": 129,
+    "documents": {}
+  },
+  {
+    "pack": "zcode-mcp-case3-review-tool-guidance-sectioned-audit",
+    "sha256": "5cafce66093aed57df8c00a207262baa86fbd0d3ca152ffe6237139fad73f8b8",
+    "kind": "PROCESS_AUDIT",
+    "basis": "verdict + review/plan analysis + requirement/plan evidence",
+    "files": 80,
+    "documents": {
+      "AUDIT-VERDICT.md": "AUDIT-VERDICT.md",
+      "HUMAN-REQUIREMENTS.md": "HUMAN-REQUIREMENTS.md",
+      "INVOCATION-AUDIT.md": "INVOCATION-AUDIT.md",
+      "PLAN-AUDIT.md": "PLAN-AUDIT.md",
+      "REVIEW-AUDIT.md": "REVIEW-AUDIT.md",
+      "VALIDATION-AUDIT.md": "VALIDATION-AUDIT.md",
+      "SKILL-COMPLIANCE.md": "SKILL-COMPLIANCE.md",
+      "COST-METRICS.md": "COST-METRICS.md",
+      "RECOMMENDATIONS.md": "RECOMMENDATIONS.md"
+    },
+    "evidence_refs": [
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "ad9fe3c56d4a5574ba70e1cb678914f166785af86946cb23c0e609e0cc057330"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "830f7e8b86aba5acafb19a0795b83744408e63e43c4c1fa3cf91405cf928c7a5"
+      },
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "45000743d57e366f60b0ebed370c488443ec5984f72cf3681f0fd2b8b16123e4"
+      }
+    ],
+    "analysis_id": "P34"
+  },
+  {
+    "pack": "zcode-mcp-case3-semantic-900s-full-analysis-logs-auth-redacted",
+    "sha256": "56d2c4a176d133766e493f133b6423e295213068134d3919fd641f5ecde8a04e",
+    "kind": "AUXILIARY_EVIDENCE",
+    "basis": "missing process-audit identity/required artifacts; runtime/conformance evidence only",
+    "files": 87,
+    "documents": {}
+  },
+  {
+    "pack": "zcode-mcp-official-runtime-conformance",
+    "sha256": "c16ee73c052a796a92a40bf2c063e70f83716d887e84cb5a16f9f5f1d50c43ea",
+    "kind": "AUXILIARY_EVIDENCE",
+    "basis": "missing process-audit identity/required artifacts; runtime/conformance evidence only",
+    "files": 22,
+    "documents": {}
+  },
+  {
+    "pack": "zcode-mcp-official-runtime-conformance-case-b",
+    "sha256": "f66925388cccd302decf6646e85117ee8e982f0e74893d357e4d3c2d9f803ab2",
+    "kind": "AUXILIARY_EVIDENCE",
+    "basis": "missing process-audit identity/required artifacts; runtime/conformance evidence only",
+    "files": 19,
+    "documents": {}
+  },
+  {
+    "pack": "zcode-mcp-official-runtime-conformance-case-c",
+    "sha256": "f620f3a63be3182958516c6a8bafe7dcc6862ff17645f5dabc366a049d6c6db8",
+    "kind": "AUXILIARY_EVIDENCE",
+    "basis": "missing process-audit identity/required artifacts; runtime/conformance evidence only",
+    "files": 20,
+    "documents": {}
+  },
+  {
+    "pack": "zcode-mcp-official-runtime-conformance-case-c-final",
+    "sha256": "08406f138af3deef4ee701a0a972a680eef2878f7ed9d13062f8c66561458aef",
+    "kind": "AUXILIARY_EVIDENCE",
+    "basis": "missing process-audit identity/required artifacts; runtime/conformance evidence only",
+    "files": 20,
+    "documents": {}
+  },
+  {
+    "pack": "zcode-mcp-official-runtime-conformance-case-c-prompt-repaired",
+    "sha256": "727ac10bbe336867cca2a3bdafec5d665460bf2eb68c2dd4aa5063c70e525a9b",
+    "kind": "AUXILIARY_EVIDENCE",
+    "basis": "missing process-audit identity/required artifacts; runtime/conformance evidence only",
+    "files": 20,
+    "documents": {}
+  },
+  {
+    "pack": "zcode-mcp-official-runtime-conformance-case-c-retry",
+    "sha256": "5b04b7cb22f4ce9a35b52df72d7ea8e12e3fdc522f36127497eecdf164b017ba",
+    "kind": "AUXILIARY_EVIDENCE",
+    "basis": "missing process-audit identity/required artifacts; runtime/conformance evidence only",
+    "files": 20,
+    "documents": {}
+  },
+  {
+    "pack": "zcode-mcp-operational-general-agent-closure-20260827-sectioned-audit",
+    "sha256": "dc7511d2218f590b9ad875b3b4ee2eeb19673dc15fca63fc4e9c33e7bf272ddd",
+    "kind": "PROCESS_AUDIT",
+    "basis": "verdict + review/plan analysis + requirement/plan evidence",
+    "files": 86,
+    "documents": {
+      "AUDIT-VERDICT.md": "AUDIT-VERDICT.md",
+      "HUMAN-REQUIREMENTS.md": "HUMAN-REQUIREMENTS.md",
+      "INVOCATION-AUDIT.md": "INVOCATION-AUDIT.md",
+      "PLAN-AUDIT.md": "PLAN-AUDIT.md",
+      "REVIEW-AUDIT.md": "REVIEW-AUDIT.md",
+      "VALIDATION-AUDIT.md": "VALIDATION-AUDIT.md",
+      "SKILL-COMPLIANCE.md": "SKILL-COMPLIANCE.md",
+      "COST-METRICS.md": "COST-METRICS.md",
+      "RECOMMENDATIONS.md": "RECOMMENDATIONS.md"
+    },
+    "evidence_refs": [
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "f43666e11278458c63665921585f9567d171d12d0b2a2e04d24ef0ad293740cd"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "a77589cc995533b98d3e14f388c1e7f7b44bd2d6c849ea20f8a56f37b8821aee"
+      },
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "00754656abcb29d555ed0428a235d7f28ff3ebb115dfaa01d048dde7a14f1593"
+      }
+    ],
+    "analysis_id": "P35"
+  },
+  {
+    "pack": "zcode-mcp-review-safety-progress-evidence-review-safety-progress-evidence-sectioned-audit",
+    "sha256": "991d5dd40974cb53ab9cfb5af00421b5fdbb16a6948b8d35cd7a7d2ffa7a1d93",
+    "kind": "PROCESS_AUDIT",
+    "basis": "verdict + review/plan analysis + requirement/plan evidence",
+    "files": 30,
+    "documents": {
+      "AUDIT-VERDICT.md": "AUDIT-VERDICT.md",
+      "HUMAN-REQUIREMENTS.md": "HUMAN-REQUIREMENTS.md",
+      "INVOCATION-AUDIT.md": "INVOCATION-AUDIT.md",
+      "PLAN-AUDIT.md": "PLAN-AUDIT.md",
+      "REVIEW-AUDIT.md": "REVIEW-AUDIT.md",
+      "VALIDATION-AUDIT.md": "VALIDATION-AUDIT.md",
+      "SKILL-COMPLIANCE.md": "SKILL-COMPLIANCE.md",
+      "COST-METRICS.md": "COST-METRICS.md",
+      "RECOMMENDATIONS.md": "RECOMMENDATIONS.md"
+    },
+    "evidence_refs": [
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "ad8fc7b94078cd6c61f7c3c96b1b12fdfacfffb454d3bd53202c19ea745d5e19"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "cea98632522fd8c63d8903df3ad572a86499897bb0e57c59b61ab8c04f56a30b"
+      },
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "f4f135e484c78a830eba8b62a3cd8c8a3c214a3288980aa9da7bed27022e2a45"
+      }
+    ],
+    "analysis_id": "P36"
+  },
+  {
+    "pack": "zcode-mcp-zcode-final-generic-agent-convergence-sectioned-audit",
+    "sha256": "c4a81bd442b508145500746d5bb6efca6954ff8d81b6955689b8abc1184a7d66",
+    "kind": "PROCESS_AUDIT",
+    "basis": "verdict + review/plan analysis + requirement/plan evidence",
+    "files": 41,
+    "documents": {
+      "AUDIT-VERDICT.md": "AUDIT-VERDICT.md",
+      "HUMAN-REQUIREMENTS.md": "HUMAN-REQUIREMENTS.md",
+      "INVOCATION-AUDIT.md": "INVOCATION-AUDIT.md",
+      "PLAN-AUDIT.md": "PLAN-AUDIT.md",
+      "REVIEW-AUDIT.md": "REVIEW-AUDIT.md",
+      "VALIDATION-AUDIT.md": "VALIDATION-AUDIT.md",
+      "SKILL-COMPLIANCE.md": "SKILL-COMPLIANCE.md",
+      "COST-METRICS.md": "COST-METRICS.md",
+      "RECOMMENDATIONS.md": "RECOMMENDATIONS.md"
+    },
+    "evidence_refs": [
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "79a97f8d118baffa7824025fe297aee0dbc94ee4e6a357ed30929b04ed63e414"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "b1e68b3a04a6011dbe217d43ee3670bb7b47628661e534ddf79534a6a257e245"
+      },
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "ab1fccd0fecae5c7367527fcb2dcced762bc34efc75145c328dff1883ce09872"
+      }
+    ],
+    "analysis_id": "P37"
+  },
+  {
+    "pack": "zcode-mcp-zcode-generic-subagent-simplification-sectioned-audit",
+    "sha256": "6619e5fef731eda83290f662e806ae49bc40cc27bda16b5844929761f535182a",
+    "kind": "PROCESS_AUDIT",
+    "basis": "verdict + review/plan analysis + requirement/plan evidence",
+    "files": 24,
+    "documents": {
+      "AUDIT-VERDICT.md": "AUDIT-VERDICT.md",
+      "HUMAN-REQUIREMENTS.md": "HUMAN-REQUIREMENTS.md",
+      "INVOCATION-AUDIT.md": "INVOCATION-AUDIT.md",
+      "PLAN-AUDIT.md": "PLAN-AUDIT.md",
+      "REVIEW-AUDIT.md": "REVIEW-AUDIT.md",
+      "VALIDATION-AUDIT.md": "VALIDATION-AUDIT.md",
+      "SKILL-COMPLIANCE.md": "SKILL-COMPLIANCE.md",
+      "COST-METRICS.md": "COST-METRICS.md",
+      "RECOMMENDATIONS.md": "RECOMMENDATIONS.md"
+    },
+    "evidence_refs": [
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "79a97f8d118baffa7824025fe297aee0dbc94ee4e6a357ed30929b04ed63e414"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "b9e2aa7d115c97acd6acaaedae4d3ea05dc0a3e6931dda223b58315aaca075ac"
+      },
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "d94c220dd452e5608fdd7f9668533df73e57b55a92924aaedb84c00a10d8f648"
+      }
+    ],
+    "analysis_id": "P38"
+  },
+  {
+    "pack": "zcode-mcp-zcode-runtime-cancellation-late-event-fencing-sectioned-audit",
+    "sha256": "7fb1e3176eb0ef2d0c5e79b5d3f1556e86d1110b16bac6731b1d16a33306164c",
+    "kind": "PROCESS_AUDIT",
+    "basis": "verdict + review/plan analysis + requirement/plan evidence",
+    "files": 68,
+    "documents": {
+      "AUDIT-VERDICT.md": "AUDIT-VERDICT.md",
+      "HUMAN-REQUIREMENTS.md": "HUMAN-REQUIREMENTS.md",
+      "INVOCATION-AUDIT.md": "INVOCATION-AUDIT.md",
+      "PLAN-AUDIT.md": "PLAN-AUDIT.md",
+      "REVIEW-AUDIT.md": "REVIEW-AUDIT.md",
+      "VALIDATION-AUDIT.md": "VALIDATION-AUDIT.md",
+      "SKILL-COMPLIANCE.md": "SKILL-COMPLIANCE.md",
+      "COST-METRICS.md": "COST-METRICS.md",
+      "RECOMMENDATIONS.md": "RECOMMENDATIONS.md"
+    },
+    "evidence_refs": [
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "7f85fb9a9e8d2f8cd8d86c3fccffc832ba2767ca7e64d1dad9f0be7f9ccb9489"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "4bc240a22cb4c39ae7d922ddfa22d0ec7c89491841f3ff15e65f805f57d14907"
+      },
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "79123649e65443f1a47fe0ff3017a3b650edaa6e74ebd55a9249530eddcb696e"
+      }
+    ],
+    "analysis_id": "P39"
+  },
+  {
+    "pack": "zcode-mcp-zcode-subagent-mcp-20260825-sectioned-audit",
+    "sha256": "5cbb4cd9dfce3b9a78a6ac1ee2ed395ffcd4437cc8992704ec2501339f274747",
+    "kind": "PROCESS_AUDIT",
+    "basis": "verdict + review/plan analysis + requirement/plan evidence",
+    "files": 168,
+    "documents": {
+      "AUDIT-VERDICT.md": "AUDIT-VERDICT.md",
+      "HUMAN-REQUIREMENTS.md": "HUMAN-REQUIREMENTS.md",
+      "INVOCATION-AUDIT.md": "INVOCATION-AUDIT.md",
+      "PLAN-AUDIT.md": "PLAN-AUDIT.md",
+      "REVIEW-AUDIT.md": "REVIEW-AUDIT.md",
+      "VALIDATION-AUDIT.md": "VALIDATION-AUDIT.md",
+      "SKILL-COMPLIANCE.md": "SKILL-COMPLIANCE.md",
+      "COST-METRICS.md": "COST-METRICS.md",
+      "RECOMMENDATIONS.md": "RECOMMENDATIONS.md"
+    },
+    "evidence_refs": [
+      {
+        "path": "PLAN-AUDIT.md",
+        "sha256": "0eef4f6e3ec48f5725f88368b9de1717ef1823560643a110328caa611f7d7201"
+      },
+      {
+        "path": "REVIEW-AUDIT.md",
+        "sha256": "296d047088bc056c2aedc0078ebcd1b4295f197b74c864b2333727563ba677f9"
+      },
+      {
+        "path": "AUDIT-VERDICT.md",
+        "sha256": "86576946036bbbe48638e94543e326d59b0982a69de88c224fafc26ba5c986a8"
+      }
+    ],
+    "analysis_id": "P40"
+  }
+]

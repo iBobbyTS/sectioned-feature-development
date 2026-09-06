@@ -15,7 +15,7 @@ import workflow as w
 
 class WorkflowTests(unittest.TestCase):
  def setUp(self):
-  self.plan=w.load_plan(ROOT/'skill/sectioned-feature-development/assets/PLAN-FULL.template.md')
+  self.plan=w.load_plan(ROOT/'tests/fixtures/v41-plan.md')
   self.plan['status']='APPROVED'
   self.state={'feature_id':self.plan['feature_id'],'run_id':self.plan['run_id'],'status':'ACTIVE',
    'plan_sha256':'digest','plan_review_status':'APPROVED','advisor_state':'NOT_REQUIRED','sections':{},'active':[]}
@@ -77,7 +77,7 @@ class WorkflowTests(unittest.TestCase):
    self.assertEqual(sorted(x['index'] for x in r),[1,2,3,4])
    old=w.reserve_review(p,'pass-1','a'*40);self.assertIn(old['index'],range(1,5))
    with self.assertRaises(w.Invalid):w.reserve_review(p,'pass-1','b'*40)
-   self.assertEqual([x['provider'] for x in sorted(r,key=lambda x:x['index'])],['astra_high','glm-5.3','astra_high','glm-5.3'])
+   self.assertEqual([x['provider'] for x in sorted(r,key=lambda x:x['index'])],['gpt','zcode','gpt','zcode'])
  def test_real_git_branch_worktree_and_ignore(self):
   with tempfile.TemporaryDirectory() as t:
    repo=Path(t)/'repo';repo.mkdir()

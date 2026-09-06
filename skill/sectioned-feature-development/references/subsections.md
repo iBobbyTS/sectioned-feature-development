@@ -18,7 +18,7 @@ A **subsection** is a bounded product implementation plus its tests and scoped r
 
 An ordinary work step (write cases, implement a rule, run tests) does not need a subsection. A row in a case matrix is not automatically a subsection. A dotted historical ID is not a hierarchy: `S04.1.2` remains a section if it was accepted as one. Explicit metadata, not punctuation, defines parenthood.
 
-Maximum nesting in 4.1: section → subsection. No sub-subsections, independent child PLAN gates, child ONE/TWO, new child repair budgets or recursively recreated recovery lineages.
+Maximum nesting in 4.2: section → subsection. No sub-subsections, independent child PLAN gates, child ONE/TWO, new child repair budgets or recursively recreated recovery lineages.
 
 ## When to decompose
 
@@ -71,13 +71,13 @@ No fresh independent final per child. Final findings return to that final review
 
 Count **attempted admitted repair waves**, not successful closure only. All child checkpoint, parent reconciliation and final repairs share the original parent lineage's five ordinary waves. A compatible batch may contain multiple finding IDs, but retries after failed closure remain attempts and count. Initial implementation refinement before independent/admitted finding is logged but is not retroactively counted as repair.
 
-Adding/reordering a child, changing a model, a new run, recovery, parent rename or provider fallback never replenishes the budget. If an advisor authorizes a narrowly named extra attempt, keep the cumulative count above five and record its explicit authority; no new general five-wave allowance.
+Adding/reordering a child, changing a model, a new run, parent rename or provider fallback never replenishes the budget; recovery cannot reset a child budget. A child/model/run change grants no additional wave. Preserve v3.9 bounded recovery rules: one named extra attempt after a non-structural diagnosis, or a genuinely replaced acceptance boundary under one structural recovery. Record the original lineage and recovery_used; a new child is never a replacement boundary. A replacement that exhausts its inherited recovery allowance reaches the native advisor, not another automatic reset. See recovery-and-migration.md.
 
 When only internal remaining decomposition changes, preserve existing implementation and review evidence; freeze at a safe boundary and obtain one bounded PLAN delta if interfaces/acceptance/dependencies change. No full PLAN re-review merely because a child list grew. An already completed feature stays closed under the existing follow-up rule.
 
 ## Git, scheduling and continuity
 
-One parent branch/worktree by default; serial children, no concurrent sibling child writers in 4.1. Independent **parents** may still run in isolated worktrees under the existing path/contract/resource checks. Parent write/resource reservations remain conservative throughout; don't release a shared Cargo.lock reservation merely because child1 finished without an approved scope revision.
+One parent branch/worktree by default; serial children, no concurrent sibling child writers in 4.2. Independent **parents** may still run in isolated worktrees under the existing path/contract/resource checks. Parent write/resource reservations remain conservative throughout; don't release a shared Cargo.lock reservation merely because child1 finished without an approved scope revision.
 
 More than one parent **or more than one executable subsection** requires EXECUTE_WITH_COMMITS on a dedicated feature branch. A single parent with children cannot be used to evade the user's multi-part branch/commit rule. Partial child commits stay on the parent's branch until parent acceptance, unless a separately approved independent section is extracted.
 
@@ -85,6 +85,6 @@ More than one parent **or more than one executable subsection** requires EXECUTE
 
 ## Migration and audit
 
-Old schema-4 plans without children still validate; schema remains 4 with additive `workflow_revision=4.1`. Do not reinterpret accepted dotted IDs or rewrite old counters. For an active atomic section, finish its existing review/candidate boundary before adding a decomposition; never reset a live writer or require retroactive child evidence.
+Old schema-4 plans without children still validate; schema remains 4; historical `workflow_revision=4.1` stays readable, new execution uses `workflow_revision=4.2`. Do not reinterpret accepted dotted IDs or rewrite old counters. For an active atomic section, finish its existing review/candidate boundary before adding a decomposition; never reset a live writer or require retroactive child evidence.
 
 Audit distinguishes parent acceptance from checkpoint verification. Record parent/child/lineage, logical review ID, real reviewer ID, checkpoint base/head, inherited counter before/after, invalidated checkpoints, joint-oracle result and time/cost across the entire parent. Compare against flat sections by accepted outcome, not by artificially improving child pass rate or decreasing logical full-pass count.

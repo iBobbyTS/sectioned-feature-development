@@ -1,44 +1,238 @@
-# PLAN-FULL — 替换为当前功能（4.1可选subsection示例）
+# Full Feature Plan
 
-此文件是模板，不是已批准计划。示例 SHA/路径/检查命令必须替换为当前仓库事实。单 section 可以保留一项并采用 serial；不得为了使用示例并行图人为制造任务。
+<!-- FEATURE-CONTEXT:START -->
+## Feature Context
 
-## 原始要求和确认
-- Requirements Contract 路径、SHA-256、用户确认：
-- 原始请求 / 后续更正 / SUPERSEDED / non-goals：
-- 最小端到端结果、准确失败样例与 expected outcome：
+### Feature identity
 
-## Owner、表示和生命周期
-- 当前 source→normalizer→storage→API→UI / permission / cleanup 路径：
-- 同一规则的权威 owner，避免复制判断：
-- 必要的状态转换与重复操作序列：
-- 真实环境 gate 的最小可运行探测；不可运行时的准确阻塞：
-- 基础修复与局部补丁是否需要用户选择：
+- Feature ID / slug:
+- Feature base or mid-feature adoption head:
+- Starting branch and selected branch origin:
+- Non-main branch choice authority, if applicable:
+- Skill invocation source / timing:
+- Trigger evidence, negative evidence, predicted owners/sections/behavioral LOC:
+- Automatic invocation announcement / approval: `not-applicable | pending | approved | rejected | narrowed`
+- Active artifacts belong only to this feature and remain untracked: `yes`
+- Audit mode / trace / exact-requirements record:
 
-## 模型和阶段
-- 作者 astra_xhigh；不同实例 astra_xhigh review；复杂计划是否需要 GLM challenge及理由：
-- 实现每节选一个 profile，写证据而非“高危=大模型”：
-- 探索可按独立问题并行；PLAN 和 PLAN review 串行；section DAG 可并行；同一候选 writer/reviewer 不重叠；feature integration 串行。
+### Original user request
 
-## 各 section 的具体行为合同
-### S01
-- Goal / REQ / owner / AC / tests / failure oracle：
-### S02
-- Goal / REQ / owner / AC / tests / failure oracle：
-### S03
-- Goal / REQ / owner / AC / tests / failure oracle：
+- Exact request record: `.agent-work/audit/{feature-id}/REQUIREMENTS.md`
+- Copy the request verbatim or quote the exact approved outcome.
+- Grill Me / equivalent clarification questions and answers, or `not used`:
+- Later corrections and superseded earlier guidance:
 
-## 集成和完成
-- 固定 integration_order 与每个依赖产物：
-- feature branch 与各 worktree 命名，DB/ports/cache 隔离：
-- exact candidate review 和 merged-head checks：
-- 未证明 composition / required final gates / 环境 blocker：
-- 完成后冻结，不把后续请求追加到此 PLAN：
+### Requirement, example, and correction traceability
 
-## 可执行调度（唯一机器事实源）
+| ID | Current instruction/example/correction | Supersedes | Acceptance criterion | Test or probe |
+|---|---|---|---|---|
+| REQ-001 |  | none | AC-F-001 |  |
+
+### Minimum sufficient end-to-end outcome
+
+- Smallest observable result that satisfies the request without optional completeness work.
+
+### Scope authority map
+
+- For each proposed outcome, option/UI/config surface, compatibility promise, support harness, or structural change: cite user intent, repository/current-production obligation, or an unavoidable correctness dependency. A plan/section/reviewer is not an authority source.
+
+### Foundational-owner decisions
+
+- Identify any requested behavior whose smallest correct implementation could be either a local patch or a bounded change to an existing shared owner.
+- Record the current choice and authority: `not-applicable | local patch approved | shared owner approved | owner decision pending`.
+- Do not propose a new generalized component merely to avoid the decision.
+
+### Goal
+
+One sentence describing the requested product outcome.
+
+### Observable behavior
+
+- User/operator-visible behavior that must become true.
+
+### Constraints and invariants
+
+- Existing repository/product invariants that remain authoritative.
+
+### Non-goals and unsupported environments
+
+- Explicitly excluded behavior, actors, deployments, compatibility, durability, or governance work.
+
+### Ownership and state boundaries
+
+- Existing owner(s) that must remain authoritative.
+
+### Allowed structural changes
+
+- List only new services, registries, persistence, workers, public surfaces, analyzers, or security controls explicitly required. Use `none` when no such mechanism is authorized.
+
+### Audit-remediation scope, if applicable
+
+- Accepted audit finding IDs: `none`
+- Unrelated discoveries go to: separate audit backlog
+
+### Feature acceptance criteria
+
+- Falsifiable end-to-end acceptance criteria.
+
+### Validation tiers
+
+- Targeted:
+- Section/package:
+- Final integration/repository:
+
+### Compatibility, migration, rollout, rollback, and cleanup
+
+- Record only what the requested feature actually requires.
+<!-- FEATURE-CONTEXT:END -->
+
+## Plan Review Gate
+
+- Status: `PENDING | APPROVED | BLOCKED`
+- Reviewed PLAN-FULL SHA-256:
+- Reviewer profile and stable task/session ID:
+- Admitted `PLAN_BLOCKER` / `PLAN_SCOPE_EXPANSION` / `OWNER_DECISION` IDs:
+- Corrections applied:
+- `PLAN_DELTA` recheck: `not-required | pending | approved | blocked`
+
+<!-- SECTION:S01:START -->
+## S01 — First behavior slice
+
+### Goal
+
+One coherent observable behavior increment.
+
+### Authority and necessity
+
+- Authority anchor:
+- Why required for the minimum end-to-end outcome:
+- Why the existing owner/path cannot satisfy it more simply:
+- Local-patch versus foundational-owner choice: `not-applicable | local patch | shared owner | owner decision pending`
+
+### Dependencies
+
+- Requires: `none`
+- Base: exact accepted predecessor commit at execution time.
+
+### Expected scope and direct impact cone
+
+- Primary owner:
+- Allowed-to-edit owners/files/symbols/routes/workflows:
+- Inspect-only dependency paths/direct callers/callees/serializers/contracts/tests:
+- Explicitly excluded owners/mechanisms:
+- Unlisted dependencies may be inspected only through a recorded causal chain from a changed symbol; inspection does not authorize editing.
+
+### Non-goals and deferred owner
+
+- Explicit exclusions.
+- Deferred behavior and named later section/owner, if any.
+
+### Invariants
+
+- Existing invariants touched by this section.
+
+### Allowed structural changes
+
+- `none`, or an explicit requirement-anchored mechanism.
+
+### Review intensity
+
+- `MECHANICAL | BOUNDED | HIGH_RISK`
+
+### Review assurance
+
+- Requested: `AUTO | ONE | TWO`
+- Resolved: `ONE | TWO`
+- Reasons / owner override / repository minimum:
+
+### Acceptance criteria
+
+- Falsifiable behavior and edge/error outcomes.
+
+### Validation tiers
+
+- Targeted:
+- Section/package:
+- Integration checkpoint, if triggered:
+
+### Reset triggers
+
+- Material API/schema/trust/state-owner/concurrency/deployment changes that would require a new initial review baseline.
+<!-- SECTION:S01:END -->
+
+<!-- SECTION:S02:START -->
+## S02 — Second behavior slice
+
+### Goal
+
+One coherent observable behavior increment.
+
+### Authority and necessity
+
+- Authority anchor:
+- Why required for the minimum end-to-end outcome:
+- Why the existing owner/path cannot satisfy it more simply:
+- Local-patch versus foundational-owner choice: `not-applicable | local patch | shared owner | owner decision pending`
+
+### Dependencies
+
+- Requires: `S01`
+- Base: exact accepted predecessor commit at execution time.
+
+### Expected scope and direct impact cone
+
+- Primary owner:
+- Allowed-to-edit owners/files/symbols/routes/workflows:
+- Inspect-only dependency paths/direct callers/callees/serializers/contracts/tests:
+- Explicitly excluded owners/mechanisms:
+- Unlisted dependencies may be inspected only through a recorded causal chain from a changed symbol; inspection does not authorize editing.
+
+### Non-goals and deferred owner
+
+- Explicit exclusions.
+
+### Invariants
+
+- Existing invariants touched by this section.
+
+### Allowed structural changes
+
+- `none`.
+
+### Review intensity
+
+- `MECHANICAL | BOUNDED | HIGH_RISK`
+
+### Review assurance
+
+- Requested: `AUTO | ONE | TWO`
+- Resolved: `ONE | TWO`
+- Reasons / owner override / repository minimum:
+
+### Acceptance criteria
+
+- Falsifiable behavior and edge/error outcomes.
+
+### Validation tiers
+
+- Targeted:
+- Section/package:
+- Integration checkpoint, if triggered:
+
+### Reset triggers
+
+- Material changes that require a new initial review baseline.
+<!-- SECTION:S02:END -->
+
+## 4.2 executable schedule (additive to the v3.9 contract above)
+
+The prose remains the behavior/authority contract; this block contains scheduling facts. Section IDs and dependencies must agree. Complete all placeholders. Before independent PLAN review, freeze this proposal with status FROZEN. Reviewer and admission operate on that exact file hash; only STATE/FEATURE-STATE become APPROVED, so approval does not itself mutate the reviewed plan. A completed plan is not edited to append later requests.
+
 <!-- SFD_PLAN_V4 -->
 ```json
 {
   "schema_version": 4,
+  "workflow_revision": "4.2",
   "feature_id": "example-feature",
   "run_id": "example-run",
   "invocation_source": "USER_EXPLICIT",
@@ -47,31 +241,30 @@
   "main_branch": "main",
   "feature_branch": "codex/example-feature",
   "base_ref": "0000000000000000000000000000000000000000",
-  "branch_authority": "USER_EXPLICIT feature branch from main; replace with actual source",
+  "branch_authority": "REPLACE_WITH_USER_OR_MAIN_RULE",
+  "requirements_path": ".agent-work/REQUIREMENTS.md",
   "requirements_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
   "max_parallel_writers": 2,
-  "parallel_capacity_authority": null,
   "worktree_parent": "git-worktree",
   "integration_order": [
     "S01",
-    "S02",
-    "S03"
+    "S02"
   ],
   "stages": [
     {
-      "id": "discover",
+      "id": "explore",
       "depends_on": [],
       "parallelism": "bounded-independent-queries",
-      "profile": "sfd_explorer",
+      "profile": "code_explorer",
       "optional": true
     },
     {
       "id": "plan",
       "depends_on": [
-        "discover"
+        "explore"
       ],
       "parallelism": "serial",
-      "profile": "astra_xhigh"
+      "profile": "plan_writer"
     },
     {
       "id": "plan-review",
@@ -79,7 +272,7 @@
         "plan"
       ],
       "parallelism": "serial",
-      "profile": "astra_xhigh"
+      "profile": "plan_reviewer"
     },
     {
       "id": "execute-dag",
@@ -87,7 +280,7 @@
         "plan-review"
       ],
       "parallelism": "section-dag",
-      "profile": "per-section"
+      "profile": "per-unit"
     },
     {
       "id": "integrate",
@@ -103,53 +296,51 @@
         "integrate"
       ],
       "parallelism": "serial",
-      "profile": "orchestrator"
+      "profile": "orchestrator",
+      "optional": true
     }
   ],
   "checks": {
     "S01-focused": {
       "command": "REPLACE_WITH_EXISTING_COMMAND",
       "cwd": ".",
-      "environment_id": "isolated-S01"
+      "environment_id": "private-S01"
     },
     "S02-focused": {
       "command": "REPLACE_WITH_EXISTING_COMMAND",
       "cwd": ".",
-      "environment_id": "isolated-S02"
-    },
-    "S03-focused": {
-      "command": "REPLACE_WITH_EXISTING_COMMAND",
-      "cwd": ".",
-      "environment_id": "isolated-S03"
+      "environment_id": "private-S02"
     }
   },
   "sections": [
     {
       "id": "S01",
       "depends_on": [],
-      "owner": "shared-contract",
+      "business_boundary": "Replace with independently consumed business outcome; NOT a model/layer label.",
+      "owner": "core-rule",
+      "lineage_id": "S01",
       "requirement_ids": [
         "REQ-001"
       ],
       "write_paths": [
-        "src/shared.py",
-        "tests/shared"
+        "src/S01",
+        "tests/S01"
       ],
       "read_paths": [],
       "exclusive_resources": [],
       "mutates_contracts": [
-        "contract-v1"
+        "base-contract"
       ],
       "consumes_contracts": [],
-      "parallel_eligible": true,
-      "parallel_reason": "Distinct consumer owners after S01 is accepted and integrated; tests use private state.",
-      "profile": "sol_medium",
-      "model_reason": "Replace with source-grounded decision; this is an example only.",
+      "parallel_eligible": false,
+      "parallel_reason": "Serial example; replace with proven independence only.",
+      "profile": "implementer_2",
+      "model_reason": "Replace with verified task evidence.",
       "task_features": {
-        "analogue": "src/example.py (replace with verified path)",
+        "analogue": "REPLACE_WITH_VERIFIED_OWNER",
         "ambiguity": "resolved",
         "semantic_hops": [
-          "producer",
+          "source",
           "consumer"
         ],
         "state_coupling": "local",
@@ -157,42 +348,46 @@
         "novel_reasoning": false
       },
       "assurance": "TWO",
+      "review_intensity": "BOUNDED",
       "check_ids": [
         "S01-focused"
       ],
-      "oracle": "Replace with executable acceptance and failure trace.",
-      "acceptance": "REQ-001 observable behavior and existing contracts pass."
+      "oracle": "REPLACE_WITH_EXACT_REPRODUCTION",
+      "acceptance": "REQ-001 required observable behavior",
+      "delivery_mode": "ATOMIC"
     },
     {
       "id": "S02",
       "depends_on": [
         "S01"
       ],
-      "owner": "ui-consumer",
+      "business_boundary": "Replace with independently consumed business outcome; NOT a model/layer label.",
+      "owner": "consumer-behavior",
+      "lineage_id": "S02",
       "requirement_ids": [
         "REQ-001"
       ],
       "write_paths": [
-        "src/ui",
-        "tests/ui"
+        "src/S02",
+        "tests/S02"
       ],
       "read_paths": [
-        "src/shared.py"
+        "src/S01"
       ],
       "exclusive_resources": [],
       "mutates_contracts": [],
       "consumes_contracts": [
-        "contract-v1"
+        "base-contract"
       ],
-      "parallel_eligible": true,
-      "parallel_reason": "Distinct consumer owners after S01 is accepted and integrated; tests use private state.",
-      "profile": "terra_high",
-      "model_reason": "Replace with source-grounded decision; this is an example only.",
+      "parallel_eligible": false,
+      "parallel_reason": "Serial example; replace with proven independence only.",
+      "profile": "implementer_2",
+      "model_reason": "Replace with verified task evidence.",
       "task_features": {
-        "analogue": "src/example.py (replace with verified path)",
+        "analogue": "REPLACE_WITH_VERIFIED_OWNER",
         "ambiguity": "resolved",
         "semantic_hops": [
-          "producer",
+          "source",
           "consumer"
         ],
         "state_coupling": "local",
@@ -200,135 +395,15 @@
         "novel_reasoning": false
       },
       "assurance": "TWO",
+      "review_intensity": "BOUNDED",
       "check_ids": [
         "S02-focused"
       ],
-      "oracle": "Replace with executable acceptance and failure trace.",
-      "acceptance": "REQ-001 observable behavior and existing contracts pass."
-    },
-    {
-      "id": "S03",
-      "depends_on": [
-        "S01"
-      ],
-      "owner": "import-consumer",
-      "requirement_ids": [
-        "REQ-001"
-      ],
-      "write_paths": [
-        "src/importer",
-        "tests/importer"
-      ],
-      "read_paths": [
-        "src/shared.py"
-      ],
-      "exclusive_resources": [],
-      "mutates_contracts": [],
-      "consumes_contracts": [
-        "contract-v1"
-      ],
-      "parallel_eligible": true,
-      "parallel_reason": "Distinct consumer owners after S01 is accepted and integrated; tests use private state.",
-      "profile": "luna_xhigh",
-      "model_reason": "Replace with source-grounded decision; this is an example only.",
-      "task_features": {
-        "analogue": "src/example.py (replace with verified path)",
-        "ambiguity": "resolved",
-        "semantic_hops": [
-          "producer",
-          "consumer"
-        ],
-        "state_coupling": "local",
-        "oracle_strength": "decisive",
-        "novel_reasoning": false
-      },
-      "assurance": "TWO",
-      "check_ids": [
-        "S03-focused"
-      ],
-      "oracle": "Replace with executable acceptance and failure trace.",
-      "acceptance": "REQ-001 observable behavior and existing contracts pass.",
-      "delivery_mode": "SUBSECTIONS",
-      "lineage_id": "S03",
-      "shared_invariants": [
-        "IMPORT-SAME-RULE",
-        "IMPORT-ATOMIC-RESULT"
-      ],
-      "joint_oracles": [
-        {
-          "id": "IMPORT-JOINT",
-          "invariants": [
-            "IMPORT-SAME-RULE",
-            "IMPORT-ATOMIC-RESULT"
-          ],
-          "check_ids": [
-            "S03-focused"
-          ],
-          "procedure": "同一输入通过内部转换和实际consumer，验证错误不留下部分结果。",
-          "expected": "producer/consumer共用同一规则且原子错误语义保持。"
-        }
-      ],
-      "subsections": [
-        {
-          "id": "S03.u1",
-          "unit_kind": "SUBSECTION",
-          "parent_section_id": "S03",
-          "depends_on": [],
-          "title": "内部转换",
-          "outcome": "实现实际转换及相关回归",
-          "consumer": "u2实际consumer",
-          "safe_intermediate_state": "只在parent分支保留真实未公开实现，不假装整体feature已完成。",
-          "oracle": "原需求的输入/错误结果与生产调用对照；替换成实际source-backed oracle。",
-          "profile": "luna_xhigh",
-          "model_reason": "演示模板；实际按任务结构决定，不因child编号降档。",
-          "requirement_ids": [
-            "REQ-001"
-          ],
-          "write_paths": [
-            "src/importer",
-            "tests/importer"
-          ],
-          "read_paths": [
-            "src/shared.py"
-          ],
-          "check_ids": [
-            "S03-focused"
-          ]
-        },
-        {
-          "id": "S03.u2",
-          "unit_kind": "SUBSECTION",
-          "parent_section_id": "S03",
-          "depends_on": [
-            "S03.u1"
-          ],
-          "title": "consumer闭环",
-          "outcome": "复用转换并接入真实consumer",
-          "consumer": "父节外部消费者",
-          "safe_intermediate_state": "只在parent分支保留真实未公开实现，不假装整体feature已完成。",
-          "oracle": "原需求的输入/错误结果与生产调用对照；替换成实际source-backed oracle。",
-          "profile": "luna_xhigh",
-          "model_reason": "演示模板；实际按任务结构决定，不因child编号降档。",
-          "requirement_ids": [
-            "REQ-001"
-          ],
-          "write_paths": [
-            "src/importer",
-            "tests/importer"
-          ],
-          "read_paths": [
-            "src/shared.py"
-          ],
-          "check_ids": [
-            "S03-focused"
-          ]
-        }
-      ]
+      "oracle": "REPLACE_WITH_EXACT_REPRODUCTION",
+      "acceptance": "REQ-001 required observable behavior",
+      "delivery_mode": "ATOMIC"
     }
-  ],
-  "workflow_revision": "4.1"
+  ]
 }
 ```
 <!-- /SFD_PLAN_V4 -->
-
-S03演示一层内部checkpoint，S01/S02仍atomic。不要照抄无实际产品边界的分解；每个child都须有真实consumer与parent共同oracle。

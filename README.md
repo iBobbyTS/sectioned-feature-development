@@ -1,92 +1,65 @@
-# Sectioned Feature Development 4.1
+# Sectioned Feature Development 4.2
 
-4.1增加可选的一层subsection：section保留业务合同、预算、最终验收和对外依赖；subsection只承担内部产品增量、测试和定向checkpoint review。不是给每个child复制两轮clean。
+**基线：真实 v3.9 tag；不是继续缩写 4.0。** 未有审计证据或本轮明确授权的职责一律保留。
 
+## 执行链
 
-这是一个包含 Sectioned Skill、配套 Code Review Skill、Codex 子代理配置、验证脚本和版本研究记录的项目。目标是减少昂贵模型的重复探索和返工，同时保留原始需求、独立 review、精确候选快照和集成验收。
+确认需求落盘 → 实际 [@plan_writer](subagent://plan_writer) 返回完整计划 → 主线程写 PLAN-FULL → 机械验证 → 独立 [@plan_reviewer](subagent://plan_reviewer) → 主线程保存报告并 admission → 逐业务 section / 串行 subsection 真实委派 → handoff → bounded review / admitted repair / delta → 父级验收 → 按 DAG 集成 → final gates → closure → audit。
 
-## 执行流程
+文档中角色均使用 subagent 链接；链接不是调用证据，必须调用宿主工具并记录返回的真实 ID。Audit OFF 不会关闭这些执行产物。
 
-确认 Requirements Contract → 按需 Luna explorer → Astra xhigh 计划 → 不同实例 Astra xhigh PLAN review → 必要时 GLM challenge → 按依赖图和任务结构分配实现 → Astra high / GLM 交替 full review、局部 delta 修复 → 串行集成与精确 HEAD 验证 → 关闭计划并生成流程 audit。
+## 保留与授权修改
 
-关键规则：多于一个 section，或一个parent含多个可执行subsection，必须独立分支且 `EXECUTE_WITH_COMMITS`；完成后的用户修改重新评估，不自动追加旧 PLAN。可以并行的是独立 DAG 节点，不是任意两个 Agent；每个正在审查的工作区必须冻结。
+保留 v3.9 的13份模板职责、完整 scope/security/repair/reset/recovery/integration 边界、计划提取、handoff、review ledger、audit/session/finalize 工具。多个 section 或多个可执行 subsection 必须独立分支+EXECUTE_WITH_COMMITS；已完成计划默认不重开。
+
+Section 按业务验收划分；subsection 按父 section 内真实模块增量或不同推理负荷划分。子项串行，共享父合同、review和repair lineage；无 child acceptance、child PLAN gate或child final轮次。独立父项使用 git-worktree 目录和 .gitignore，可按读写/契约/资源约束并行；最大两writer的起始策略继承4.0，未宣称最优。
+
+## 角色
+
+| 名称 | 模型 | effort | 用途 |
+|---|---|---|---|
+| [@plan_writer](subagent://plan_writer) | gpt-6-astra | xhigh | 计划作者，只读返回完整草稿 |
+| [@plan_reviewer](subagent://plan_reviewer) | gpt-6-astra | xhigh | 独立计划审查，不兼任作者 |
+| [@implementer_1](subagent://implementer_1) | gpt-6-astra | medium | 尚不能安全拆解的结构推理 |
+| [@implementer_2](subagent://implementer_2) | gpt-5.6-sol | medium | 默认非平凡实现 |
+| [@implementer_3](subagent://implementer_3) | gpt-5.6-terra | high | 已有模式的局部新行为 |
+| [@implementer_4](subagent://implementer_4) | gpt-5.6-luna | xhigh | 规则已确定、有范例和可判错oracle |
+| [@code_reviewer](subagent://code_reviewer) | gpt-6-astra | high | 独立code/integration review |
+| [@code_explorer](subagent://code_explorer) | gpt-5.6-luna | xhigh | 有界只读定位，不递归规划 |
+| [@advisor](subagent://advisor) | gpt-6-astra | xhigh | 罕见、有限上下文独立裁决 |
+
+这是继承4.0的可检验路由假设，不是新性能实验结论。不要把“安全代码”自动等同最大模型，或把“小diff”自动等同最低模型。一次明确under-routing后重评未解决部分，不逐档试错。Grill Me界面使用Astra high仍是合理起始选择，只在README记录，不自动改变用户设置。独立交接只给完整已确认Requirements Contract；原始grill对话留在provenance。
 
 ## 安装
 
-需要 Python 3.11+（TOML 验证）、本地 Codex 支持 standalone custom-agent TOML。本项目现在同时提供 `skill/sectioned-feature-development/` 与 `skill/code-review/`；后者实现 4.1 所需的 `sfd-delegated-review/4.1` 单轮协议。默认不覆盖已有文件，显式 `--replace` 才先备份确切目标再替换。ZCode 本版本按所附 macOS MCP 文档适配；不声称 Windows GLM 可用。
-
 ```bash
-python3 scripts/install.py                    # dry-run，尊重 $CODEX_HOME
-python3 scripts/install.py --apply            # 只安装到不存在的目标
-python3 scripts/install.py --apply --replace  # 先备份确切目标，再完整替换
-python3 -m unittest discover -s tests -v
-```
-
-安装位置：`$CODEX_HOME/skills/sectioned-feature-development/`、`$CODEX_HOME/skills/code-review/` 与 `$CODEX_HOME/agents/*.toml`；未设时使用 `~/.codex`。八份配置明确指定 name、description、model、model_reasoning_effort、sandbox_mode、developer_instructions，不覆盖其他 agent 或全局 config。安装器不删除旧的 differently-named v3 skill；确认不再使用后自行停用以避免同时触发。
-
-### 仅更新配套 Code Review
-
-```bash
-python3 scripts/install.py --only code-review
+python3 scripts/install.py                         # dry run
+python3 scripts/install.py --apply --replace       # backups then install BOTH skills + nine agents
 python3 scripts/install.py --only code-review --apply --replace
 ```
 
-这条命令只备份/替换 `$CODEX_HOME/skills/code-review/`，不改已安装的 Sectioned Skill、八个 agent、AGENTS.md 或全局 config。它兼容原 4.0 的现有 `context=DELEGATED_PASS` packet 使用；无需重建 PLAN 或重审已接受 section。需要完整一致的新项目时，使用上面的默认安装命令。
+尊重 CODEX_HOME，默认 ~/.codex。安装器不改全局config或用户AGENTS.md，不删除旧名称agent或无关文件；本流程只使用上述新角色名。已有同名目标必须--replace并备份。Python>=3.11；本地状态锁/工具以macOS/POSIX为目标。
 
-本次上传的基线安装器引用了 active code-review，但包里只有历史附录中的版本。此项目补齐真实 `skill/code-review` 4.1，并保持旧4.0 delegated packet兼容。`CLEAN`仍只是单轮结论，主线程独占验收；repair delta不能替代原ONE/TWO要求的fresh final。这里不判断你机器当前已安装版本是否缺失。
+## 正常使用与恢复
 
-[本次冲突分析与验证](docs/version-history/4.1/UPDATES.md)。
+显式要求使用Skill：默认执行到完成，但必须保存计划、真实派发和报告。自动触发：先宣布，首版PLAN-FULL完成后、PLAN review之前提供绝对链接让用户批准。当前非main分支按3.9的三选一授权。恢复旧功能只前瞻采用，不补造旧子代理、不重开accepted work来满足新schema。
 
-[简化的 AGENTS.md](docs/AGENTS.example.md) 供人工替换/合并；安装器不会改它。保留语言、Git、Docker、CodeGraph、验证和 anti-loop 政策；详细编排只在 Skill 中定义。不要照搬“删除文件”而丢掉用户安全和授权规则。
+根Skill的 [artifact生命周期](skill/sectioned-feature-development/references/artifact-lifecycle.md) 给出完整落盘/提取/派发/验收命令。STATE.json为机器事实；FEATURE-STATE.md由其渲染为完整可读状态，合同与原始review仍是语义证据。
 
-启动新的 Codex 会话后核对这些模型/effort 和自定义 agent 确实加载。父级运行时 permission override 可能影响配置默认值，需检查实际权限。配置有效不等于账号可用；不支持时应报 `MODEL_CONFIG_UNAVAILABLE`，不能默默换模型。第一次正式使用前核验原生 fresh-context 子代理和 ZCode `system_status`。本发布只做了本地脚本/配置/场景测试，没有实际调用你机器上的 Codex 或 ZCode。
+## ZCode与Advisor
 
-## 固定角色与模型
+只使用附件定义的九个 zcode_subagent_* 工具。MCP不负责Git/worktree，send是队列、终态拒收，不虚构resume或read_only mode。Astra/GLM按feature-wide完整review序号轮换；checkpoint/delta不新增full pass，但每个真实调用进入audit。Advisor保留原请求合同，采用原生fresh-context实例；无法证明非继承上下文时阻塞，不能只提示“忽略前文”。
 
-| 名称 | 配置 | 用途 |
-|---|---|---|
-| luna_xhigh | gpt-5.6-luna / xhigh | 有已验证范例、决策已给定、可判错 oracle 的实现 |
-| terra_high | gpt-5.6-terra / high | 熟悉组件/路径，有限新增状态 |
-| sol_medium | gpt-5.6-sol / medium | 默认非平凡实现；跨表示/状态语义 |
-| astra_medium | gpt-6-astra / medium | 不能安全拆解的新结构或困难推理 |
-| astra_high | gpt-6-astra / high | 独立 code review |
-| astra_xhigh | gpt-6-astra / xhigh | 创建 PLAN；另一个实例 review PLAN |
-| sfd_explorer | gpt-5.6-luna / xhigh | 有界只读 owner/caller/test 探索 |
-| advisor | gpt-6-astra / xhigh | 低频隔离上下文技术裁决 |
+## Audit专属目录
 
-总共六种 model–effort 组合，不给主 Agent 一个二十组合的选择菜单。这些路由是带依据的首版假设，不是 benchmark 已证明的能力分界。具体挑选依据和失败升级见 Skill 的 models reference；新 audit 统计首次实现、审查、修复、升级、集成的总成本和 escaped defects。
+只把本Skill的typed process audit放入 ~/Desktop/audit-pack/。代码审计、运行时实验、conformance和其他ZIP放别处，只作为辅助证据引用。原3.9分析维度与工具保留，新增模型/subsection/并行/Advisor字段；不能把telemetry gap升级成产品缺陷。
 
-## Grill Me 与交接
+## 文档与验证
 
-用户在 UI 选择 **Astra high** 做 grill-me 是合理的初始设置：该阶段主要做材料理解、遗漏识别和人类语义决策，不需要默认 xhigh/max。没有 matched-effort 实验能证明 high 最优，后续记录问题质量、遗漏、澄清次数与 downstream rework即可。这个 UI 偏好只放 README，不进入执行 Skill 或自动配置。
+- [4.2 修改依据](docs/version-history/v4.2/UPDATES.md)
+- [40个流程包与9个辅助包分析](docs/version-history/v4.2/AUDIT_PACK_ANALYSIS.md)
+- [3.9职责保留清单](docs/version-history/v4.2/RETENTION.md)
+- [研究与证据边界](docs/version-history/v4.2/RESEARCH.md)
+- [验证记录](docs/version-history/v4.2/VALIDATION.md)
 
-确认后的 Requirements Contract **可以独立交给新 agent**，前提是包含原始目标、边界、准确反例、更正/取代、确认决定、假设、可测试 AC、planner discretion 和真实未决项。原 grill 对话只进入审计 provenance，不默认进入计划/实现/advisor。既有 PLAN 中未经用户确认的内容不能自动升级为要求。
-
-## 当前 ZCode 适配边界
-
-只调用文档中的九个 `zcode_subagent_*` 工具。MCP 不负责 Git/worktree/commit/patch；由编排层管理。`send` 是排队而非 interrupt；终态拒收，不能恢复同一个完成会话。取消后等待 TERMINAL + reaped。
-
-因此普通澄清尽量同会话；终态后的 repair delta 默认使用**同 provider 新 agent + 原 finding 合同**并记录 continuity gap，不能声称 same-agent。需要绝对同会话语义时保持 `CONTINUITY_BLOCKED`，而不是伪造 `continue` 工具。plan permission mode 本身也不构成只读保证，必须隔离评审工作树并核对前后产品指纹。
-
-## Advisor 与并行
-
-保留原 `ADVISOR-REQUEST.template.md` 原始字节，调用名为 `advisor` 的原生子代理，不再要求人工问 Pro。即使主线程也是 Astra，advisor仍使用非继承新上下文，只读交接文件与必要源码。如果宿主不能证明无父对话继承，报告 `ADVISOR_CONTEXT_BLOCKED`；TOML 不含虚构的 context-isolation 参数。
-
-并行从 `max_parallel_writers=2` 开始，PLAN 里记录读/写路径、语义契约、排他测试资源和顺序。先把 `/git-worktree/` 加入 `.gitignore` 再创建工作树。先接受共享基础，再并行消费者；在 feature 分支串行集成。该并发数是保守试运行设置，未经本项目性能实验，不是最优结论。
-
-## Audit 与版本历史
-
-只把本 Skill 的 typed **process audit** 放 `~/Desktop/audit-pack/`。产品安全审计、runtime/conformance、手工 advisor 证据不进入；不自动删现有外来包。LIVE audit默认开启，`audit off`不关闭质量/advisor机制。
-
-[本轮逐包分析](docs/version-history/4.1/AUDIT_PACK_ANALYSIS.md)、[外部研究](docs/version-history/4.1/RESEARCH.md)、[证据→修改](docs/version-history/4.1/UPDATES.md)、[原始请求](docs/version-history/4.1/PROMPT.md)、[验证与未实测项](docs/version-history/4.1/VALIDATION.md)。历史 Markdown 文档保留为历史资料，不自动加载，不代表当前规则。
-
-## 4.1使用要点
-
-- 单规则交叉条件（如HTTP status×body timeout）保留一张共同测试矩阵；domain→HTTP adapter等真实增量可用subsection。
-- children串行、同parent工作树，CHECKPOINT_VERIFIED不等于ACCEPTED；父section最终闭合才能集成、解锁外部消费者。
-- 每个checkpoint的定向review累积到parent primary pass；共同不变量必须在最终head复核，原ONE/TWO/fresh final不降低。
-- 预算共享、非递归、无LOC硬门槛；完成历史不倒改。schema4原子计划仍兼容。
-- 上传基线的安装器已声明会安装code-review，但当前运行路径缺该目录。此包补齐真实的 `skill/code-review` 4.1，兼容4.0 delegated packet；不是只把旧文件留在version-history。
-- 安装前dry-run；`--only code-review`可仅更新兼容review引擎。安装器不覆盖用户AGENTS、运行中STATE或真实项目PLAN。
-
-[4.1分析与设计](docs/version-history/4.1/UPDATES.md) · [验证](docs/version-history/4.1/VALIDATION.md)
+离线验证检查文件、Git、DAG、角色及反例，不证明真实Codex一定遵守，也未运行付费模型/用户ZCode端到端实验。

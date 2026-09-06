@@ -1,7 +1,7 @@
 # Delegated single-pass review
 
 - context: DELEGATED_PASS
-- protocol: sfd-delegated-review/4.1
+- protocol: sfd-delegated-review/4.2
 - feature/run/section/pass ID / full-pass index (delta: original pass):
 - provider/profile/instance/session or agent_id:
 - scope: INITIAL_BOUNDED / REPAIR_DELTA / FINAL_BOUNDED / INTEGRATION
@@ -25,4 +25,4 @@ Return pass_signal CLEAN / MATERIAL_CANDIDATES / INSUFFICIENT_EVIDENCE. The inst
 - logical parent primary review ID / actual reviewer IDs / continuity status:
 - output: CHECKPOINT_VERIFIED only after parent admission; not ACCEPTED, not new budget.
 
-Compatibility: DELEGATED_PASS accepts legacy atomic `sfd-delegated-review/4.0`; new child packets use `sfd-delegated-review/4.1`.
+Compatibility: DELEGATED_PASS accepts legacy atomic `sfd-delegated-review/4.0`; new child packets use `sfd-delegated-review/4.2`.

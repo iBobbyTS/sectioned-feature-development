@@ -7,7 +7,7 @@ import tempfile
 import unittest
 import zipfile
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT/'skill/sectioned-feature-development/scripts'))
-import audit as a
+import process_audit as a
 
 class AuditTests(unittest.TestCase):
  def setUp(self):

@@ -11,7 +11,7 @@ import re
 import subprocess
 import tempfile
 
-PROFILES = {'luna_xhigh', 'terra_high', 'sol_medium', 'astra_medium'}
+PROFILES = {'implementer_4', 'implementer_3', 'implementer_2', 'implementer_1'}
 SHA = re.compile(r'^(?:[a-f0-9]{40}|[a-f0-9]{64})$')
 ID = re.compile(r'^[A-Za-z0-9][A-Za-z0-9_.-]{0,95}$')
 BEGIN, END = '<!-- SFD_PLAN_V4 -->', '<!-- /SFD_PLAN_V4 -->'
@@ -73,7 +73,7 @@ def validate(p: dict) -> None:
     if not SHA.fullmatch(str(p.get('base_ref', ''))): raise Invalid('exact base_ref required')
     if not isinstance(p.get('feature_branch'), str) or not isinstance(p.get('main_branch'), str):
         raise Invalid('branch names required')
-    if p.get('status') not in {'DRAFT','APPROVED','COMPLETED'}: raise Invalid('invalid plan status')
+    if p.get('status') not in {'DRAFT','APPROVED','COMPLETED','FROZEN'}: raise Invalid('invalid plan status')
     if not re.fullmatch(r'[a-f0-9]{64}', str(p.get('requirements_sha256', ''))):
         raise Invalid('requirements SHA-256 required')
     n = p.get('max_parallel_writers')
@@ -140,12 +140,22 @@ def validate(p: dict) -> None:
         if any(order.index(d) >= order.index(s['id']) for d in s['depends_on']):
             raise Invalid('integration order violates dependencies')
     validate_subsections(p)
+    if p.get('workflow_revision')=='4.2':
+        if not p.get('requirements_path'): raise Invalid('persisted requirements_path required')
+        for s in sections:
+            if not s.get('business_boundary'): raise Invalid('business section boundary required; never a model-only partition')
+            for child in s.get('subsections',[]):
+                if child.get('decomposition_reason') not in {'MODULE_INCREMENT','MODEL_CAPABILITY','BOTH'}:
+                    raise Invalid('child decomposition must be a real internal increment and/or model capability boundary')
+                if not child.get('task_features') or not child.get('model_reason'):
+                    raise Invalid('subsection model evidence required')
 
 def ready(p: dict, state: dict, plan_hash: str) -> dict:
     validate(p)
     if state.get('feature_id') != p['feature_id'] or state.get('run_id') != p['run_id']:
         raise Invalid('state/plan identity mismatch')
-    if p['status'] != 'APPROVED' or state.get('status') != 'ACTIVE':
+    allowed_plan_states={'APPROVED','FROZEN'} if p.get('workflow_revision')=='4.2' else {'APPROVED'}
+    if p['status'] not in allowed_plan_states or state.get('status') != 'ACTIVE':
         return {'ready': [], 'reason': 'FEATURE_NOT_ACTIVE_AND_APPROVED'}
     if state.get('plan_sha256') != plan_hash or state.get('plan_review_status') != 'APPROVED':
         raise Invalid('approved review must cover this exact plan')
@@ -153,6 +163,10 @@ def ready(p: dict, state: dict, plan_hash: str) -> dict:
         raise Invalid('automatic activation needs user PLAN approval')
     if state.get('advisor_state') in {'REQUIRED','RUNNING','CONTEXT_BLOCKED'}:
         return {'ready': [], 'reason': 'ADVISOR_BARRIER'}
+    if p.get('workflow_revision')=='4.2':
+        from execution_artifacts import plan_evidence
+        if not state.get('repo_root'): raise Invalid('repository identity missing')
+        plan_evidence(p,state,plan_hash,Path(state['repo_root']))
     ss = state.get('sections', {})
     nodes = {s['id']:s for s in p['sections']}
     active = state.get('active', [])
@@ -224,7 +238,7 @@ def reserve_review(path: Path, pass_id: str, head: str) -> dict:
             if ledger[pass_id]['head'] != head: raise Invalid('pass ID reused for different candidate')
             return ledger[pass_id]
         index = int(state.get('full_review_cursor',0)) + 1
-        record = {'index':index,'provider':'astra_high' if index%2 else 'glm-5.3','head':head}
+        record = {'index':index,'provider':'gpt' if index%2 else 'zcode','profile':'code_reviewer' if index%2 else None,'model':'gpt-6-astra' if index%2 else 'glm-5.3','head':head}
         ledger[pass_id]=record;state['full_review_cursor']=index;atomic_json(path,state)
         return record
 
@@ -250,7 +264,7 @@ def validate_subsections(p):
         if mode == 'ATOMIC':
             if children: raise Invalid('atomic section cannot contain subsections')
             continue
-        if p.get('workflow_revision') != '4.1': raise Invalid('subsections require workflow_revision=4.1')
+        if p.get('workflow_revision') not in {'4.1','4.2'}: raise Invalid('subsections require workflow_revision=4.1 or 4.2')
         if not isinstance(children, list) or len(children) < 2: raise Invalid('use work steps for fewer than two real increments')
         if p['execution_mode'] != 'EXECUTE_WITH_COMMITS' or p['feature_branch'] == p['main_branch']:
             raise Invalid('MULTI_UNIT_REQUIRES_COMMITS_AND_FEATURE_BRANCH')
@@ -368,7 +382,12 @@ def acceptance_check(p, state, sid, head, plan_hash):
     gate=ready(p,state,plan_hash)
     if gate.get('reason'):errors.append(gate['reason'])
     s=get_section(p,sid);ss=state.get('sections',{}).get(sid,{})
-    if s.get('delivery_mode')!='SUBSECTIONS':raise Invalid('atomic acceptance remains the existing parent workflow')
+    if s.get('delivery_mode')!='SUBSECTIONS':
+        if p.get('workflow_revision')=='4.2':
+            from execution_artifacts import atomic_evidence
+            r=atomic_evidence(p,state,sid,head)
+            r['errors']=errors+r['errors'];r['eligible_by_metadata']=not r['errors'];return r
+        raise Invalid('atomic acceptance remains the existing parent workflow')
     if not SHA.fullmatch(head):raise Invalid('exact final candidate required')
     if ss.get('candidate_head')!=head:errors.append('candidate/state head mismatch')
     if any(x['section_id']==sid for x in state.get('active',[])):errors.append('parent actor still active')
@@ -415,6 +434,10 @@ def acceptance_check(p, state, sid, head, plan_hash):
         if f.get('result')!='CLEAN' or f.get('head')!=head or not f.get('actor_id') or f['actor_id'] in primary_actors|writers or not artifact_metadata(f.get('artifact')):
             errors.append('fresh independent parent final evidence missing')
         if f.get('artifact'):artifacts.append(f['artifact'])
+    if p.get('workflow_revision')=='4.2':
+        for name in ('task_artifact','contract_artifact','handoff_artifact'):
+            if not artifact_metadata(ss.get(name)):errors.append('missing '+name)
+            else:artifacts.append(ss[name])
     return {'eligible_by_metadata':not errors,'errors':errors,'parent_section_id':sid,'candidate_head':head,'needs_final':needs_final,
             'repair_waves':used,'evidence_artifacts':artifacts,'checkpoint_ancestry':sorted(set(ancestry)),
             'warning':'No state mutation. Actual Git/artifact checks and semantic sufficiency remain required.'}
@@ -431,6 +454,25 @@ def verify_acceptance_files(repo, result):
             raise Invalid('missing/hash-mismatched evidence: '+str(a.get('path')))
     result['git_ancestry_and_artifact_hashes_verified']=True
     return result
+
+
+def repair_limit(p, state, sid, lineage, ledger, used):
+    """v3.9 recovery window, preserving lifetime counts and the v4.1 child budget invariant."""
+    if p.get('workflow_revision')!='4.2':return 5
+    recovery=ledger.get('structural_recovery')
+    if not recovery:return 5
+    if (not ledger.get('recovery_used') or recovery.get('original_lineage_id')!=lineage
+        or recovery.get('replacement_section_id')!=sid or recovery.get('generation')!=1
+        or recovery.get('boundary_changed') is not True
+        or recovery.get('classification') not in {'SPLIT_REMAINING','REBOUND_OWNER','RESTART_FROM_BASE'}):
+        raise Invalid('NOT_A_GENUINE_SINGLE_STRUCTURAL_RECOVERY')
+    start=recovery.get('waves_at_boundary_change')
+    if type(start) is not int or start<1 or start>used:raise Invalid('INVALID_RECOVERY_COUNTER_OR_RESET')
+    from execution_artifacts import verify, obj
+    report=obj(verify(recovery.get('decision_artifact'),Path(state['repo_root'])))
+    if report.get('classification')!=recovery['classification'] or report.get('boundary_changed') is not True:
+        raise Invalid('RECOVERY_REPORT_DOES_NOT_AUTHORIZE_BOUNDARY')
+    return start+5
 
 
 def reserve_repair(p, path, sid, child_id, attempt_id, findings, plan_hash):
@@ -452,8 +494,19 @@ def reserve_repair(p, path, sid, child_id, attempt_id, findings, plan_hash):
         if any(x['section_id']==sid for x in state.get('active',[])):raise Invalid('finish/reap current parent actor before repair reservation')
         used=used_repairs(ss,b)
         approval=b.get('extra_attempt_authority',{}).get(attempt_id,{})
-        if used>=5 and (not approval.get('request_id') or not re.fullmatch('[a-f0-9]{64}',str(approval.get('decision_sha256','')))):
-            raise Invalid('PARENT_REPAIR_LIMIT: no new child/model/run budget')
+        limit=repair_limit(p,state,sid,lineage,b,used)
+        if used>=limit:
+            if not approval.get('request_id') or not re.fullmatch('[a-f0-9]{64}',str(approval.get('decision_sha256',''))):
+                raise Invalid('PARENT_REPAIR_LIMIT: no new child/model/run budget')
+            if p.get('workflow_revision')=='4.2':
+                from execution_artifacts import verify
+                report=approval.get('decision_artifact')
+                verify(report,Path(state['repo_root']))
+                if report['sha256']!=approval['decision_sha256']:raise Invalid('EXTRA_ATTEMPT_DECISION_MISMATCH')
+                # One ordinary non-structural recovery wave only; thereafter a genuine advisor/owner decision is required.
+                if (used!=5 or b.get('structural_recovery')) and approval.get('authority_kind') not in {'ADVISOR_DECISION','USER_EXPLICIT'}:
+                    raise Invalid('AUTOMATIC_RECOVERY_ALREADY_USED')
+                b['recovery_used']=True
         payload.update(wave=used+1,lineage_id=lineage,authority=approval or None)
         attempts[attempt_id]=payload;b['waves_used']=used+1
         ss['repair_waves']=used+1;ss['had_material_findings']=True

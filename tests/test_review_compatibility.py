@@ -21,15 +21,15 @@ class ReviewCompatibilityTests(unittest.TestCase):
 
     def test_parent_and_companion_protocol_agree(self):
         paths = [REVIEW/'references/delegated-pass.md', SFD/'SKILL.md',
-                 SFD/'references/reviews.md', SFD/'assets/REVIEW-PACKET.template.md',
-                 ROOT/'agents/astra_high.toml']
+                 SFD/'references/bounded-review.md', SFD/'assets/REVIEW-PACKET.template.md',
+                 ROOT/'agents/code_reviewer.toml']
         for path in paths:
             with self.subTest(path=path):
                 text = path.read_text()
                 self.assertIn('sfd-delegated-review/4.0', text)
-                self.assertIn('sfd-delegated-review/4.1', text)
+                self.assertIn('sfd-delegated-review/4.2', text)
                 self.assertIn('DELEGATED_PASS', text)
-        for path in [REVIEW/'references/delegated-pass.md', SFD/'references/reviews.md', SFD/'assets/REVIEW-PACKET.template.md']:
+        for path in [REVIEW/'references/delegated-pass.md', SFD/'references/bounded-review.md', SFD/'assets/REVIEW-PACKET.template.md']:
             for signal in ['CLEAN', 'MATERIAL_CANDIDATES', 'INSUFFICIENT_EVIDENCE']:
                 self.assertIn(signal, path.read_text())
 

@@ -1,0 +1,9 @@
+{
+  "kind": "sectioned-development-process-audit",
+  "producer": "sectioned-feature-development",
+  "schema_version": 1,
+  "feature_id": "REPLACE",
+  "run_id": "REPLACE",
+  "feature_base": "0000000000000000000000000000000000000000",
+  "source_head": "0000000000000000000000000000000000000000"
+}

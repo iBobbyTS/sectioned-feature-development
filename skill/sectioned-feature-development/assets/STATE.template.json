@@ -34,6 +34,12 @@
     }
   },
   "completion": null,
-  "workflow_revision": "4.1",
-  "repair_lineages": {}
+  "workflow_revision": "4.2",
+  "repair_lineages": {},
+  "repo_root": "REPLACE",
+  "main_actor_id": "REPLACE",
+  "actors": {},
+  "requirements": null,
+  "plan_author": null,
+  "plan_review": null
 }

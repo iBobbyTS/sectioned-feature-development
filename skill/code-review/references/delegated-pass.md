@@ -1,6 +1,6 @@
 # Delegated review — 4.1
 
-`context=DELEGATED_PASS`; protocols `sfd-delegated-review/4.1` and flat-packet compatibility `sfd-delegated-review/4.0`.
+`context=DELEGATED_PASS`; protocols `sfd-delegated-review/4.2`, `sfd-delegated-review/4.1` and flat-packet compatibility `sfd-delegated-review/4.0`.
 
 Parent owns scope admission, repair assignment, budgets, review/provider scheduling, acceptance and integration. Return one signal: CLEAN, MATERIAL_CANDIDATES, INSUFFICIENT_EVIDENCE. CLEAN refers only to the requested pass/range, never automatic parent acceptance.
 

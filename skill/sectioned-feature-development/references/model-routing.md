@@ -1,21 +1,22 @@
 # Task–model routing
 
-This is a provisional policy to evaluate, not a factual capability boundary. Source/task-family and small real-world comparisons disagree; no matched per-item evaluation establishes the optimal six configurations for these repositories. Research and limitations are in `docs/version-history/4.0/RESEARCH.md` of the project distribution.
+This is a provisional policy to evaluate, not a factual capability boundary. Source/task-family and small real-world comparisons disagree; no matched per-item evaluation establishes the optimal six configurations for these repositories. Research and limitations are in `docs/version-history/v4.0/RESEARCH.md` of the project distribution.
 
 ## Fixed roster
 
 | Profile | Model | Effort | Role |
 |---|---|---|---|
-| luna_xhigh | gpt-5.6-luna | xhigh | Transform an already specified local rule using a demonstrated analogue and decisive tests |
-| terra_high | gpt-5.6-terra | high | Implement a familiar component/path with limited new state and verifiable behavior |
-| sol_medium | gpt-5.6-sol | medium | Default non-trivial implementation with coupled repository semantics |
-| astra_medium | gpt-6-astra | medium | Implement novel structural reasoning or unresolved cross-owner behavior that cannot be decomposed safely |
-| astra_high | gpt-6-astra | high | Independent code review and integration delta review |
-| astra_xhigh | gpt-6-astra | xhigh | Plan author and separate plan reviewer |
-| sfd_explorer | gpt-5.6-luna | xhigh | Read-only code-location and direct dependency discovery |
-| advisor | gpt-6-astra | xhigh | Rare, fresh-context technical adjudication |
+| [@implementer_4](subagent://implementer_4) | gpt-5.6-luna | xhigh | Transform an already specified local rule using a demonstrated analogue and decisive tests |
+| [@implementer_3](subagent://implementer_3) | gpt-5.6-terra | high | Implement a familiar component/path with limited new state and verifiable behavior |
+| [@implementer_2](subagent://implementer_2) | gpt-5.6-sol | medium | Default non-trivial implementation with coupled repository semantics |
+| [@implementer_1](subagent://implementer_1) | gpt-6-astra | medium | Implement novel structural reasoning or unresolved cross-owner behavior that cannot be decomposed safely |
+| [@code_reviewer](subagent://code_reviewer) | gpt-6-astra | high | Independent code review and integration delta review |
+| [@plan_writer](subagent://plan_writer) | gpt-6-astra | xhigh | Plan author only; independent plan reviewer is below |
+| [@plan_reviewer](subagent://plan_reviewer) | gpt-6-astra | xhigh | Independent review of saved PLAN; never the writer instance |
+| [@code_explorer](subagent://code_explorer) | gpt-5.6-luna | xhigh | Read-only code-location and direct dependency discovery |
+| [@advisor](subagent://advisor) | gpt-6-astra | xhigh | Rare, fresh-context technical adjudication |
 
-Eight role files, six model–effort combinations; no max or low variants. GLM is the separately configured external review provider.
+Nine role files, six model–effort combinations; no max or low variants. GLM is the separately configured external review provider.
 
 ## Decision features
 

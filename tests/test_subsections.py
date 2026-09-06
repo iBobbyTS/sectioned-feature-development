@@ -17,7 +17,7 @@ def check(head):return {'result':'PASS','head':head,'artifact':artifact()}
 
 class SubsectionTests(unittest.TestCase):
  def setUp(self):
-  self.p=w.load_plan(R/'skill/sectioned-feature-development/assets/PLAN-FULL.template.md');self.p['status']='APPROVED'
+  self.p=w.load_plan(R/'tests/fixtures/v41-plan.md');self.p['status']='APPROVED'
   self.s=self.p['sections'][-1];self.sid=self.s['id'];self.units=self.s['subsections']
   self.heads=['0'*39+str(i) for i in range(1,4)]
   self.state={'feature_id':self.p['feature_id'],'run_id':self.p['run_id'],'status':'ACTIVE','plan_sha256':'digest','plan_review_status':'APPROVED','active':[],

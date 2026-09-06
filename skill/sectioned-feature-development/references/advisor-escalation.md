@@ -1,6 +1,6 @@
 # Native advisor — independent adjudication
 
-The advisor is `advisor` (`gpt-6-astra`, xhigh). It is not a third routine reviewer or a manual ChatGPT Pro task. It remains available when audit is off. Model superiority is not the trigger, especially when the main agent also uses Astra; the benefit sought is a fresh bounded evidence view.
+The advisor is [@advisor](subagent://advisor) (GPT-6 Astra, xhigh). It is not a third routine reviewer or a manual ChatGPT Pro task. It remains available when audit is off. Model superiority is not the trigger, especially when the main agent also uses Astra; the benefit sought is a fresh bounded evidence view.
 
 ## Rare triggers
 
@@ -28,7 +28,7 @@ Provide the request, confirmed requirements and actual frozen source/worktree. N
 
 ## Decision protocol
 
-Freeze affected writers/reviewers and set advisor state REQUIRED. Dispatch a fresh `advisor` instance even when the parent is Astra. It must independently determine the minimum safe technical boundary and return:
+Freeze affected writers/reviewers and set advisor state REQUIRED. Dispatch a fresh [@advisor](subagent://advisor) instance even when the parent is Astra. It must independently determine the minimum safe technical boundary and return:
 
 - request ID and exact source head;
 - decision / evidence vs assumptions / rejected alternatives;

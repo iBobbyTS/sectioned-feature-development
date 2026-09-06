@@ -1,3 +1,13 @@
+# 4.2 — v3.9-preserving reconstruction
+
+- Start from actual v3.9 instead of continuing the reduced4.0 root. Preserve unproven duties.
+- Restore persistent artifact/real delegation/plan-review/acceptance chain; audit OFF still needs execution evidence.
+- Enforce multisection branch+commit and closed-feature follow-up.
+- Adopt parent business sections and internal/module/model-load subsections, parent-level acceptance/budget.
+- Retain authorized4.0 model tiers/native advisor/isolated parallelism with requested role names.
+- Dedicated process-only audit namespace and all legacy analytical dimensions plus new model/subsection/parallel/Advisor telemetry.
+- Ship companion code-review and installer together.
+
 # Change Log
 
 ## 4.1 — 2026-09-05

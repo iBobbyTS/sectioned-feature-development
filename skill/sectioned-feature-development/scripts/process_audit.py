@@ -159,6 +159,11 @@ def intake(path: Path) -> dict:
     m=json.loads(z.read(n))
     if m.get('artifact_type')==TYPE and m.get('schema_version')==4:
      return {'class':'PROCESS_V4_CANDIDATE','needs':'verify identity and manifest before counting'}
+   matches=[n for n in ns if n.rsplit('/',1)[-1]=='PROCESS-IDENTITY.json']
+   for n in matches:
+    m=json.loads(z.read(n))
+    if m.get('kind')==TYPE and m.get('producer')==PRODUCER and m.get('run_id'):
+     return {'class':'PROCESS_V42_CANDIDATE','needs':'verify manifest and exact Git identity with audit_finalize.py'}
    required={'AUDIT-VERDICT.md','PLAN-AUDIT.md','REVIEW-AUDIT.md','INVOCATION-AUDIT.md','SKILL-COMPLIANCE.md'}
    matched=required & {n.rsplit('/',1)[-1] for n in ns}
    if len(matched)>=4:return {'class':'LEGACY_PROCESS','reason':'multiple process documents; provenance still needs review'}

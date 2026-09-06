@@ -1,0 +1,22 @@
+{
+  "inputs": [
+    {
+      "file": "audit-packs.zip",
+      "bytes": 22225233,
+      "sha256": "b830bf6657db3f371584c67b89fb0b2a0e825d81fa01f7857333f7e4c1a1df92"
+    },
+    {
+      "file": "sectioned-feature-development(3).zip",
+      "bytes": 2315736,
+      "sha256": "e5fb4661471c5c8784280bfebab63eafc25e900fb5659ccd3187c6f962731af7"
+    }
+  ],
+  "base_tag": "v3.9",
+  "base_commit": "e21c9a3e525fa7d3da0fb71fc3eeb12cf25c591c",
+  "uploaded_head": "daa2c5415850967167f386dd74c89b32cb4475f0",
+  "new_version": "4.2",
+  "policy": "preserve unproven baseline duties; explicit authorizations and audit-backed changes only",
+  "uploaded_working_tree_status": [
+    " M docs/version-history/v4.0/AUDIT_INTAKE.csv"
+  ]
+}
