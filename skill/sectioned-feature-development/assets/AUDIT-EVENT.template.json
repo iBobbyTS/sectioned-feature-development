@@ -31,5 +31,6 @@
   "billed_cost": null,
   "list_price_estimate": null,
   "result": "UNKNOWN",
-  "evidence_paths": []
+  "evidence_paths": [],
+  "workflow_revision": "4.1"
 }

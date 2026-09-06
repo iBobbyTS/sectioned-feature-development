@@ -1,0 +1,728 @@
+diff -ruN '--exclude=__pycache__' input-project/skill/sectioned-feature-development/SKILL.md output-project/skill/sectioned-feature-development/SKILL.md
+--- input-project/skill/sectioned-feature-development/SKILL.md	2026-09-05 17:08:48.001107209 +0000
++++ output-project/skill/sectioned-feature-development/SKILL.md	2026-09-05 17:27:03.099302549 +0000
+@@ -1,14 +1,15 @@
+ ---
+ name: sectioned-feature-development
+-description: "Deliver genuinely non-trivial software changes through an approved requirements contract, reviewable sections, task-based agent selection, bounded reviews, and verified integration. Use for substantial behavioral work, multiple semantic owners, changed persistence/protocol/state/lifecycle contracts, an unclear impact cone, or a whole-change attempt that failed to converge; do not activate merely because a small edit touches a high-risk file. Activate prospectively if a small task grows. Explicit invocation proceeds without routine plan approval; automatic invocation is announced and pauses after the first PLAN-FULL. After completion, reassess follow-up requests as new work rather than appending to the closed plan."
++description: "Use optional subsections for implementation checkpoints under one parent contract, budget and acceptance. Deliver genuinely non-trivial software changes through an approved requirements contract, reviewable sections, task-based agent selection, bounded reviews, and verified integration. Use for substantial behavioral work, multiple semantic owners, changed persistence/protocol/state/lifecycle contracts, an unclear impact cone, or a whole-change attempt that failed to converge; do not activate merely because a small edit touches a high-risk file. Activate prospectively if a small task grows. Explicit invocation proceeds without routine plan approval; automatic invocation is announced and pauses after the first PLAN-FULL. After completion, reassess follow-up requests as new work rather than appending to the closed plan."
+ ---
+ 
+-# Sectioned Feature Development — 4.0.1
++# Sectioned Feature Development — 4.1.1
+ 
+ Deliver the approved outcome, not a larger system. The main agent owns admission and integration; delegated agents perform bounded work. This skill describes workflow, not model capability guarantees.
+ 
+ ## Read only the current phase
+ 
++- Parent sections and internal checkpoints: [subsections.md](references/subsections.md)
+ - Planning and portable requirements: [planning.md](references/planning.md)
+ - Task/model selection and cheap exploration: [models.md](references/models.md)
+ - Branches, dependency scheduling and integration: [execution.md](references/execution.md)
+@@ -24,7 +25,7 @@
+ 1. User requirements and current repository contracts supply authority. PLAN, reviewer preference and audit do not create it.
+ 2. A material finding needs changed-diff causality, a reachable supported path, an existing requirement, a concrete consequence and a bounded repair.
+ 3. `.agent-work/` stays local/untracked. Never force-stage it. Preserve unrelated user work and already accepted evidence.
+-4. **More than one section requires `EXECUTE_WITH_COMMITS` and a dedicated feature branch.** If no-commit instructions conflict, stop for a decision. Do not silently downgrade the workflow.
++4. **More than one section, or a single section with multiple executable subsections, requires `EXECUTE_WITH_COMMITS` and a dedicated feature branch.** If no-commit instructions conflict, stop for a decision. Do not silently downgrade the workflow.
+ 5. From `main`, creating an authorized feature branch needs no separate approval. From another branch, ask whether to base on main, that branch, or first merge it into main. Worker branches within an already authorized feature are not a new feature-base decision.
+ 6. Parent may serialize local worker commits into the authorized feature branch. This does not authorize merge into main, push, PR creation, reset, clean, deletion or published-history rewriting.
+ 7. A reviewer sees a frozen candidate. No writer mutates that review workspace. Independent, approved DAG siblings may run in different worktrees; a consumer waits for all prerequisites to be accepted **and integrated**.
+@@ -48,6 +49,8 @@
+ 
+ Use `astra_xhigh` as a plan author, and a **fresh** `astra_xhigh` as plan reviewer. Give each a bounded packet rather than the whole chat. Plan by atomic behavior first, then by materially different reasoning difficulty where a real interface permits separation. Never split an atomic migration/state transition simply to assign a cheaper model.
+ 
++A section is the acceptance boundary, not a LOC bucket. Before assigning a large section to an implementer, check for meaningful internal product increments. Use optional one-level subsections with targeted checkpoint review and a shared parent contract, budget and final acceptance; do not split cross-cases of one rule or turn test-only steps into product nodes. See [subsections.md](references/subsections.md).
++
+ Every section records requirements, canonical owners, dependency IDs, explicit paths, read/write contracts, resource isolation, tests, model profile and reason. Every stage records whether it can run concurrently. See planning/models references for the targeted review lenses and supported profiles.
+ 
+ For high-complexity plans (unresolved cross-runtime composition, a changed state/representation model spanning several owners, or a previous structural recovery), add one independent GLM plan challenge after the Astra plan is corrected. Not every sensitive file requires this pass. Maximum two full PLAN passes; only changed boundaries may receive one delta recheck. No clean streak.
+@@ -68,15 +71,19 @@
+ 
+ Dispatch only ready DAG nodes with their task packet. Run targeted checks before spending on independent review. Commit each coherent implementation/fix when in commit mode. Freeze the candidate commit (or exact uncommitted fingerprint for an authorized single-section no-commit task).
+ 
++Decomposed sections run each child as implement + targeted tests + scoped review (`SUBSECTION_DELTA`) on the parent branch. One parent primary reviewer accumulates coverage; after the last child, `PARENT_RECONCILIATION` must close the whole invariant matrix at the final candidate. Child status is CHECKPOINT_VERIFIED, never section acceptance or a new budget. The fresh final review remains at parent level. Atomic sections keep their existing path.
++
+ Code review uses `astra_high` and external `glm-5.3`, alternating **feature-wide full-pass reservations**, beginning with Astra. Reserve a pass index before dispatch so concurrent reviews cannot race. PLAN and advisor calls have separate counters; delta checks and infrastructure retries do not advance the full-pass counter.
+ 
+ `ONE`: a clean initial full review accepts the section; if it finds material defects, close repairs through bounded delta verification and require one fresh final full review. `TWO`: one covered baseline/closure plus a fresh independent final full pass. Choose TWO where hidden failure states, weak oracles or composition risk justify independence; a high-risk filename or zero findings alone decides nothing. User/repository assurance requirements remain authoritative.
+ 
+-The reviewer invokes the bundled `$code-review` with `context=DELEGATED_PASS` and protocol `sfd-delegated-review/4.0` as a single-pass contract: scope, candidate findings, coverage, exact head and gaps only. It may not spawn another review loop, change requirements, repair or accept the section. Use the companion installed `code-review` 4.0.1; historical docs are not runtime skills. If a stale installed version still conflicts, report the loaded path/protocol instead of silently nesting workflows.
++Checkpoint/delta/reconciliation calls do not advance the full-pass counter, but every actual model invocation is recorded. A parent primary slot reserved at its first checkpoint becomes CLEAN only after parent reconciliation.
++
++The reviewer invokes the bundled `$code-review` with `context=DELEGATED_PASS` and protocol `sfd-delegated-review/4.1` as a single-pass contract: scope, candidate findings, coverage, exact head and gaps only. It may not spawn another review loop, change requirements, repair or accept the section. Use the companion installed `code-review` 4.1; historical docs are not runtime skills. If a stale installed version still conflicts, report the loaded path/protocol instead of silently nesting workflows.
+ 
+ Main admits findings. Same-review verification goes back to its reviewer when the actual session supports it. The current ZCode API cannot resume a terminal agent; follow its explicit continuity policy rather than inventing a continuation tool. New full passes use fresh instances.
+ 
+-At most five admitted material repair waves per original section lineage. At the limit, diagnose once: simplify current work, repair within the real owner, split only remaining independent work, or request the rare advisor. No automatic chain of new five-wave budgets and no evidence-only section.
++At most five admitted material repair waves per original section lineage, shared by every child checkpoint and parent reconciliation/final. Subdivision never resets that count. At the limit, diagnose once: simplify current work, repair within the real owner, split only remaining independent work, or request the rare advisor. No automatic chain of new five-wave budgets and no evidence-only section.
+ 
+ ## 5. Integrate and complete
+ 
+@@ -93,3 +100,5 @@
+ Process audit is LIVE by default, disable only on explicit `audit off`. Capture lifecycle/model/routing/cost facts at existing boundaries, not every read. Missing audit details do not add product gates. Only this skill's typed process-audit ZIPs may be published to `~/Desktop/audit-pack/`; runtime/conformance/product/advisor evidence stays elsewhere and is referenced by sanitized hash.
+ 
+ Before the final response, publish one canonical process pack, or report an audit-only failure after one bounded correction. Report product readiness, model/context/continuity gaps, maintainability and the audit path separately. Never claim actual model/runtime validation from script tests alone.
++
++Compatibility: DELEGATED_PASS accepts legacy atomic `sfd-delegated-review/4.0`; new child packets use `sfd-delegated-review/4.1`.
+diff -ruN '--exclude=__pycache__' input-project/skill/sectioned-feature-development/agents/openai.yaml output-project/skill/sectioned-feature-development/agents/openai.yaml
+--- input-project/skill/sectioned-feature-development/agents/openai.yaml	2026-09-05 17:08:48.003579525 +0000
++++ output-project/skill/sectioned-feature-development/agents/openai.yaml	2026-09-05 17:27:03.682997186 +0000
+@@ -1,4 +1,4 @@
+ interface:
+   display_name: "Sectioned Feature Development"
+-  short_description: "Bounded delivery with model routing and isolated parallel work"
+-  default_prompt: "Use $sectioned-feature-development to deliver this feature with a confirmed contract, bounded reviews and verified integration."
++  short_description: "Nested implementation with parent-level acceptance"
++  default_prompt: "Use $sectioned-feature-development to plan bounded sections and optional internal checkpoints without multiplying acceptance gates."
+diff -ruN '--exclude=__pycache__' input-project/skill/sectioned-feature-development/assets/AUDIT-EVENT.template.json output-project/skill/sectioned-feature-development/assets/AUDIT-EVENT.template.json
+--- input-project/skill/sectioned-feature-development/assets/AUDIT-EVENT.template.json	2026-09-05 17:08:48.004653073 +0000
++++ output-project/skill/sectioned-feature-development/assets/AUDIT-EVENT.template.json	2026-09-05 17:22:03.965260403 +0000
+@@ -31,5 +31,6 @@
+   "billed_cost": null,
+   "list_price_estimate": null,
+   "result": "UNKNOWN",
+-  "evidence_paths": []
++  "evidence_paths": [],
++  "workflow_revision": "4.1"
+ }
+diff -ruN '--exclude=__pycache__' input-project/skill/sectioned-feature-development/assets/AUDIT-METADATA.template.json output-project/skill/sectioned-feature-development/assets/AUDIT-METADATA.template.json
+--- input-project/skill/sectioned-feature-development/assets/AUDIT-METADATA.template.json	2026-09-05 17:08:48.004549099 +0000
++++ output-project/skill/sectioned-feature-development/assets/AUDIT-METADATA.template.json	2026-09-05 17:22:03.965187846 +0000
+@@ -2,7 +2,7 @@
+   "artifact_type": "sectioned-development-process-audit",
+   "producer": {
+     "name": "sectioned-feature-development",
+-    "version": "4.0"
++    "version": "4.1"
+   },
+   "schema_version": 4,
+   "repo": "example",
+@@ -17,5 +17,6 @@
+   },
+   "evidence_consistency": "CONSISTENT",
+   "telemetry_status": "DEGRADED",
+-  "product_status": "INSUFFICIENT_EVIDENCE"
++  "product_status": "INSUFFICIENT_EVIDENCE",
++  "workflow_revision": "4.1"
+ }
+diff -ruN '--exclude=__pycache__' input-project/skill/sectioned-feature-development/assets/PLAN-FULL.template.md output-project/skill/sectioned-feature-development/assets/PLAN-FULL.template.md
+--- input-project/skill/sectioned-feature-development/assets/PLAN-FULL.template.md	2026-09-05 17:08:48.005247662 +0000
++++ output-project/skill/sectioned-feature-development/assets/PLAN-FULL.template.md	2026-09-05 17:22:03.964711831 +0000
+@@ -1,4 +1,4 @@
+-# PLAN-FULL — 替换为当前功能
++# PLAN-FULL — 替换为当前功能（4.1可选subsection示例）
+ 
+ 此文件是模板，不是已批准计划。示例 SHA/路径/检查命令必须替换为当前仓库事实。单 section 可以保留一项并采用 serial；不得为了使用示例并行图人为制造任务。
+ 
+@@ -247,9 +247,88 @@
+         "S03-focused"
+       ],
+       "oracle": "Replace with executable acceptance and failure trace.",
+-      "acceptance": "REQ-001 observable behavior and existing contracts pass."
++      "acceptance": "REQ-001 observable behavior and existing contracts pass.",
++      "delivery_mode": "SUBSECTIONS",
++      "lineage_id": "S03",
++      "shared_invariants": [
++        "IMPORT-SAME-RULE",
++        "IMPORT-ATOMIC-RESULT"
++      ],
++      "joint_oracles": [
++        {
++          "id": "IMPORT-JOINT",
++          "invariants": [
++            "IMPORT-SAME-RULE",
++            "IMPORT-ATOMIC-RESULT"
++          ],
++          "check_ids": [
++            "S03-focused"
++          ],
++          "procedure": "同一输入通过内部转换和实际consumer，验证错误不留下部分结果。",
++          "expected": "producer/consumer共用同一规则且原子错误语义保持。"
++        }
++      ],
++      "subsections": [
++        {
++          "id": "S03.u1",
++          "unit_kind": "SUBSECTION",
++          "parent_section_id": "S03",
++          "depends_on": [],
++          "title": "内部转换",
++          "outcome": "实现实际转换及相关回归",
++          "consumer": "u2实际consumer",
++          "safe_intermediate_state": "只在parent分支保留真实未公开实现，不假装整体feature已完成。",
++          "oracle": "原需求的输入/错误结果与生产调用对照；替换成实际source-backed oracle。",
++          "profile": "luna_xhigh",
++          "model_reason": "演示模板；实际按任务结构决定，不因child编号降档。",
++          "requirement_ids": [
++            "REQ-001"
++          ],
++          "write_paths": [
++            "src/importer",
++            "tests/importer"
++          ],
++          "read_paths": [
++            "src/shared.py"
++          ],
++          "check_ids": [
++            "S03-focused"
++          ]
++        },
++        {
++          "id": "S03.u2",
++          "unit_kind": "SUBSECTION",
++          "parent_section_id": "S03",
++          "depends_on": [
++            "S03.u1"
++          ],
++          "title": "consumer闭环",
++          "outcome": "复用转换并接入真实consumer",
++          "consumer": "父节外部消费者",
++          "safe_intermediate_state": "只在parent分支保留真实未公开实现，不假装整体feature已完成。",
++          "oracle": "原需求的输入/错误结果与生产调用对照；替换成实际source-backed oracle。",
++          "profile": "luna_xhigh",
++          "model_reason": "演示模板；实际按任务结构决定，不因child编号降档。",
++          "requirement_ids": [
++            "REQ-001"
++          ],
++          "write_paths": [
++            "src/importer",
++            "tests/importer"
++          ],
++          "read_paths": [
++            "src/shared.py"
++          ],
++          "check_ids": [
++            "S03-focused"
++          ]
++        }
++      ]
+     }
+-  ]
++  ],
++  "workflow_revision": "4.1"
+ }
+ ```
+ <!-- /SFD_PLAN_V4 -->
++
++S03演示一层内部checkpoint，S01/S02仍atomic。不要照抄无实际产品边界的分解；每个child都须有真实consumer与parent共同oracle。
+diff -ruN '--exclude=__pycache__' input-project/skill/sectioned-feature-development/assets/REVIEW-PACKET.template.md output-project/skill/sectioned-feature-development/assets/REVIEW-PACKET.template.md
+--- input-project/skill/sectioned-feature-development/assets/REVIEW-PACKET.template.md	2026-09-05 17:08:48.005039474 +0000
++++ output-project/skill/sectioned-feature-development/assets/REVIEW-PACKET.template.md	2026-09-05 17:14:35.348718490 +0000
+@@ -1,7 +1,7 @@
+ # Delegated single-pass review
+ 
+ - context: DELEGATED_PASS
+-- protocol: sfd-delegated-review/4.0
++- protocol: sfd-delegated-review/4.1
+ - feature/run/section/pass ID / full-pass index (delta: original pass):
+ - provider/profile/instance/session or agent_id:
+ - scope: INITIAL_BOUNDED / REPAIR_DELTA / FINAL_BOUNDED / INTEGRATION
+@@ -15,3 +15,14 @@
+ Read actual relevant code; report causally reachable, material defects and uncertainty. Do not implement, rewrite the contract, run a second review loop or decide feature acceptance. Return pass identity, coverage, candidates with evidence, checks and gaps. The parent performs admission and applies repair budgets.
+ 
+ Return pass_signal CLEAN / MATERIAL_CANDIDATES / INSUFFICIENT_EVIDENCE. The installed companion code-review delegated protocol applies; no section acceptance or standalone repair loop.
++
++## Optional subsection fields (parent inherits all authority)
++- unit_kind: SECTION | SUBSECTION
++- parent_section_id / subsection_id / lineage_id:
++- parent base / previous checkpoint / current candidate:
++- pending parent behavior and safe intermediate state:
++- shared invariant IDs / targeted checkpoint checks / joint parent oracle:
++- logical parent primary review ID / actual reviewer IDs / continuity status:
++- output: CHECKPOINT_VERIFIED only after parent admission; not ACCEPTED, not new budget.
++
++Compatibility: DELEGATED_PASS accepts legacy atomic `sfd-delegated-review/4.0`; new child packets use `sfd-delegated-review/4.1`.
+diff -ruN '--exclude=__pycache__' input-project/skill/sectioned-feature-development/assets/STATE.template.json output-project/skill/sectioned-feature-development/assets/STATE.template.json
+--- input-project/skill/sectioned-feature-development/assets/STATE.template.json	2026-09-05 17:08:48.004804897 +0000
++++ output-project/skill/sectioned-feature-development/assets/STATE.template.json	2026-09-05 17:22:03.964872158 +0000
+@@ -24,8 +24,16 @@
+     "S03": {
+       "status": "PENDING",
+       "integrated": false,
+-      "repair_waves": 0
++      "repair_waves": 0,
++      "primary_review_id": null,
++      "subsections": {},
++      "primary_review": null,
++      "joint_evidence": {},
++      "final_checks": {},
++      "final_review": null
+     }
+   },
+-  "completion": null
++  "completion": null,
++  "workflow_revision": "4.1",
++  "repair_lineages": {}
+ }
+diff -ruN '--exclude=__pycache__' input-project/skill/sectioned-feature-development/assets/TASK-PACKET.template.md output-project/skill/sectioned-feature-development/assets/TASK-PACKET.template.md
+--- input-project/skill/sectioned-feature-development/assets/TASK-PACKET.template.md	2026-09-05 17:08:48.004422612 +0000
++++ output-project/skill/sectioned-feature-development/assets/TASK-PACKET.template.md	2026-09-05 17:14:35.347002920 +0000
+@@ -13,3 +13,12 @@
+ - stop conditions: missing semantic authority, changed owner boundary, wrong workspace, plan/model mismatch:
+ 
+ Do not edit scheduler/audit state, future sections, user work or another worktree. Return source-grounded facts and unknowns, not claimed completion from a green build alone.
++
++## Optional subsection fields (parent inherits all authority)
++- unit_kind: SECTION | SUBSECTION
++- parent_section_id / subsection_id / lineage_id:
++- parent base / previous checkpoint / current candidate:
++- pending parent behavior and safe intermediate state:
++- shared invariant IDs / targeted checkpoint checks / joint parent oracle:
++- logical parent primary review ID / actual reviewer IDs / continuity status:
++- output: CHECKPOINT_VERIFIED only after parent admission; not ACCEPTED, not new budget.
+diff -ruN '--exclude=__pycache__' input-project/skill/sectioned-feature-development/references/audit.md output-project/skill/sectioned-feature-development/references/audit.md
+--- input-project/skill/sectioned-feature-development/references/audit.md	2026-09-05 17:08:48.002709358 +0000
++++ output-project/skill/sectioned-feature-development/references/audit.md	2026-09-05 17:14:35.346705559 +0000
+@@ -56,3 +56,7 @@
+ Use separate quality/efficiency/routing-compliance results, not one weighted score. Insufficient code evidence is excluded from quality comparison. Human-discovered escaped defects and eventual corrected quality are separate. Do not maximize skill usage coverage: correct de-escalation is success.
+ 
+ Compare total cost per accepted task across matched task families, uncertainty/oracle tiers and difficulty tails. Production trials are not randomized benchmarks. State sample size, selection effects and missing data. A weak executor may cost more after premium review/repair; a long detailed plan may cost more than its cheap implementation saves. Update routing only after repeated evidence or a clear rule-level defect; don't reduce checks to hit a cost target.
++
++## 4.1 subsection observations
++
++Keep schema_version=4; producer.version=4.1 and workflow_revision=4.1 distinguish additive records. For subsection events record parent_section_id, subsection_id, lineage_id, checkpoint base/head, logical review ID and actual reviewer identity. Record joint-oracle coverage and invalidation before parent acceptance. All real child review, recheck, repair and synthesis costs roll up to the parent; lower logical full-pass count is not proof of lower cost or unchanged defect rate. Children never count as accepted features. No per-child audit ZIPs or parallel audit state machines.
+diff -ruN '--exclude=__pycache__' input-project/skill/sectioned-feature-development/references/execution.md output-project/skill/sectioned-feature-development/references/execution.md
+--- input-project/skill/sectioned-feature-development/references/execution.md	2026-09-05 17:08:48.002862535 +0000
++++ output-project/skill/sectioned-feature-development/references/execution.md	2026-09-05 17:14:35.346634093 +0000
+@@ -52,3 +52,7 @@
+ Broad suites once per appropriate stable gate. If logs truncate, save original output and summarize mechanically, not rerun the entire suite merely to recount tests. No old green check can bless later unreviewed product edits.
+ 
+ A blocked environment is reported separately from product defects. Feature closure stores final head, plan digest and outcome. `workflow.py follow-up` will never authorize appending a completed plan without an explicit user reopen request.
++
++## Internal checkpoints
++
++Parent section DAG remains authoritative. Serial child commits stay on the parent branch; CHECKPOINT_VERIFIED only enables the next local child. Another parent cannot depend on that child ID or consume it as an accepted contract. Freeze reviewer workspace before each checkpoint, and block child dispatch on open/invalidated checkpoint findings. `next-unit` and `acceptance-check` provide metadata checks, not automatic dispatch or proof of runtime evidence.
+diff -ruN '--exclude=__pycache__' input-project/skill/sectioned-feature-development/references/models.md output-project/skill/sectioned-feature-development/references/models.md
+--- input-project/skill/sectioned-feature-development/references/models.md	2026-09-05 17:08:48.003024274 +0000
++++ output-project/skill/sectioned-feature-development/references/models.md	2026-09-05 17:14:35.346802873 +0000
+@@ -47,3 +47,7 @@
+ Log actual selected profile, reason, requested/observed model+effort, context bytes, attempt and parent IDs, findings, repair model/time/tokens, validation/integration cost and user-discovered escapes. Never report a requested model as observed when the harness does not expose it.
+ 
+ Evaluate quality first, then total cost per accepted outcome including failed attempts. Use matched task families/oracle strength and repeated isolated replay only when separately authorized. Do not experiment on production just to collect data.
++
++## Subsection selection
++
++A parent may delegate different serial internal increments to different existing profiles when the interface permits it; neither model changes nor child labels reset repair or review history. Keep inseparable rules with one capable owner. Do not downgrade merely because a child has fewer lines. Parent synthesis/final review retains the whole contract and risk.
+diff -ruN '--exclude=__pycache__' input-project/skill/sectioned-feature-development/references/planning.md output-project/skill/sectioned-feature-development/references/planning.md
+--- input-project/skill/sectioned-feature-development/references/planning.md	2026-09-05 17:08:48.002435053 +0000
++++ output-project/skill/sectioned-feature-development/references/planning.md	2026-09-05 17:14:35.346526754 +0000
+@@ -44,3 +44,7 @@
+ ## Closed feature
+ 
+ Freeze final plan/hash and completion boundary in STATE.json. A later request gets a new request ID, requirement delta and trigger assessment. An explicitly requested reopen creates a new plan revision retaining the old hash and acceptance evidence; it does not silently append to the old file or reset counters. A newly discovered defect before completion remains within the active repair process.
++
++## Optional decomposition before implementation
++
++Apply [subsections.md](subsections.md) during the first PLAN author/review. Two meaningful implementation checkpoints inside one accepted behavior do not need two independent section acceptance pipelines. Keep atomic rules and transaction effects together; record their cross-condition oracle at parent level. In 4.1 children are serial and externally consumed only through parent acceptance. LOC estimates are advisory, not hard caps or quotas.
+diff -ruN '--exclude=__pycache__' input-project/skill/sectioned-feature-development/references/reviews.md output-project/skill/sectioned-feature-development/references/reviews.md
+--- input-project/skill/sectioned-feature-development/references/reviews.md	2026-09-05 17:08:48.003303457 +0000
++++ output-project/skill/sectioned-feature-development/references/reviews.md	2026-09-05 17:14:35.348629849 +0000
+@@ -2,7 +2,7 @@
+ 
+ ## One parent state machine
+ 
+-The bundled `$code-review` 4.0.1 implements `sfd-delegated-review/4.0` and is installed alongside this skill. In delegated mode it is a single-pass reviewer engine. Parent supplies context=DELEGATED_PASS, exact base/head, requirements, scope, exclusions, pass ID, expected result and validation evidence. Reviewer returns candidates, coverage and gaps; it does not admit, repair, launch another reviewer or grow scope. No second orchestrator is hidden inside code-review.
++The bundled `$code-review` 4.0.1 implements `sfd-delegated-review/4.1` and is installed alongside this skill. In delegated mode it is a single-pass reviewer engine. Parent supplies context=DELEGATED_PASS, exact base/head, requirements, scope, exclusions, pass ID, expected result and validation evidence. Reviewer returns candidates, coverage and gaps; it does not admit, repair, launch another reviewer or grow scope. No second orchestrator is hidden inside code-review.
+ 
+ ## Providers and assurance
+ 
+@@ -38,3 +38,9 @@
+ ## Required packet output
+ 
+ Pass ID/provider/actual identity; exact candidate; inspected paths; tests reused/newly run/not runnable; candidate IDs and evidence; proposed classes; confidence/gaps; CLEAN/MATERIAL_CANDIDATES/INSUFFICIENT_EVIDENCE. Main alone decides section acceptance and feature readiness. Historical provider-specific verdict strings are normalized without claiming they are today's runtime enum.
++
++## Subsection coverage under the same parent pass
++
++`SUBSECTION_DELTA` covers a new bounded child increment and parent shared invariants; `PARENT_RECONCILIATION` finishes cumulative coverage at final HEAD. Both use the same logical primary pass and the available real originating reviewer, with explicit continuity gaps where unavoidable. They do not earn separate Clean A/B pairs. Parent ONE/TWO and final review rules remain unchanged; all repair attempts share the original lineage. See [subsections.md](subsections.md).
++
++Compatibility: DELEGATED_PASS accepts legacy atomic `sfd-delegated-review/4.0`; new child packets use `sfd-delegated-review/4.1`.
+diff -ruN '--exclude=__pycache__' input-project/skill/sectioned-feature-development/references/subsections.md output-project/skill/sectioned-feature-development/references/subsections.md
+--- input-project/skill/sectioned-feature-development/references/subsections.md	1970-01-01 00:00:00.000000000 +0000
++++ output-project/skill/sectioned-feature-development/references/subsections.md	2026-09-05 17:14:35.346202634 +0000
+@@ -0,0 +1,90 @@
++# Subsections — implementation granularity, not acceptance multiplication
++
++## Contents
++1. [Two levels](#two-levels)
++2. [When to decompose](#when-to-decompose)
++3. [Plan contract](#plan-contract)
++4. [Checkpoint execution and review](#checkpoint-execution-and-review)
++5. [Parent acceptance](#parent-acceptance)
++6. [Budget and change control](#budget-and-change-control)
++7. [Git, scheduling and continuity](#git-scheduling-and-continuity)
++8. [Migration and audit](#migration-and-audit)
++
++## Two levels
++
++A **section** is the externally consumed acceptance/integration boundary: one approved behavior contract, shared invariants, assurance, original repair lineage and downstream dependency identity.
++
++A **subsection** is a bounded product implementation plus its tests and scoped review checkpoint **inside** that boundary. It can introduce a real internal helper/domain before the public adapter, provided the parent names its concrete consumer and the intermediate code is safe. It is not independently releaseable/accepted and does not unlock another section.
++
++An ordinary work step (write cases, implement a rule, run tests) does not need a subsection. A row in a case matrix is not automatically a subsection. A dotted historical ID is not a hierarchy: `S04.1.2` remains a section if it was accepted as one. Explicit metadata, not punctuation, defines parenthood.
++
++Maximum nesting in 4.1: section → subsection. No sub-subsections, independent child PLAN gates, child ONE/TWO, new child repair budgets or recursively recreated recovery lineages.
++
++## When to decompose
++
++Use subsections prospectively when all three hold:
++- the parent contains at least two distinguishable **real product increments** or different reasoning loads;
++- an earlier increment can be meaningfully exercised/reviewed before expensive dependent code is written;
++- a shared external contract, state machine, transaction or final consumer still requires one joint acceptance.
++
++Examples: simulation primitives→event composition; exact representation/identity→atomic producer transaction; analysis candidate→frozen publication/delivery; worker/current-state→historical reconstruction. Two or three checkpoints are often enough, but this is not a quota.
++
++Keep an atomic section when dividing it would separate two sides of the same rule, create a duplicate validator/parser/state owner, require a fake success path, or save no meaningful context. Status×body-failure priority is one matrix; splitting “timeout” from “non-2xx” does not establish two independent contracts. Validator and extractor must consume the same parsed representation, not become independently approved owners.
++
++Use a separate full section instead if another section must depend on an increment early, or it truly has an independent product/release/ownership contract. Do not export an unaccepted child by bypassing the parent gate.
++
++LOC is diagnostic, never a stop/split/compact-code trigger. A known larger but coherent increment is allowed. New dependencies or inseparable rule interactions, not crossing 300/650/700 lines, justify revisiting granularity.
++
++## Plan contract
++
++Keep the existing `sections` DAG. Only decomposed parents add `delivery_mode=SUBSECTIONS`, explicit `lineage_id`, `shared_invariants`, `joint_oracles`, and a serial ordered `subsections` list. Each child supplies ID/parent, scope subset, concrete outcome, planned consumer, safe intermediate state, same-parent predecessors, model, check IDs and its scoped oracle.
++
++The parent retains original requirements, resource limits, exemptions, write envelope, consumers, assurance and budget. No child may weaken these or create an unsupported guarantee. Child tests are written beside the changed behavior; don't create an evidence-only product node or a framework to make the schedule prettier.
++
++Model profiles may differ only at meaningful interfaces. Do not manufacture a shared API solely to route a few lines to a cheap model. The parent review sees the complete shared contract from the first checkpoint, including which behavior is intentionally not implemented yet.
++
++## Checkpoint execution and review
++
++1. Reserve **one parent primary full-review slot** at the first checkpoint; its scope is incrementally inspected, not yet CLEAN for the parent. Keep feature-wide Astra/GLM alternation unchanged.
++2. Implement one child on the existing parent worktree/branch; add targeted behavior tests and make a coherent commit. Don't announce the still-incomplete public feature as supported.
++3. Freeze the checkpoint SHA. Send `SUBSECTION_DELTA` under `DELEGATED_PASS` to the parent primary reviewer: predecessor reviewed head→candidate, child scope, parent invariants, pending behaviors, exact checks. New construction is reviewed, not only repair code; “delta” refers to range, not reduced rigor.
++4. Main admits material findings; repair and verify on that reviewer, with the **shared parent lineage**. No next dependent child while the checkpoint has an admitted open defect or an invalidated invariant.
++5. Record `CHECKPOINT_VERIFIED` with base/head, checks and review artifact; not `ACCEPTED`. Continue the next child. Do not create another PLAN.md/state/report hierarchy; one current task packet and one parent ledger are enough.
++6. If a later change invalidates earlier code, record the exact prior checkpoint/paths/invariant, review that delta and rerun affected joint cases. Do not reopen all historical lines or clear old evidence because of a new child number.
++
++One primary reviewer session is preferred across children, preserving coverage. Where provider/harness cannot resume a terminal session, use the existing explicit same-provider delta-with-gap policy or stop under strict continuity. Different actual agents are never falsely reported as one session. Every real invocation, including checkpoint reviews, counts in cost telemetry even when it does not advance the full-pass index.
++
++## Parent acceptance
++
++After the last child, the primary reviewer performs **PARENT_RECONCILIATION** on the final parent candidate: reconcile cumulative diff coverage, all admitted closures, intentionally deferred behavior, cross-child interactions, real consumer and the complete parent invariant/oracle matrix. This is completion of the primary pass, not another automatic full rediscovery pass.
++
++A set of locally green child tests is insufficient. Parent-specific joint oracles execute on the final candidate (or demonstrably identical relevant input/environment); primary coverage must explicitly account for every child and any later invalidation. If evidence cannot establish cumulative coverage, conduct the missing bounded review; do not label it clean from a checklist.
++
++Parent assurance remains unchanged:
++- ONE, no admitted material defect anywhere: completed primary/reconciliation can accept.
++- ONE with an admitted material repair, or TWO: **one fresh independent parent final full review** at the exact final candidate is still required.
++- Final reviewer sees the original parent base→final diff, entire approved contract and joint evidence; it is distinct from all writers and primary reviewer instances. It is not given a requirement to trust checkpoints.
++
++No fresh independent final per child. Final findings return to that final reviewer for bounded delta closure and consume the same parent repair budget. Parent acceptance/integration is the only event that unblocks external dependents.
++
++## Budget and change control
++
++Count **attempted admitted repair waves**, not successful closure only. All child checkpoint, parent reconciliation and final repairs share the original parent lineage's five ordinary waves. A compatible batch may contain multiple finding IDs, but retries after failed closure remain attempts and count. Initial implementation refinement before independent/admitted finding is logged but is not retroactively counted as repair.
++
++Adding/reordering a child, changing a model, a new run, recovery, parent rename or provider fallback never replenishes the budget. If an advisor authorizes a narrowly named extra attempt, keep the cumulative count above five and record its explicit authority; no new general five-wave allowance.
++
++When only internal remaining decomposition changes, preserve existing implementation and review evidence; freeze at a safe boundary and obtain one bounded PLAN delta if interfaces/acceptance/dependencies change. No full PLAN re-review merely because a child list grew. An already completed feature stays closed under the existing follow-up rule.
++
++## Git, scheduling and continuity
++
++One parent branch/worktree by default; serial children, no concurrent sibling child writers in 4.1. Independent **parents** may still run in isolated worktrees under the existing path/contract/resource checks. Parent write/resource reservations remain conservative throughout; don't release a shared Cargo.lock reservation merely because child1 finished without an approved scope revision.
++
++More than one parent **or more than one executable subsection** requires EXECUTE_WITH_COMMITS on a dedicated feature branch. A single parent with children cannot be used to evade the user's multi-part branch/commit rule. Partial child commits stay on the parent's branch until parent acceptance, unless a separately approved independent section is extracted.
++
++`workflow.py next-unit` proposes the next serial child from the actual state; it does not dispatch an agent. `acceptance-check` validates recorded gate evidence metadata, not the authenticity or completeness of arbitrary claims. Main must still verify Git ancestry, actual tests, artifacts and identities. The tool cannot enforce a sandbox by itself.
++
++## Migration and audit
++
++Old schema-4 plans without children still validate; schema remains 4 with additive `workflow_revision=4.1`. Do not reinterpret accepted dotted IDs or rewrite old counters. For an active atomic section, finish its existing review/candidate boundary before adding a decomposition; never reset a live writer or require retroactive child evidence.
++
++Audit distinguishes parent acceptance from checkpoint verification. Record parent/child/lineage, logical review ID, real reviewer ID, checkpoint base/head, inherited counter before/after, invalidated checkpoints, joint-oracle result and time/cost across the entire parent. Compare against flat sections by accepted outcome, not by artificially improving child pass rate or decreasing logical full-pass count.
+diff -ruN '--exclude=__pycache__' input-project/skill/sectioned-feature-development/scripts/audit.py output-project/skill/sectioned-feature-development/scripts/audit.py
+--- input-project/skill/sectioned-feature-development/scripts/audit.py	2026-09-05 17:08:48.003761054 +0000
++++ output-project/skill/sectioned-feature-development/scripts/audit.py	2026-09-05 17:22:03.965090702 +0000
+@@ -64,6 +64,10 @@
+    raise Invalid(f'event identity mismatch line {n}')
+   if not isinstance(e.get('family'),str) or not e['family'] or not isinstance(e.get('event_id'),str) or not e['event_id'] or e.get('capture') not in {'LIVE','RECONSTRUCTED'}:
+    raise Invalid(f'invalid event envelope line {n}')
++  if e.get('family')=='subsection':
++   if not isinstance(e.get('parent_section_id'),str) or not isinstance(e.get('subsection_id'),str) or not e.get('lineage_id') or e['parent_section_id']==e['subsection_id']:
++    raise Invalid('subsection event requires distinct parent/child and inherited lineage')
++   if e.get('section_id') not in {None,e['parent_section_id']}:raise Invalid('subsection event section_id must name parent')
+   if e['event_id'] in event_ids:raise Invalid('duplicate event ID')
+   event_ids.add(e['event_id'])
+  for key,pathkey in [('plan_sha256','plan_path'),('requirements_sha256','requirements_path')]:
+diff -ruN '--exclude=__pycache__' input-project/skill/sectioned-feature-development/scripts/workflow.py output-project/skill/sectioned-feature-development/scripts/workflow.py
+--- input-project/skill/sectioned-feature-development/scripts/workflow.py	2026-09-05 17:08:48.004217208 +0000
++++ output-project/skill/sectioned-feature-development/scripts/workflow.py	2026-09-05 17:28:14.849260064 +0000
+@@ -1,5 +1,5 @@
+ #!/usr/bin/env python3
+-"""SFD v4 plan/DAG checks and narrow local state helpers. No Git mutations or agent calls."""
++"""SFD v4/4.1 plan/DAG/checkpoint checks and narrow local state helpers. No Git mutations or agent calls."""
+ from __future__ import annotations
+ import argparse
+ import contextlib
+@@ -139,6 +139,7 @@
+     for s in sections:
+         if any(order.index(d) >= order.index(s['id']) for d in s['depends_on']):
+             raise Invalid('integration order violates dependencies')
++    validate_subsections(p)
+ 
+ def ready(p: dict, state: dict, plan_hash: str) -> dict:
+     validate(p)
+@@ -232,11 +233,245 @@
+         return 'NEW_REVISION_PRESERVE_CLOSED_PLAN' if explicit_reopen else 'NEW_REQUEST_REASSESS_LOCAL_OR_NEW_FEATURE'
+     return 'ASSESS_ACTIVE_REQUIREMENT_DELTA'
+ 
++# 4.1 additive plan/state helpers; schema-4 atomic plans remain valid.
++def inside(path, envelopes):
++    path = path_prefix(path)
++    return any(path == path_prefix(root) or path.startswith(path_prefix(root) + '/') for root in envelopes)
++
++
++def validate_subsections(p):
++    parents = {s['id'] for s in p['sections']}
++    all_ids = set(parents)
++    for s in p['sections']:
++        children = s.get('subsections', [])
++        mode = s.get('delivery_mode', 'ATOMIC')
++        if mode not in {'ATOMIC', 'SUBSECTIONS'}:
++            raise Invalid('invalid delivery_mode')
++        if mode == 'ATOMIC':
++            if children: raise Invalid('atomic section cannot contain subsections')
++            continue
++        if p.get('workflow_revision') != '4.1': raise Invalid('subsections require workflow_revision=4.1')
++        if not isinstance(children, list) or len(children) < 2: raise Invalid('use work steps for fewer than two real increments')
++        if p['execution_mode'] != 'EXECUTE_WITH_COMMITS' or p['feature_branch'] == p['main_branch']:
++            raise Invalid('MULTI_UNIT_REQUIRES_COMMITS_AND_FEATURE_BRANCH')
++        if not isinstance(s.get('lineage_id'), str) or not ID.fullmatch(s['lineage_id']):
++            raise Invalid('explicit original lineage_id required')
++        invariants = s.get('shared_invariants')
++        if not isinstance(invariants, list) or not invariants or any(not isinstance(x,str) or not ID.fullmatch(x) for x in invariants) or len(invariants) != len(set(invariants)):
++            raise Invalid('unique parent invariant IDs required')
++        oracles = s.get('joint_oracles')
++        if not isinstance(oracles, list) or not oracles: raise Invalid('parent joint_oracles required')
++        covered = set(); oracle_ids = set()
++        for o in oracles:
++            if not isinstance(o,dict) or not ID.fullmatch(str(o.get('id',''))) or o['id'] in oracle_ids:
++                raise Invalid('unique joint oracle IDs required')
++            oracle_ids.add(o['id'])
++            ci, ii = o.get('check_ids'), o.get('invariants')
++            if not isinstance(ci,list) or not ci or any(x not in s['check_ids'] for x in ci):raise Invalid('joint oracle checks must be in parent checks')
++            if not isinstance(ii,list) or not ii or any(x not in invariants for x in ii):raise Invalid('joint oracle invariant mismatch')
++            if not o.get('procedure') or not o.get('expected'):raise Invalid('joint oracle needs concrete procedure and outcome')
++            covered.update(ii)
++        if covered != set(invariants):raise Invalid('uncovered parent invariant')
++        seen = set()
++        for c in children:
++            if not isinstance(c,dict) or c.get('unit_kind') != 'SUBSECTION':raise Invalid('explicit SUBSECTION type required')
++            cid=c.get('id')
++            if not isinstance(cid,str) or not ID.fullmatch(cid) or cid in all_ids:raise Invalid('unique child identity required')
++            all_ids.add(cid)
++            if c.get('parent_section_id') != s['id']:raise Invalid('child parent mismatch')
++            if any(k in c for k in ('subsections','assurance','repair_limit','repair_budget','lineage_id','branch','final_review','max_loc','loc_hard_cap','line_budget')):
++                raise Invalid('child cannot add nesting, independent budget/assurance/branch or LOC cap')
++            deps=c.get('depends_on')
++            if not isinstance(deps,list) or len(set(deps))!=len(deps) or any(x not in seen for x in deps):raise Invalid('child dependencies must be earlier same-parent children')
++            if c.get('profile') not in PROFILES:raise Invalid('unknown child implementation profile')
++            for key in ('write_paths','read_paths','check_ids','requirement_ids'):
++                if not isinstance(c.get(key),list) or any(not isinstance(x,str) for x in c[key]):raise Invalid('invalid child '+key)
++            if not c['write_paths'] or any(not inside(x,s['write_paths']) for x in c['write_paths']):raise Invalid('child writes outside parent scope')
++            if any(not inside(x,s['write_paths']+s['read_paths']) for x in c['read_paths']):raise Invalid('child reads outside frozen parent context')
++            if not c['check_ids'] or any(x not in s['check_ids'] for x in c['check_ids']):raise Invalid('child check IDs must be declared by parent')
++            if not c['requirement_ids'] or any(x not in s['requirement_ids'] for x in c['requirement_ids']):raise Invalid('child requirements cannot add authority')
++            for key in ('title','outcome','consumer','safe_intermediate_state','oracle','model_reason'):
++                if not isinstance(c.get(key),str) or not c[key].strip():raise Invalid('child missing '+key)
++            seen.add(cid)
++
++
++def get_section(p, sid):
++    for s in p['sections']:
++        if s['id'] == sid:return s
++    raise Invalid('unknown parent section')
++
++
++def artifact_metadata(a):
++    return isinstance(a,dict) and isinstance(a.get('path'),str) and bool(a['path']) and bool(re.fullmatch('[a-f0-9]{64}',str(a.get('sha256',''))))
++
++
++def checkpoint_errors(c, rec, primary_id):
++    errors=[]
++    if rec.get('status')!='CHECKPOINT_VERIFIED':errors.append('not checkpoint verified')
++    if rec.get('invalidated',False):errors.append('checkpoint invalidated')
++    for key in ('base','head'):
++        if not SHA.fullmatch(str(rec.get(key,''))):errors.append('exact checkpoint '+key+' missing')
++    checks=rec.get('checks',{})
++    for cid in c['check_ids']:
++        e=checks.get(cid,{})
++        if e.get('result')!='PASS' or e.get('head')!=rec.get('head') or not artifact_metadata(e.get('artifact')):
++            errors.append('missing exact-head check '+cid)
++    r=rec.get('review',{})
++    if not primary_id or r.get('parent_review_id')!=primary_id:errors.append('parent primary review identity mismatch')
++    if r.get('result')!='CLEAN' or r.get('head')!=rec.get('head') or r.get('base')!=rec.get('base') or not r.get('actor_id') or not artifact_metadata(r.get('artifact')):
++        errors.append('checkpoint review evidence incomplete')
++    if rec.get('open_findings'):errors.append('open checkpoint findings')
++    return errors
++
++
++def next_unit(p, state, sid, plan_hash):
++    # Reuse the original plan approval, invocation and resource gates.
++    r=ready(p,state,plan_hash)
++    if r.get('reason'):return {'next':None,'reason':r['reason']}
++    s=get_section(p,sid);ss=state.get('sections',{}).get(sid,{})
++    if ss.get('status') in {'ACCEPTED','ABANDONED','COMPLETED','BLOCKED'}:
++        return {'next':None,'reason':'PARENT_NOT_DISPATCHABLE'}
++    if ss.get('open_findings'):return {'next':None,'reason':'PARENT_FINDING_BARRIER'}
++    if any(a['section_id']==sid for a in state.get('active',[])):
++        return {'next':None,'reason':'PARENT_ACTOR_BARRIER'}
++    if any(state.get('sections',{}).get(d,{}).get('status')!='ACCEPTED' or not state['sections'][d].get('integrated') for d in s['depends_on']):
++        return {'next':None,'reason':'PARENT_DEPENDENCY_BARRIER'}
++    active=state.get('active',[])
++    if sum(a.get('stage') in {'IMPLEMENT','REPAIR'} for a in active)>=p['max_parallel_writers']:
++        return {'next':None,'reason':'WRITER_CAPACITY'}
++    for a in active:
++        other=get_section(p,a['section_id'])
++        if not s['parallel_eligible'] or not other['parallel_eligible'] or conflicts(s,other):
++            return {'next':None,'reason':'PARENT_RESOURCE_CONFLICT'}
++    if s.get('delivery_mode','ATOMIC')=='ATOMIC':
++        return {'next':sid,'unit_kind':'SECTION','profile':s['profile']}
++    ledger=ss.get('subsections',{})
++    for c in s['subsections']:
++        rec=ledger.get(c['id'],{})
++        if rec.get('status','PENDING')=='PENDING':
++            return {'next':c['id'],'parent_section_id':sid,'unit_kind':'SUBSECTION','profile':c['profile'],'lineage_id':s['lineage_id']}
++        errors=checkpoint_errors(c,rec,ss.get('primary_review_id'))
++        if errors:return {'next':None,'reason':'CHECKPOINT_BARRIER','subsection_id':c['id'],'errors':errors}
++    return {'next':None,'reason':'PARENT_RECONCILIATION_REQUIRED'}
++
++
++def used_repairs(ss, lineage):
++    # Imported local counts may be smaller than the documented original lineage count.
++    values=[ss.get('repair_waves',0),ss.get('original_lineage_waves',0),
++            ss.get('repair_lineage',{}).get('waves_used',0),lineage.get('waves_used',0)]
++    if any(type(v) is not int or v<0 for v in values):raise Invalid('repair counts must be known non-negative integers before mutation')
++    return max(values)
++
++
++def acceptance_check(p, state, sid, head, plan_hash):
++    errors=[]
++    gate=ready(p,state,plan_hash)
++    if gate.get('reason'):errors.append(gate['reason'])
++    s=get_section(p,sid);ss=state.get('sections',{}).get(sid,{})
++    if s.get('delivery_mode')!='SUBSECTIONS':raise Invalid('atomic acceptance remains the existing parent workflow')
++    if not SHA.fullmatch(head):raise Invalid('exact final candidate required')
++    if ss.get('candidate_head')!=head:errors.append('candidate/state head mismatch')
++    if any(x['section_id']==sid for x in state.get('active',[])):errors.append('parent actor still active')
++    if ss.get('open_findings'):errors.append('parent has open findings')
++    expected={c['id'] for c in s['subsections']};primary_actors=set();writers=set(ss.get('writer_actor_ids',[]));artifacts=[];ancestry=[]
++    previous_head=ss.get('section_base')
++    if not SHA.fullmatch(str(previous_head or '')):errors.append('missing original parent section_base')
++    for c in s['subsections']:
++        rec=ss.get('subsections',{}).get(c['id'],{})
++        if rec.get('base')!=previous_head:errors.append('checkpoint coverage gap before '+c['id'])
++        previous_head=rec.get('head')
++        errors.extend(c['id']+': '+e for e in checkpoint_errors(c,rec,ss.get('primary_review_id')))
++        r=rec.get('review',{});primary_actors.add(r.get('actor_id'))
++        for key in ('base','head'):
++            if rec.get(key):ancestry.append(rec[key])
++        if r.get('artifact'):artifacts.append(r['artifact'])
++        artifacts.extend(e.get('artifact') for e in rec.get('checks',{}).values() if e.get('artifact'))
++        writers.update(rec.get('writer_actor_ids',[]))
++    primary=ss.get('primary_review',{})
++    if primary.get('base')!=ss.get('section_base'):errors.append('primary must reconcile original parent base to final candidate')
++    if primary.get('id')!=ss.get('primary_review_id') or primary.get('result')!='CLEAN' or primary.get('head')!=head or not primary.get('actor_id') or not artifact_metadata(primary.get('artifact')):
++        errors.append('whole-parent primary reconciliation missing')
++    primary_actors.add(primary.get('actor_id'))
++    if set(primary.get('covered_subsections',[]))!=expected or primary.get('open_invalidations')!=[]:
++        errors.append('cumulative coverage or invalidation reconciliation incomplete')
++    if primary.get('artifact'):artifacts.append(primary['artifact'])
++    for j in s['joint_oracles']:
++        e=ss.get('joint_evidence',{}).get(j['id'],{})
++        if e.get('result')!='PASS' or e.get('head')!=head or not artifact_metadata(e.get('artifact')):
++            errors.append('missing joint oracle at parent candidate: '+j['id'])
++        if e.get('artifact'):artifacts.append(e['artifact'])
++    for cid in s['check_ids']:
++        e=ss.get('final_checks',{}).get(cid,{})
++        if e.get('result')!='PASS' or e.get('head')!=head or not artifact_metadata(e.get('artifact')):
++            errors.append('missing parent required check: '+cid)
++        if e.get('artifact'):artifacts.append(e['artifact'])
++    if not writers or None in primary_actors:errors.append('missing actual writer/reviewer identities')
++    if writers & primary_actors:errors.append('writer cannot supply independent primary review')
++    budget=state.get('repair_lineages',{}).get(s['lineage_id'],{})
++    used=used_repairs(ss,budget)
++    needs_final=s['assurance']=='TWO' or used>0 or bool(ss.get('had_material_findings'))
++    if needs_final:
++        f=ss.get('final_review',{})
++        if f.get('result')!='CLEAN' or f.get('head')!=head or not f.get('actor_id') or f['actor_id'] in primary_actors|writers or not artifact_metadata(f.get('artifact')):
++            errors.append('fresh independent parent final evidence missing')
++        if f.get('artifact'):artifacts.append(f['artifact'])
++    return {'eligible_by_metadata':not errors,'errors':errors,'parent_section_id':sid,'candidate_head':head,'needs_final':needs_final,
++            'repair_waves':used,'evidence_artifacts':artifacts,'checkpoint_ancestry':sorted(set(ancestry)),
++            'warning':'No state mutation. Actual Git/artifact checks and semantic sufficiency remain required.'}
++
++
++def verify_acceptance_files(repo, result):
++    repo=repo.resolve();head=result['candidate_head']
++    subprocess.run(['git','-C',str(repo),'cat-file','-e',head+'^{commit}'],check=True,capture_output=True)
++    for old in result['checkpoint_ancestry']:
++        subprocess.run(['git','-C',str(repo),'merge-base','--is-ancestor',old,head],check=True,capture_output=True)
++    for a in result['evidence_artifacts']:
++        path=repo/a['path']
++        if not path.resolve().is_relative_to(repo) or not path.is_file() or digest(path)!=a['sha256']:
++            raise Invalid('missing/hash-mismatched evidence: '+str(a.get('path')))
++    result['git_ancestry_and_artifact_hashes_verified']=True
++    return result
++
++
++def reserve_repair(p, path, sid, child_id, attempt_id, findings, plan_hash):
++    if not ID.fullmatch(attempt_id) or not findings:raise Invalid('repair attempt ID and finding IDs required')
++    with lock(path.with_suffix('.lock')):
++        state=json.loads(path.read_text());gate=ready(p,state,plan_hash)
++        if gate.get('reason'):raise Invalid('repair barrier: '+gate['reason'])
++        s=get_section(p,sid);ss=state.get('sections',{}).get(sid,{})
++        if ss.get('status') in {'ACCEPTED','COMPLETED','ABANDONED'}:raise Invalid('closed parent is not a repair budget reset point')
++        if child_id and child_id not in {c['id'] for c in s.get('subsections',[])}:raise Invalid('unknown child for repair')
++        lineage=s.get('lineage_id',sid)
++        b=state.setdefault('repair_lineages',{}).setdefault(lineage,{'waves_used':used_repairs(ss,{}),'attempts':{},'recovery_used':bool(ss.get('recovery_used',False))})
++        attempts=b.setdefault('attempts',{})
++        payload={'section_id':sid,'subsection_id':child_id,'finding_ids':sorted(set(findings))}
++        if attempt_id in attempts:
++            prev=attempts[attempt_id]
++            if any(prev.get(k)!=v for k,v in payload.items()):raise Invalid('repair attempt ID semantic conflict')
++            return prev
++        if any(x['section_id']==sid for x in state.get('active',[])):raise Invalid('finish/reap current parent actor before repair reservation')
++        used=used_repairs(ss,b)
++        approval=b.get('extra_attempt_authority',{}).get(attempt_id,{})
++        if used>=5 and (not approval.get('request_id') or not re.fullmatch('[a-f0-9]{64}',str(approval.get('decision_sha256','')))):
++            raise Invalid('PARENT_REPAIR_LIMIT: no new child/model/run budget')
++        payload.update(wave=used+1,lineage_id=lineage,authority=approval or None)
++        attempts[attempt_id]=payload;b['waves_used']=used+1
++        ss['repair_waves']=used+1;ss['had_material_findings']=True
++        state.setdefault('sections',{})[sid]=ss
++        atomic_json(path,state);return payload
++
++
+ def main():
+     ap=argparse.ArgumentParser(description=__doc__); sub=ap.add_subparsers(dest='cmd',required=True)
+     for name in ('validate','ready'):
+         q=sub.add_parser(name);q.add_argument('plan',type=Path)
+         if name=='ready':q.add_argument('state',type=Path);q.add_argument('--repo',type=Path,required=True)
++    for name in ('next-unit','acceptance-check','reserve-repair'):
++        q=sub.add_parser(name);q.add_argument('plan',type=Path);q.add_argument('state',type=Path);q.add_argument('--section',required=True)
++        if name!='reserve-repair':q.add_argument('--repo',type=Path,required=True)
++        if name=='acceptance-check':q.add_argument('--head',required=True)
++        if name=='reserve-repair':
++            q.add_argument('--subsection');q.add_argument('--attempt-id',required=True);q.add_argument('--finding',action='append',required=True)
+     q=sub.add_parser('reserve-review');q.add_argument('state',type=Path);q.add_argument('--pass-id',required=True);q.add_argument('--head',required=True)
+     q=sub.add_parser('follow-up');q.add_argument('--status',required=True);q.add_argument('--explicit-reopen',action='store_true')
+     a=ap.parse_args()
+@@ -247,6 +482,16 @@
+             else:
+                 if a.repo:git_check(a.repo,p)
+                 result=ready(p,json.loads(a.state.read_text()),digest(a.plan))
++        elif a.cmd in {'next-unit','acceptance-check','reserve-repair'}:
++            p=load_plan(a.plan);state=json.loads(a.state.read_text());h=digest(a.plan)
++            if a.cmd=='next-unit':
++                git_check(a.repo,p);result=next_unit(p,state,a.section,h)
++            elif a.cmd=='acceptance-check':
++                result=acceptance_check(p,state,a.section,a.head,h)
++                if result['eligible_by_metadata']:result=verify_acceptance_files(a.repo,result)
++                else:
++                    print(json.dumps(result,ensure_ascii=False,indent=2));return 2
++            else:result=reserve_repair(p,a.state,a.section,a.subsection,a.attempt_id,a.finding,h)
+         elif a.cmd=='reserve-review':result=reserve_review(a.state,a.pass_id,a.head)
+         else:result={'disposition':follow_up(a.status,a.explicit_reopen)}
+         print(json.dumps(result,ensure_ascii=False,indent=2))

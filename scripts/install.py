@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Install SFD and named Codex agents. Dry-run by default; never rewrites AGENTS.md."""
+"""Install SFD, companion code-review, and named Codex agents. Dry-run by default; never rewrites AGENTS.md."""
 from __future__ import annotations
 import argparse
 import hashlib
@@ -22,16 +22,23 @@ def agent_files():
    raise ValueError(f'invalid agent configuration {p.name}')
  return files
 
-def targets(home):
- return [(ROOT/'skill/sectioned-feature-development',home/'skills/sectioned-feature-development')]+[(p,home/'agents'/p.name) for p in agent_files()]
+def targets(home, only='all'):
+ names=['code-review'] if only=='code-review' else ['sectioned-feature-development','code-review']
+ for name in names:
+  if not (ROOT/'skill'/name/'SKILL.md').is_file():
+   raise ValueError(f'missing bundled skill: {name}')
+ items=[(ROOT/'skill'/name,home/'skills'/name) for name in names]
+ if only=='all':items += [(p,home/'agents'/p.name) for p in agent_files()]
+ return items
 
 def main():
  p=argparse.ArgumentParser(description=__doc__)
  p.add_argument('--codex-home',type=Path,default=Path(os.environ.get('CODEX_HOME','~/.codex')).expanduser())
  p.add_argument('--apply',action='store_true');p.add_argument('--replace',action='store_true')
+ p.add_argument('--only',choices=['all','code-review'],default='all',help='all installs both skills and agents; code-review updates only the companion')
  a=p.parse_args();home=a.codex_home.expanduser().resolve()
  try:
-  items=targets(home)
+  items=targets(home,a.only)
   for src,dst in items:
    if dst.is_symlink():raise ValueError(f'refusing symlink target: {dst}')
    print(f'{src.relative_to(ROOT)} -> {dst}'+(' [exists]' if dst.exists() else ''))

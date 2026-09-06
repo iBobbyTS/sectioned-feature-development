@@ -56,7 +56,7 @@ class WorkflowTests(unittest.TestCase):
  def test_write_read_contract_resource_collisions(self):
   self.state['sections']['S01']={'status':'ACCEPTED','integrated':True}
   for key,value in [('read_paths',['src/ui']),('exclusive_resources',['db-shared']),('consumes_contracts',['new-ui-contract'])]:
-   p=copy.deepcopy(self.plan);p['sections'][2][key]=value
+   p=copy.deepcopy(self.plan);p['sections'][2][key]=(p['sections'][2][key]+value if key=='read_paths' else value)
    if key=='exclusive_resources':p['sections'][1][key]=value
    if key=='consumes_contracts':p['sections'][1]['mutates_contracts']=value
    with self.subTest(key=key):self.assertEqual(w.ready(p,self.state,'digest')['ready'],['S02'])

@@ -64,6 +64,10 @@ def validate_payload(m: dict, result: dict[str,bytes]) -> None:
    raise Invalid(f'event identity mismatch line {n}')
   if not isinstance(e.get('family'),str) or not e['family'] or not isinstance(e.get('event_id'),str) or not e['event_id'] or e.get('capture') not in {'LIVE','RECONSTRUCTED'}:
    raise Invalid(f'invalid event envelope line {n}')
+  if e.get('family')=='subsection':
+   if not isinstance(e.get('parent_section_id'),str) or not isinstance(e.get('subsection_id'),str) or not e.get('lineage_id') or e['parent_section_id']==e['subsection_id']:
+    raise Invalid('subsection event requires distinct parent/child and inherited lineage')
+   if e.get('section_id') not in {None,e['parent_section_id']}:raise Invalid('subsection event section_id must name parent')
   if e['event_id'] in event_ids:raise Invalid('duplicate event ID')
   event_ids.add(e['event_id'])
  for key,pathkey in [('plan_sha256','plan_path'),('requirements_sha256','requirements_path')]:

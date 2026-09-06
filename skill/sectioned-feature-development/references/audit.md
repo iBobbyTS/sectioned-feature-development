@@ -56,3 +56,7 @@ Product defect or unavailable runtime does not mean audit conflict. CONFLICTED r
 Use separate quality/efficiency/routing-compliance results, not one weighted score. Insufficient code evidence is excluded from quality comparison. Human-discovered escaped defects and eventual corrected quality are separate. Do not maximize skill usage coverage: correct de-escalation is success.
 
 Compare total cost per accepted task across matched task families, uncertainty/oracle tiers and difficulty tails. Production trials are not randomized benchmarks. State sample size, selection effects and missing data. A weak executor may cost more after premium review/repair; a long detailed plan may cost more than its cheap implementation saves. Update routing only after repeated evidence or a clear rule-level defect; don't reduce checks to hit a cost target.
+
+## 4.1 subsection observations
+
+Keep schema_version=4; producer.version=4.1 and workflow_revision=4.1 distinguish additive records. For subsection events record parent_section_id, subsection_id, lineage_id, checkpoint base/head, logical review ID and actual reviewer identity. Record joint-oracle coverage and invalidation before parent acceptance. All real child review, recheck, repair and synthesis costs roll up to the parent; lower logical full-pass count is not proof of lower cost or unchanged defect rate. Children never count as accepted features. No per-child audit ZIPs or parallel audit state machines.

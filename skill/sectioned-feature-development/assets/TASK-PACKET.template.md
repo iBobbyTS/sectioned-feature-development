@@ -13,3 +13,12 @@
 - stop conditions: missing semantic authority, changed owner boundary, wrong workspace, plan/model mismatch:
 
 Do not edit scheduler/audit state, future sections, user work or another worktree. Return source-grounded facts and unknowns, not claimed completion from a green build alone.
+
+## Optional subsection fields (parent inherits all authority)
+- unit_kind: SECTION | SUBSECTION
+- parent_section_id / subsection_id / lineage_id:
+- parent base / previous checkpoint / current candidate:
+- pending parent behavior and safe intermediate state:
+- shared invariant IDs / targeted checkpoint checks / joint parent oracle:
+- logical parent primary review ID / actual reviewer IDs / continuity status:
+- output: CHECKPOINT_VERIFIED only after parent admission; not ACCEPTED, not new budget.

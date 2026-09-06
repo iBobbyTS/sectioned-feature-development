@@ -1,0 +1,48 @@
+test_auxiliary_filter (test_audit.AuditTests.test_auxiliary_filter) ... ok
+test_changed_requires_explicit_replace (test_audit.AuditTests.test_changed_requires_explicit_replace) ... ok
+test_complete_requires_identity_sources (test_audit.AuditTests.test_complete_requires_identity_sources) ... ok
+test_event_identity_and_duplicates_blocked (test_audit.AuditTests.test_event_identity_and_duplicates_blocked) ... ok
+test_foreign_metadata_blocked (test_audit.AuditTests.test_foreign_metadata_blocked) ... ok
+test_hash_tamper_blocked (test_audit.AuditTests.test_hash_tamper_blocked) ... ok
+test_legacy_filter_not_current (test_audit.AuditTests.test_legacy_filter_not_current) ... ok
+test_publish_verify_idempotent (test_audit.AuditTests.test_publish_verify_idempotent) ... ok
+test_secret_and_nested_archive_paths_blocked (test_audit.AuditTests.test_secret_and_nested_archive_paths_blocked) ... ok
+test_symlink_and_path_escape_blocked (test_audit.AuditTests.test_symlink_and_path_escape_blocked) ... ok
+test_verify_rejects_hash_consistent_wrong_event_identity (test_audit.AuditTests.test_verify_rejects_hash_consistent_wrong_event_identity) ... ok
+test_verify_rejects_hash_consistent_wrong_source_identity (test_audit.AuditTests.test_verify_rejects_hash_consistent_wrong_source_identity) ... ok
+test_active_doc_links (test_project.ProjectTests.test_active_doc_links) ... ok
+test_agents_exact_six_combinations (test_project.ProjectTests.test_agents_exact_six_combinations) ... ok
+test_current_tool_family_only_in_adapter (test_project.ProjectTests.test_current_tool_family_only_in_adapter) ... ok
+test_exact_advisor_contract_hash (test_project.ProjectTests.test_exact_advisor_contract_hash) ... ok
+test_install_dry_run_and_apply (test_project.ProjectTests.test_install_dry_run_and_apply) ... ok
+test_active_companion_not_historical_only (test_review_compatibility.ReviewCompatibilityTests.test_active_companion_not_historical_only) ... ok
+test_companion_only_dry_run_does_not_write (test_review_compatibility.ReviewCompatibilityTests.test_companion_only_dry_run_does_not_write) ... ok
+test_companion_only_replace_backs_up_and_preserves_others (test_review_compatibility.ReviewCompatibilityTests.test_companion_only_replace_backs_up_and_preserves_others) ... ok
+test_parent_and_companion_protocol_agree (test_review_compatibility.ReviewCompatibilityTests.test_parent_and_companion_protocol_agree) ... ok
+test_required_assurance_and_continuity_are_not_weakened (test_review_compatibility.ReviewCompatibilityTests.test_required_assurance_and_continuity_are_not_weakened) ... ok
+test_same_candidate_is_required_for_clean (test_review_compatibility.ReviewCompatibilityTests.test_same_candidate_is_required_for_clean) ... ok
+test_standalone_lifecycle_is_not_delegated_authority (test_review_compatibility.ReviewCompatibilityTests.test_standalone_lifecycle_is_not_delegated_authority) ... ok
+test_symlink_companion_target_is_rejected (test_review_compatibility.ReviewCompatibilityTests.test_symlink_companion_target_is_rejected) ... ok
+test_advisor_barrier (test_workflow.WorkflowTests.test_advisor_barrier) ... ok
+test_completed_plan_cannot_execute (test_workflow.WorkflowTests.test_completed_plan_cannot_execute) ... ok
+test_cycle_and_stage_cycle_blocked (test_workflow.WorkflowTests.test_cycle_and_stage_cycle_blocked) ... ok
+test_independent_consumers_ready (test_workflow.WorkflowTests.test_independent_consumers_ready) ... ok
+test_independent_work_can_run_during_review (test_workflow.WorkflowTests.test_independent_work_can_run_during_review) ... ok
+test_multisection_main_blocked (test_workflow.WorkflowTests.test_multisection_main_blocked) ... ok
+test_multisection_no_commit_blocked (test_workflow.WorkflowTests.test_multisection_no_commit_blocked) ... ok
+test_only_root_ready (test_workflow.WorkflowTests.test_only_root_ready) ... ok
+test_path_escape_and_glob_blocked (test_workflow.WorkflowTests.test_path_escape_and_glob_blocked) ... ok
+test_pending_parent_review_blocks_consumer (test_workflow.WorkflowTests.test_pending_parent_review_blocks_consumer) ... ok
+test_real_git_branch_worktree_and_ignore (test_workflow.WorkflowTests.test_real_git_branch_worktree_and_ignore) ... ok
+test_review_reservation_concurrent_idempotent (test_workflow.WorkflowTests.test_review_reservation_concurrent_idempotent) ... ok
+test_single_no_commit_allowed (test_workflow.WorkflowTests.test_single_no_commit_allowed) ... ok
+test_stale_plan_and_auto_approval_blocked (test_workflow.WorkflowTests.test_stale_plan_and_auto_approval_blocked) ... ok
+test_template_and_dag (test_workflow.WorkflowTests.test_template_and_dag) ... ok
+test_unintegrated_dependency_blocks (test_workflow.WorkflowTests.test_unintegrated_dependency_blocks) ... ok
+test_unknown_check_blocked (test_workflow.WorkflowTests.test_unknown_check_blocked) ... ok
+test_write_read_contract_resource_collisions (test_workflow.WorkflowTests.test_write_read_contract_resource_collisions) ... ok
+
+----------------------------------------------------------------------
+Ran 43 tests in 4.795s
+
+OK

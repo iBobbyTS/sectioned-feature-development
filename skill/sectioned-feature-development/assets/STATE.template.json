@@ -24,8 +24,16 @@
     "S03": {
       "status": "PENDING",
       "integrated": false,
-      "repair_waves": 0
+      "repair_waves": 0,
+      "primary_review_id": null,
+      "subsections": {},
+      "primary_review": null,
+      "joint_evidence": {},
+      "final_checks": {},
+      "final_review": null
     }
   },
-  "completion": null
+  "completion": null,
+  "workflow_revision": "4.1",
+  "repair_lineages": {}
 }

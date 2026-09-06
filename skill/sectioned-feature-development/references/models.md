@@ -1,6 +1,6 @@
 # Task–model routing
 
-This is a provisional policy to evaluate, not a factual capability boundary. Source/task-family and small real-world comparisons disagree; no matched per-item evaluation establishes the optimal six configurations for these repositories. Research and limitations are in `docs/version-history/v4.0/RESEARCH.md` of the project distribution.
+This is a provisional policy to evaluate, not a factual capability boundary. Source/task-family and small real-world comparisons disagree; no matched per-item evaluation establishes the optimal six configurations for these repositories. Research and limitations are in `docs/version-history/4.0/RESEARCH.md` of the project distribution.
 
 ## Fixed roster
 
@@ -47,3 +47,7 @@ First classify a failed attempt: model/semantic error, plan/requirement error, e
 Log actual selected profile, reason, requested/observed model+effort, context bytes, attempt and parent IDs, findings, repair model/time/tokens, validation/integration cost and user-discovered escapes. Never report a requested model as observed when the harness does not expose it.
 
 Evaluate quality first, then total cost per accepted outcome including failed attempts. Use matched task families/oracle strength and repeated isolated replay only when separately authorized. Do not experiment on production just to collect data.
+
+## Subsection selection
+
+A parent may delegate different serial internal increments to different existing profiles when the interface permits it; neither model changes nor child labels reset repair or review history. Keep inseparable rules with one capable owner. Do not downgrade merely because a child has fewer lines. Parent synthesis/final review retains the whole contract and risk.

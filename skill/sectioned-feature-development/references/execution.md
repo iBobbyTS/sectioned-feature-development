@@ -52,3 +52,7 @@ Merged candidate checks prove composition. Keep a final `unproven_composition` l
 Broad suites once per appropriate stable gate. If logs truncate, save original output and summarize mechanically, not rerun the entire suite merely to recount tests. No old green check can bless later unreviewed product edits.
 
 A blocked environment is reported separately from product defects. Feature closure stores final head, plan digest and outcome. `workflow.py follow-up` will never authorize appending a completed plan without an explicit user reopen request.
+
+## Internal checkpoints
+
+Parent section DAG remains authoritative. Serial child commits stay on the parent branch; CHECKPOINT_VERIFIED only enables the next local child. Another parent cannot depend on that child ID or consume it as an accepted contract. Freeze reviewer workspace before each checkpoint, and block child dispatch on open/invalidated checkpoint findings. `next-unit` and `acceptance-check` provide metadata checks, not automatic dispatch or proof of runtime evidence.

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""SFD v4 plan/DAG checks and narrow local state helpers. No Git mutations or agent calls."""
+"""SFD v4/4.1 plan/DAG/checkpoint checks and narrow local state helpers. No Git mutations or agent calls."""
 from __future__ import annotations
 import argparse
 import contextlib
@@ -139,6 +139,7 @@ def validate(p: dict) -> None:
     for s in sections:
         if any(order.index(d) >= order.index(s['id']) for d in s['depends_on']):
             raise Invalid('integration order violates dependencies')
+    validate_subsections(p)
 
 def ready(p: dict, state: dict, plan_hash: str) -> dict:
     validate(p)
@@ -232,11 +233,245 @@ def follow_up(status: str, explicit_reopen: bool) -> str:
         return 'NEW_REVISION_PRESERVE_CLOSED_PLAN' if explicit_reopen else 'NEW_REQUEST_REASSESS_LOCAL_OR_NEW_FEATURE'
     return 'ASSESS_ACTIVE_REQUIREMENT_DELTA'
 
+# 4.1 additive plan/state helpers; schema-4 atomic plans remain valid.
+def inside(path, envelopes):
+    path = path_prefix(path)
+    return any(path == path_prefix(root) or path.startswith(path_prefix(root) + '/') for root in envelopes)
+
+
+def validate_subsections(p):
+    parents = {s['id'] for s in p['sections']}
+    all_ids = set(parents)
+    for s in p['sections']:
+        children = s.get('subsections', [])
+        mode = s.get('delivery_mode', 'ATOMIC')
+        if mode not in {'ATOMIC', 'SUBSECTIONS'}:
+            raise Invalid('invalid delivery_mode')
+        if mode == 'ATOMIC':
+            if children: raise Invalid('atomic section cannot contain subsections')
+            continue
+        if p.get('workflow_revision') != '4.1': raise Invalid('subsections require workflow_revision=4.1')
+        if not isinstance(children, list) or len(children) < 2: raise Invalid('use work steps for fewer than two real increments')
+        if p['execution_mode'] != 'EXECUTE_WITH_COMMITS' or p['feature_branch'] == p['main_branch']:
+            raise Invalid('MULTI_UNIT_REQUIRES_COMMITS_AND_FEATURE_BRANCH')
+        if not isinstance(s.get('lineage_id'), str) or not ID.fullmatch(s['lineage_id']):
+            raise Invalid('explicit original lineage_id required')
+        invariants = s.get('shared_invariants')
+        if not isinstance(invariants, list) or not invariants or any(not isinstance(x,str) or not ID.fullmatch(x) for x in invariants) or len(invariants) != len(set(invariants)):
+            raise Invalid('unique parent invariant IDs required')
+        oracles = s.get('joint_oracles')
+        if not isinstance(oracles, list) or not oracles: raise Invalid('parent joint_oracles required')
+        covered = set(); oracle_ids = set()
+        for o in oracles:
+            if not isinstance(o,dict) or not ID.fullmatch(str(o.get('id',''))) or o['id'] in oracle_ids:
+                raise Invalid('unique joint oracle IDs required')
+            oracle_ids.add(o['id'])
+            ci, ii = o.get('check_ids'), o.get('invariants')
+            if not isinstance(ci,list) or not ci or any(x not in s['check_ids'] for x in ci):raise Invalid('joint oracle checks must be in parent checks')
+            if not isinstance(ii,list) or not ii or any(x not in invariants for x in ii):raise Invalid('joint oracle invariant mismatch')
+            if not o.get('procedure') or not o.get('expected'):raise Invalid('joint oracle needs concrete procedure and outcome')
+            covered.update(ii)
+        if covered != set(invariants):raise Invalid('uncovered parent invariant')
+        seen = set()
+        for c in children:
+            if not isinstance(c,dict) or c.get('unit_kind') != 'SUBSECTION':raise Invalid('explicit SUBSECTION type required')
+            cid=c.get('id')
+            if not isinstance(cid,str) or not ID.fullmatch(cid) or cid in all_ids:raise Invalid('unique child identity required')
+            all_ids.add(cid)
+            if c.get('parent_section_id') != s['id']:raise Invalid('child parent mismatch')
+            if any(k in c for k in ('subsections','assurance','repair_limit','repair_budget','lineage_id','branch','final_review','max_loc','loc_hard_cap','line_budget')):
+                raise Invalid('child cannot add nesting, independent budget/assurance/branch or LOC cap')
+            deps=c.get('depends_on')
+            if not isinstance(deps,list) or len(set(deps))!=len(deps) or any(x not in seen for x in deps):raise Invalid('child dependencies must be earlier same-parent children')
+            if c.get('profile') not in PROFILES:raise Invalid('unknown child implementation profile')
+            for key in ('write_paths','read_paths','check_ids','requirement_ids'):
+                if not isinstance(c.get(key),list) or any(not isinstance(x,str) for x in c[key]):raise Invalid('invalid child '+key)
+            if not c['write_paths'] or any(not inside(x,s['write_paths']) for x in c['write_paths']):raise Invalid('child writes outside parent scope')
+            if any(not inside(x,s['write_paths']+s['read_paths']) for x in c['read_paths']):raise Invalid('child reads outside frozen parent context')
+            if not c['check_ids'] or any(x not in s['check_ids'] for x in c['check_ids']):raise Invalid('child check IDs must be declared by parent')
+            if not c['requirement_ids'] or any(x not in s['requirement_ids'] for x in c['requirement_ids']):raise Invalid('child requirements cannot add authority')
+            for key in ('title','outcome','consumer','safe_intermediate_state','oracle','model_reason'):
+                if not isinstance(c.get(key),str) or not c[key].strip():raise Invalid('child missing '+key)
+            seen.add(cid)
+
+
+def get_section(p, sid):
+    for s in p['sections']:
+        if s['id'] == sid:return s
+    raise Invalid('unknown parent section')
+
+
+def artifact_metadata(a):
+    return isinstance(a,dict) and isinstance(a.get('path'),str) and bool(a['path']) and bool(re.fullmatch('[a-f0-9]{64}',str(a.get('sha256',''))))
+
+
+def checkpoint_errors(c, rec, primary_id):
+    errors=[]
+    if rec.get('status')!='CHECKPOINT_VERIFIED':errors.append('not checkpoint verified')
+    if rec.get('invalidated',False):errors.append('checkpoint invalidated')
+    for key in ('base','head'):
+        if not SHA.fullmatch(str(rec.get(key,''))):errors.append('exact checkpoint '+key+' missing')
+    checks=rec.get('checks',{})
+    for cid in c['check_ids']:
+        e=checks.get(cid,{})
+        if e.get('result')!='PASS' or e.get('head')!=rec.get('head') or not artifact_metadata(e.get('artifact')):
+            errors.append('missing exact-head check '+cid)
+    r=rec.get('review',{})
+    if not primary_id or r.get('parent_review_id')!=primary_id:errors.append('parent primary review identity mismatch')
+    if r.get('result')!='CLEAN' or r.get('head')!=rec.get('head') or r.get('base')!=rec.get('base') or not r.get('actor_id') or not artifact_metadata(r.get('artifact')):
+        errors.append('checkpoint review evidence incomplete')
+    if rec.get('open_findings'):errors.append('open checkpoint findings')
+    return errors
+
+
+def next_unit(p, state, sid, plan_hash):
+    # Reuse the original plan approval, invocation and resource gates.
+    r=ready(p,state,plan_hash)
+    if r.get('reason'):return {'next':None,'reason':r['reason']}
+    s=get_section(p,sid);ss=state.get('sections',{}).get(sid,{})
+    if ss.get('status') in {'ACCEPTED','ABANDONED','COMPLETED','BLOCKED'}:
+        return {'next':None,'reason':'PARENT_NOT_DISPATCHABLE'}
+    if ss.get('open_findings'):return {'next':None,'reason':'PARENT_FINDING_BARRIER'}
+    if any(a['section_id']==sid for a in state.get('active',[])):
+        return {'next':None,'reason':'PARENT_ACTOR_BARRIER'}
+    if any(state.get('sections',{}).get(d,{}).get('status')!='ACCEPTED' or not state['sections'][d].get('integrated') for d in s['depends_on']):
+        return {'next':None,'reason':'PARENT_DEPENDENCY_BARRIER'}
+    active=state.get('active',[])
+    if sum(a.get('stage') in {'IMPLEMENT','REPAIR'} for a in active)>=p['max_parallel_writers']:
+        return {'next':None,'reason':'WRITER_CAPACITY'}
+    for a in active:
+        other=get_section(p,a['section_id'])
+        if not s['parallel_eligible'] or not other['parallel_eligible'] or conflicts(s,other):
+            return {'next':None,'reason':'PARENT_RESOURCE_CONFLICT'}
+    if s.get('delivery_mode','ATOMIC')=='ATOMIC':
+        return {'next':sid,'unit_kind':'SECTION','profile':s['profile']}
+    ledger=ss.get('subsections',{})
+    for c in s['subsections']:
+        rec=ledger.get(c['id'],{})
+        if rec.get('status','PENDING')=='PENDING':
+            return {'next':c['id'],'parent_section_id':sid,'unit_kind':'SUBSECTION','profile':c['profile'],'lineage_id':s['lineage_id']}
+        errors=checkpoint_errors(c,rec,ss.get('primary_review_id'))
+        if errors:return {'next':None,'reason':'CHECKPOINT_BARRIER','subsection_id':c['id'],'errors':errors}
+    return {'next':None,'reason':'PARENT_RECONCILIATION_REQUIRED'}
+
+
+def used_repairs(ss, lineage):
+    # Imported local counts may be smaller than the documented original lineage count.
+    values=[ss.get('repair_waves',0),ss.get('original_lineage_waves',0),
+            ss.get('repair_lineage',{}).get('waves_used',0),lineage.get('waves_used',0)]
+    if any(type(v) is not int or v<0 for v in values):raise Invalid('repair counts must be known non-negative integers before mutation')
+    return max(values)
+
+
+def acceptance_check(p, state, sid, head, plan_hash):
+    errors=[]
+    gate=ready(p,state,plan_hash)
+    if gate.get('reason'):errors.append(gate['reason'])
+    s=get_section(p,sid);ss=state.get('sections',{}).get(sid,{})
+    if s.get('delivery_mode')!='SUBSECTIONS':raise Invalid('atomic acceptance remains the existing parent workflow')
+    if not SHA.fullmatch(head):raise Invalid('exact final candidate required')
+    if ss.get('candidate_head')!=head:errors.append('candidate/state head mismatch')
+    if any(x['section_id']==sid for x in state.get('active',[])):errors.append('parent actor still active')
+    if ss.get('open_findings'):errors.append('parent has open findings')
+    expected={c['id'] for c in s['subsections']};primary_actors=set();writers=set(ss.get('writer_actor_ids',[]));artifacts=[];ancestry=[]
+    previous_head=ss.get('section_base')
+    if not SHA.fullmatch(str(previous_head or '')):errors.append('missing original parent section_base')
+    for c in s['subsections']:
+        rec=ss.get('subsections',{}).get(c['id'],{})
+        if rec.get('base')!=previous_head:errors.append('checkpoint coverage gap before '+c['id'])
+        previous_head=rec.get('head')
+        errors.extend(c['id']+': '+e for e in checkpoint_errors(c,rec,ss.get('primary_review_id')))
+        r=rec.get('review',{});primary_actors.add(r.get('actor_id'))
+        for key in ('base','head'):
+            if rec.get(key):ancestry.append(rec[key])
+        if r.get('artifact'):artifacts.append(r['artifact'])
+        artifacts.extend(e.get('artifact') for e in rec.get('checks',{}).values() if e.get('artifact'))
+        writers.update(rec.get('writer_actor_ids',[]))
+    primary=ss.get('primary_review',{})
+    if primary.get('base')!=ss.get('section_base'):errors.append('primary must reconcile original parent base to final candidate')
+    if primary.get('id')!=ss.get('primary_review_id') or primary.get('result')!='CLEAN' or primary.get('head')!=head or not primary.get('actor_id') or not artifact_metadata(primary.get('artifact')):
+        errors.append('whole-parent primary reconciliation missing')
+    primary_actors.add(primary.get('actor_id'))
+    if set(primary.get('covered_subsections',[]))!=expected or primary.get('open_invalidations')!=[]:
+        errors.append('cumulative coverage or invalidation reconciliation incomplete')
+    if primary.get('artifact'):artifacts.append(primary['artifact'])
+    for j in s['joint_oracles']:
+        e=ss.get('joint_evidence',{}).get(j['id'],{})
+        if e.get('result')!='PASS' or e.get('head')!=head or not artifact_metadata(e.get('artifact')):
+            errors.append('missing joint oracle at parent candidate: '+j['id'])
+        if e.get('artifact'):artifacts.append(e['artifact'])
+    for cid in s['check_ids']:
+        e=ss.get('final_checks',{}).get(cid,{})
+        if e.get('result')!='PASS' or e.get('head')!=head or not artifact_metadata(e.get('artifact')):
+            errors.append('missing parent required check: '+cid)
+        if e.get('artifact'):artifacts.append(e['artifact'])
+    if not writers or None in primary_actors:errors.append('missing actual writer/reviewer identities')
+    if writers & primary_actors:errors.append('writer cannot supply independent primary review')
+    budget=state.get('repair_lineages',{}).get(s['lineage_id'],{})
+    used=used_repairs(ss,budget)
+    needs_final=s['assurance']=='TWO' or used>0 or bool(ss.get('had_material_findings'))
+    if needs_final:
+        f=ss.get('final_review',{})
+        if f.get('result')!='CLEAN' or f.get('head')!=head or not f.get('actor_id') or f['actor_id'] in primary_actors|writers or not artifact_metadata(f.get('artifact')):
+            errors.append('fresh independent parent final evidence missing')
+        if f.get('artifact'):artifacts.append(f['artifact'])
+    return {'eligible_by_metadata':not errors,'errors':errors,'parent_section_id':sid,'candidate_head':head,'needs_final':needs_final,
+            'repair_waves':used,'evidence_artifacts':artifacts,'checkpoint_ancestry':sorted(set(ancestry)),
+            'warning':'No state mutation. Actual Git/artifact checks and semantic sufficiency remain required.'}
+
+
+def verify_acceptance_files(repo, result):
+    repo=repo.resolve();head=result['candidate_head']
+    subprocess.run(['git','-C',str(repo),'cat-file','-e',head+'^{commit}'],check=True,capture_output=True)
+    for old in result['checkpoint_ancestry']:
+        subprocess.run(['git','-C',str(repo),'merge-base','--is-ancestor',old,head],check=True,capture_output=True)
+    for a in result['evidence_artifacts']:
+        path=repo/a['path']
+        if not path.resolve().is_relative_to(repo) or not path.is_file() or digest(path)!=a['sha256']:
+            raise Invalid('missing/hash-mismatched evidence: '+str(a.get('path')))
+    result['git_ancestry_and_artifact_hashes_verified']=True
+    return result
+
+
+def reserve_repair(p, path, sid, child_id, attempt_id, findings, plan_hash):
+    if not ID.fullmatch(attempt_id) or not findings:raise Invalid('repair attempt ID and finding IDs required')
+    with lock(path.with_suffix('.lock')):
+        state=json.loads(path.read_text());gate=ready(p,state,plan_hash)
+        if gate.get('reason'):raise Invalid('repair barrier: '+gate['reason'])
+        s=get_section(p,sid);ss=state.get('sections',{}).get(sid,{})
+        if ss.get('status') in {'ACCEPTED','COMPLETED','ABANDONED'}:raise Invalid('closed parent is not a repair budget reset point')
+        if child_id and child_id not in {c['id'] for c in s.get('subsections',[])}:raise Invalid('unknown child for repair')
+        lineage=s.get('lineage_id',sid)
+        b=state.setdefault('repair_lineages',{}).setdefault(lineage,{'waves_used':used_repairs(ss,{}),'attempts':{},'recovery_used':bool(ss.get('recovery_used',False))})
+        attempts=b.setdefault('attempts',{})
+        payload={'section_id':sid,'subsection_id':child_id,'finding_ids':sorted(set(findings))}
+        if attempt_id in attempts:
+            prev=attempts[attempt_id]
+            if any(prev.get(k)!=v for k,v in payload.items()):raise Invalid('repair attempt ID semantic conflict')
+            return prev
+        if any(x['section_id']==sid for x in state.get('active',[])):raise Invalid('finish/reap current parent actor before repair reservation')
+        used=used_repairs(ss,b)
+        approval=b.get('extra_attempt_authority',{}).get(attempt_id,{})
+        if used>=5 and (not approval.get('request_id') or not re.fullmatch('[a-f0-9]{64}',str(approval.get('decision_sha256','')))):
+            raise Invalid('PARENT_REPAIR_LIMIT: no new child/model/run budget')
+        payload.update(wave=used+1,lineage_id=lineage,authority=approval or None)
+        attempts[attempt_id]=payload;b['waves_used']=used+1
+        ss['repair_waves']=used+1;ss['had_material_findings']=True
+        state.setdefault('sections',{})[sid]=ss
+        atomic_json(path,state);return payload
+
+
 def main():
     ap=argparse.ArgumentParser(description=__doc__); sub=ap.add_subparsers(dest='cmd',required=True)
     for name in ('validate','ready'):
         q=sub.add_parser(name);q.add_argument('plan',type=Path)
         if name=='ready':q.add_argument('state',type=Path);q.add_argument('--repo',type=Path,required=True)
+    for name in ('next-unit','acceptance-check','reserve-repair'):
+        q=sub.add_parser(name);q.add_argument('plan',type=Path);q.add_argument('state',type=Path);q.add_argument('--section',required=True)
+        if name!='reserve-repair':q.add_argument('--repo',type=Path,required=True)
+        if name=='acceptance-check':q.add_argument('--head',required=True)
+        if name=='reserve-repair':
+            q.add_argument('--subsection');q.add_argument('--attempt-id',required=True);q.add_argument('--finding',action='append',required=True)
     q=sub.add_parser('reserve-review');q.add_argument('state',type=Path);q.add_argument('--pass-id',required=True);q.add_argument('--head',required=True)
     q=sub.add_parser('follow-up');q.add_argument('--status',required=True);q.add_argument('--explicit-reopen',action='store_true')
     a=ap.parse_args()
@@ -247,6 +482,16 @@ def main():
             else:
                 if a.repo:git_check(a.repo,p)
                 result=ready(p,json.loads(a.state.read_text()),digest(a.plan))
+        elif a.cmd in {'next-unit','acceptance-check','reserve-repair'}:
+            p=load_plan(a.plan);state=json.loads(a.state.read_text());h=digest(a.plan)
+            if a.cmd=='next-unit':
+                git_check(a.repo,p);result=next_unit(p,state,a.section,h)
+            elif a.cmd=='acceptance-check':
+                result=acceptance_check(p,state,a.section,a.head,h)
+                if result['eligible_by_metadata']:result=verify_acceptance_files(a.repo,result)
+                else:
+                    print(json.dumps(result,ensure_ascii=False,indent=2));return 2
+            else:result=reserve_repair(p,a.state,a.section,a.subsection,a.attempt_id,a.finding,h)
         elif a.cmd=='reserve-review':result=reserve_review(a.state,a.pass_id,a.head)
         else:result={'disposition':follow_up(a.status,a.explicit_reopen)}
         print(json.dumps(result,ensure_ascii=False,indent=2))

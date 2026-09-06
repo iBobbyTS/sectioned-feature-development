@@ -44,3 +44,7 @@ If a local patch would duplicate a semantic rule or patch several consumers arou
 ## Closed feature
 
 Freeze final plan/hash and completion boundary in STATE.json. A later request gets a new request ID, requirement delta and trigger assessment. An explicitly requested reopen creates a new plan revision retaining the old hash and acceptance evidence; it does not silently append to the old file or reset counters. A newly discovered defect before completion remains within the active repair process.
+
+## Optional decomposition before implementation
+
+Apply [subsections.md](subsections.md) during the first PLAN author/review. Two meaningful implementation checkpoints inside one accepted behavior do not need two independent section acceptance pipelines. Keep atomic rules and transaction effects together; record their cross-condition oracle at parent level. In 4.1 children are serial and externally consumed only through parent acceptance. LOC estimates are advisory, not hard caps or quotas.

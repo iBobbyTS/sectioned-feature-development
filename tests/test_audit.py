@@ -74,6 +74,13 @@ class AuditTests(unittest.TestCase):
   self.m['identity']['requirements_sha256']='f'*64
   self.rewrite_zip(p,{'metadata.json':json.dumps(self.m).encode()})
   with self.assertRaises(a.Invalid):a.verify(p)
+ def test_subsection_events_require_parent_identity(self):
+  e={'feature_id':self.m['feature_id'],'run_id':self.m['run_id'],'event_id':'child-check','capture':'LIVE','family':'subsection'}
+  (self.root/'events.jsonl').write_text(json.dumps(e)+'\n');self.update()
+  with self.assertRaises(a.Invalid):a.inputs(self.root)
+  e.update(parent_section_id='C03',section_id='C03',subsection_id='C03.u1',lineage_id='C03')
+  (self.root/'events.jsonl').write_text(json.dumps(e)+'\n');self.update()
+  self.assertEqual(a.inputs(self.root)[0]['feature_id'],self.m['feature_id'])
  def test_auxiliary_filter(self):
   z=Path(self.tmp.name)/'case-3.zip'
   with zipfile.ZipFile(z,'w') as f:f.writestr('SUMMARY.md','runtime stdout')

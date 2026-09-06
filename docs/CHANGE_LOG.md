@@ -1,5 +1,23 @@
 # Change Log
 
+## 4.1 — 2026-09-05
+
+- 可选单层subsections，将实现/review checkpoint与parent验收边界分离；禁止递归与LOC强拆。
+- 共同不变量、一次累计primary coverage、parent joint reconciliation和独立final；不机械复制子节Clean A/B。
+- 预算/authority/provider序号继承；subsection通过不解锁外部依赖。
+- 添加child调度、metadata验收和累计repair工具/回归；schema4原子计划兼容。
+- 补齐缺失的当前code-review目录并升级delegated4.1，保留4.0兼容；安装器能真实完整安装。
+- PPPMS计划基于当前附件的active45节点而非先前初稿；四个pending parent各加两checkpoint，accepted/B02不重开。
+
+
+## 4.0.1 — 2026-09-04
+
+- 修复 4.0 漏打包 active code-review 的配套缺口；历史附录不作为运行依赖。
+- 新增明确的 DELEGATED_PASS 与 STANDALONE 分流；delegated 不 admission、不 repair、不接受 section、不增加 reviewer。
+- 对齐三种 pass signal、原 ONE/TWO、feature-wide Astra/GLM 序号和 terminal continuation gap；不改变 4.0 工作流语义。
+- 安装器默认安装两份 Skill 和八个 agent；新增 --only code-review 供已安装 4.0 用户最小升级。
+- 增加协议/安装回归测试；4.0 历史记录与已有脚本保持不变。
+
 ## 4.0 — 2026-09-04
 
 - 单一当前 Skill 替代两套过时 MCP variant；配套八个 agent TOML、六个 model/effort组合。

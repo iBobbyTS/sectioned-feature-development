@@ -2,7 +2,7 @@
 
 ## One parent state machine
 
-The installed `$code-review` is a single-pass reviewer engine. Parent supplies context=DELEGATED_PASS, exact base/head, requirements, scope, exclusions, pass ID, expected result and validation evidence. Reviewer returns candidates, coverage and gaps; it does not admit, repair, launch another reviewer or grow scope. No second orchestrator is hidden inside code-review.
+The bundled `$code-review` 4.0.1 implements `sfd-delegated-review/4.1` and is installed alongside this skill. In delegated mode it is a single-pass reviewer engine. Parent supplies context=DELEGATED_PASS, exact base/head, requirements, scope, exclusions, pass ID, expected result and validation evidence. Reviewer returns candidates, coverage and gaps; it does not admit, repair, launch another reviewer or grow scope. No second orchestrator is hidden inside code-review.
 
 ## Providers and assurance
 
@@ -38,3 +38,9 @@ Five waves per original section lineage (including final findings) are the ordin
 ## Required packet output
 
 Pass ID/provider/actual identity; exact candidate; inspected paths; tests reused/newly run/not runnable; candidate IDs and evidence; proposed classes; confidence/gaps; CLEAN/MATERIAL_CANDIDATES/INSUFFICIENT_EVIDENCE. Main alone decides section acceptance and feature readiness. Historical provider-specific verdict strings are normalized without claiming they are today's runtime enum.
+
+## Subsection coverage under the same parent pass
+
+`SUBSECTION_DELTA` covers a new bounded child increment and parent shared invariants; `PARENT_RECONCILIATION` finishes cumulative coverage at final HEAD. Both use the same logical primary pass and the available real originating reviewer, with explicit continuity gaps where unavoidable. They do not earn separate Clean A/B pairs. Parent ONE/TWO and final review rules remain unchanged; all repair attempts share the original lineage. See [subsections.md](subsections.md).
+
+Compatibility: DELEGATED_PASS accepts legacy atomic `sfd-delegated-review/4.0`; new child packets use `sfd-delegated-review/4.1`.

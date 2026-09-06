@@ -1,4 +1,4 @@
-# PLAN-FULL — 替换为当前功能
+# PLAN-FULL — 替换为当前功能（4.1可选subsection示例）
 
 此文件是模板，不是已批准计划。示例 SHA/路径/检查命令必须替换为当前仓库事实。单 section 可以保留一项并采用 serial；不得为了使用示例并行图人为制造任务。
 
@@ -247,9 +247,88 @@
         "S03-focused"
       ],
       "oracle": "Replace with executable acceptance and failure trace.",
-      "acceptance": "REQ-001 observable behavior and existing contracts pass."
+      "acceptance": "REQ-001 observable behavior and existing contracts pass.",
+      "delivery_mode": "SUBSECTIONS",
+      "lineage_id": "S03",
+      "shared_invariants": [
+        "IMPORT-SAME-RULE",
+        "IMPORT-ATOMIC-RESULT"
+      ],
+      "joint_oracles": [
+        {
+          "id": "IMPORT-JOINT",
+          "invariants": [
+            "IMPORT-SAME-RULE",
+            "IMPORT-ATOMIC-RESULT"
+          ],
+          "check_ids": [
+            "S03-focused"
+          ],
+          "procedure": "同一输入通过内部转换和实际consumer，验证错误不留下部分结果。",
+          "expected": "producer/consumer共用同一规则且原子错误语义保持。"
+        }
+      ],
+      "subsections": [
+        {
+          "id": "S03.u1",
+          "unit_kind": "SUBSECTION",
+          "parent_section_id": "S03",
+          "depends_on": [],
+          "title": "内部转换",
+          "outcome": "实现实际转换及相关回归",
+          "consumer": "u2实际consumer",
+          "safe_intermediate_state": "只在parent分支保留真实未公开实现，不假装整体feature已完成。",
+          "oracle": "原需求的输入/错误结果与生产调用对照；替换成实际source-backed oracle。",
+          "profile": "luna_xhigh",
+          "model_reason": "演示模板；实际按任务结构决定，不因child编号降档。",
+          "requirement_ids": [
+            "REQ-001"
+          ],
+          "write_paths": [
+            "src/importer",
+            "tests/importer"
+          ],
+          "read_paths": [
+            "src/shared.py"
+          ],
+          "check_ids": [
+            "S03-focused"
+          ]
+        },
+        {
+          "id": "S03.u2",
+          "unit_kind": "SUBSECTION",
+          "parent_section_id": "S03",
+          "depends_on": [
+            "S03.u1"
+          ],
+          "title": "consumer闭环",
+          "outcome": "复用转换并接入真实consumer",
+          "consumer": "父节外部消费者",
+          "safe_intermediate_state": "只在parent分支保留真实未公开实现，不假装整体feature已完成。",
+          "oracle": "原需求的输入/错误结果与生产调用对照；替换成实际source-backed oracle。",
+          "profile": "luna_xhigh",
+          "model_reason": "演示模板；实际按任务结构决定，不因child编号降档。",
+          "requirement_ids": [
+            "REQ-001"
+          ],
+          "write_paths": [
+            "src/importer",
+            "tests/importer"
+          ],
+          "read_paths": [
+            "src/shared.py"
+          ],
+          "check_ids": [
+            "S03-focused"
+          ]
+        }
+      ]
     }
-  ]
+  ],
+  "workflow_revision": "4.1"
 }
 ```
 <!-- /SFD_PLAN_V4 -->
+
+S03演示一层内部checkpoint，S01/S02仍atomic。不要照抄无实际产品边界的分解；每个child都须有真实consumer与parent共同oracle。

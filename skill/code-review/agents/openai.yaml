@@ -1,0 +1,4 @@
+interface:
+  display_name: "Code Review"
+  short_description: "Bounded reviews with explicit parent and checkpoint scope"
+  default_prompt: "Use $code-review for one evidence-backed pass over the supplied scope; return findings, coverage and gaps without taking over parent acceptance."

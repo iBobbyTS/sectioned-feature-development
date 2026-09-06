@@ -1,4 +1,4 @@
 interface:
   display_name: "Sectioned Feature Development"
-  short_description: "Bounded delivery with model routing and isolated parallel work"
-  default_prompt: "Use $sectioned-feature-development to deliver this feature with a confirmed contract, bounded reviews and verified integration."
+  short_description: "Nested implementation with parent-level acceptance"
+  default_prompt: "Use $sectioned-feature-development to plan bounded sections and optional internal checkpoints without multiplying acceptance gates."
