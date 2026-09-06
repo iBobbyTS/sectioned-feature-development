@@ -1,5 +1,5 @@
 name = "implementer_1"
-description = "Implement novel structural reasoning or difficult cross-owner behavior that cannot be safely reduced to independent simpler work."
+description = "Only use when main agent is in the $sectioned-feature-development workflow"
 model = "gpt-6-astra"
 model_reasoning_effort = "medium"
 sandbox_mode = "workspace-write"

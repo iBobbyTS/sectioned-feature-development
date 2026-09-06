@@ -1,5 +1,5 @@
 name = "implementer_4"
-description = "Implement a fully specified transformation with an existing analogue and decisive regression; not a general debugging fallback."
+description = "Only use when main agent is in the $sectioned-feature-development workflow"
 model = "gpt-5.6-luna"
 model_reasoning_effort = "xhigh"
 sandbox_mode = "workspace-write"

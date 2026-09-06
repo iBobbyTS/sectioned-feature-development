@@ -1,5 +1,5 @@
 name = "implementer_2"
-description = "Implement non-trivial repository behavior requiring coupled semantic reasoning; default implementation worker."
+description = "Only use when main agent is in the $sectioned-feature-development workflow"
 model = "gpt-5.6-sol"
 model_reasoning_effort = "medium"
 sandbox_mode = "workspace-write"

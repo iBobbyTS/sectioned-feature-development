@@ -1,5 +1,5 @@
 name = "implementer_3"
-description = "Implement familiar component/consumer behavior using a stable canonical owner and bounded state."
+description = "Only use when main agent is in the $sectioned-feature-development workflow"
 model = "gpt-5.6-terra"
 model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
