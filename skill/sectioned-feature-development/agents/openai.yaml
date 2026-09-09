@@ -1,4 +1,4 @@
 interface:
   display_name: "Sectioned Feature Development"
-  short_description: "v3.9 contracts with model-aware internal checkpoints"
-  default_prompt: "Use $sectioned-feature-development; preserve the full plan, delegation and review lifecycle. Partition business sections and internal model-aware subsections without expanding scope."
+  short_description: "Frozen impl tiers, beta ZAS, external Advisor"
+  default_prompt: "Use $sectioned-feature-development; preserve the full plan, delegation and review lifecycle. Freeze each section/subsection implementation tier in PLAN-FULL; use capability-gated beta ZAS and the external human Advisor without expanding scope."

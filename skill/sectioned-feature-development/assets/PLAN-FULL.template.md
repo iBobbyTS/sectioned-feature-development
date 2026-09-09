@@ -135,6 +135,12 @@ One coherent observable behavior increment.
 
 - `none`, or an explicit requirement-anchored mechanism.
 
+### Frozen implementation assignment
+
+- Impl agent: [@impl_std](subagent://impl_std) (replace with the chosen tier; must match schedule `profile`).
+- Evidence-based reason and task features:
+- No dispatch-time AUTO selection; every subsection also declares its own profile.
+
 ### Review intensity
 
 - `MECHANICAL | BOUNDED | HIGH_RISK`
@@ -199,6 +205,12 @@ One coherent observable behavior increment.
 
 - `none`.
 
+### Frozen implementation assignment
+
+- Impl agent: [@impl_std](subagent://impl_std) (replace with the chosen tier; must match schedule `profile`).
+- Evidence-based reason and task features:
+- No dispatch-time AUTO selection; every subsection also declares its own profile.
+
 ### Review intensity
 
 - `MECHANICAL | BOUNDED | HIGH_RISK`
@@ -224,7 +236,7 @@ One coherent observable behavior increment.
 - Material changes that require a new initial review baseline.
 <!-- SECTION:S02:END -->
 
-## 4.2 executable schedule (additive to the v3.9 contract above)
+## 4.3 executable schedule (additive to the v3.9 contract above)
 
 The prose remains the behavior/authority contract; this block contains scheduling facts. Section IDs and dependencies must agree. Complete all placeholders. Before independent PLAN review, freeze this proposal with status FROZEN. Reviewer and admission operate on that exact file hash; only STATE/FEATURE-STATE become APPROVED, so approval does not itself mutate the reviewed plan. A completed plan is not edited to append later requests.
 
@@ -232,7 +244,7 @@ The prose remains the behavior/authority contract; this block contains schedulin
 ```json
 {
   "schema_version": 4,
-  "workflow_revision": "4.2",
+  "workflow_revision": "4.3",
   "feature_id": "example-feature",
   "run_id": "example-run",
   "invocation_source": "USER_EXPLICIT",
@@ -264,7 +276,7 @@ The prose remains the behavior/authority contract; this block contains schedulin
         "explore"
       ],
       "parallelism": "serial",
-      "profile": "plan_writer"
+      "profile": "orchestrator"
     },
     {
       "id": "plan-review",
@@ -334,7 +346,7 @@ The prose remains the behavior/authority contract; this block contains schedulin
       "consumes_contracts": [],
       "parallel_eligible": false,
       "parallel_reason": "Serial example; replace with proven independence only.",
-      "profile": "implementer_2",
+      "profile": "impl_std",
       "model_reason": "Replace with verified task evidence.",
       "task_features": {
         "analogue": "REPLACE_WITH_VERIFIED_OWNER",
@@ -381,7 +393,7 @@ The prose remains the behavior/authority contract; this block contains schedulin
       ],
       "parallel_eligible": false,
       "parallel_reason": "Serial example; replace with proven independence only.",
-      "profile": "implementer_2",
+      "profile": "impl_std",
       "model_reason": "Replace with verified task evidence.",
       "task_features": {
         "analogue": "REPLACE_WITH_VERIFIED_OWNER",

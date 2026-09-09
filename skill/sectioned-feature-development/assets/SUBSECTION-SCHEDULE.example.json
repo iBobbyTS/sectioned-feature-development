@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "workflow_revision": "4.2",
+  "workflow_revision": "4.3",
   "feature_id": "example-subsections",
   "run_id": "example-run",
   "invocation_source": "USER_EXPLICIT",
@@ -32,7 +32,7 @@
         "explore"
       ],
       "parallelism": "serial",
-      "profile": "plan_writer"
+      "profile": "main_orchestrator"
     },
     {
       "id": "plan-review",
@@ -102,7 +102,7 @@
       "consumes_contracts": [],
       "parallel_eligible": false,
       "parallel_reason": "Serial example; replace with proven independence only.",
-      "profile": "implementer_2",
+      "profile": "impl_std",
       "model_reason": "Replace with verified task evidence.",
       "task_features": {
         "analogue": "REPLACE_WITH_VERIFIED_OWNER",
@@ -149,7 +149,7 @@
       ],
       "parallel_eligible": false,
       "parallel_reason": "Serial example; replace with proven independence only.",
-      "profile": "implementer_2",
+      "profile": "impl_std",
       "model_reason": "Replace with verified task evidence.",
       "task_features": {
         "analogue": "REPLACE_WITH_VERIFIED_OWNER",
@@ -210,7 +210,7 @@
             "S02-focused"
           ],
           "oracle": "Named behavior example at checkpoint.",
-          "profile": "implementer_3",
+          "profile": "impl_mini",
           "model_reason": "Replace with analogue/state/oracle evidence.",
           "task_features": {
             "analogue": "REPLACE_WITH_VERIFIED_OWNER",
@@ -250,7 +250,7 @@
             "S02-focused"
           ],
           "oracle": "Named behavior example at checkpoint.",
-          "profile": "implementer_2",
+          "profile": "impl_std",
           "model_reason": "Replace with analogue/state/oracle evidence.",
           "task_features": {
             "analogue": "REPLACE_WITH_VERIFIED_OWNER",

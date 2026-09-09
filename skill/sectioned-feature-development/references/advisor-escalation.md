@@ -1,43 +1,69 @@
-# Native advisor — independent adjudication
+# External Advisor Escalation — restored 3.9 contract
 
-The advisor is [@advisor](subagent://advisor) (GPT-6 Astra, xhigh). It is not a third routine reviewer or a manual ChatGPT Pro task. It remains available when audit is off. Model superiority is not the trigger, especially when the main agent also uses Astra; the benefit sought is a fresh bounded evidence view.
+## Contents
+- [Purpose and exact trigger rules](#purpose-and-exact-trigger-rules)
+- [Non-triggers](#non-triggers)
+- [Freeze and package](#freeze-and-package)
+- [Human handoff](#human-handoff)
+- [Result intake](#result-intake)
+- [Audit](#audit)
 
-## Rare triggers
+## Purpose and exact trigger rules
 
-Preserve the prior handoff contract and trigger intent:
-- ADV-01: an original lineage used one structural recovery and again cannot converge within its cumulative boundary.
-- ADV-02: independent valid reviews retain incompatible, materially consequential conclusions on the same frozen proposition after one shared targeted reproduction.
-- ADV-03: the only proposed next action discards a substantial coherent accepted design/section; a local defect is not sufficient.
-- ADV-04: two unresolved trust/consistency/state-owner models have materially different complexity or safety consequences and existing authority/probes do not select one.
-- ADV-05: source, deterministic evidence and review conclusions still contradict release readiness after one comparable rerun.
-- ADV-06: bounded real probing leaves external system shape uncertain, and proceeding commits to an expensive/irreversible architecture.
+The Advisor is outside the Codex runtime. The human obtains its decision and returns it. Do not spawn a native advisor, invoke a second reviewer as a substitute, or select the Advisor's provider/model. This mechanism is independent of audit and remains active with audit OFF.
 
-No escalation for ordinary findings, first hard cap, a simple owner product question, tool outage, credentials, audit gaps or incidental nits. Do not request an advisor before and after every task.
+Restore the six v3.9 triggers without widening them:
 
-## Isolated context
+1. `ADV-01 SECOND_CONVERGENCE_FAILURE`: an original section lineage consumed its one automatic hard-cap recovery; the replacement reaches another hard cap or requires a sixth independent material repair wave.
+2. `ADV-02 HIGH_IMPACT_REVIEWER_CONFLICT`: native and ZCode reviewers independently recommend mutually exclusive architecture, trust/persistence/public-compatibility boundary, scope authority or merge verdict, and one bounded probe/test cannot resolve it. The historical contract's “Sol position” field records the actual current GPT reviewer identity explicitly.
+3. `ADV-03 LARGE_VALIDATED_WORK_DISCARD`: restart-from-base or major-owner rebound would discard roughly 20% or more of validated feature implementation; the cause is not an ordinary local bug.
+4. `ADV-04 UNRESOLVED_TRUST_OR_CONSISTENCY_MODEL`: two materially different security, credential, durability or concurrency models remain plausible; both over- and under-design have serious consequences; repository/user authority does not choose one.
+5. `ADV-05 RELEASE_EVIDENCE_CONTRADICTION`: source/Git, deterministic checks and independent reviewers disagree about final-HEAD release readiness, and one same-environment deterministic rerun cannot reconcile it.
+6. `ADV-06 EXTERNAL_SYSTEM_SHAPE_UNRESOLVED`: after one bounded real probe, external protocol/agent/harness shape is still unknown and continuing would lock in a costly or irreversible architecture.
 
-Keep `assets/ADVISOR-REQUEST.template.md` byte-for-byte unchanged. Fill it as a request, not a persuasive answer. The legacy “Sol position” field may describe the current GPT review position explicitly; don't silently relabel source claims. Add `ADVISOR-CONTEXT.json` beside it:
+## Non-triggers
 
-```json
-{"request_id":"ADV-request-id","source_commit":"exact-sha","fresh_context_required":true,"inherit_parent_history":false,"allowed_documents":["ADVISOR-REQUEST.md","REQUIREMENTS-CONTRACT.md"],"source_paths":["relevant/owner"],"excluded_context":["full-parent-chat","raw-rollouts","other-feature-plans","unrelated-review-narrative"],"expansion_policy":"one-targeted-evidence-request"}
+No escalation for a normal bug, first finding, first hard cap, one ZAS outage/loop/cancellation, missing credential/environment, simple merge conflict, pre-existing baseline failure, a product decision directly answerable by the user, low-cost local refactor, or one model's preference. Beta ZAS diagnostics alone do not create a system-level decision. Ask the owner directly for ordinary business semantics.
+
+## Freeze and package
+
+1. Persist a filled copy of the byte-preserved `assets/ADVISOR-REQUEST.template.md` with trigger facts and a precise question, not a persuasive preselected answer.
+2. Use `advisor_flow.py request` to set the barrier. Stop writers/reviewers using actual lifecycle tools; do not merely clear their IDs. Record final partial results. Confirm no actors remain active before packaging.
+3. Freeze HEAD, dirty patch, requirements, PLAN-FULL, contracts, ledger and relevant ZAS observations. Audit OFF still requires these execution records.
+4. Use `advisor_flow.py package`, which calls `advisor_pack.py`: full current worktree (including ignored workflow state), normal `.git` or linked-worktree/common Git metadata, and a portable bundle when available. Tracked source is not silently excluded as “build output”. Preserve symlinks without following them. Do not mutate Git, reset, clean, or upload.
+5. Block on detected secret-like files/content; report paths only and ask the human. The scanner is best-effort and cannot certify compressed Git history is free of secrets. The human reviews sharing before forwarding. Never silently strip relevant evidence and call the pack complete.
+Before the request snapshot, allow active actors to stop and persist their final partial work; if HEAD changes afterward, packaging blocks and the request must be explicitly refreshed rather than silently using a stale decision packet.
+
+6. Canonical ZIP: `~/Desktop/advisor-pack/{repo}-{feature}-{trigger}.zip`; working request/receipt under `.agent-work/advisor/{request-id}/`. This is NOT a sectioned process-audit ZIP and never goes into `~/Desktop/audit-pack/`.
+7. Respond only with the paused state, path/hash, and handoff prompt (or precise packaging blocker). Do not continue normal development while waiting.
+
+```bash
+python {skill-dir}/scripts/advisor_flow.py --repo /abs/repo request \
+  --request-id ADV-S01-001 --trigger ADV-04 --request-file /abs/repo/.agent-work/ADVISOR-DRAFT.md
+# Stop and record actual active agents, then:
+python {skill-dir}/scripts/advisor_flow.py --repo /abs/repo package
 ```
 
-Launch through a native fresh-context subagent facility, using the actual tool schema. When `fork_context` exists, request false; **do not assume this field exists** and do not add it to TOML. Verify the launch metadata/context manifest. Read-only sandbox prevents writes but does not remove inherited context. A prompt telling an inherited agent to “ignore history” is not isolation. If the harness cannot establish a noninherited context, return ADVISOR_CONTEXT_BLOCKED; do not simulate a successful isolated consultation.
+## Human handoff
 
-Provide the request, confirmed requirements and actual frozen source/worktree. No whole-repository ZIP or raw transcript is required. Initial evidence is concise and claim-specific; the advisor can inspect actual relevant code/tests and ask once for additional named source evidence. Never deny necessary source access just to meet an arbitrary token cap. Do not attach all previous reasoning by default.
+```text
+请将附件交给外部 Advisor，只读检查完整仓库、Git、已确认需求、PLAN、review 和测试证据。
+当前触发：<TRIGGER_ID>；冻结 HEAD：<HEAD>。
+需要裁决的唯一问题：<EXACT_DECISION>。
+请返回 DECISION、关键证据、最小安全边界、否决方案及理由、保留的有效工作、后续顺序、停止/再次升级条件和不确定性。
+不要直接改代码、扩大产品需求或代替 human owner 接受业务/风险/破坏性操作。
+```
 
-## Decision protocol
+The skill need only know that an external Advisor exists; no model name is embedded in routing.
 
-Freeze affected writers/reviewers and set advisor state REQUIRED. Dispatch a fresh [@advisor](subagent://advisor) instance even when the parent is Astra. It must independently determine the minimum safe technical boundary and return:
+## Result intake
 
-- request ID and exact source head;
-- decision / evidence vs assumptions / rejected alternatives;
-- preserved work, permitted and forbidden scope;
-- needed checks and exact resume phase;
-- unresolved human-owned product/risk choices.
+Save the result verbatim as `ADVISOR-RESULT.md` using `advisor_flow.py receive`. Record provenance/model only when actually provided. Receiving advice keeps the feature blocked at `WAITING_HUMAN_DECISION`.
 
-Allowed technical dispositions: CONTINUE_CURRENT, SIMPLIFY_CURRENT, REPLAN_REMAINING, REBOUND_OWNER, STOP_FOR_OWNER_DECISION, NEED_EVIDENCE. RESTART_FROM_BASE is a recommendation only; it never authorizes destructive Git. Advisor cannot implement, launch subagents, merge, expand requirements, or turn a suggestion into authority.
+The human explicitly accepts, rejects, or requests clarification. Save that actual message as a receipt with `request_id`, `decision`, `user_message_id`, `verbatim_user_message`. Use `advisor_flow.py adopt`; a model-authored approval string is not human authority. The receipt checks linkage, not cryptographic human authentication.
 
-Save response verbatim with actor/model/effort/context hashes. Main admits the bounded technical decision automatically if within existing authority; ask the human only for genuine product/risk/destructive changes. Resume only affected work with inherited budgets and accepted evidence. No recursive advisor-on-advisor or multiple competing advice calls on unchanged facts.
+Apply only the accepted bounded action; preserve accepted sections, history and original repair counters. Do not restart a clean streak, reset a budget, silently reopen a completed PLAN or infer merge/reset/push authority. A technical recommendation needing a plan revision still follows the existing bounded PLAN delta process.
 
-When audit is on, include trigger facts, request/template digest, allowed/actual context manifest, instance provenance, exact source, decision, main admission, resumed outcome and all advisor token/time costs. Audit cannot trigger a consultation.
+## Audit
+
+If enabled, capture trigger facts, request hash, frozen code identity, ZIP/manifest hashes, secret/package gaps, raw returned result, human adoption, applied action and resumed outcome. Keep advisor ZIP external; reference its metadata instead of nesting a full repository in the process audit. If disabled, retain the request/result/adoption locally; do not enable audit merely because the Advisor is needed.

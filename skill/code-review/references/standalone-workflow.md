@@ -6,6 +6,25 @@ For DELEGATED_PASS use [delegated-pass.md](delegated-pass.md) instead; the paren
 
 Review one bounded change set with senior-engineer judgment. Optimize for real merge risk and evidence, not checklist theater, repeated full scans, or style-only feedback.
 
+## Contents
+
+- [Boundary](#boundary)
+- [Load References Progressively](#load-references-progressively)
+- [Review Contract](#review-contract)
+- [Choose Review Depth](#choose-review-depth)
+- [Phase 0: Establish Repository Reality](#phase-0-establish-repository-reality)
+- [Phase 1: Reconstruct Intent and Invariants](#phase-1-reconstruct-intent-and-invariants)
+- [Phase 2: Map the Change and Impact Cone](#phase-2-map-the-change-and-impact-cone)
+- [Phase 3: Generate Candidates Before Fixing](#phase-3-generate-candidates-before-fixing)
+- [Phase 4: Validate, Falsify, and Deduplicate](#phase-4-validate-falsify-and-deduplicate)
+- [Classify Findings](#classify-findings)
+- [Repair-Enabled Mode](#repair-enabled-mode)
+- [Incremental Re-Review and Reset Rules](#incremental-re-review-and-reset-rules)
+- [Final Fresh Verification](#final-fresh-verification)
+- [Convergence and Stop Conditions](#convergence-and-stop-conditions)
+- [Orchestrator Delegation](#orchestrator-delegation)
+- [Report](#report)
+
 ## Boundary
 
 - Review the specified pull request, commit range, staged/unstaged diff, or explicitly named change set.

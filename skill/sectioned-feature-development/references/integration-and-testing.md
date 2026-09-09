@@ -77,7 +77,7 @@ It does not:
 - strengthen security/durability/compatibility beyond the approved feature;
 - reopen accepted sections without concrete combined-behavior evidence.
 
-Use one cumulative integration repair budget of at most five waves across checkpoints and final integration. Rerunning final evidence does not reset it. After the cap, allow at most one bounded [@plan_writer](subagent://plan_writer) diagnosis/recovery event; if the next repair/final pass does not close, report `not-mergeable` or stop for a genuine owner decision rather than expanding the feature.
+Use one cumulative integration repair budget of at most five waves across checkpoints and final integration. Rerunning final evidence does not reset it. After the cap, allow at most one bounded the main orchestrator (plan author) diagnosis/recovery event; if the next repair/final pass does not close, report `not-mergeable` or stop for a genuine owner decision rather than expanding the feature.
 
 ## Evidence failures
 

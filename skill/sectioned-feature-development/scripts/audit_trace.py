@@ -18,7 +18,7 @@ from pathlib import Path
 from typing import Any, Iterator
 
 SCHEMA_VERSION = 3
-EVENT_FAMILIES = {'audit','invocation','requirements','planning','section','subsection','implementation','review','finding','repair','validation','integration','advisor','model','parallel','recovery','scope','branch','artifact','orchestration','feature'}
+EVENT_FAMILIES = {'audit','invocation','requirements','planning','section','subsection','implementation','review','finding','repair','validation','integration','advisor','model','parallel','recovery','scope','branch','artifact','orchestration','feature','zas'}
 INVOCATION_SOURCES = {"USER_EXPLICIT", "CUSTOM_INSTRUCTIONS_AUTO", "AGENT_DISCRETION"}
 INVOCATION_TIMINGS = {"FEATURE_START", "MID_FEATURE"}
 KNOWN_EVENTS = {

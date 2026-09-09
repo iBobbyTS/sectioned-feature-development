@@ -6,21 +6,19 @@ This is a provisional policy to evaluate, not a factual capability boundary. Sou
 
 | Profile | Model | Effort | Role |
 |---|---|---|---|
-| [@implementer_4](subagent://implementer_4) | gpt-5.6-luna | xhigh | Transform an already specified local rule using a demonstrated analogue and decisive tests |
-| [@implementer_3](subagent://implementer_3) | gpt-5.6-terra | high | Implement a familiar component/path with limited new state and verifiable behavior |
-| [@implementer_2](subagent://implementer_2) | gpt-5.6-sol | medium | Default non-trivial implementation with coupled repository semantics |
-| [@implementer_1](subagent://implementer_1) | gpt-6-astra | medium | Implement novel structural reasoning or unresolved cross-owner behavior that cannot be decomposed safely |
+| [@impl_nano](subagent://impl_nano) | gpt-5.6-luna | xhigh | Transform an already specified local rule using a demonstrated analogue and decisive tests |
+| [@impl_mini](subagent://impl_mini) | gpt-5.6-terra | high | Implement a familiar component/path with limited new state and verifiable behavior |
+| [@impl_std](subagent://impl_std) | gpt-5.6-sol | medium | Default non-trivial implementation with coupled repository semantics |
+| [@impl_large](subagent://impl_large) | gpt-6-astra | medium | Implement novel structural reasoning or unresolved cross-owner behavior that cannot be decomposed safely |
 | [@code_reviewer](subagent://code_reviewer) | gpt-6-astra | high | Independent code review and integration delta review |
-| [@plan_writer](subagent://plan_writer) | gpt-6-astra | xhigh | Plan author only; independent plan reviewer is below |
 | [@plan_reviewer](subagent://plan_reviewer) | gpt-6-astra | xhigh | Independent review of saved PLAN; never the writer instance |
 | [@code_explorer](subagent://code_explorer) | gpt-5.6-luna | xhigh | Read-only code-location and direct dependency discovery |
-| [@advisor](subagent://advisor) | gpt-6-astra | xhigh | Rare, fresh-context technical adjudication |
 
-Nine role files, six model–effort combinations; no max or low variants. GLM is the separately configured external review provider.
+Seven native agent files, six model–effort combinations; no max or low variants. Main writes the plan; the Advisor is external and has no native agent file. GLM is the separately configured external review provider.
 
 ## Decision features
 
-Record before dispatch:
+Record in each section/subsection of PLAN-FULL before independent plan review:
 - `analogue`: exact existing example path, or none;
 - `ambiguity`: resolved / bounded unknown / structural unknown;
 - `semantic_hops`: the producer→normalizer→store→projection→consumer path actually touched;
@@ -40,6 +38,14 @@ Do not write a huge line-by-line plan just to make Luna viable: include planner/
 One bounded query: named entry point + requested owner/consumer/test map + exclusions. Reuse repository CodeGraph policy before grep/file exploration. The explorer cannot write code, rewrite the plan, call reviewers, declare scope complete, or choose product semantics.
 
 Return a small map with path/symbol/line, commit identity, claim→evidence, unknowns and suggested next read. Ordinarily no more than eight source pointers; if this would hide necessary evidence, report truncation and request a targeted second query. This is a context budget, not a hard correctness cutoff. Main reads only decisive/uncertain boundaries rather than repeating the whole search. Skip delegation when direct reading is cheaper.
+
+## Frozen implementation assignment
+
+Each section and each child supplies its own `profile`, `model_reason`, and `task_features`. A parent profile is used for parent-level implementation/repair; it never fills in a missing child profile. Even a section delivered through children records the responsible parent tier. Prose must show the matching clickable agent level, and the schedule stores the exact role name.
+
+`workflow.py` rejects missing, AUTO, obsolete, or unknown profiles. `execution_artifacts.py task` binds the extracted unit, profile and plan hash; `stage-start` rejects a differently registered implementer, a stale task, or a contradictory observed model/effort. A role link is not a launch receipt.
+
+Do not select a tier while dispatching. If genuine under-routing is observed, stop that unit, record the failure evidence, revise only affected unresolved assignments in PLAN-FULL, obtain bounded PLAN delta verification, regenerate task artifacts, and register the new real agent. Do not reopen accepted sections or reset the lineage. Runtime/auth/MCP failures are not evidence of model under-routing.
 
 ## Escalation
 

@@ -419,7 +419,7 @@ Then stop. Do not fix an audit-discovered product issue or begin another section
 
 For every external review event record: provider (`SOL` or `ZCODE`), stable agent/session/review IDs, daemon instance, base/head, review kind, dispatch/completion/cancellation timestamps, continuation relationship, artifact hash, and differentiated MCP/daemon/ZCode/model error class.
 
-For every Advisor escalation record: trigger ID, evidence predicate, freeze head/status, request/context-manifest hashes, native launch identity/timestamp, Advisor result verbatim/provenance, main admission (or human product/risk decision when required), and resulting bounded action. Advisor recording is required when Audit is on; escalation itself remains available when Audit is off.
+For every external Advisor escalation record: trigger ID, threshold evidence, frozen HEAD/status, request hash, full-repository export/manifest hashes, human handoff, verbatim returned result/provenance, explicit human acceptance/rejection and resulting bounded action. There is no native Advisor launch or token estimate. Advisor recording is required when Audit is on; escalation itself remains available when Audit is off.
 
 ## 4.2 process-only namespace and inherited model/subsection records
 
@@ -429,6 +429,12 @@ The canonical writer remains the retained v3.9 `audit_finalize.py`: atomic ZIP, 
 
 Include all original v3.9 requirement/invocation/scope/counterfactual/review/cost/recovery analyses. Also include MODEL-TASK-AUDIT.md, PARALLEL-AUDIT.md, SUBSECTION-AUDIT.md and ADVISOR-AUDIT.md (NOT_APPLICABLE when absent). For each real subagent record role, actual actor/session, parent/child/lineage, task/diff hashes, requested vs observed model/effort, task features, input/result/launch receipt, check evidence, all attempts and error class. Low-tier failure, model escalation, review/repair/validation/Advisor costs all contribute to accepted-outcome cost. UNKNOWN is not zero.
 
-For subsections distinguish logical parent review ID from real call count; checkpoint verification never becomes child acceptance. Record cross-child invalidations, joint-oracle results and cumulative repair before/after. For parallel work record planned/actual dependency DAG, read/write/contracts/resources, start/end, reservations, worktrees, overlap/conflict/abandoned work, serial integration order and merged-head defects; wall critical path is not worker-time sum. For native Advisor record bounded context/launch evidence, request/decision hash and main admission even when parent model equals Advisor model.
+For subsections distinguish logical parent review ID from real call count; checkpoint verification never becomes child acceptance. Record cross-child invalidations, joint-oracle results and cumulative repair before/after. For parallel work record planned/actual dependency DAG, read/write/contracts/resources, start/end, reservations, worktrees, overlap/conflict/abandoned work, serial integration order and merged-head defects; wall critical path is not worker-time sum. For the external Advisor preserve request/export/result/human-adoption evidence. Do not infer a model or costs that the human did not provide.
 
 Audit OFF disables only telemetry/pack, not required PLAN, task, contract, handoff, reviews, real actors, recovery/closure evidence. Failed/missing measurements may degrade telemetry, but do not manufacture product repairs or rerun gates. Product-data token exports are not Agent development cost.
+
+## 4.3 ZAS controlled-test evidence
+
+Read [ZAS audit](zas-audit.md) for an actual ZAS attempt. Capture ZAS-AUDIT.md plus one ZAS-RUNS.jsonl ledger, selected safe observation pages and diagnostic receipts. These are part of this process pack, not independent development samples. Runtime-only ZAS tests and standalone diagnostics stay outside the reserved audit folder.
+
+Capture the exact PLAN assignment for every parent/child, planned and observed role/model/effort, and any approved assignment revision. Never treat requested as observed. The preserved physical reviewer calls, failures, monitoring and cancellation cost all contribute to accepted-outcome cost; missing telemetry is UNKNOWN, not zero.

@@ -1,3 +1,12 @@
+# 4.3 — 2026-09-07
+
+- 基于上传4.2.1工作区增量更新，保留主线程计划作者的本地决定。
+- 实现角色改为impl_nano/mini/std/large；每section/subsection在PLAN冻结，派发匹配。
+- 适配当前ZAS9个短名称工具，受控beta；提出能力门控的只读observation和语义进展监督。
+- ZAS attempt/生命周期/误报进入过程审计，不改变review alternation或repair预算。
+- 恢复3.9人工外部Advisor，保留请求合同与六个触发；增加外部结果采纳状态。
+- 可选显式备份并移除旧编号Agent和原生Advisor；不改无关配置。
+
 # 4.2 — v3.9-preserving reconstruction
 
 - Start from actual v3.9 instead of continuing the reduced4.0 root. Preserve unproven duties.

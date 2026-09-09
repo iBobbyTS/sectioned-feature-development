@@ -1,65 +1,96 @@
-# Sectioned Feature Development 4.2
+# Sectioned Feature Development 4.3
 
-**基线：真实 v3.9 tag；不是继续缩写 4.0。** 未有审计证据或本轮明确授权的职责一律保留。
+基于上传的实际 **4.2.1 工作区**增量更新，继续保留从真实3.9恢复的执行产物、scope边界、review/repair/recovery、subsection、并行与审计职责。只改变本轮要求：实现角色命名、计划冻结模型、ZAS受控beta观测、人工外部Advisor。
 
 ## 执行链
 
-确认需求落盘 → 实际 [@plan_writer](subagent://plan_writer) 返回完整计划 → 主线程写 PLAN-FULL → 机械验证 → 独立 [@plan_reviewer](subagent://plan_reviewer) → 主线程保存报告并 admission → 逐业务 section / 串行 subsection 真实委派 → handoff → bounded review / admitted repair / delta → 父级验收 → 按 DAG 集成 → final gates → closure → audit。
+保存确认需求 → **主线程编写并保存完整 PLAN-FULL** → 机械校验 → 实际委派独立 [@plan_reviewer](subagent://plan_reviewer) → 保存报告与admission → 按冻结模型派发section/subsection实现 → HANDOFF → bounded review／repair／delta → 父级reconciliation与验收 → DAG顺序集成和final gates → closure → audit与归档。
 
-文档中角色均使用 subagent 链接；链接不是调用证据，必须调用宿主工具并记录返回的真实 ID。Audit OFF 不会关闭这些执行产物。
+本次上传的本地版本已删除计划作者子代理；4.3保留这一修改，**不恢复不存在的计划作者角色**。主线程负责计划和工作流状态，仍不得替代真实implementer／repairer写产品或测试。审计OFF不关闭上述执行产物。
 
-## 保留与授权修改
+## 固定模型分级
 
-保留 v3.9 的13份模板职责、完整 scope/security/repair/reset/recovery/integration 边界、计划提取、handoff、review ledger、audit/session/finalize 工具。多个 section 或多个可执行 subsection 必须独立分支+EXECUTE_WITH_COMMITS；已完成计划默认不重开。
-
-Section 按业务验收划分；subsection 按父 section 内真实模块增量或不同推理负荷划分。子项串行，共享父合同、review和repair lineage；无 child acceptance、child PLAN gate或child final轮次。独立父项使用 git-worktree 目录和 .gitignore，可按读写/契约/资源约束并行；最大两writer的起始策略继承4.0，未宣称最优。
-
-## 角色
-
-| 名称 | 模型 | effort | 用途 |
+| 子代理 | 模型 | effort | 既有使用边界 |
 |---|---|---|---|
-| [@plan_writer](subagent://plan_writer) | gpt-6-astra | xhigh | 计划作者，只读返回完整草稿 |
-| [@plan_reviewer](subagent://plan_reviewer) | gpt-6-astra | xhigh | 独立计划审查，不兼任作者 |
-| [@implementer_1](subagent://implementer_1) | gpt-6-astra | medium | 尚不能安全拆解的结构推理 |
-| [@implementer_2](subagent://implementer_2) | gpt-5.6-sol | medium | 默认非平凡实现 |
-| [@implementer_3](subagent://implementer_3) | gpt-5.6-terra | high | 已有模式的局部新行为 |
-| [@implementer_4](subagent://implementer_4) | gpt-5.6-luna | xhigh | 规则已确定、有范例和可判错oracle |
-| [@code_reviewer](subagent://code_reviewer) | gpt-6-astra | high | 独立code/integration review |
-| [@code_explorer](subagent://code_explorer) | gpt-5.6-luna | xhigh | 有界只读定位，不递归规划 |
-| [@advisor](subagent://advisor) | gpt-6-astra | xhigh | 罕见、有限上下文独立裁决 |
+| [@impl_nano](subagent://impl_nano) | gpt-5.6-luna | xhigh | 规则已定、有范例和明确可判错测试 |
+| [@impl_mini](subagent://impl_mini) | gpt-5.6-terra | high | 既有模式下的局部新行为 |
+| [@impl_std](subagent://impl_std) | gpt-5.6-sol | medium | 默认非平凡实现 |
+| [@impl_large](subagent://impl_large) | gpt-6-astra | medium | 尚不能安全拆解的结构推理 |
+| [@plan_reviewer](subagent://plan_reviewer) | gpt-6-astra | xhigh | 独立计划审查 |
+| [@code_reviewer](subagent://code_reviewer) | gpt-6-astra | high | 独立代码／集成审查 |
+| [@code_explorer](subagent://code_explorer) | gpt-5.6-luna | xhigh | 有界只读定位 |
 
-这是继承4.0的可检验路由假设，不是新性能实验结论。不要把“安全代码”自动等同最大模型，或把“小diff”自动等同最低模型。一次明确under-routing后重评未解决部分，不逐档试错。Grill Me界面使用Astra high仍是合理起始选择，只在README记录，不自动改变用户设置。独立交接只给完整已确认Requirements Contract；原始grill对话留在provenance。
+**七份原生Agent配置、六种model–effort组合。** 不新增模型性能结论，继承此前待验证的任务路由。
+
+PLAN-FULL机器块中，每个section和每个subsection都必须显式写 `profile`，只能取上述四种实现角色之一；同时保留model_reason、task_features与验收。父section选级用于父级集成／修复责任，不代替子项自身分配。不得写AUTO、待定或等执行时选择。
+
+任务提取绑定 `plan_sha256 + unit_id + profile`；实际派发角色及已知model/effort必须匹配。遇到确切under-routing只对未接受的剩余任务做有依据的计划修订与必要delta复核，再派发；不静默换模型，不清空原repair计数。
+
+Grill Me界面选Astra high的既有建议保留为起始假设，不作为Skill运行门禁。新Agent默认接收完整已确认Requirements Contract，不灌入全部grill聊天。
+
+## 4.2职责保持
+
+- 多section或多个可执行subsection：独立feature branch + EXECUTE_WITH_COMMITS。
+- Section按业务合同，subsection按内部模块增量／模型能力。子项串行，共用父合同、检查和repair lineage，无独立child验收预算。
+- 独立父section可以在`./git-worktree`下并行，目录写入.gitignore；读写、契约与外部资源互相独立才允许。审查中的候选不可修改。
+- 完成后保存closure；后续修改重新判断普通小改或新feature，除明确授权不重开旧PLAN。
+- 继承ONE/TWO、scope admission、reset正反例、五波累计预算和一次结构recovery规则；本轮未简化任何未证明有问题的职责。
+
+## ZAS：受控真实项目beta
+
+当前源码的工具族是 **zcode_subagent_status/spawn/poll/list/send/respond/cancel/result/close**，不是旧的带agent前缀工具族。实际installed tools/list及status才是运行权威。
+
+原生／GLM feature-wide full-review交替不变；delta不新增full pass。ZAS不是绝对可用的gate：记录每个物理attempt，基础设施失败不算产品缺陷或repair wave，不能静默跳过GLM slot并宣称完整异构审查。
+
+- 当前activity只证明活跃，不证明任务推进；reasoning仅有计数，tool主要有ID与类别。
+- send是队列，不是interrupt；terminal continuation当前不可用。
+- cancel后必须确认 `TERMINAL + resources_reaped=true`，再读结果/close；未回收前不复用workspace。
+- 旧Hook默认强安全保证不适用当前源码；plan模式也不能代替审查快照前后校验。
+- 当前spawn不提供caller幂等键；响应丢失先按repository查任务，不直接重试创建。
+
+4.3只有一份adapter，分能力运行：当前协议为 `BETA_BASELINE_LIMITED`；**待用户实施建议后**，只有工具目录和status同时声明`zas-observation/1`时，才调用新增只读observation接口。没有假装该接口已经存在。
+
+主线程结合有界任务与公开行为证据判断语义空转。没有字符串相似度杀进程、daemon自动判错、额外monitor LLM或每次poll都跑review。详见[ZAS adapter](skill/sectioned-feature-development/references/zcode-mcp-adapter.md)、[进展监督](skill/sectioned-feature-development/references/zas-progress-supervision.md)。
+
+**给ZAS开发Codex执行：**[独立优化方向与验收合同](docs/ZAS_OPTIMIZATION_DIRECTIONS.md)。项目不包含或改写ZAS产品源码、二进制。
+
+## Advisor：恢复3.9人工外部交接
+
+不安装、不调用原生advisor agent。原始`ADVISOR-REQUEST.template.md`字节保持；六个ADV触发条件恢复3.9规则。触发后停止实际writer/reviewer，冻结请求和Git，打包完整工作树＋Git（含linked-worktree metadata和bundle）到 `~/Desktop/advisor-pack/`，提供人类交接prompt后停下。
+
+外部结果原文落盘；**收到结果不是采纳授权**。记录用户明确accept/reject/clarify，才能按限定范围续跑。秘密检测命中时阻止导出；历史Git秘密检测仍需人工检查，不声称自动认证全历史安全。不自动上传、merge、reset或清理用户工作。
+
+Advisor独立于Audit开关。查看[外部Advisor流程](skill/sectioned-feature-development/references/advisor-escalation.md)。
 
 ## 安装
 
+Python 3.11+、macOS/POSIX工具环境：
+
 ```bash
-python3 scripts/install.py                         # dry run
-python3 scripts/install.py --apply --replace       # backups then install BOTH skills + nine agents
+python3 scripts/install.py                                  # 只列目标
+python3 scripts/install.py --apply --replace                # 备份后装两份Skill和七份Agent
 python3 scripts/install.py --only code-review --apply --replace
 ```
 
-尊重 CODEX_HOME，默认 ~/.codex。安装器不改全局config或用户AGENTS.md，不删除旧名称agent或无关文件；本流程只使用上述新角色名。已有同名目标必须--replace并备份。Python>=3.11；本地状态锁/工具以macOS/POSIX为目标。
+尊重`CODEX_HOME`，默认`~/.codex`。不会自动改AGENTS.md、全局config或删除其他Agent。旧编号实现角色和旧原生Advisor文件不再被本Skill引用；需要一并移出可发现目录时，可显式加 `--retire-legacy-agents`，安装器先备份这五个确切名称，再移除；不会删除其他角色。
 
-## 正常使用与恢复
+建议在当前feature关闭后切换4.3。不提供旧活动STATE/PLAN的自动迁移，也不靠新门禁重判旧accepted工作；确需中途切换，先停止真实actors并保留旧执行环境/证据，再做显式受控迁移，禁止只替换Skill后假定旧角色ID和计划hash自动有效。
 
-显式要求使用Skill：默认执行到完成，但必须保存计划、真实派发和报告。自动触发：先宣布，首版PLAN-FULL完成后、PLAN review之前提供绝对链接让用户批准。当前非main分支按3.9的三选一授权。恢复旧功能只前瞻采用，不补造旧子代理、不重开accepted work来满足新schema。
+配套code-review仍使用 `sfd-delegated-review/4.2` 委托协议，避免仅版本号变化制造无意义的review兼容阻塞；4.3不改变其review次数或验收权。
 
-根Skill的 [artifact生命周期](skill/sectioned-feature-development/references/artifact-lifecycle.md) 给出完整落盘/提取/派发/验收命令。STATE.json为机器事实；FEATURE-STATE.md由其渲染为完整可读状态，合同与原始review仍是语义证据。
+## Audit
 
-## ZCode与Advisor
+只把本Skill的typed process audit放到 `~/Desktop/audit-pack/`。ZAS diagnose、runtime/conformance材料和Advisor全仓包放其他目录，只在流程包内引用必要脱敏证据。
 
-只使用附件定义的九个 zcode_subagent_* 工具。MCP不负责Git/worktree，send是队列、终态拒收，不虚构resume或read_only mode。Astra/GLM按feature-wide完整review序号轮换；checkpoint/delta不新增full pass，但每个真实调用进入audit。Advisor保留原请求合同，采用原生fresh-context实例；无法证明非继承上下文时阻塞，不能只提示“忽略前文”。
+增加 `ZAS-AUDIT.md`、物理attempt／逻辑review关联、capability/build/observed model、进展窗口、误报、cancel/reap/close、失败与cleanup独立结果、caller/API成本。未知不填0，无新audit包时不重复沿用旧统计。Audit OFF时进展监督与清理责任仍存在。
 
-## Audit专属目录
+## 本轮文档
 
-只把本Skill的typed process audit放入 ~/Desktop/audit-pack/。代码审计、运行时实验、conformance和其他ZIP放别处，只作为辅助证据引用。原3.9分析维度与工具保留，新增模型/subsection/并行/Advisor字段；不能把telemetry gap升级成产品缺陷。
+- [源码核查与旧协议差异](docs/version-history/v4.3/ZAS_SOURCE_REVIEW.md)
+- [分析范围](docs/version-history/v4.3/AUDIT_PACK_ANALYSIS.md)
+- [研究事实与可信度](docs/version-history/v4.3/RESEARCH.md)
+- [修改依据](docs/version-history/v4.3/UPDATES.md)
+- [验证与限制](docs/version-history/v4.3/VALIDATION.md)
+- [3.9职责保留基线](docs/version-history/v4.2/RETENTION.md)
 
-## 文档与验证
-
-- [4.2 修改依据](docs/version-history/v4.2/UPDATES.md)
-- [40个流程包与9个辅助包分析](docs/version-history/v4.2/AUDIT_PACK_ANALYSIS.md)
-- [3.9职责保留清单](docs/version-history/v4.2/RETENTION.md)
-- [研究与证据边界](docs/version-history/v4.2/RESEARCH.md)
-- [验证记录](docs/version-history/v4.2/VALIDATION.md)
-
-离线验证检查文件、Git、DAG、角色及反例，不证明真实Codex一定遵守，也未运行付费模型/用户ZCode端到端实验。
+离线文件/Git/身份/测试检查不证明真实Codex、ZCode或模型一定正确；ZAS增强接口和公开reasoning可见性需在实际runtime上单独验证。

@@ -42,7 +42,7 @@
 
 - Do not promote these into requirements or descendant plans.
 
-## Fresh [@plan_writer](subagent://plan_writer) classification
+## Fresh the main orchestrator (plan author) classification
 
 Choose exactly one:
 

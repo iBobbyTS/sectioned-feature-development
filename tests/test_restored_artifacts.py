@@ -24,7 +24,7 @@ class RestoredArtifacts(unittest.TestCase):
   self.plan_path=self.aw/'PLAN-FULL.md';self.plan=w.load_plan(self.plan_path)
   self.plan.update(base_ref=self.base,status='FROZEN',requirements_sha256=w.digest(self.aw/'REQUIREMENTS.md'))
   self.plan_path.write_text(set_schedule(self.plan_path.read_text(),self.plan))
-  self.author=self.actor('writer-actual','plan_writer');self.reviewer=self.actor('reviewer-actual','plan_reviewer')
+  self.author='parent-real-id';self.reviewer=self.actor('reviewer-actual','plan_reviewer')
   self.author_output=self.aw/'evidence/full-draft.md';self.author_output.write_text(self.plan_path.read_text())
   self.plan_report=jwrite(self.aw/'reviews/plan.json',{'actor_id':self.reviewer,'result':'APPROVED','plan_sha256':w.digest(self.plan_path),'candidates':[]})
   self.admission=jwrite(self.aw/'reviews/admission.json',{'decision':'APPROVED','unresolved_findings':[]})
@@ -36,7 +36,7 @@ class RestoredArtifacts(unittest.TestCase):
  def approve(self):return e.record_plan(self.repo,self.author,self.author_output,self.reviewer,self.plan_report,self.admission,'NOT_APPLICABLE')
  def atomic(self):
   self.approve();e.task(self.repo,'S01');state=e.load(self.repo);ss=state['sections']['S01']
-  for aid,role in [('impl','implementer_2'),('primary','code_reviewer'),('final','code_reviewer')]:self.actor(aid,role)
+  for aid,role in [('impl','impl_std'),('primary','code_reviewer'),('final','code_reviewer')]:self.actor(aid,role)
   state=e.load(self.repo);ss=state['sections']['S01'];h=self.base
   def a(n):return e.proof(jwrite(self.aw/'evidence'/n,{'fixture':'synthetic recorded result'}),self.repo)
   ss.update(status='AWAITING_ADMISSION',candidate_head=h,writer_actor_ids=['impl'],handoff_artifact=a('handoff.json'),handoff_head=h,open_findings=[],primary_review={'result':'CLEAN','base':h,'head':h,'actor_id':'primary','artifact':a('primary-review.json')},final_review={'result':'CLEAN','head':h,'actor_id':'final','artifact':a('final-review.json')},final_checks={'S01-focused':{'result':'PASS','head':h,'artifact':a('checks.json')}})
@@ -60,13 +60,13 @@ class RestoredArtifacts(unittest.TestCase):
   self.approve();self.plan_report.unlink()
   with self.assertRaises(w.Invalid):e.ready_files(self.repo)
  def test_alias_without_actual_launch_id_rejected(self):
-  p=jwrite(self.aw/'evidence/alias.json',{'profile':'implementer_2'})
-  with self.assertRaisesRegex(w.Invalid,'LAUNCH_RECEIPT'):e.register(self.repo,'impl-alias','implementer_2',p,self.repo)
+  p=jwrite(self.aw/'evidence/alias.json',{'profile':'impl_std'})
+  with self.assertRaisesRegex(w.Invalid,'LAUNCH_RECEIPT'):e.register(self.repo,'impl-alias','impl_std',p,self.repo)
  def test_plan_reviewer_cannot_be_implementer(self):
-  with self.assertRaisesRegex(w.Invalid,'REUSE'):e.register(self.repo,self.reviewer,'implementer_2',self.aw/'evidence/reviewer-actual.json',self.repo)
+  with self.assertRaisesRegex(w.Invalid,'REUSE'):e.register(self.repo,self.reviewer,'impl_std',self.aw/'evidence/reviewer-actual.json',self.repo)
  def test_main_cannot_register_as_worker(self):
   p=jwrite(self.aw/'evidence/main.json',{'agent_id':'parent-real-id'})
-  with self.assertRaises(w.Invalid):e.register(self.repo,'parent-real-id','implementer_1',p,self.repo)
+  with self.assertRaises(w.Invalid):e.register(self.repo,'parent-real-id','impl_large',p,self.repo)
  def test_task_materializes_current_parent_contract(self):
   self.approve();r=e.task(self.repo,'S01')
   self.assertTrue(Path(r['task']).is_file());self.assertTrue(Path(r['contract']).is_file())
@@ -100,7 +100,7 @@ class RestoredArtifacts(unittest.TestCase):
   self.approve();jwrite(self.aw/'CLOSURE.json',{'head':self.base})
   with self.assertRaisesRegex(w.Invalid,'CLOSED_PLAN'):self.approve()
  def test_baseline_subsection_request_unchanged(self):
-  base=R/'docs/version-history/v4.2/baseline-v3.9/assets/ADVISOR-REQUEST.template.md'
+  base=R/'docs/version-history/v4.3/BASELINE-ADVISOR-REQUEST.md'
   self.assertEqual(base.read_bytes(),(S/'assets/ADVISOR-REQUEST.template.md').read_bytes())
 
  def subsection_plan(self):
@@ -124,7 +124,7 @@ class RestoredArtifacts(unittest.TestCase):
   with self.assertRaises(w.Invalid):w.validate(self.plan)
  def test_subsection_parent_requires_joint_and_real_checkpoint_evidence(self):
   parent=self.subsection_plan();self.approve();e.task(self.repo,'S01')
-  for aid,role in [('impl','implementer_2'),('primary','code_reviewer'),('final','code_reviewer')]:self.actor(aid,role)
+  for aid,role in [('impl','impl_std'),('primary','code_reviewer'),('final','code_reviewer')]:self.actor(aid,role)
   st=e.load(self.repo);ss=st['sections']['S01'];ss.update(primary_review_id='parent-primary',writer_actor_ids=['impl'],subsections={},open_findings=[])
   def art(name):return e.proof(jwrite(self.aw/'evidence'/name,{'result':'synthetic fixture'}),self.repo)
   old=self.base

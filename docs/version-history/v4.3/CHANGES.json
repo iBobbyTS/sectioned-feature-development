@@ -1,0 +1,284 @@
+[
+  {
+    "path": "README.md",
+    "kind": "modified",
+    "before_sha256": "f2f4cbfed596ddce6d38d9067b6a11255dbcf1754596f2aeb7f7900093a3235a",
+    "after_sha256": "aaa51f67da99b4833a64c7ebc27be921f18e678ca114cc876cf7e7f024befca9"
+  },
+  {
+    "path": "VERSION",
+    "kind": "modified",
+    "before_sha256": "c84057e14bca4c902bb887688cbb3bec69461b864a5d804b8e1e4e06d3bba148",
+    "after_sha256": "ba639ab79c7470c675fc78c9f702bcafe048f44ef03468b12f81f05393d1803b"
+  },
+  {
+    "path": "agents/advisor.toml",
+    "kind": "removed",
+    "before_sha256": "0602ddc7bce7e583ce0d79fde866dd67abcf030a2157bd503603e6178583170b",
+    "after_sha256": null
+  },
+  {
+    "path": "agents/impl_large.toml",
+    "kind": "added",
+    "before_sha256": null,
+    "after_sha256": "bf3a0ad55d7752c0b06b84de7fc5c933c3686dcdb7328ba3938d32b024731c2c"
+  },
+  {
+    "path": "agents/impl_mini.toml",
+    "kind": "added",
+    "before_sha256": null,
+    "after_sha256": "d8b2033d62e3511ce320f234d47686ed86db6967c000d4d7561dc8cb0e1e5d86"
+  },
+  {
+    "path": "agents/impl_nano.toml",
+    "kind": "added",
+    "before_sha256": null,
+    "after_sha256": "bc4b3d282f661b0269c45f6843a6032e404927bd31a59794220a44009fdd4d98"
+  },
+  {
+    "path": "agents/impl_std.toml",
+    "kind": "added",
+    "before_sha256": null,
+    "after_sha256": "00b65d1de7978e3fdc90446e43873eb0119d55bca419ea6ad1553ed4972a1a8d"
+  },
+  {
+    "path": "agents/implementer_1.toml",
+    "kind": "removed",
+    "before_sha256": "d486553fbdd42f222844d727639d563fa946644a75dd68d76287281e5a3fc01b",
+    "after_sha256": null
+  },
+  {
+    "path": "agents/implementer_2.toml",
+    "kind": "removed",
+    "before_sha256": "de1000c1b34a611cff93fd765f9b98efe905fb489c93a02bb2b4ab30b0c7a234",
+    "after_sha256": null
+  },
+  {
+    "path": "agents/implementer_3.toml",
+    "kind": "removed",
+    "before_sha256": "11c934c4841a5f0308986f9dbb7d0a36bfe88f2936c75834cc500ddaabc20c22",
+    "after_sha256": null
+  },
+  {
+    "path": "agents/implementer_4.toml",
+    "kind": "removed",
+    "before_sha256": "5c3cbe8a2573e382bf46eadabfefd4a453c85ffdfcbc5008e8e7be554a27a040",
+    "after_sha256": null
+  },
+  {
+    "path": "docs/CHANGE_LOG.md",
+    "kind": "modified",
+    "before_sha256": "88f08fe117b56fc94a95c15ad40f42e2ecb1ad7f6f987a903f1f783a756b3af1",
+    "after_sha256": "6b75694067b3e7cda6dabd9d680a8aee5ad764ab7a0806573832c598fa5e8f9e"
+  },
+  {
+    "path": "docs/ZAS_OPTIMIZATION_DIRECTIONS.md",
+    "kind": "added",
+    "before_sha256": null,
+    "after_sha256": "83e15c257dd7133ff1ecca7d722e4234fe0f5761eb53847b88e8b6c17a15a826"
+  },
+  {
+    "path": "docs/contracts/zas-observation-v1.schema.json",
+    "kind": "added",
+    "before_sha256": null,
+    "after_sha256": "fc434a0ec56eecd2127bd3ef5a911e245dedec49eff8e687338b5209c62afede"
+  },
+  {
+    "path": "scripts/install.py",
+    "kind": "modified",
+    "before_sha256": "8af60624422f69734fc1797dec672280283203b5319e6ad789ed66d96ecc8eb7",
+    "after_sha256": "3e86d60d90761640e26a8f05895319b85d4a4c02e53a3cb4ff1f54ea127b56b2"
+  },
+  {
+    "path": "skill/code-review/SKILL.md",
+    "kind": "modified",
+    "before_sha256": "0908bbf1f7058ad886e8f3a0ad31844bbe009f6ec1492603d0ce66a146ace737",
+    "after_sha256": "cec353d70e91a99ce0d6c14f3c460417e808d0a876cf8b6d2ef0e3d70b0b017b"
+  },
+  {
+    "path": "skill/code-review/references/standalone-workflow.md",
+    "kind": "modified",
+    "before_sha256": "2b05cfaf8775ab2af263699f7c25e482d0ed04d76a55eb7243a81850858471d8",
+    "after_sha256": "79ce203ba6d24ecf5258325194e1894319a3e9cc606745c4fcb658695eca8d6e"
+  },
+  {
+    "path": "skill/sectioned-feature-development/SKILL.md",
+    "kind": "modified",
+    "before_sha256": "3160a7470e2068747e3c709d61f197d00ca9d6014a2523806fc5648cf8a76813",
+    "after_sha256": "1f94efe9975f8435da635493bb9f05f4f06a01f29f7e2a67305219a8fef00f40"
+  },
+  {
+    "path": "skill/sectioned-feature-development/VERSION",
+    "kind": "modified",
+    "before_sha256": "c84057e14bca4c902bb887688cbb3bec69461b864a5d804b8e1e4e06d3bba148",
+    "after_sha256": "ba639ab79c7470c675fc78c9f702bcafe048f44ef03468b12f81f05393d1803b"
+  },
+  {
+    "path": "skill/sectioned-feature-development/agents/openai.yaml",
+    "kind": "modified",
+    "before_sha256": "dda93304598db5e02d75969f1cbbe0774637be3107a5a81d892a27e1dfdbb149",
+    "after_sha256": "ad360e95df88fed038c5c1ebc5b7a5ad20757c9bb80ab924b5b249cd4e7dd99e"
+  },
+  {
+    "path": "skill/sectioned-feature-development/assets/HARD-CAP-DIAGNOSIS.template.md",
+    "kind": "modified",
+    "before_sha256": "85912fba111c9f98af511af9feed6ddc14f1e60760b456b11ee3a526f9d65678",
+    "after_sha256": "08c91d9ceb08b4ad70157b156a34a234ef63210f72971618de5dc077d76ddcf6"
+  },
+  {
+    "path": "skill/sectioned-feature-development/assets/PLAN-FULL.template.md",
+    "kind": "modified",
+    "before_sha256": "1a8dfd2190b0c23c04bbc4a976b7294b022b951e25e3cd8478816e947f985f41",
+    "after_sha256": "fccc95f6780733a66887c1d448a6c8eb49d382fbc8d278c86aa5223ee253a712"
+  },
+  {
+    "path": "skill/sectioned-feature-development/assets/STATE.template.json",
+    "kind": "modified",
+    "before_sha256": "73ed1ff509a48ffd1e31dc7e29e9221b3934ba21dbed476d5ab19959b79386fb",
+    "after_sha256": "0413f8fb269cdee88a3f7887abe03685e8c6459c86e227f30206d22f2ec2f757"
+  },
+  {
+    "path": "skill/sectioned-feature-development/assets/SUBSECTION-SCHEDULE.example.json",
+    "kind": "modified",
+    "before_sha256": "3989652bd28f99ac6aebdc0bb6c6f530963af2e7cd8b4af46697f910e84f7ba2",
+    "after_sha256": "25455628ed274d2e6d79ef903cfc5d9fe2225a4abf64b094b7a5660d8abf3385"
+  },
+  {
+    "path": "skill/sectioned-feature-development/assets/ZAS-ATTEMPT.template.json",
+    "kind": "added",
+    "before_sha256": null,
+    "after_sha256": "ea6a2659f2aae66d69559100a1ad62f3ed46472bf0bf928d7bd4fa8bcf18a9a5"
+  },
+  {
+    "path": "skill/sectioned-feature-development/references/advisor-escalation.md",
+    "kind": "modified",
+    "before_sha256": "dd561f64e2540997767ae6fe80e5841512c448c20791614a4a72c6832edfab69",
+    "after_sha256": "f4ddafaaa2126fd180b5c41c1248d6287b0cd93d7f92c4ad9f86624d929119e2"
+  },
+  {
+    "path": "skill/sectioned-feature-development/references/artifact-lifecycle.md",
+    "kind": "modified",
+    "before_sha256": "6886db20385e3fdfb8257e0fed62b60251a8ee13d43aeac31dffa5483f136dff",
+    "after_sha256": "89f55e125834b56963a89b8f1a2d881ff038260d0be223a902fb024ea88b4b71"
+  },
+  {
+    "path": "skill/sectioned-feature-development/references/artifact-schemas.md",
+    "kind": "modified",
+    "before_sha256": "84cac6430fe7253851c2ad931cc869923a4fcf1dca4f34a9a5baf5054270ea83",
+    "after_sha256": "a464bc96529bd30bd147cc3366741cacdfe18a946f11b4ce9520fc3d9870392c"
+  },
+  {
+    "path": "skill/sectioned-feature-development/references/audit-mode.md",
+    "kind": "modified",
+    "before_sha256": "d64e1d3c01797d06403e76f9b4b50a4790e8e45a9b3e87313b1fdfabe17928b9",
+    "after_sha256": "d3efa43bc017b6d18af58cebf8f3f405dcff20f6157cf39bca091e583f167e84"
+  },
+  {
+    "path": "skill/sectioned-feature-development/references/integration-and-testing.md",
+    "kind": "modified",
+    "before_sha256": "a2e8a2348bb79f6b4ccfe06fea6effcadddf70b0d6e2ec27617f1a39ebcddc7f",
+    "after_sha256": "efe91ec97b594e4ceca1921886aa4f6ba4bd2fe843d7d2baf7db206385fb2309"
+  },
+  {
+    "path": "skill/sectioned-feature-development/references/model-routing.md",
+    "kind": "modified",
+    "before_sha256": "905bfbc2e697b5ef02bc9afd3205886505515b327d2b4e0f8bf4f09b46b97420",
+    "after_sha256": "e749d2ffa612c67ad6affb2463a46b4f58bbd6ad571455f1fb440455d3052624"
+  },
+  {
+    "path": "skill/sectioned-feature-development/references/recovery-and-migration.md",
+    "kind": "modified",
+    "before_sha256": "a48265591f6a7d17d48918062645708d87be1a210f0b847d311f9bb07e421ff7",
+    "after_sha256": "1663673522532360dbae21566566ad4e5c716f5bf56810632514679954a7ffe2"
+  },
+  {
+    "path": "skill/sectioned-feature-development/references/subsections.md",
+    "kind": "modified",
+    "before_sha256": "4f2a68bfb698414050d09ed8b3834a9c5def7ed304c7e200ce5ad35e52cb751e",
+    "after_sha256": "6ed3d07414b4f08d9e863d278373e7689707dcf6feecbf710255120b91ce61ca"
+  },
+  {
+    "path": "skill/sectioned-feature-development/references/zas-audit.md",
+    "kind": "added",
+    "before_sha256": null,
+    "after_sha256": "1d90efe08c86e477239b4628999215b74d42c58d6611be2d3ab6f9698cd8e313"
+  },
+  {
+    "path": "skill/sectioned-feature-development/references/zas-progress-supervision.md",
+    "kind": "added",
+    "before_sha256": null,
+    "after_sha256": "f89447ef59b6f28410a5d31235cce77edc049bd8208b385be830015d1c7f269b"
+  },
+  {
+    "path": "skill/sectioned-feature-development/references/zcode-mcp-adapter.md",
+    "kind": "modified",
+    "before_sha256": "c1addd0c7b6d96c9de354a1331a4722dbe6b30b204ac0b88358214b6e9863390",
+    "after_sha256": "bc76c5ab2907cd25442f99eacdedd31c0d880916c5b5d44305902995623c362d"
+  },
+  {
+    "path": "skill/sectioned-feature-development/scripts/advisor_flow.py",
+    "kind": "added",
+    "before_sha256": null,
+    "after_sha256": "fd921a0837c6f09947ddc64443880cee8c705b8237bd91d1bf9d19a7b390c009"
+  },
+  {
+    "path": "skill/sectioned-feature-development/scripts/advisor_pack.py",
+    "kind": "modified",
+    "before_sha256": "893d9168871c6210e5cbf898255d8e0c415f3fc45fbca85dbb40b9fa82a3f7ec",
+    "after_sha256": "af1b22761b6a801409e340ed734cf2d576ef7b716498f3311eda55129a24e788"
+  },
+  {
+    "path": "skill/sectioned-feature-development/scripts/audit_trace.py",
+    "kind": "modified",
+    "before_sha256": "7195a334b3c989b2604a0f130c586157bff0e2b8d69a9eb194b8ef6f29b226ab",
+    "after_sha256": "49d2577a7fcfb72f77639c92b8c65f77bab83623e84710b7a92f7b8efd68e75e"
+  },
+  {
+    "path": "skill/sectioned-feature-development/scripts/execution_artifacts.py",
+    "kind": "modified",
+    "before_sha256": "7accef40e47c0649e12028e3eb616cc5489ba5f2e0600ea199a9a431d6e0b9dc",
+    "after_sha256": "e9faf8fd7880edf5a9ef411db45a266a705310dffaf4be9dd9a1e6556952f490"
+  },
+  {
+    "path": "skill/sectioned-feature-development/scripts/workflow.py",
+    "kind": "modified",
+    "before_sha256": "0226f06b16d707b9be4a811830d461155ac65b58a0e5740df6fd9e330a653632",
+    "after_sha256": "c744a407502512c8f69169fbd8966dafd05cb193ac2726251ce2211f703b3316"
+  },
+  {
+    "path": "skill/sectioned-feature-development/scripts/zas_evidence.py",
+    "kind": "added",
+    "before_sha256": null,
+    "after_sha256": "72aaf491196a8422575cec9871e8d3b531839ede8b65c042d8086fe92ca86e30"
+  },
+  {
+    "path": "tests/fixtures/v41-plan.md",
+    "kind": "modified",
+    "before_sha256": "8707d3c1638dda5ee5dfa5900219276eb10f7e4235d12c527befb403100d6958",
+    "after_sha256": "e7711aaf5e2ae34563e0bcb6bb0d8a365c68e8059e3d9f374aab6da70bffeb4c"
+  },
+  {
+    "path": "tests/test_project.py",
+    "kind": "modified",
+    "before_sha256": "8e9e0edd97167143a5de5616e4d8fa261cf4474411b2ac1d380795da017781a6",
+    "after_sha256": "562fe08ae5686bafaf171cf0e0d20014812e0791b711bfbb050ca6b81f1adbdc"
+  },
+  {
+    "path": "tests/test_restored_artifacts.py",
+    "kind": "modified",
+    "before_sha256": "89aa7b2a00121b33e3cd51b4e7fd079a80a53f9d6345f985c96a5f0d41789acb",
+    "after_sha256": "c82ff67ebbf1506d8b9173a7c868df3bea372c33d76eece3211794baf0f9fda8"
+  },
+  {
+    "path": "tests/test_v43_execution.py",
+    "kind": "added",
+    "before_sha256": null,
+    "after_sha256": "3c19c81d18b50b9def0f14b06afccfc2979ac6820ea0e1d564acccb73e928064"
+  },
+  {
+    "path": "tests/test_v43_zas.py",
+    "kind": "added",
+    "before_sha256": null,
+    "after_sha256": "c314e9369aa9b62045cc217503a57c25b6601f8d674eb112299db45307b13426"
+  }
+]

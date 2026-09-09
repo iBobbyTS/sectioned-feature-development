@@ -1,4 +1,4 @@
-name = "implementer_3"
+name = "impl_mini"
 description = "Only use when main agent is in the $sectioned-feature-development workflow"
 model = "gpt-5.6-terra"
 model_reasoning_effort = "high"

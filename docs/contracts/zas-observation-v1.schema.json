@@ -1,0 +1,188 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/sfd/zas-observation-v1.schema.json",
+  "title": "PROPOSED ZAS observation v1 response",
+  "description": "Proposed compatibility contract only; not implemented or advertised by uploaded ZAS. Authorization and semantic progression are NOT proven by schema validation.",
+  "type": "object",
+  "required": [
+    "schema",
+    "agent_id",
+    "stream_id",
+    "first_available_seq",
+    "next_seq",
+    "has_more",
+    "gap",
+    "loss",
+    "events"
+  ],
+  "properties": {
+    "schema": {
+      "const": "zas-observation/1"
+    },
+    "agent_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "stream_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "first_available_seq": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "next_seq": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "has_more": {
+      "type": "boolean"
+    },
+    "gap": {
+      "type": "object",
+      "required": [
+        "present",
+        "reason"
+      ],
+      "properties": {
+        "present": {
+          "type": "boolean"
+        },
+        "reason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "loss": {
+      "type": "object",
+      "required": [
+        "dropped_events",
+        "redacted_fields",
+        "truncated_events"
+      ],
+      "properties": {
+        "dropped_events": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "redacted_fields": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "truncated_events": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "events": {
+      "type": "array",
+      "maxItems": 100,
+      "items": {
+        "type": "object",
+        "required": [
+          "seq",
+          "kind",
+          "visibility",
+          "source",
+          "summary"
+        ],
+        "properties": {
+          "seq": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "kind": {
+            "type": "string",
+            "minLength": 1
+          },
+          "visibility": {
+            "enum": [
+              "metadata",
+              "runtime_public"
+            ]
+          },
+          "source": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_event_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "agent_id": {
+            "type": "string"
+          },
+          "session_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "turn_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "model_request_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "tool_call_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "timestamp_ms": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "content": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 8192
+          },
+          "summary": {
+            "type": "object",
+            "description": "Bounded sanitized source facts. Unknown event kinds retained; not an arbitrary raw payload."
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "visibility": {
+                  "const": "metadata"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "content": {
+                  "type": "null"
+                }
+              }
+            }
+          }
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

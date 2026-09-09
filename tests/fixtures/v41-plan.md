@@ -143,7 +143,7 @@
       "consumes_contracts": [],
       "parallel_eligible": true,
       "parallel_reason": "Distinct consumer owners after S01 is accepted and integrated; tests use private state.",
-      "profile": "implementer_2",
+      "profile": "impl_std",
       "model_reason": "Replace with source-grounded decision; this is an example only.",
       "task_features": {
         "analogue": "src/example.py (replace with verified path)",
@@ -186,7 +186,7 @@
       ],
       "parallel_eligible": true,
       "parallel_reason": "Distinct consumer owners after S01 is accepted and integrated; tests use private state.",
-      "profile": "implementer_3",
+      "profile": "impl_mini",
       "model_reason": "Replace with source-grounded decision; this is an example only.",
       "task_features": {
         "analogue": "src/example.py (replace with verified path)",
@@ -229,7 +229,7 @@
       ],
       "parallel_eligible": true,
       "parallel_reason": "Distinct consumer owners after S01 is accepted and integrated; tests use private state.",
-      "profile": "implementer_4",
+      "profile": "impl_nano",
       "model_reason": "Replace with source-grounded decision; this is an example only.",
       "task_features": {
         "analogue": "src/example.py (replace with verified path)",
@@ -279,7 +279,7 @@
           "consumer": "u2实际consumer",
           "safe_intermediate_state": "只在parent分支保留真实未公开实现，不假装整体feature已完成。",
           "oracle": "原需求的输入/错误结果与生产调用对照；替换成实际source-backed oracle。",
-          "profile": "implementer_4",
+          "profile": "impl_nano",
           "model_reason": "演示模板；实际按任务结构决定，不因child编号降档。",
           "requirement_ids": [
             "REQ-001"
@@ -307,7 +307,7 @@
           "consumer": "父节外部消费者",
           "safe_intermediate_state": "只在parent分支保留真实未公开实现，不假装整体feature已完成。",
           "oracle": "原需求的输入/错误结果与生产调用对照；替换成实际source-backed oracle。",
-          "profile": "implementer_4",
+          "profile": "impl_nano",
           "model_reason": "演示模板；实际按任务结构决定，不因child编号降档。",
           "requirement_ids": [
             "REQ-001"

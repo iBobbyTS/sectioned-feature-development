@@ -2,7 +2,7 @@
 name: code-review
 description: "Evidence-based review of a PR, commit range, section or repair delta. In delegated sectioned-feature-development mode, execute one bounded checkpoint, reconciliation or full pass and return candidates/coverage without taking over admission, implementation or acceptance."
 ---
-# Code Review — 4.2
+# Code Review — 4.3
 
 ## Select execution context first
 

@@ -1,0 +1,26 @@
+{
+  "skill": {
+    "head": "25d587ae5fe172206d7de40364f18834cfa10edc",
+    "dirty_worktree": " M agents/code_reviewer.toml\n M agents/plan_reviewer.toml\n M docs/version-history/v4.2/AUDIT_INTAKE.csv\n",
+    "input_archive_sha256": "ca22e9f34b5c50336d43f7d42102a6cec78d1dbdb717a3f37867fd7b74dc3d82",
+    "dirty_source_hashes": {
+      "agents/code_reviewer.toml": "e82b43ec905cb5e893a096bb126d1e23da2df2a53b204f3c5fa8e571c7385fb1",
+      "agents/plan_reviewer.toml": "4d73a92524b82187a613afd8f89a33227d57fa53f27b2c3a576efd3daf929d0e",
+      "docs/version-history/v4.2/AUDIT_INTAKE.csv": "a279b58c02c59ac4472cd61906ea1005fca4c8ab3af30f9f6be4096a32b3d134"
+    }
+  },
+  "zas": {
+    "head": "4e011ae5eaf5e0c46cccf5a36cbb379e181c90be",
+    "dirty_worktree": " M Cargo.lock\n M cli/main.mjs\n M crates/zcode-agentd/Cargo.toml\n M crates/zcode-agentd/src/lib.rs\n M crates/zcode-agentd/src/rpc.rs\n M crates/zcode-subagent-mcp/src/lib.rs\n M docs/recovery.md\n M npm/native/darwin-arm64/zcode-as-subagent-mcp\n M npm/native/darwin-arm64/zcode-as-subagentd\n M tests/cli/diagnose.test.mjs\n",
+    "input_archive_sha256": "c92133e562b09ce2b085cde7e866c79408bc7b91ae59dc8ba1802f8453cc1aa6",
+    "dirty_source_hashes": {
+      "cli/main.mjs": "27ddee87a479f66ad3e1ae213d9a72eac19b847fcf708eac16d9190768a3f4cf",
+      "crates/zcode-agentd/Cargo.toml": "30a2c9fdea05d2489c5ecc0623275413af180d58bd5b726316cbc75d000cf747",
+      "crates/zcode-agentd/src/lib.rs": "d83cb0a01d2cd213263182b97d80267e8c0668d57857d8ff536a869bb3dc0cd1",
+      "crates/zcode-agentd/src/rpc.rs": "ce6c7399e380cac454402f1b8c54c63baa94ddb837bc32708917599516ea050c",
+      "crates/zcode-subagent-mcp/src/lib.rs": "060ed6287ff6f2ab96c3cce8fe39f1e5f05871ec7be7316a2eed3922604c4ed4",
+      "docs/recovery.md": "ae870eeb5f271fad9add6057914228392d25a4a2e8919d09c04f0598ef0f0906",
+      "tests/cli/diagnose.test.mjs": "2af4cab98884cbea4bb43eb455c1e112ec7297fc0d4515269c708e8511f90274"
+    }
+  }
+}

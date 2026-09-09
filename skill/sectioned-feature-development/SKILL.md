@@ -1,11 +1,18 @@
 ---
 name: sectioned-feature-development
-description: "Plan, review, delegate, integrate and audit non-trivial changes as bounded business sections with optional internal subsections. Use for work over roughly 300 behavioral lines, over three owners, material persistence/schema/security/auth/concurrency/routing/public-protocol/process/state changes, unclear impact cones or failed whole-change convergence. Touching a high-risk module alone is insufficient for a local fix, one-off script or mechanical edit. Activate prospectively when small work grows. Explicit invocation skips routine user approval, never saved plans, real subagents, handoffs or review. Auto invocation is announced and pauses after the first saved PLAN-FULL before review. Multiple sections require a dedicated branch and commits. Reclassify later requests after completion instead of appending a closed plan. Supports model tiers, isolated parallel worktrees, Astra/GLM review and a limited-context native advisor."
+description: "Plan, review, delegate, integrate and audit non-trivial changes as bounded business sections with optional internal subsections. Use for work over roughly 300 behavioral lines, over three owners, material persistence/schema/security/auth/concurrency/routing/public-protocol/process/state changes, unclear impact cones or failed whole-change convergence. Touching a high-risk module alone is insufficient for a local fix, one-off script or mechanical edit. Activate prospectively when small work grows. Explicit invocation skips routine user approval, never saved plans, real subagents, handoffs or review. Auto invocation is announced and pauses after the first saved PLAN-FULL before review. Multiple sections require a dedicated branch and commits. Reclassify later requests after completion instead of appending a closed plan. Supports model tiers, isolated parallel worktrees, Astra/GLM review and external Advisor handoff through the human."
 ---
 
-## V4.2 — v3.9 execution contract with authorized extensions
+## V4.3 — preserved execution contract, frozen implementation tiers, beta ZAS, external Advisor
 
-This version is rebased on the actual v3.9 tag; unproven simplifications are not carried forward. Read [artifact lifecycle](references/artifact-lifecycle.md) at activation: audit OFF never removes PLAN, real delegation, handoff, review or acceptance records. Use stable review identities, Astra/GLM alternation, isolated candidates, and the native [@advisor](subagent://advisor) according to [external reviewer orchestration](references/external-reviewer-orchestration.md) and [Advisor escalation](references/advisor-escalation.md); Audit records these events but never authorizes them.
+This version is rebased on the actual v3.9 tag; unproven simplifications are not carried forward. Read [artifact lifecycle](references/artifact-lifecycle.md) at activation: audit OFF never removes PLAN, real delegation, handoff, review or acceptance records. Use stable review identities, Astra/GLM alternation, isolated candidates, and the external Advisor via human handoff according to [external reviewer orchestration](references/external-reviewer-orchestration.md) and [Advisor escalation](references/advisor-escalation.md); Audit records these events but never authorizes them.
+
+## 4.3 execution deltas
+
+- Keep the uploaded 4.2.1 main-thread PLAN authoring choice: main writes the canonical complete PLAN-FULL; [@plan_reviewer](subagent://plan_reviewer) is still a genuinely independent subagent. Main never substitutes for implementation/repair workers.
+- Before PLAN review, every business section **and** every subsection has its own explicit `profile` in PLAN-FULL: [@impl_nano](subagent://impl_nano), [@impl_mini](subagent://impl_mini), [@impl_std](subagent://impl_std), or [@impl_large](subagent://impl_large). No AUTO/TBD/inherited child assignment. The task packet and actual delegated role must match that frozen plan. An execution-time model change first needs a bounded plan revision and corresponding delta review, retaining accepted work and budgets.
+- ZAS is a controlled-test beta integration. Preserve native/ZCode full-review alternation and all existing acceptance requirements. Read [current and proposed ZAS adapter](references/zcode-mcp-adapter.md) and [progress supervision](references/zas-progress-supervision.md). Discover tools/capabilities; never send old API fields or pretend the proposed observation endpoint already exists.
+- Restore the 3.9 external Advisor workflow: trigger → stop → full repository/Git pack → human handoff → wait → verbatim result and human adoption. No native advisor subagent. Advisor remains independent of audit and ordinary ZAS diagnostics.
 
 ## Authority and safety
 
@@ -136,7 +143,7 @@ The full v3.9 parent-stage/recovery sequence is retained in [artifact lifecycle]
    - a repository-required gate/rule or current production contract;
    - an unavoidable correctness dependency, with a causal explanation of why the smaller existing path cannot satisfy the requested outcome.
    Remove items whose only authority is the draft plan, another section, a reviewer, or a desire for stronger proof.
-6. Dispatch a real [@plan_writer](subagent://plan_writer) with the persisted confirmed requirements and necessary source. It returns the COMPLETE plan text; because it is read-only, the main agent must write `.agent-work/PLAN-FULL.md`, initialize `.agent-work/STATE.json` and render `FEATURE-STATE.md` BEFORE validation or independent review. Use the full bundled template and record:
+6. Dispatch a real the main orchestrator (plan author) with the persisted confirmed requirements and necessary source. It returns the COMPLETE plan text; because it is read-only, the main agent must write `.agent-work/PLAN-FULL.md`, initialize `.agent-work/STATE.json` and render `FEATURE-STATE.md` BEFORE validation or independent review. Use the full bundled template and record:
    - requested outcome and observable behavior;
    - existing repository invariants and authoritative constraints;
    - explicit non-goals and unsupported environments;
@@ -238,12 +245,12 @@ Role identity and sequencing are mandatory; profile choice is secondary. The pla
 
 Mandatory named roles (fresh instances where independence is required; no textual role label counts as a spawn):
 
-- plan authorship: [@plan_writer](subagent://plan_writer), Astra xhigh, returns full draft for parent persistence;
+- plan authorship: the main orchestrator (plan author), Astra xhigh, returns full draft for parent persistence;
 - plan review: a distinct [@plan_reviewer](subagent://plan_reviewer), Astra xhigh; high-complexity GLM challenge follows the existing finite PLAN policy;
-- implementation/repair: [@implementer_1](subagent://implementer_1) Astra medium, [@implementer_2](subagent://implementer_2) Sol medium, [@implementer_3](subagent://implementer_3) Terra high, or [@implementer_4](subagent://implementer_4) Luna xhigh, using evidence in [model routing](references/model-routing.md);
+- implementation/repair: [@impl_large](subagent://impl_large) Astra medium, [@impl_std](subagent://impl_std) Sol medium, [@impl_mini](subagent://impl_mini) Terra high, or [@impl_nano](subagent://impl_nano) Luna xhigh, using evidence in [model routing](references/model-routing.md);
 - code/integration review: [@code_reviewer](subagent://code_reviewer), Astra high, alternating with actual ZCode GLM review via [adapter](references/zcode-mcp-adapter.md);
 - optional bounded exploration: [@code_explorer](subagent://code_explorer), Luna xhigh; do not re-read all its output just to duplicate its work;
-- bounded hard-cap diagnosis: fresh [@plan_writer](subagent://plan_writer); rare independent technical adjudication: [@advisor](subagent://advisor), Astra xhigh, with noninherited limited context.
+- bounded hard-cap diagnosis: a fresh [@plan_reviewer](subagent://plan_reviewer) instance returns the bounded diagnosis to main; rare independent technical adjudication follows the external Advisor handoff, not a native model call.
 
 
 Dispatch a real delegated implementer only after recording that no reviewer is active on this parent/candidate, all prerequisites are accepted+integrated, and its workspace/resources are reserved. Other provably independent parent workspaces may run concurrently. The implementer receives repository rules, feature outcome/invariants, `PLAN.md`, the section contract, exact base, and required checks. Require:
@@ -397,7 +404,7 @@ The backup is a recovery point, not a command to abandon current correct work.
 
 ### 4.2 Invoke a fresh recovery planner
 
-Give a clean [@plan_writer](subagent://plan_writer):
+Give a clean the main orchestrator (plan author):
 
 - original section lineage, whether its single automatic recovery event is already used, current goal/contract, base/head, and diff summary;
 - all admitted root-cause classes and repair results;
@@ -446,7 +453,7 @@ After all sections are accepted, record an `unproven_composition` list before di
 
 Integration composition creates no new authority to add product scope, deployment models, threat models, durability, observability, rollout promises, routes, analyzers, or browser flows. Admit only feature-diff-caused composition defects, necessary merge-blocking dependencies, or evidence gaps tied to an existing feature acceptance criterion/repository gate.
 
-Do not repeat local section review or upgrade the feature into a repository audit. Use one cumulative integration budget of at most five repair waves across checkpoint/final integration; it never resets when final evidence is rerun. After that, allow at most one bounded [@plan_writer](subagent://plan_writer) diagnosis/recovery event for the feature integration boundary; if the next bounded repair/final pass does not close, stop as `not-mergeable` or for a genuine owner decision.
+Do not repeat local section review or upgrade the feature into a repository audit. Use one cumulative integration budget of at most five repair waves across checkpoint/final integration; it never resets when final evidence is rerun. After that, allow at most one bounded the main orchestrator (plan author) diagnosis/recovery event for the feature integration boundary; if the next bounded repair/final pass does not close, stop as `not-mergeable` or for a genuine owner decision.
 
 Run the broadest deterministic suite/build/browser/application checks once at final integration unless repository rules require otherwise. Reuse identical successful evidence for the same code head; rerun only when the relevant product/test range changed or the prior run is not trustworthy. These checks verify the already-listed feature acceptance criteria and repository-required gates; they do not create new acceptance scope. State readiness as `mergeable`, `not-mergeable`, or `insufficient-evidence`.
 
@@ -462,4 +469,4 @@ Run the broadest deterministic suite/build/browser/application checks once at fi
 
 ## Delegated companion contract
 
-The installed companion uses `context=DELEGATED_PASS`, protocol `sfd-delegated-review/4.2` (legacy `sfd-delegated-review/4.1` and `sfd-delegated-review/4.0` are readable for active historical packets). Parent alone owns admission/acceptance; reviewer returns CLEAN, MATERIAL_CANDIDATES, or INSUFFICIENT_EVIDENCE. ONE with an admitted material repair requires delta closure plus a fresh final full pass; TWO requires covered baseline/closure plus fresh independent final evidence. `unproven_composition` controls whether another integration reviewer is needed, not whether required checks run.
+The installed companion uses `context=DELEGATED_PASS`, protocol `sfd-delegated-review/4.2` (legacy `sfd-delegated-review/4.2`, `sfd-delegated-review/4.1` and `sfd-delegated-review/4.0` are readable for active historical packets). Parent alone owns admission/acceptance; reviewer returns CLEAN, MATERIAL_CANDIDATES, or INSUFFICIENT_EVIDENCE. ONE with an admitted material repair requires delta closure plus a fresh final full pass; TWO requires covered baseline/closure plus fresh independent final evidence. `unproven_composition` controls whether another integration reviewer is needed, not whether required checks run.

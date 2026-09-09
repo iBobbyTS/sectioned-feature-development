@@ -35,16 +35,22 @@ def main():
  p=argparse.ArgumentParser(description=__doc__)
  p.add_argument('--codex-home',type=Path,default=Path(os.environ.get('CODEX_HOME','~/.codex')).expanduser())
  p.add_argument('--apply',action='store_true');p.add_argument('--replace',action='store_true')
+ p.add_argument('--retire-legacy-agents',action='store_true',help='explicitly back up and remove only implementer_1..4 and advisor from agents/')
  p.add_argument('--only',choices=['all','code-review'],default='all',help='all installs both skills and agents; code-review updates only the companion')
  a=p.parse_args();home=a.codex_home.expanduser().resolve()
  try:
   items=targets(home,a.only)
+  if a.retire_legacy_agents and (a.only!='all' or not a.replace):raise ValueError('--retire-legacy-agents requires full install with --replace')
+  retired=[home/'agents'/f'{name}.toml' for name in ('implementer_1','implementer_2','implementer_3','implementer_4','advisor')] if a.retire_legacy_agents else []
+  for dst in retired:
+   if dst.is_symlink():raise ValueError(f'refusing legacy symlink: {dst}')
+   if dst.exists():print(f'RETIRE after backup: {dst}')
   for src,dst in items:
    if dst.is_symlink():raise ValueError(f'refusing symlink target: {dst}')
    print(f'{src.relative_to(ROOT)} -> {dst}'+(' [exists]' if dst.exists() else ''))
   if not a.apply:
    print('DRY_RUN: no files changed. --apply installs; --replace backs up existing targets first.');return 0
-  occupied=[dst for _,dst in items if dst.exists()]
+  occupied=[dst for _,dst in items if dst.exists()]+[dst for dst in retired if dst.exists()]
   if occupied and not a.replace:raise ValueError('targets exist; review dry-run, then use --replace to back them up')
   home.mkdir(parents=True,exist_ok=True)
   backup=None
@@ -68,6 +74,8 @@ def main():
     if dst.is_dir():shutil.rmtree(dst)  # exact named target already backed up; no unrelated paths
     elif dst.exists():dst.unlink()
     shutil.move(str(candidate),str(dst))
+  for dst in retired:
+   if dst.exists():dst.unlink()  # explicit named removal, backup above includes original bytes
   print(f'INSTALLED. Backup: {backup or "none"}. AGENTS.md, other agents, global config and old differently named skills unchanged.')
   print('Verify exact model/effort availability and fresh-context launch in your actual Codex installation before use.')
   return 0

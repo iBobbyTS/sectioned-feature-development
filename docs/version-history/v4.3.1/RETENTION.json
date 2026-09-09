@@ -1,0 +1,47 @@
+{
+  "baseline_archive_sha256": "c583dc51829fca5e3acfc236e42e2c091aee2b610c8afde892e740bcf90b963f",
+  "historical_files_preserved": 151,
+  "agents_preserved": 7,
+  "changed": [
+    "README.md",
+    "VERSION",
+    "docs/CHANGE_LOG.md",
+    "docs/ZAS_OPTIMIZATION_DIRECTIONS.md",
+    "skill/code-review/SKILL.md",
+    "skill/code-review/references/delegated-pass.md",
+    "skill/sectioned-feature-development/SKILL.md",
+    "skill/sectioned-feature-development/VERSION",
+    "skill/sectioned-feature-development/agents/openai.yaml",
+    "skill/sectioned-feature-development/assets/ZAS-ATTEMPT.template.json",
+    "skill/sectioned-feature-development/references/artifact-schemas.md",
+    "skill/sectioned-feature-development/references/audit-mode.md",
+    "skill/sectioned-feature-development/references/zas-audit.md",
+    "skill/sectioned-feature-development/references/zas-progress-supervision.md",
+    "skill/sectioned-feature-development/references/zcode-mcp-adapter.md",
+    "skill/sectioned-feature-development/scripts/advisor_pack.py",
+    "skill/sectioned-feature-development/scripts/audit_finalize.py",
+    "skill/sectioned-feature-development/scripts/process_audit.py",
+    "skill/sectioned-feature-development/scripts/zas_evidence.py",
+    "tests/test_project.py",
+    "tests/test_v43_zas.py"
+  ],
+  "removed": [
+    "docs/contracts/zas-observation-v1.schema.json"
+  ],
+  "added": [
+    "docs/contracts/zas-observation-v1.1.schema.json",
+    "docs/contracts/zas-observe-tool.json",
+    "docs/contracts/zas-public-reasoning-source.template.json",
+    "docs/version-history/v4.3.1/AUDIT_PACK_ANALYSIS.md",
+    "docs/version-history/v4.3.1/PROMPT.md",
+    "docs/version-history/v4.3.1/RESEARCH.md",
+    "docs/version-history/v4.3.1/RETENTION.json",
+    "docs/version-history/v4.3.1/UPDATES.md",
+    "docs/version-history/v4.3.1/VALIDATION.md",
+    "docs/version-history/v4.3.1/ZAS_SOURCE_REVIEW.md",
+    "skill/sectioned-feature-development/assets/ZAS-IDENTITY.template.json",
+    "skill/sectioned-feature-development/assets/ZAS-LINK.template.json",
+    "skill/sectioned-feature-development/scripts/zas_audit_pack.py",
+    "tests/test_v431_audit_pair.py"
+  ]
+}

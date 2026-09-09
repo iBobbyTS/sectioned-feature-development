@@ -32,11 +32,11 @@ Use `--audit OFF` only on explicit request. `init` creates DRAFT files, not an a
 
 ## Plan author to saved PLAN
 
-1. Persist REQUIREMENTS before invoking [@plan_writer](subagent://plan_writer).
-2. Dispatch a real native instance with the requirements, source/owner map, complete PLAN-FULL template, allowed changes and exclusions. Save the raw spawn response and stable returned ID. Role name links are routing hints, not proof that dispatch occurred.
-3. The plan writer is read-only: it returns the COMPLETE draft. The main agent must save that output, then write the canonical PLAN-FULL. Do not leave the plan only in chat or accept a short outline as the full artifact.
+1. Persist REQUIREMENTS before authoring. The main orchestrator authors the complete plan, preserving the uploaded 4.2.1 local policy; do not spawn a nonexistent plan_writer.
+2. Save the complete draft at `.agent-work/evidence/plan-draft.md`, then write canonical PLAN-FULL. Record the actual main actor ID as author. Main authorship is not a delegated implementation exception.
+3. Do not leave the plan only in chat or accept a short outline. Every section and child has a fixed implementation profile before independent review.
 4. Retain the v3.9 FEATURE-CONTEXT/SECTION markers and complete narrative contracts. Add the SFD_PLAN_V4 block for machine scheduling. Parent section IDs/dependencies agree between both views; each child is listed only under its parent. The scheduler block is not another requirement source.
-5. Freeze the reviewed proposal with scheduling `status=FROZEN`, `workflow_revision=4.2`, real base/branch, requirements path/hash and check commands. `FROZEN` is not approval. Review/admission update STATE, not the already-reviewed plan bytes.
+5. Freeze the reviewed proposal with scheduling `status=FROZEN`, `workflow_revision=4.3`, real base/branch, requirements path/hash and check commands. `FROZEN` is not approval. Review/admission update STATE, not the already-reviewed plan bytes.
 6. Run both mechanical checks:
 
 ```bash
@@ -67,10 +67,10 @@ Register the real launch receipts and record the plan gate:
 
 ```bash
 python {skill-dir}/scripts/execution_artifacts.py --repo . register \
-  --actor <actual-id> --role plan_writer --receipt .agent-work/evidence/plan-writer-spawn.json --workspace <repo>
-# Repeat registration for the distinct plan_reviewer and its actual spawn response.
+  --actor <reviewer-id> --role plan_reviewer --receipt .agent-work/evidence/plan-reviewer-spawn.json --workspace <repo>
+# Main plan author uses the main_actor_id established by init; no author launch receipt is fabricated.
 python {skill-dir}/scripts/execution_artifacts.py --repo . approve-plan \
-  --author <writer-id> --author-output .agent-work/evidence/plan-draft.md \
+  --author <main-actor-id> --author-output .agent-work/evidence/plan-draft.md \
   --reviewer <reviewer-id> --review-output .agent-work/reviews/PLAN-RESULT.json \
   --admission .agent-work/reviews/PLAN-REVIEW.md --user-approval <APPROVED-or-NOT_APPLICABLE>
 ```
@@ -88,7 +88,7 @@ python {skill-dir}/scripts/execution_artifacts.py --repo . task --section S01
 
 `task` uses the v3.9 extractor behavior to write a parent-specific current PLAN, binds the section CONTRACT, and includes the complete selected subsection row when applicable. A serial single-parent workflow also gets `.agent-work/PLAN.md`. Parallel parents use `sections/{ID}-PLAN.md` so their writers never overwrite one global PLAN.
 
-Choose [@implementer_1](subagent://implementer_1), [@implementer_2](subagent://implementer_2), [@implementer_3](subagent://implementer_3), or [@implementer_4](subagent://implementer_4) using module/model reasoning evidence. Actually invoke it; main never substitutes its own product/test edits. Persist the returned launch ID, selected profile, requested/observed model and effort, task hash, base, workspace, parent/child and original lineage. Unknown observed telemetry stays UNKNOWN.
+Choose [@impl_large](subagent://impl_large), [@impl_std](subagent://impl_std), [@impl_mini](subagent://impl_mini), or [@impl_nano](subagent://impl_nano) using module/model reasoning evidence. Actually invoke it; main never substitutes its own product/test edits. Persist the returned launch ID, selected profile, requested/observed model and effort, task hash, base, workspace, parent/child and original lineage. Unknown observed telemetry stays UNKNOWN.
 
 Bind each real launch ID to the reserved task with `stage-start` before handing over mutable work. If the host combines creation and dispatch, reserve first and record/bind the returned ID immediately; no second writer is allowed while binding is pending. The helper does not call the host or enforce an OS sandbox.
 
@@ -190,3 +190,11 @@ ALL_SECTIONS_ACCEPTED
 
 Advance only when the corresponding code-visible evidence exists. Agent declarations are not gates.
 
+
+## 4.3 frozen model and external Advisor constraints
+
+Main authors the persisted plan (uploaded 4.2.1 choice); record `--author <main-actor-id>` and its saved plan output, never invent a plan-author subagent launch. Independent PLAN reviewer launch/report/admission remain mandatory. Implementation/repair still require real delegated workers.
+
+Each unit's plan profile must be concrete before review. The task extractor saves `task_plan_sha256`, `task_unit_id`, and `task_profile`; a write-stage launch must match all three and its registered model/effort. No standalone runtime tier selector exists.
+
+External Advisor states REQUIRED, PACKAGE_BLOCKED, WAITING_EXTERNAL and WAITING_HUMAN_DECISION block readiness, writer/reviewer dispatch and closure even with audit OFF. Use advisor_flow.py for request/pack/result/human-adoption; never invoke a native advisor.

@@ -1,0 +1,29 @@
+..............F..........E.........................................................................
+======================================================================
+ERROR: test_baseline_subsection_request_unchanged (test_restored_artifacts.RestoredArtifacts.test_baseline_subsection_request_unchanged)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/sfd43/input/sectioned-feature-development/tests/test_restored_artifacts.py", line 104, in test_baseline_subsection_request_unchanged
+    self.assertEqual(base.read_bytes(),(S/'assets/ADVISOR-REQUEST.template.md').read_bytes())
+                     ~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.13/pathlib/_abc.py", line 625, in read_bytes
+    with self.open(mode='rb') as f:
+         ~~~~~~~~~^^^^^^^^^^^
+  File "/usr/lib/python3.13/pathlib/_local.py", line 539, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/mnt/data/sfd43/input/sectioned-feature-development/docs/version-history/v4.2/baseline-v3.9/assets/ADVISOR-REQUEST.template.md'
+
+======================================================================
+FAIL: test_agents_exact_six_combinations (test_project.ProjectTests.test_agents_exact_six_combinations)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/sfd43/input/sectioned-feature-development/tests/test_project.py", line 13, in test_agents_exact_six_combinations
+    self.assertEqual(len(ps),9);self.assertEqual(len({(x['model'],x['model_reasoning_effort']) for x in ps}),6)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^
+AssertionError: 8 != 9
+
+----------------------------------------------------------------------
+Ran 99 tests in 7.530s
+
+FAILED (failures=1, errors=1)

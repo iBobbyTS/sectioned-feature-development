@@ -13,8 +13,8 @@ import section_plan
 from ensure_agent_work_untracked import ensure_untracked
 
 ASSETS=Path(__file__).resolve().parents[1]/'assets'
-WRITERS={'implementer_1','implementer_2','implementer_3','implementer_4'}
-ROLES=WRITERS|{'plan_writer','plan_reviewer','code_reviewer','code_explorer','advisor','glm_reviewer'}
+WRITERS={'impl_large','impl_std','impl_mini','impl_nano'}
+ROLES=WRITERS|{'plan_reviewer','code_reviewer','code_explorer','glm_reviewer'}
 REVIEW_STAGES={'PLAN_REVIEW','INITIAL_BOUNDED','SUBSECTION_DELTA','PARENT_RECONCILIATION','REPAIR_DELTA','FINAL_BOUNDED','INTEGRATION'}
 WRITE_STAGES={'IMPLEMENT','REPAIR'}
 
@@ -85,14 +85,14 @@ def init(repo,feature,run,main_actor,audit='LIVE',invocation_source='USER_EXPLIC
  for n in ['sections','reviews','replans','audit']: (aw/n).mkdir(parents=True,exist_ok=True)
  for src,dst in [('REQUIREMENTS.template.md','REQUIREMENTS.md'),('PLAN-FULL.template.md','PLAN-FULL.md')]:
   shutil.copy2(ASSETS/src,aw/dst)
- state={'schema_version':4,'workflow_revision':'4.2','feature_id':feature,'run_id':run,'status':'DRAFT',
+ state={'schema_version':4,'workflow_revision':'4.3','feature_id':feature,'run_id':run,'status':'DRAFT',
   'main_actor_id':main_actor,'repo_root':str(repo),'audit_mode':audit,'plan_sha256':None,'plan_review_status':'PENDING',
   'user_plan_approval':'PENDING','advisor_state':'NOT_REQUIRED','actors':{},'active':[],
   'sections':{},'repair_lineages':{},'full_review_cursor':0,'full_reviews':{},'completion':None,'next_action':'REQUIREMENTS_AND_PLAN_AUTHOR'}
  if audit!='OFF':
   trace=aw/'audit'/feature/'TRACE.jsonl';state['audit_trace']=str(trace)
   cmd=[sys.executable,str(Path(__file__).with_name('audit_trace.py')),'init',str(trace),'--feature-id',feature,
-       '--skill-version','4.2','--invocation-source',invocation_source,'--invocation-timing','FEATURE_START',
+       '--skill-version','4.3','--invocation-source',invocation_source,'--invocation-timing','FEATURE_START',
        '--trigger-evidence',trigger_evidence,'--feature-base',git(repo,'rev-parse','HEAD'),'--repo',str(repo),
        '--field','run_id='+run]
   result=subprocess.run(cmd,capture_output=True,text=True)
@@ -122,6 +122,10 @@ def register(repo,actor,role,receipt,workspace,requested_model=None,observed_mod
  if state.get('status')=='COMPLETED':raise w.Invalid('CLOSED_FEATURE')
  old=state.setdefault('actors',{}).get(actor)
  if old and old['role']!=role:raise w.Invalid('ACTOR_ROLE_REUSE')
+ expected=w.IMPLEMENTATION_MODELS.get(role)
+ if expected:
+  if requested_model not in {None,expected[0]} or requested_effort not in {None,expected[1]}:raise w.Invalid('IMPLEMENTER_CONFIG_MISMATCH')
+  requested_model,requested_effort=expected
  rec={'role':role,'workspace':str(workspace.resolve()),'launch_receipt':proof(receipt,repo),
       'requested_model':requested_model or 'UNKNOWN','observed_model':observed_model or 'UNKNOWN','requested_effort':requested_effort or 'UNKNOWN','observed_effort':observed_effort or 'UNKNOWN','registered_at':now()}
  if old and old['launch_receipt']!=rec['launch_receipt']:raise w.Invalid('ACTOR_RECEIPT_REPLACEMENT')
@@ -129,7 +133,7 @@ def register(repo,actor,role,receipt,workspace,requested_model=None,observed_mod
 
 def check_plan(repo,plan_path,allow_draft=False):
  p=w.load_plan(plan_path)
- if p.get('workflow_revision')!='4.2':raise w.Invalid('NEW_EXECUTION_REQUIRES_REVISION_4_2; adopt active legacy work prospectively, do not relabel old evidence')
+ if p.get('workflow_revision')!='4.3':raise w.Invalid('NEW_EXECUTION_REQUIRES_REVISION_4_3; adopt active legacy work prospectively, do not relabel old evidence')
  legacy=section_plan.parse_plan(plan_path)
  if set(x.section_id for x in legacy.sections)!=set(s['id'] for s in p['sections']):raise w.Invalid('NARRATIVE_SCHEDULE_SECTION_MISMATCH')
  contract=repo/p.get('requirements_path','.agent-work/REQUIREMENTS.md')
@@ -143,7 +147,8 @@ def plan_evidence(p,state,h,repo):
  verify(state.get('requirements'),repo)
  if state['requirements']['sha256']!=p['requirements_sha256']:raise w.Invalid('REQUIREMENTS_STATE_MISMATCH')
  author=state.get('plan_author',{});review=state.get('plan_review',{})
- verify_actor(state,author.get('actor_id'),repo,{'plan_writer'});verify(author.get('artifact'),repo)
+ if author.get('actor_id') != state.get('main_actor_id'):raise w.Invalid('PLAN_AUTHOR_MUST_BE_ORCHESTRATOR')
+ verify(author.get('artifact'),repo)
  verify_actor(state,review.get('actor_id'),repo,{'plan_reviewer'});rp=verify(review.get('artifact'),repo)
  if author.get('actor_id')==review.get('actor_id'):raise w.Invalid('PLAN_AUTHOR_REVIEWER_COLLISION')
  if review.get('plan_sha256')!=h or review.get('result')!='APPROVED' or not review.get('admission'):
@@ -246,6 +251,8 @@ def task(repo,sid):
   contract.write_text(body+'\n\n## Frozen dispatch base\n'+ss['section_base']+'\n')
  ss['task_artifact']=proof(out,repo);ss['contract_artifact']=proof(contract,repo)
  if len(p['sections'])==1:shutil.copy2(out,repo/'.agent-work/PLAN.md')
+ ss['task_plan_sha256']=w.digest(path);ss['task_unit_id']=result['next'];ss['task_profile']=result['profile']
+ audit_event(repo,state,'implementation_assignment_frozen','planning',{'section_id':sid,'unit_id':result['next'],'profile':result['profile'],'plan_sha256':ss['task_plan_sha256']})
  save(repo,state);return {'task':str(out),'contract':str(contract),'next':result['next'],'profile':result['profile']}
 
 def finish_section(repo,sid,head):
@@ -265,7 +272,7 @@ def finish_section(repo,sid,head):
 def close(repo):
  state=load(repo);p=check_plan(repo,repo/'.agent-work/PLAN-FULL.md')
  ready_files(repo)
- if state.get('active') or state.get('advisor_state') in {'REQUIRED','RUNNING','CONTEXT_BLOCKED'}:raise w.Invalid('ACTIVE_BARRIER')
+ if state.get('active') or state.get('advisor_state') in w.ADVISOR_BLOCKING_STATES:raise w.Invalid('ACTIVE_BARRIER')
  if any(s.get('status')!='ACCEPTED' or not s.get('integrated') for s in state['sections'].values()):raise w.Invalid('SECTIONS_NOT_INTEGRATED')
  head=git(repo,'rev-parse','HEAD');final=state.get('final_gate',{})
  if final.get('head')!=head or final.get('readiness') not in {'MERGEABLE','mergeable','MERGEABLE_WITH_DOCUMENTED_GAPS'} or not final.get('artifact'):raise w.Invalid('FINAL_HEAD_EVIDENCE_REQUIRED_OR_NOT_READY')
@@ -279,7 +286,7 @@ def stage_start(repo,sid,stage,actor,workspace):
     with w.lock(path.with_suffix('.lock')):
         state=load(repo);p=check_plan(repo,repo/'.agent-work/PLAN-FULL.md');h=w.digest(repo/'.agent-work/PLAN-FULL.md')
         plan_evidence(p,state,h,repo);w.git_check(repo,p)
-        if state.get('status')!='ACTIVE' or state.get('advisor_state') in {'REQUIRED','RUNNING','CONTEXT_BLOCKED'}:raise w.Invalid('FEATURE_OR_ADVISOR_BARRIER')
+        if state.get('status')!='ACTIVE' or state.get('advisor_state') in w.ADVISOR_BLOCKING_STATES:raise w.Invalid('FEATURE_OR_ADVISOR_BARRIER')
         role_set=WRITERS if stage in WRITE_STAGES else {'code_reviewer','glm_reviewer'}
         verify_actor(state,actor,repo,role_set)
         if stage not in WRITE_STAGES|REVIEW_STAGES:raise w.Invalid('UNKNOWN_STAGE')
@@ -320,11 +327,20 @@ def stage_start(repo,sid,stage,actor,workspace):
             verify(ss.get('handoff_artifact'),repo)
         for key in ('task_artifact','contract_artifact'):verify(ss.get(key),repo)
         unit_id=next_['next'] if stage=='IMPLEMENT' else ss.get('active_subsection_id') or sid
+        if stage in WRITE_STAGES:
+            unit=next((c for c in sec.get('subsections',[]) if c['id']==unit_id),sec)
+            planned=unit['profile'];actual=state['actors'][actor]
+            if actual['role']!=planned:raise w.Invalid('IMPLEMENTER_DIFFERS_FROM_FROZEN_PLAN: revise and review the plan before dispatch')
+            expected=w.IMPLEMENTATION_MODELS[planned]
+            for field,value in [('requested_model',expected[0]),('requested_effort',expected[1]),('observed_model',expected[0]),('observed_effort',expected[1])]:
+                if actual.get(field) not in {None,'UNKNOWN',value}:raise w.Invalid('IMPLEMENTER_MODEL_OR_EFFORT_MISMATCH: '+field)
+            if ss.get('task_plan_sha256')!=h or ss.get('task_unit_id')!=unit_id or ss.get('task_profile')!=planned:
+                raise w.Invalid('TASK_ASSIGNMENT_NOT_FROZEN_FOR_THIS_UNIT')
         ss['active_subsection_id']=unit_id if unit_id!=sid else None
         entry={'section_id':sid,'subsection_id':ss['active_subsection_id'],'stage':stage,'actor_id':actor,'workspace':str(ws),'status':'RUNNING',
                'head':git(ws,'rev-parse','HEAD'),'fingerprint':product_fingerprint(ws),'started_at':now()}
         state['active'].append(entry);ss['status']='IMPLEMENTING' if stage in WRITE_STAGES else 'REVIEWING'
-        audit_event(repo,state,'stage_started','orchestration',{'actor_id':actor,'section_id':sid,'stage':stage,'subsection_id':ss['active_subsection_id'],'profile':state['actors'][actor]['role'],'workspace':ws,'head':entry['head'],'repair_waves':ss.get('repair_waves',0)});save(repo,state);return entry
+        audit_event(repo,state,'stage_started','orchestration',{'actor_id':actor,'section_id':sid,'stage':stage,'subsection_id':ss['active_subsection_id'],'profile':state['actors'][actor]['role'],'planned_profile':unit['profile'] if stage in WRITE_STAGES else None,'plan_sha256':h,'workspace':ws,'head':entry['head'],'repair_waves':ss.get('repair_waves',0)});save(repo,state);return entry
 
 def stage_finish(repo,actor,result):
     path=repo/'.agent-work/STATE.json'

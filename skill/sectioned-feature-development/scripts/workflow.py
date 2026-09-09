@@ -11,7 +11,14 @@ import re
 import subprocess
 import tempfile
 
-PROFILES = {'implementer_4', 'implementer_3', 'implementer_2', 'implementer_1'}
+IMPLEMENTATION_MODELS = {
+    'impl_nano': ('gpt-5.6-luna', 'xhigh'),
+    'impl_mini': ('gpt-5.6-terra', 'high'),
+    'impl_std': ('gpt-5.6-sol', 'medium'),
+    'impl_large': ('gpt-6-astra', 'medium'),
+}
+PROFILES = set(IMPLEMENTATION_MODELS)
+ADVISOR_BLOCKING_STATES = {'REQUIRED','ADVISOR_REQUIRED','PACKAGING','PACKAGE_BLOCKED','WAITING_EXTERNAL','RESULT_RECEIVED','WAITING_HUMAN_DECISION','RUNNING','CONTEXT_BLOCKED'}
 SHA = re.compile(r'^(?:[a-f0-9]{40}|[a-f0-9]{64})$')
 ID = re.compile(r'^[A-Za-z0-9][A-Za-z0-9_.-]{0,95}$')
 BEGIN, END = '<!-- SFD_PLAN_V4 -->', '<!-- /SFD_PLAN_V4 -->'
@@ -140,7 +147,7 @@ def validate(p: dict) -> None:
         if any(order.index(d) >= order.index(s['id']) for d in s['depends_on']):
             raise Invalid('integration order violates dependencies')
     validate_subsections(p)
-    if p.get('workflow_revision')=='4.2':
+    if p.get('workflow_revision') in {'4.2','4.3'}:
         if not p.get('requirements_path'): raise Invalid('persisted requirements_path required')
         for s in sections:
             if not s.get('business_boundary'): raise Invalid('business section boundary required; never a model-only partition')
@@ -154,16 +161,16 @@ def ready(p: dict, state: dict, plan_hash: str) -> dict:
     validate(p)
     if state.get('feature_id') != p['feature_id'] or state.get('run_id') != p['run_id']:
         raise Invalid('state/plan identity mismatch')
-    allowed_plan_states={'APPROVED','FROZEN'} if p.get('workflow_revision')=='4.2' else {'APPROVED'}
+    allowed_plan_states={'APPROVED','FROZEN'} if p.get('workflow_revision') in {'4.2','4.3'} else {'APPROVED'}
     if p['status'] not in allowed_plan_states or state.get('status') != 'ACTIVE':
         return {'ready': [], 'reason': 'FEATURE_NOT_ACTIVE_AND_APPROVED'}
     if state.get('plan_sha256') != plan_hash or state.get('plan_review_status') != 'APPROVED':
         raise Invalid('approved review must cover this exact plan')
     if p['invocation_source'] != 'USER_EXPLICIT' and state.get('user_plan_approval') != 'APPROVED':
         raise Invalid('automatic activation needs user PLAN approval')
-    if state.get('advisor_state') in {'REQUIRED','RUNNING','CONTEXT_BLOCKED'}:
+    if state.get('advisor_state') in ADVISOR_BLOCKING_STATES:
         return {'ready': [], 'reason': 'ADVISOR_BARRIER'}
-    if p.get('workflow_revision')=='4.2':
+    if p.get('workflow_revision') in {'4.2','4.3'}:
         from execution_artifacts import plan_evidence
         if not state.get('repo_root'): raise Invalid('repository identity missing')
         plan_evidence(p,state,plan_hash,Path(state['repo_root']))
@@ -232,7 +239,7 @@ def reserve_review(path: Path, pass_id: str, head: str) -> dict:
     if not ID.fullmatch(pass_id) or not SHA.fullmatch(head): raise Invalid('pass ID and exact head required')
     with lock(path.with_suffix('.lock')):
         state = json.loads(path.read_text())
-        if state.get('status') != 'ACTIVE' or state.get('advisor_state') in {'REQUIRED','RUNNING','CONTEXT_BLOCKED'}: raise Invalid('closed/blocked feature cannot reserve a review')
+        if state.get('status') != 'ACTIVE' or state.get('advisor_state') in ADVISOR_BLOCKING_STATES: raise Invalid('closed/blocked feature cannot reserve a review')
         ledger = state.setdefault('full_reviews', {})
         if pass_id in ledger:
             if ledger[pass_id]['head'] != head: raise Invalid('pass ID reused for different candidate')
@@ -264,7 +271,7 @@ def validate_subsections(p):
         if mode == 'ATOMIC':
             if children: raise Invalid('atomic section cannot contain subsections')
             continue
-        if p.get('workflow_revision') not in {'4.1','4.2'}: raise Invalid('subsections require workflow_revision=4.1 or 4.2')
+        if p.get('workflow_revision') not in {'4.1','4.2','4.3'}: raise Invalid('subsections require workflow_revision=4.1, 4.2 or 4.3')
         if not isinstance(children, list) or len(children) < 2: raise Invalid('use work steps for fewer than two real increments')
         if p['execution_mode'] != 'EXECUTE_WITH_COMMITS' or p['feature_branch'] == p['main_branch']:
             raise Invalid('MULTI_UNIT_REQUIRES_COMMITS_AND_FEATURE_BRANCH')
@@ -383,7 +390,7 @@ def acceptance_check(p, state, sid, head, plan_hash):
     if gate.get('reason'):errors.append(gate['reason'])
     s=get_section(p,sid);ss=state.get('sections',{}).get(sid,{})
     if s.get('delivery_mode')!='SUBSECTIONS':
-        if p.get('workflow_revision')=='4.2':
+        if p.get('workflow_revision') in {'4.2','4.3'}:
             from execution_artifacts import atomic_evidence
             r=atomic_evidence(p,state,sid,head)
             r['errors']=errors+r['errors'];r['eligible_by_metadata']=not r['errors'];return r
@@ -434,7 +441,7 @@ def acceptance_check(p, state, sid, head, plan_hash):
         if f.get('result')!='CLEAN' or f.get('head')!=head or not f.get('actor_id') or f['actor_id'] in primary_actors|writers or not artifact_metadata(f.get('artifact')):
             errors.append('fresh independent parent final evidence missing')
         if f.get('artifact'):artifacts.append(f['artifact'])
-    if p.get('workflow_revision')=='4.2':
+    if p.get('workflow_revision') in {'4.2','4.3'}:
         for name in ('task_artifact','contract_artifact','handoff_artifact'):
             if not artifact_metadata(ss.get(name)):errors.append('missing '+name)
             else:artifacts.append(ss[name])
@@ -458,7 +465,7 @@ def verify_acceptance_files(repo, result):
 
 def repair_limit(p, state, sid, lineage, ledger, used):
     """v3.9 recovery window, preserving lifetime counts and the v4.1 child budget invariant."""
-    if p.get('workflow_revision')!='4.2':return 5
+    if p.get('workflow_revision')!='4.3':return 5
     recovery=ledger.get('structural_recovery')
     if not recovery:return 5
     if (not ledger.get('recovery_used') or recovery.get('original_lineage_id')!=lineage
@@ -498,7 +505,7 @@ def reserve_repair(p, path, sid, child_id, attempt_id, findings, plan_hash):
         if used>=limit:
             if not approval.get('request_id') or not re.fullmatch('[a-f0-9]{64}',str(approval.get('decision_sha256',''))):
                 raise Invalid('PARENT_REPAIR_LIMIT: no new child/model/run budget')
-            if p.get('workflow_revision')=='4.2':
+            if p.get('workflow_revision') in {'4.2','4.3'}:
                 from execution_artifacts import verify
                 report=approval.get('decision_artifact')
                 verify(report,Path(state['repo_root']))

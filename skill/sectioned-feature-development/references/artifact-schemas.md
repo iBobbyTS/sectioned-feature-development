@@ -166,7 +166,7 @@ Record:
 - open/root recurring causes;
 - rejected scope proposals separately;
 - current architecture/structural mechanisms;
-- [@plan_writer](subagent://plan_writer) classification and rationale;
+- the main orchestrator (plan author) classification and rationale;
 - minimal plan changes;
 - preserved code/evidence;
 - restart base only when `RESTART_FROM_BASE`.
