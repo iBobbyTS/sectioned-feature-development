@@ -106,13 +106,14 @@ def build_parser() -> argparse.ArgumentParser:
         default=".",
         help="repository path or a path inside it (default: current directory)",
     )
+    parser.add_argument("--repo", dest="repo_alias", help="alias for positional repository path")
     return parser
 
 
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     try:
-        root, exclude, changed = ensure_untracked(Path(args.path).resolve())
+        root, exclude, changed = ensure_untracked(Path(args.repo_alias or args.path).resolve())
     except AlreadyTrackedError as exc:
         print(f"ALREADY_TRACKED: {exc}", file=sys.stderr)
         return EXIT_ALREADY_TRACKED

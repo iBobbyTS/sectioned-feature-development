@@ -1,0 +1,1087 @@
+{
+  "baseline": "provided-v4.3.1-complete",
+  "output": "4.4",
+  "self_hash_omitted": true,
+  "changes": [
+    {
+      "path": "README.md",
+      "status": "modified",
+      "input_sha256": "4047cd2679235c70df5843bbdf9d3ca97b0c3664eb62227746c9a65756b722d8",
+      "output_sha256": "915b5523ade5704a910b5c43cfbcf0b0b6f5cb75696f5694341f48cadb4e9f02"
+    },
+    {
+      "path": "VERSION",
+      "status": "modified",
+      "input_sha256": "8722a3e4c8ef0feb2e7a669f5f854c72d5d6390b25598f9745dc95e5ffe51dce",
+      "output_sha256": "bc33529cc1b1e6924eb04c472ecaab73efc2d71a0bbf442c550ecdb4b1b5db94"
+    },
+    {
+      "path": "docs/CHANGE_LOG.md",
+      "status": "modified",
+      "input_sha256": "2106e5003f4384749646653fbf89a8fb0c37f23e0e0615dd8025b16e21d1487f",
+      "output_sha256": "88a6bb2b4556a32acf86ebac0b65580aed082828b50d854e4eb543610e2105ad"
+    },
+    {
+      "path": "docs/version-history/v4.4/AUDIT_PACK_ANALYSIS.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "60c2d138f8a2b654551840050226c5d7f203937744f62955c841f75c7fe389b0"
+    },
+    {
+      "path": "docs/version-history/v4.4/FORWARD-EVAL.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "faad58da458bf885ff68fb502ec9300811cb23e639d61f0c2d683077f150e6e6"
+    },
+    {
+      "path": "docs/version-history/v4.4/INPUT-AGENT-HASHES.json",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "ba6014f52d60f220c0e1d67d1b12feb8baf71370c039644bd5a9b6f785da18f8"
+    },
+    {
+      "path": "docs/version-history/v4.4/PROMPT.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "0414efd74cddcab68e7c9650aa6062cf850f4a778515387cdd6b5fb82567f6cd"
+    },
+    {
+      "path": "docs/version-history/v4.4/RESEARCH.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "a89c8bce71321574bcb4acf8e4d1c1980cfdcb4ece532ea810779b4b087ce3a0"
+    },
+    {
+      "path": "docs/version-history/v4.4/ROLLOUT-METRICS.json",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "53b535af773eb47e3ec3428c600b6a31ae58b9c07c465aadff56bba9b6770a6c"
+    },
+    {
+      "path": "docs/version-history/v4.4/SCRIPT-INVENTORY.json",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "1d183b9df0961418742680c450953a3432776d65a642dea7fbc3bd32d19d0343"
+    },
+    {
+      "path": "docs/version-history/v4.4/UPDATES.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "4cb03a96624f3ed040214db42ec896cb18748e1e8fb36077fa6f213ce945025c"
+    },
+    {
+      "path": "docs/version-history/v4.4/USER-AUTHORITY-EXCERPTS.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "61fa59b22bdbcca9b36747d2445980a4fc85657fe7f35b0f2392d3aca9facceb"
+    },
+    {
+      "path": "docs/version-history/v4.4/VALIDATION.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "196e02c7dde216b42c6d91fc332a921ae166cbff8be7e4b429b86eec9ec5247c"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v3.9/SKILL.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "aeb38420d843640031fa836a0dc3814246fa0a57bcd4ab552f759957ce7a6535"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v3.9/VERSION",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "9f209a7299032444d49cc2fb15123315617f20c992fe1f0e667fbfb38445d42c"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v3.9/agents/openai.yaml",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "bb3e0e717e428c8730ebe32dfd2976b99c419aa402c982786367e5774c0d8058"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v3.9/assets/ADVISOR-REQUEST.template.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "4e237e1da8d1e40be6eb87d47ed578a7ece15cd65ede184d7384242bcb078cdb"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v3.9/assets/EXTERNAL-REVIEW-PACKET.template.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "2e197b76d4ed7103e890fc0016f31a75771f705d094420b1a103779136f3d369"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v3.9/assets/FEATURE-STATE.template.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "1346e93671d770d3c7f4c58668f62d965bdf5fb1ad180c4636941ecb3adbf9fa"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v3.9/assets/HARD-CAP-DIAGNOSIS.template.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "cac6d3048136a8d443428f2c1beb908f69817766b13c796973f14e83dd0e44df"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v3.9/assets/INTEGRATION-REVIEW-REQUEST.template.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "00fc8ddffecc11c5738c1221e597e7b9f7b6939ccfbf8ab66b8a37e563d695d2"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v3.9/assets/PLAN-FULL.template.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "124575c35dc6de6bfb1512890e773d4038fbbcd6f6209d78e60d62299e0eff3b"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v3.9/assets/PLAN-REVIEW-REQUEST.template.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "035cf8b80500f282abd4ac9d70f66ad54972ef746b9dcbae7a86d7fd9172cac9"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v3.9/assets/PLAN.template.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "fff198cd6778675cd9980c14a4aaf57f106ef243f42d77b4a110bb8dda452053"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v3.9/assets/REQUIREMENTS.template.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "32823718f237930832ce6ce25a8a03d8e264776a00b3b9584b74e30a7cbb50cf"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v3.9/assets/REVIEW-LEDGER.template.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "1a493a3eedd4b471d72e8e351f830a9395778f55ae0e3f0d3a4814fadb271072"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v3.9/assets/SECTION-CONTRACT.template.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "00139fe0fbeca9e4fc86983a44f30fdf4f194df1c813d1284e4a1d2696b850e1"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v3.9/assets/SECTION-HANDOFF.template.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "c0cece8b2f9bac7bef962988e898537d8d4b315238c6f316b61f44ed5642493a"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v3.9/assets/SECTION-REVIEW-REQUEST.template.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "34c22df2bf88b7b5c9a61bad98cc49f80c2e39e49a0ce19cac86407788ebc6f3"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v3.9/references/activation-and-orchestration.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "d911f17f1523ab6a1d8ca302aa1e33594b9c4a26330b7e41dc1b62b605abec03"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v3.9/references/advisor-escalation.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "3e2780bad6994e28aa50439c4a8caabcf5d13c97d1bb7d4bd08c8b792646abe2"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v3.9/references/artifact-schemas.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "899dce4b0992936b8fe9e55db05fa965a8e5a3ffccc752626bbf95bd45b179fd"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v3.9/references/audit-mode.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "5e16f51c2ad8d06848cae96ac422366e957dabd17d06cc8005655f661905b5c6"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v3.9/references/bounded-review.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "4f7c747d1a9195e86fdb3a7b775181c6bebb70ba6deed6b20f1b1345fbf0655c"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v3.9/references/external-reviewer-orchestration.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "b4ac7ebb04d7116751122058eebc078318359d1a771c1d006487a18eaaf52b70"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v3.9/references/integration-and-testing.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "5cd7766e2f17100190d7634a0204b7f8dbd4effe15ee706c34fa61ee139bb5e0"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v3.9/references/recovery-and-migration.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "305ece8272ed0b891a67919d4e97921a9c9bf7a9494d1b5ae4e893d76872a610"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v3.9/references/scope-control.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "28f619e2920cf5e3ca43b446d7967787a02b368f9d366e9583d8f8cef3d62824"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v3.9/references/section-planning.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "1e64124faa46b08c92ed736aea8736e1914147ba978e6ab3cb8a99ae4ea8149d"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v3.9/references/zcode-mcp-adapter.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "b2fa9199752b4f4e5e718dbacb93ee08d2e0fd90e8e5420a0a6b9c0b5da00a4f"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v3.9/scripts/advisor_pack.py",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "198bb4a7051e121f939475d30cf81ddf107b188b24d8d3d819c561bf860f0f3a"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v3.9/scripts/audit_finalize.py",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "67a8923a8f7e93c0fdf2a287480b0ec6f02b726409c8836e0912f3b4b1869cc1"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v3.9/scripts/audit_trace.py",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "38bc9c1cd45184e7065399e23d6f2b2411b239ffa3f0ad53188b877792e2d3d2"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v3.9/scripts/ensure_agent_work_untracked.py",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "79ba2f6e717e47333ca3f652d3633891453a99b6a44e7abda245a18c16359e89"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v3.9/scripts/section_plan.py",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "31e4e6320f831868eae9adc4cbd4e794389be81c40d06b78e95d92643fbb35d8"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v3.9/scripts/session_evidence.py",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "4755df28a7a5d920a04a85f8cb0a405e73f53a029d6463116179958bca7b800b"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v3.9/scripts/test_advisor_pack.py",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "89a46715df0ce7e17c9056690baf3beafd92355e212d1682531016603871f55b"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v3.9/scripts/test_audit_finalize.py",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "cf3993703bddf3814127e1fda3c79ad2dc8e32b58bb894fafb6480ccbd6ac88b"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v3.9/scripts/test_audit_trace.py",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "9a56884b9d413d93431eaea7530286e4594c14fe27d00f458d6bf5811ca63650"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v3.9/scripts/test_ensure_agent_work_untracked.py",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "a5ba5814a6ff6c7c913d35c51a4219541c2d27a3c5dc2457fcb2a4410903636a"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v3.9/scripts/test_section_plan.py",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "b57e1266a11d879508dcfc6c005f7863f684b6249f9cc3bfef20a64d2faa3a89"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v3.9/scripts/test_session_evidence.py",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "95f12bf9823f5b5fadf1c5b89f7c4c9aebc94ac113bbda40544f9f574fe402e8"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/code-review/SKILL.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "fe927d0651ce5b7cfffecb897cb2d801c97ccdb21777b3e9023f24043636418c"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/code-review/agents/openai.yaml",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "07a1981fef76d946a458817f98658d4a852ed532b9a3512eb21d42b22d020075"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/code-review/references/ai-agent-risk-catalog.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "563adcbc7920fe852f9a73f0ae02b7f505018ff1e4649be2dc41a76c0244f5a7"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/code-review/references/delegated-pass.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "9cebc2708e3096ad47b5705c60fbf2ce4347dee5a5eb26a16c3d90df1be5ed14"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/code-review/references/ledger-templates.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "5294375ca4a346b1cf7cb839c22ae7c0bf5bc382a8464c44111c58c46b9023c2"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/code-review/references/review-coverage.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "fdcd29dcc9d2548712d0c61c5940ded72a6db435b7f099e7745141ba8ce240f7"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/code-review/references/review-loop-protocol.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "25d54e15ec4c5fab4f7e49ca47942da5cb2e2848936ebb2e67f040bd27f949d2"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/code-review/references/section-review-protocol.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "acf80998bfbeff63773a54173993506236fbce93d9fcbc60e60edcf19549102b"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/code-review/references/standalone-workflow.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "79ce203ba6d24ecf5258325194e1894319a3e9cc606745c4fcb658695eca8d6e"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/SKILL.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "343a84f01cb19edae11cd00b8557db926743d567a8a780a369012dbfcd2d4b29"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/VERSION",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "8722a3e4c8ef0feb2e7a669f5f854c72d5d6390b25598f9745dc95e5ffe51dce"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/agents/openai.yaml",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "315de638194b00ca1069915d2a115e27bdeb67c3a9827f620f08da042b75a8e0"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/assets/ADVISOR-REQUEST.template.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "4e237e1da8d1e40be6eb87d47ed578a7ece15cd65ede184d7384242bcb078cdb"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/assets/AUDIT-METADATA.template.json",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "62d7f430f98a2c837c6ae2cbd901b759b741f2bf537c1c633752c23a6d317f3f"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/assets/EXTERNAL-REVIEW-PACKET.template.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "2e197b76d4ed7103e890fc0016f31a75771f705d094420b1a103779136f3d369"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/assets/FEATURE-STATE.template.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "1346e93671d770d3c7f4c58668f62d965bdf5fb1ad180c4636941ecb3adbf9fa"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/assets/HARD-CAP-DIAGNOSIS.template.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "08c91d9ceb08b4ad70157b156a34a234ef63210f72971618de5dc077d76ddcf6"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/assets/INTEGRATION-REVIEW-REQUEST.template.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "5611fb0f1abb2d4cb78d627e6f7cda21751b42025e87a8f8b15ba4431c7fd9a5"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/assets/PLAN-FULL.template.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "fccc95f6780733a66887c1d448a6c8eb49d382fbc8d278c86aa5223ee253a712"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/assets/PLAN-REVIEW-REQUEST.template.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "67458487c9437f834351d21b555e76beb8682092f5ded8f11ca3daa6e4601ae7"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/assets/PLAN.template.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "fff198cd6778675cd9980c14a4aaf57f106ef243f42d77b4a110bb8dda452053"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/assets/PROCESS-IDENTITY.template.json",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "6f90a12b3d39de6fe774f599b3f02ddb6c4b28fd59b485e1d7a0946a8be267f5"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/assets/REQUIREMENTS.template.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "32823718f237930832ce6ce25a8a03d8e264776a00b3b9584b74e30a7cbb50cf"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/assets/REVIEW-LEDGER.template.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "1a493a3eedd4b471d72e8e351f830a9395778f55ae0e3f0d3a4814fadb271072"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/assets/REVIEW-PACKET.template.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "24c990c672498894d328fa5e793915e10cb03f6f724f2569cb3d6f92ef429b0e"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/assets/SECTION-CONTRACT.template.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "00139fe0fbeca9e4fc86983a44f30fdf4f194df1c813d1284e4a1d2696b850e1"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/assets/SECTION-HANDOFF.template.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "c0cece8b2f9bac7bef962988e898537d8d4b315238c6f316b61f44ed5642493a"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/assets/SECTION-REVIEW-REQUEST.template.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "4f1ec0959e4a4ad60f98bf89c6b4a8b293ab5e475481d82d33831ea805ab6b94"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/assets/STATE.template.json",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "0413f8fb269cdee88a3f7887abe03685e8c6459c86e227f30206d22f2ec2f757"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/assets/SUBSECTION-SCHEDULE.example.json",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "25455628ed274d2e6d79ef903cfc5d9fe2225a4abf64b094b7a5660d8abf3385"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/assets/TASK-PACKET.template.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "cc47a783c75b85e166e6990c4bc7855c3241803da1d97ccfaf6c62318eb26090"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/assets/ZAS-ATTEMPT.template.json",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "405345f98b0e25b0e719d849594081fa6145c95884bb4d64d6edf92b2210159a"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/assets/ZAS-IDENTITY.template.json",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "a6e74a1b158f3132f28b0e28794a0e928093fca7bff117b153525feecdb22956"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/assets/ZAS-LINK.template.json",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "82ff66a978a73fb281e2edf16b5da22e2370eac6ae8e8c877a19d6c141b4ae60"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/references/activation-and-orchestration.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "d35f07d3167b44a639138072992260281d6b8630a7bd2c5a5506e1fe0fd0e38a"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/references/advisor-escalation.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "f4ddafaaa2126fd180b5c41c1248d6287b0cd93d7f92c4ad9f86624d929119e2"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/references/artifact-lifecycle.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "a6f512601c993c7ed2ff92c2344cb563d5a7d3f894db9cc85d55d1b540d5493c"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/references/artifact-schemas.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "967ea7b5a2f6e524f1062ffd1ad32924dc8420d6ccc46a6e95a1b3b7ab7afab3"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/references/audit-mode.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "59d74c5b9720142b3449c98ccd71bb62a9cae740e005d3f1651a73c6f9fe86b4"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/references/bounded-review.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "e74c76902c88f91b9229bd6e4334282b2770be04c1a99afc7ad3133619d5110d"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/references/external-reviewer-orchestration.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "9b565bf527ff9d19898d73a375a8603fc81ee500d74470d6e41159e229acc146"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/references/integration-and-testing.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "efe91ec97b594e4ceca1921886aa4f6ba4bd2fe843d7d2baf7db206385fb2309"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/references/model-routing.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "e749d2ffa612c67ad6affb2463a46b4f58bbd6ad571455f1fb440455d3052624"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/references/parallel-execution.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "e5e4dce1f5a2cdb708ff5d4c3ecb5cba0ee5d899eb0cca2bc2a9003950750845"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/references/recovery-and-migration.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "1663673522532360dbae21566566ad4e5c716f5bf56810632514679954a7ffe2"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/references/scope-control.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "28f619e2920cf5e3ca43b446d7967787a02b368f9d366e9583d8f8cef3d62824"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/references/section-planning.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "b4b9aa98025adba7916015ddb15c8d0b8c9029108f523e812b3d7aff1786a319"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/references/subsections.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "6ed3d07414b4f08d9e863d278373e7689707dcf6feecbf710255120b91ce61ca"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/references/zas-audit.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "ce6f84ed1819b13ddaba94272771039c529a7aaed658701a10459bce86cf19bf"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/references/zas-progress-supervision.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "9b1203428d6a2e4ecda55f87500d03082d1e80062f5803b4a6be891d3bad3241"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/references/zcode-mcp-adapter.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "ba53dbe5f7a76f6c0785f4dbc3eb73aa58c437b5801d6b6dd99183f7c225bc0c"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/scripts/advisor_flow.py",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "fd921a0837c6f09947ddc64443880cee8c705b8237bd91d1bf9d19a7b390c009"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/scripts/advisor_pack.py",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "0fb00be0f74106f3f64094c5eee390a12bcfe49f2f8be93a447a40a807413d10"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/scripts/audit_finalize.py",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "23c40d796b87fa0669f6f5e1824f117747345854ed7ccf5241a5f80769cbdaf3"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/scripts/audit_trace.py",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "49d2577a7fcfb72f77639c92b8c65f77bab83623e84710b7a92f7b8efd68e75e"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/scripts/ensure_agent_work_untracked.py",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "79ba2f6e717e47333ca3f652d3633891453a99b6a44e7abda245a18c16359e89"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/scripts/execution_artifacts.py",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "4bc0af998a665c23b3d2bfdc87ba97763ce6f2b06dee19c0936172071bbcb63d"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/scripts/process_audit.py",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "865f13e54715814e9f140d45c118e29bf199d55da7ba9674f3b3d4b9c69cd5ae"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/scripts/section_plan.py",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "31e4e6320f831868eae9adc4cbd4e794389be81c40d06b78e95d92643fbb35d8"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/scripts/session_evidence.py",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "4755df28a7a5d920a04a85f8cb0a405e73f53a029d6463116179958bca7b800b"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/scripts/test_advisor_pack.py",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "89a46715df0ce7e17c9056690baf3beafd92355e212d1682531016603871f55b"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/scripts/test_audit_finalize.py",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "c622d2036a6665377315076e79ef25fd0f393e72e45ee13ef9e9acdd0b3eca61"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/scripts/test_audit_trace.py",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "aec1688792eadcbb7f393212c2e7018abac140ff135e5b07712d31b89e8100ed"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/scripts/test_ensure_agent_work_untracked.py",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "a5ba5814a6ff6c7c913d35c51a4219541c2d27a3c5dc2457fcb2a4410903636a"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/scripts/test_section_plan.py",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "b57e1266a11d879508dcfc6c005f7863f684b6249f9cc3bfef20a64d2faa3a89"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/scripts/test_session_evidence.py",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "95f12bf9823f5b5fadf1c5b89f7c4c9aebc94ac113bbda40544f9f574fe402e8"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/scripts/workflow.py",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "c744a407502512c8f69169fbd8966dafd05cb193ac2726251ce2211f703b3316"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/scripts/zas_audit_pack.py",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "ab1b11dc990a315b2bf006b48c505078153fb4984b4ff41e81789691eb8d3dc6"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/scripts/zas_evidence.py",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "cee5bd9ea95c54fd57337c576f3b2821bc98f1b4f9b98e7c868671eb2f38e753"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/tests/fixtures/v41-plan.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "e7711aaf5e2ae34563e0bcb6bb0d8a365c68e8059e3d9f374aab6da70bffeb4c"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/tests/test_audit.py",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "d3066c2e43a864e84253cd60ca933372970ed6bc61eaa4e0de6ed759ce24b345"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/tests/test_plan_admission_regression.py",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "2c341c461019b49882153ad0f0c2bf56cc4345521def7780eb533621ce232cf0"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/tests/test_project.py",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "4454582b98433d418f58308ccaf0ad1926b55c66467c8f4d5ad352c0c8c47af3"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/tests/test_restored_artifacts.py",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "c82ff67ebbf1506d8b9173a7c868df3bea372c33d76eece3211794baf0f9fda8"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/tests/test_review_compatibility.py",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "93beb1a58d647a9ccb68900263f1e4d7f2676c21a021fa34b7ed27de9705f4a0"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/tests/test_subsections.py",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "2a20311d5f95e043100c34760c5df900665621f5a3a60689957564607c1ec1cc"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/tests/test_v431_audit_pair.py",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "ca41c4fd6eaebe4e6f542cff4223741ee05266be3ba0af16f8200c122e32c6f5"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/tests/test_v43_execution.py",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "3c19c81d18b50b9def0f14b06afccfc2979ac6820ea0e1d564acccb73e928064"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/tests/test_v43_zas.py",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "016a3f5db5c4cb542254f1ac7c702658639f140a3848db5edb22ac285c15bdc2"
+    },
+    {
+      "path": "docs/version-history/v4.4/baseline-v4.3.1/tests/test_workflow.py",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "885c11279f4af90106f800120f276be6a3008843fcfebecff43ffe4ad9048900"
+    },
+    {
+      "path": "docs/version-history/v4.4/zas-handoff/NEW-SESSION-PROMPT.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "caec90341bc86a0b112025e4db62fb7e952175f42f311429ac5a0055499f3bea"
+    },
+    {
+      "path": "docs/version-history/v4.4/zas-handoff/PLAN-FULL.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "9eba0410e634deb4b37234c80f0f4bcf4ce8bd1648f697e276eb52a41bb6a689"
+    },
+    {
+      "path": "docs/version-history/v4.4/zas-handoff/REQUIREMENTS.md",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "a35e465da3d059a52a6289338f1fc3f9c055b9296b05d71911dccf36727b36f9"
+    },
+    {
+      "path": "skill/code-review/SKILL.md",
+      "status": "modified",
+      "input_sha256": "fe927d0651ce5b7cfffecb897cb2d801c97ccdb21777b3e9023f24043636418c",
+      "output_sha256": "ac5a1c80f9bdc3f41d34aec9d0a6c25d3b33a225dd162aa0a586f3b3800233a3"
+    },
+    {
+      "path": "skill/code-review/agents/openai.yaml",
+      "status": "modified",
+      "input_sha256": "07a1981fef76d946a458817f98658d4a852ed532b9a3512eb21d42b22d020075",
+      "output_sha256": "b375d8832e9acc5b21e664f2259bef8d2e8edd29ff747afd5802db2431b65d87"
+    },
+    {
+      "path": "skill/code-review/references/delegated-pass.md",
+      "status": "modified",
+      "input_sha256": "9cebc2708e3096ad47b5705c60fbf2ce4347dee5a5eb26a16c3d90df1be5ed14",
+      "output_sha256": "986a660cb9af792e3b00cb52a8f6d1ceb3fcfc58a978eae9eb96b91f8f27af49"
+    },
+    {
+      "path": "skill/sectioned-feature-development/SKILL.md",
+      "status": "modified",
+      "input_sha256": "343a84f01cb19edae11cd00b8557db926743d567a8a780a369012dbfcd2d4b29",
+      "output_sha256": "474ae236fb0c588decf90f03beb8093aff129d42bded612568dd352359a734da"
+    },
+    {
+      "path": "skill/sectioned-feature-development/VERSION",
+      "status": "modified",
+      "input_sha256": "8722a3e4c8ef0feb2e7a669f5f854c72d5d6390b25598f9745dc95e5ffe51dce",
+      "output_sha256": "bc33529cc1b1e6924eb04c472ecaab73efc2d71a0bbf442c550ecdb4b1b5db94"
+    },
+    {
+      "path": "skill/sectioned-feature-development/agents/openai.yaml",
+      "status": "modified",
+      "input_sha256": "315de638194b00ca1069915d2a115e27bdeb67c3a9827f620f08da042b75a8e0",
+      "output_sha256": "b437028479c24407b523b4b3d8f239cd780d2e72530132682d74ce2ccb09a481"
+    },
+    {
+      "path": "skill/sectioned-feature-development/assets/AUDIT-METADATA.template.json",
+      "status": "modified",
+      "input_sha256": "62d7f430f98a2c837c6ae2cbd901b759b741f2bf537c1c633752c23a6d317f3f",
+      "output_sha256": "f237ff1b504e9658584dfccfb947bee0071a7fbbeddee8559a487e35797b4bd5"
+    },
+    {
+      "path": "skill/sectioned-feature-development/assets/FEATURE-STATE.template.md",
+      "status": "modified",
+      "input_sha256": "1346e93671d770d3c7f4c58668f62d965bdf5fb1ad180c4636941ecb3adbf9fa",
+      "output_sha256": "7f706fdb2b1f3393d724b4ba20b880db05355ab36496b098bb5486f5daa1a131"
+    },
+    {
+      "path": "skill/sectioned-feature-development/assets/INTEGRATION-REVIEW-REQUEST.template.md",
+      "status": "modified",
+      "input_sha256": "5611fb0f1abb2d4cb78d627e6f7cda21751b42025e87a8f8b15ba4431c7fd9a5",
+      "output_sha256": "6dec17cee2847adfd1d307235c654bd98d454161321a00138ac0f7deb940d62c"
+    },
+    {
+      "path": "skill/sectioned-feature-development/assets/PLAN-FULL.template.md",
+      "status": "modified",
+      "input_sha256": "fccc95f6780733a66887c1d448a6c8eb49d382fbc8d278c86aa5223ee253a712",
+      "output_sha256": "e9fbbfeef9b913bdb77d2f9474673a9e1d81aa3dd8afb0fc4ea24c59c00e6609"
+    },
+    {
+      "path": "skill/sectioned-feature-development/assets/PLAN-REVIEW-REQUEST.template.md",
+      "status": "modified",
+      "input_sha256": "67458487c9437f834351d21b555e76beb8682092f5ded8f11ca3daa6e4601ae7",
+      "output_sha256": "25bf6c0fbe79ff88c36b10fc6dd64f5ce7af576ebe8cef51778d2cc934423e9d"
+    },
+    {
+      "path": "skill/sectioned-feature-development/assets/REVIEW-PACKET.template.md",
+      "status": "modified",
+      "input_sha256": "24c990c672498894d328fa5e793915e10cb03f6f724f2569cb3d6f92ef429b0e",
+      "output_sha256": "dfd024a68fad971906bb51bdd6cb58a7aeb669d60d8d900114a4b59212df3224"
+    },
+    {
+      "path": "skill/sectioned-feature-development/assets/SECTION-CONTRACT.template.md",
+      "status": "modified",
+      "input_sha256": "00139fe0fbeca9e4fc86983a44f30fdf4f194df1c813d1284e4a1d2696b850e1",
+      "output_sha256": "f0e1539d7f18ffec735a6acdf1be03825d1d4d8168025caf42882c8f38553d00"
+    },
+    {
+      "path": "skill/sectioned-feature-development/assets/SECTION-HANDOFF.template.md",
+      "status": "modified",
+      "input_sha256": "c0cece8b2f9bac7bef962988e898537d8d4b315238c6f316b61f44ed5642493a",
+      "output_sha256": "db55a03ae9c8a095736146c3b19233cfe9ddf45527a5c058edeb6ab6f4ac06f2"
+    },
+    {
+      "path": "skill/sectioned-feature-development/assets/SECTION-REVIEW-REQUEST.template.md",
+      "status": "modified",
+      "input_sha256": "4f1ec0959e4a4ad60f98bf89c6b4a8b293ab5e475481d82d33831ea805ab6b94",
+      "output_sha256": "74666d299349acfebb652e38bd0abe9551e546b9fc0ad81bbd5f75f61dec24c2"
+    },
+    {
+      "path": "skill/sectioned-feature-development/assets/STATE.template.json",
+      "status": "retired",
+      "input_sha256": "0413f8fb269cdee88a3f7887abe03685e8c6459c86e227f30206d22f2ec2f757",
+      "output_sha256": null
+    },
+    {
+      "path": "skill/sectioned-feature-development/assets/SUBSECTION-SCHEDULE.example.json",
+      "status": "retired",
+      "input_sha256": "25455628ed274d2e6d79ef903cfc5d9fe2225a4abf64b094b7a5660d8abf3385",
+      "output_sha256": null
+    },
+    {
+      "path": "skill/sectioned-feature-development/assets/TASK-PACKET.template.md",
+      "status": "modified",
+      "input_sha256": "cc47a783c75b85e166e6990c4bc7855c3241803da1d97ccfaf6c62318eb26090",
+      "output_sha256": "dfb6503101ff8be8ce710b87916b3599e9fb5df8e3d268985565a37891152365"
+    },
+    {
+      "path": "skill/sectioned-feature-development/references/activation-and-orchestration.md",
+      "status": "modified",
+      "input_sha256": "d35f07d3167b44a639138072992260281d6b8630a7bd2c5a5506e1fe0fd0e38a",
+      "output_sha256": "27a434d3e5ad875da6be5b05ee001095c99f7aa01d515e0c9401dce657eab230"
+    },
+    {
+      "path": "skill/sectioned-feature-development/references/advisor-escalation.md",
+      "status": "modified",
+      "input_sha256": "f4ddafaaa2126fd180b5c41c1248d6287b0cd93d7f92c4ad9f86624d929119e2",
+      "output_sha256": "9abc4fd57a8f052c2231f1ca1aec340336bb871a267a19f48fe930f851b27a85"
+    },
+    {
+      "path": "skill/sectioned-feature-development/references/artifact-lifecycle.md",
+      "status": "modified",
+      "input_sha256": "a6f512601c993c7ed2ff92c2344cb563d5a7d3f894db9cc85d55d1b540d5493c",
+      "output_sha256": "f26598b5b310f3d8dbe7d672e36387b5244c9c9607a6e1a2832686b55550596d"
+    },
+    {
+      "path": "skill/sectioned-feature-development/references/artifact-schemas.md",
+      "status": "modified",
+      "input_sha256": "967ea7b5a2f6e524f1062ffd1ad32924dc8420d6ccc46a6e95a1b3b7ab7afab3",
+      "output_sha256": "94127a7362bcf13a3dca558a10c216f12d8a79c73362c49096659272d69f27b0"
+    },
+    {
+      "path": "skill/sectioned-feature-development/references/audit-mode.md",
+      "status": "modified",
+      "input_sha256": "59d74c5b9720142b3449c98ccd71bb62a9cae740e005d3f1651a73c6f9fe86b4",
+      "output_sha256": "af0127b21c88b1de6c01e63945c04d18e614341623d086b6d5ebf3851aaa0678"
+    },
+    {
+      "path": "skill/sectioned-feature-development/references/external-reviewer-orchestration.md",
+      "status": "modified",
+      "input_sha256": "9b565bf527ff9d19898d73a375a8603fc81ee500d74470d6e41159e229acc146",
+      "output_sha256": "6c852518765a0a286ceddbdb1e26de22e9b2a4365dce01c741988fcdb37efc1d"
+    },
+    {
+      "path": "skill/sectioned-feature-development/references/model-routing.md",
+      "status": "modified",
+      "input_sha256": "e749d2ffa612c67ad6affb2463a46b4f58bbd6ad571455f1fb440455d3052624",
+      "output_sha256": "972ee8dafe424c9e84d5b681b0f713db84d7c3fbe8ee970596a978cff12ac11d"
+    },
+    {
+      "path": "skill/sectioned-feature-development/references/parallel-execution.md",
+      "status": "modified",
+      "input_sha256": "e5e4dce1f5a2cdb708ff5d4c3ecb5cba0ee5d899eb0cca2bc2a9003950750845",
+      "output_sha256": "d715f26927f6bfb49d6561895d5579432a7b42a5a9575d8186a8a0d9bef2be5a"
+    },
+    {
+      "path": "skill/sectioned-feature-development/references/recovery-and-migration.md",
+      "status": "modified",
+      "input_sha256": "1663673522532360dbae21566566ad4e5c716f5bf56810632514679954a7ffe2",
+      "output_sha256": "e61e8a1a1d994b621b5de25ccab511d566fa0af1a8e3a8155ac862753570a483"
+    },
+    {
+      "path": "skill/sectioned-feature-development/references/section-planning.md",
+      "status": "modified",
+      "input_sha256": "b4b9aa98025adba7916015ddb15c8d0b8c9029108f523e812b3d7aff1786a319",
+      "output_sha256": "2af65bf5e91a381e616feaab9632c335c7affcb7c9fb4c5ffa2adee3762f3072"
+    },
+    {
+      "path": "skill/sectioned-feature-development/references/subsections.md",
+      "status": "modified",
+      "input_sha256": "6ed3d07414b4f08d9e863d278373e7689707dcf6feecbf710255120b91ce61ca",
+      "output_sha256": "4d07c8c87155256dba5b740194d75009448a817b1eb03c70a2aa23a95ed6fc52"
+    },
+    {
+      "path": "skill/sectioned-feature-development/references/zcode-mcp-adapter.md",
+      "status": "modified",
+      "input_sha256": "ba53dbe5f7a76f6c0785f4dbc3eb73aa58c437b5801d6b6dd99183f7c225bc0c",
+      "output_sha256": "ddcc2c6f0a68f6d07f53a19784f9da323df9405f1a337a5e9d885f89239b45fb"
+    },
+    {
+      "path": "skill/sectioned-feature-development/scripts/advisor_flow.py",
+      "status": "retired",
+      "input_sha256": "fd921a0837c6f09947ddc64443880cee8c705b8237bd91d1bf9d19a7b390c009",
+      "output_sha256": null
+    },
+    {
+      "path": "skill/sectioned-feature-development/scripts/ensure_agent_work_untracked.py",
+      "status": "modified",
+      "input_sha256": "79ba2f6e717e47333ca3f652d3633891453a99b6a44e7abda245a18c16359e89",
+      "output_sha256": "a851f326dc30344e9a8509f6d4846a582c085d5e15a560975b26bb0997b9c196"
+    },
+    {
+      "path": "skill/sectioned-feature-development/scripts/execution_artifacts.py",
+      "status": "retired",
+      "input_sha256": "4bc0af998a665c23b3d2bfdc87ba97763ce6f2b06dee19c0936172071bbcb63d",
+      "output_sha256": null
+    },
+    {
+      "path": "skill/sectioned-feature-development/scripts/section_plan.py",
+      "status": "modified",
+      "input_sha256": "31e4e6320f831868eae9adc4cbd4e794389be81c40d06b78e95d92643fbb35d8",
+      "output_sha256": "84abf30e61675f9a7aa9e5cf74b779e65090ce93b6c182b091e223aba5ae30e3"
+    },
+    {
+      "path": "skill/sectioned-feature-development/scripts/test_section_plan.py",
+      "status": "retired",
+      "input_sha256": "b57e1266a11d879508dcfc6c005f7863f684b6249f9cc3bfef20a64d2faa3a89",
+      "output_sha256": null
+    },
+    {
+      "path": "skill/sectioned-feature-development/scripts/workflow.py",
+      "status": "retired",
+      "input_sha256": "c744a407502512c8f69169fbd8966dafd05cb193ac2726251ce2211f703b3316",
+      "output_sha256": null
+    },
+    {
+      "path": "skill/sectioned-feature-development/scripts/zas_evidence.py",
+      "status": "modified",
+      "input_sha256": "cee5bd9ea95c54fd57337c576f3b2821bc98f1b4f9b98e7c868671eb2f38e753",
+      "output_sha256": "705219911a5984436a4414f84bd4d8f195e9ce58b4d626f87e04082c4f63c4b8"
+    },
+    {
+      "path": "tests/fixtures/v41-plan.md",
+      "status": "retired",
+      "input_sha256": "e7711aaf5e2ae34563e0bcb6bb0d8a365c68e8059e3d9f374aab6da70bffeb4c",
+      "output_sha256": null
+    },
+    {
+      "path": "tests/test_basic_plan.py",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "0b6eedc2e8cf4d0aa9ed42f8b22d8eae32e8ab6227491c08a38c6044927706bd"
+    },
+    {
+      "path": "tests/test_plan_admission_regression.py",
+      "status": "retired",
+      "input_sha256": "2c341c461019b49882153ad0f0c2bf56cc4345521def7780eb533621ce232cf0",
+      "output_sha256": null
+    },
+    {
+      "path": "tests/test_restored_artifacts.py",
+      "status": "retired",
+      "input_sha256": "c82ff67ebbf1506d8b9173a7c868df3bea372c33d76eece3211794baf0f9fda8",
+      "output_sha256": null
+    },
+    {
+      "path": "tests/test_subsections.py",
+      "status": "retired",
+      "input_sha256": "2a20311d5f95e043100c34760c5df900665621f5a3a60689957564607c1ec1cc",
+      "output_sha256": null
+    },
+    {
+      "path": "tests/test_v43_execution.py",
+      "status": "retired",
+      "input_sha256": "3c19c81d18b50b9def0f14b06afccfc2979ac6820ea0e1d564acccb73e928064",
+      "output_sha256": null
+    },
+    {
+      "path": "tests/test_v44_contract.py",
+      "status": "added",
+      "input_sha256": null,
+      "output_sha256": "cab20b2c284b7a637f0f625940187c0884e88183eea39cbf29db269339754a9c"
+    },
+    {
+      "path": "tests/test_workflow.py",
+      "status": "retired",
+      "input_sha256": "885c11279f4af90106f800120f276be6a3008843fcfebecff43ffe4ad9048900",
+      "output_sha256": null
+    }
+  ]
+}

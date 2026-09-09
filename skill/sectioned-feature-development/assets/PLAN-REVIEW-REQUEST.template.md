@@ -77,7 +77,7 @@ For every `PLAN_BLOCKER`, provide:
 # PLAN-FULL Review
 
 - Reviewer task/session ID:
-- Plan SHA-256:
+- Plan revision/path or reviewed snapshot:
 - Mode: INITIAL_PLAN | PLAN_DELTA
 - Verdict: APPROVE | NEEDS_CORRECTION | OWNER_DECISION
 
@@ -109,7 +109,8 @@ For every `PLAN_BLOCKER`, provide:
 
 A clean result with zero material candidates is valid.
 
-## 4.2 durable handoff
+## Durable handoff
 
-The reviewer returns a result to the parent; the parent saves the complete report at the frozen output path, hashes it, and records actual dispatch/session identity before admission. No output path or missing actual report means INSUFFICIENT_EVIDENCE, never an implicit clean. The reviewer does not edit workflow state or accept a section. The companion context is DELEGATED_PASS.
-Return a small JSON envelope with actor_id, result (APPROVED / NEEDS_CORRECTION / OWNER_DECISION), plan_sha256, candidates, coverage and source references, alongside the full report. Parent admission is stored separately with decision and unresolved_findings. The main plan author and reviewer must be different actual agents. APPROVED in the saved gate is the parent admission; the original reviewer result/hash remains separately preserved.
+The reviewer returns the complete result; main saves it once and records the actual task/session ID before admission. Missing actual review coverage remains INSUFFICIENT_EVIDENCE, never an implicit clean. An unavailable file format, output-path schema or hash field is not missing semantic evidence if the actual result is already present and preserved.
+
+Use readable Markdown: actual reviewer identity, plan revision/path or saved snapshot, original result, candidates, coverage, source references and gaps. No JSON envelope is required. Main writes dispositions beside the original report; it must not rewrite NEEDS_CORRECTION into a fictional reviewer approval. Plan author and reviewer are distinct real instances. Hashes may be computed for archive integrity, not to authorize ordinary corrections.

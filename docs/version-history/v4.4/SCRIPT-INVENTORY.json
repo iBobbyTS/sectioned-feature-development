@@ -1,0 +1,172 @@
+{
+  "baseline_tag": "v3.9",
+  "baseline_commit": "e21c9a3e525fa7d3da0fb71fc3eeb12cf25c591c",
+  "baseline_variant": "current-mcp",
+  "scripts": [
+    {
+      "script": "advisor_flow.py",
+      "v3.9": null,
+      "v4.3.1": {
+        "lines": 105,
+        "sha256": "fd921a0837c6f09947ddc64443880cee8c705b8237bd91d1bf9d19a7b390c009"
+      },
+      "v4.4": null,
+      "action": "retired_scheduler"
+    },
+    {
+      "script": "advisor_pack.py",
+      "v3.9": {
+        "lines": 52,
+        "sha256": "198bb4a7051e121f939475d30cf81ddf107b188b24d8d3d819c561bf860f0f3a"
+      },
+      "v4.3.1": {
+        "lines": 116,
+        "sha256": "0fb00be0f74106f3f64094c5eee390a12bcfe49f2f8be93a447a40a807413d10"
+      },
+      "v4.4": {
+        "lines": 116,
+        "sha256": "0fb00be0f74106f3f64094c5eee390a12bcfe49f2f8be93a447a40a807413d10"
+      },
+      "action": "operation_only_not_scheduler"
+    },
+    {
+      "script": "audit_finalize.py",
+      "v3.9": {
+        "lines": 476,
+        "sha256": "67a8923a8f7e93c0fdf2a287480b0ec6f02b726409c8836e0912f3b4b1869cc1"
+      },
+      "v4.3.1": {
+        "lines": 529,
+        "sha256": "23c40d796b87fa0669f6f5e1824f117747345854ed7ccf5241a5f80769cbdaf3"
+      },
+      "v4.4": {
+        "lines": 529,
+        "sha256": "23c40d796b87fa0669f6f5e1824f117747345854ed7ccf5241a5f80769cbdaf3"
+      },
+      "action": "operation_only_not_scheduler"
+    },
+    {
+      "script": "audit_trace.py",
+      "v3.9": {
+        "lines": 445,
+        "sha256": "38bc9c1cd45184e7065399e23d6f2b2411b239ffa3f0ad53188b877792e2d3d2"
+      },
+      "v4.3.1": {
+        "lines": 448,
+        "sha256": "49d2577a7fcfb72f77639c92b8c65f77bab83623e84710b7a92f7b8efd68e75e"
+      },
+      "v4.4": {
+        "lines": 448,
+        "sha256": "49d2577a7fcfb72f77639c92b8c65f77bab83623e84710b7a92f7b8efd68e75e"
+      },
+      "action": "operation_only_not_scheduler"
+    },
+    {
+      "script": "ensure_agent_work_untracked.py",
+      "v3.9": {
+        "lines": 129,
+        "sha256": "79ba2f6e717e47333ca3f652d3633891453a99b6a44e7abda245a18c16359e89"
+      },
+      "v4.3.1": {
+        "lines": 129,
+        "sha256": "79ba2f6e717e47333ca3f652d3633891453a99b6a44e7abda245a18c16359e89"
+      },
+      "v4.4": {
+        "lines": 130,
+        "sha256": "a851f326dc30344e9a8509f6d4846a582c085d5e15a560975b26bb0997b9c196"
+      },
+      "action": "operation_only_not_scheduler"
+    },
+    {
+      "script": "execution_artifacts.py",
+      "v3.9": null,
+      "v4.3.1": {
+        "lines": 450,
+        "sha256": "4bc0af998a665c23b3d2bfdc87ba97763ce6f2b06dee19c0936172071bbcb63d"
+      },
+      "v4.4": null,
+      "action": "retired_scheduler"
+    },
+    {
+      "script": "process_audit.py",
+      "v3.9": null,
+      "v4.3.1": {
+        "lines": 196,
+        "sha256": "865f13e54715814e9f140d45c118e29bf199d55da7ba9674f3b3d4b9c69cd5ae"
+      },
+      "v4.4": {
+        "lines": 196,
+        "sha256": "865f13e54715814e9f140d45c118e29bf199d55da7ba9674f3b3d4b9c69cd5ae"
+      },
+      "action": "operation_only_not_scheduler"
+    },
+    {
+      "script": "section_plan.py",
+      "v3.9": {
+        "lines": 393,
+        "sha256": "31e4e6320f831868eae9adc4cbd4e794389be81c40d06b78e95d92643fbb35d8"
+      },
+      "v4.3.1": {
+        "lines": 393,
+        "sha256": "31e4e6320f831868eae9adc4cbd4e794389be81c40d06b78e95d92643fbb35d8"
+      },
+      "v4.4": {
+        "lines": 183,
+        "sha256": "84abf30e61675f9a7aa9e5cf74b779e65090ce93b6c182b091e223aba5ae30e3"
+      },
+      "action": "basic_structure_only"
+    },
+    {
+      "script": "session_evidence.py",
+      "v3.9": {
+        "lines": 311,
+        "sha256": "4755df28a7a5d920a04a85f8cb0a405e73f53a029d6463116179958bca7b800b"
+      },
+      "v4.3.1": {
+        "lines": 311,
+        "sha256": "4755df28a7a5d920a04a85f8cb0a405e73f53a029d6463116179958bca7b800b"
+      },
+      "v4.4": {
+        "lines": 311,
+        "sha256": "4755df28a7a5d920a04a85f8cb0a405e73f53a029d6463116179958bca7b800b"
+      },
+      "action": "operation_only_not_scheduler"
+    },
+    {
+      "script": "workflow.py",
+      "v3.9": null,
+      "v4.3.1": {
+        "lines": 561,
+        "sha256": "c744a407502512c8f69169fbd8966dafd05cb193ac2726251ce2211f703b3316"
+      },
+      "v4.4": null,
+      "action": "retired_scheduler"
+    },
+    {
+      "script": "zas_audit_pack.py",
+      "v3.9": null,
+      "v4.3.1": {
+        "lines": 174,
+        "sha256": "ab1b11dc990a315b2bf006b48c505078153fb4984b4ff41e81789691eb8d3dc6"
+      },
+      "v4.4": {
+        "lines": 174,
+        "sha256": "ab1b11dc990a315b2bf006b48c505078153fb4984b4ff41e81789691eb8d3dc6"
+      },
+      "action": "operation_only_not_scheduler"
+    },
+    {
+      "script": "zas_evidence.py",
+      "v3.9": null,
+      "v4.3.1": {
+        "lines": 86,
+        "sha256": "cee5bd9ea95c54fd57337c576f3b2821bc98f1b4f9b98e7c868671eb2f38e753"
+      },
+      "v4.4": {
+        "lines": 130,
+        "sha256": "705219911a5984436a4414f84bd4d8f195e9ce58b4d626f87e04082c4f63c4b8"
+      },
+      "action": "operation_only_not_scheduler"
+    }
+  ]
+}

@@ -62,7 +62,7 @@ Required section fields:
 - reset triggers;
 - review intensity and review assurance (`ONE | TWO | AUTO -> resolved`) with reasons.
 
-Use durable `FEATURE-CONTEXT` and `SECTION:{ID}` markers so extraction is deterministic. The additive SFD_PLAN_V4 block drives scheduling without replacing these narrative obligations. `FROZEN` records reviewed bytes; approval is in the state and canonical review ledger.
+Use readable ## S01 and optional ### S01.A headings with one Implementer link and Depends on field per unit. Other headings are free-form. Old markers are harmless comments; there is no machine scheduling block. Main records approval rationale in the review ledger and actual status in FEATURE-STATE.md.
 
 ## PLAN.md
 
@@ -202,3 +202,7 @@ Audit records are observational: they create no product authority, review findin
 ## ZAS companion output (4.3.1)
 
 ZAS-LINK.json belongs to the main process pack; ZAS-IDENTITY.json, ZAS-AUDIT.md, ZAS-RUNS.jsonl and detailed evidence belong to the paired xxx-zas.zip. Both remain one feature/run. Hashes remain JSON fields; no .sha256 files are emitted. See [ZAS audit](zas-audit.md).
+
+## Readable execution versus archival metadata
+
+All execution fields are semantic facts, not a required JSON envelope. Use actual main/worker/reviewer outputs and concise Markdown references. The optional hash fields here identify transported or archived files; they do not gate every PLAN correction or dispatch. Main decides ready/accepted using real checks and reports. Runtime TASK may combine extracted PLAN and CONTRACT; do not require three copies of the same text.

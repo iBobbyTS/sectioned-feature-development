@@ -1,4 +1,4 @@
 interface:
   display_name: "Code Review"
-  short_description: "Bounded review with delegated parent-owned acceptance"
-  default_prompt: "Use $code-review for one bounded pass. In DELEGATED_PASS context return candidates and exact evidence; the parent owns admission and acceptance."
+  short_description: "One evidence-based bounded code review pass"
+  default_prompt: "Use $code-review for one bounded review of the supplied change. Return evidence-backed candidates, coverage and gaps; leave admission and scheduling to the parent workflow."

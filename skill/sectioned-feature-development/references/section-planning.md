@@ -247,13 +247,13 @@ A plan is executable when the required outcome, cross-owner interfaces, current 
 
 - A new test/probe/source file may be absent before implementation when its owning section and create-before-run responsibility are declared. Its absence alone is not a blocker.
 - Internal helper names, exact private types/library calls, probe output filenames and private JSON layouts are normally implementer decisions. Freeze them only when an existing public/shared consumer or repository requirement needs that exact contract. Cite that authority; do not turn a suggestion into a new acceptance obligation.
-- Review verifies declaration of required checks; it does not require the unfinished feature's tests/build/live results before implementation. Schema/check-ID/heading repairs belong to the parent and deterministic validators before paid review.
+- Review verifies declaration of required checks; it does not require the unfinished feature's tests/build/live results before implementation. Basic section-ID/dependency/role syntax is checked once by the helper; other formatting belongs to the parent and cannot create paid review work.
 - Temporary migration coexistence may be explicitly allowed until the consuming section removes the old owner. Do not demand a future consumer/adaptor in an earlier section's acceptance; move that consumer-specific evidence to its owning section or integration.
 - Each candidate proposes a bounded correction. The reviewer does not write an admission ledger, approve its own suggested scope, demand an additional full review, or decide that a new R2/R3 label resets the review allowance.
 
 ### Finite recheck rule
 
-After ordinary corrections, rerun the plan validator and proceed. A second reviewer pass is allowed only as one fresh `PLAN_DELTA` recheck when admitted corrections materially change the feature outcome, section graph, primary owner, public contract, state/trust/persistence boundary, or external seam. It checks only changed plan text and dependency consequences.
+After ordinary corrections, main records admission and proceeds; rerun the basic validator only if IDs/dependencies/profiles changed. Besides the existing high-complexity independent GLM challenge, at most one `PLAN_DELTA` recheck is allowed when admitted corrections materially change the feature outcome, section graph, primary owner, public contract, state/trust/persistence boundary, or external seam. It checks only changed plan text and dependency consequences.
 
 No clean streak, third full pass, hard-cap recovery, recursive planning agent, evidence rehabilitation, or plan-review-only section is permitted. The one conditional high-complexity ZCode challenge in external-reviewer-orchestration.md is distinct from a primary-review retry; it does not authorize native full reviews R2/R3/... . A changed plan hash, report filename, run suffix, or rejection by the reviewer does not reset this policy. An unresolved material issue after `PLAN_DELTA` blocks implementation pending the real decision. Do not let a reviewer request the next full pass. Preserve valid coverage; see artifact-lifecycle.md for parent-only local correction admission without falsifying the original reviewer result.
 
@@ -303,3 +303,7 @@ For UI async changes, freeze one repeated-event trajectory (edit→save→naviga
 Separate PLAN_OMISSION from PLAN_ALREADY_REQUIRED_BUT_NOT_IMPLEMENTED: the latter needs the exact requirement and production test in the task packet, not more plan reviewers. Original incidents/preconditions supplied by the user are not evidence of a skill defect.
 
 Sections are selected by business acceptance; subsection choice must identify a real internal module increment, a meaningful task-model boundary, or both. Never split by LOC alone or manufacture an interface merely to use a cheaper worker.
+
+## 4.4 readable plan contract
+
+PLAN-FULL is Markdown, not a pair of narrative and SFD_PLAN_V4 JSON. The section helper checks IDs, dependency existence/cycles, parent membership and an explicit linked impl role per unit. Required business authority, constraints, tests and joint oracles remain semantic PLAN-review responsibilities; no fixed heading vocabulary, field count or hash grants approval. Missing formatting alone is not a new review candidate. Ordinary corrected PLAN text can be admitted by main with the original result preserved; changed substantive boundaries receive only the authorized delta recheck.

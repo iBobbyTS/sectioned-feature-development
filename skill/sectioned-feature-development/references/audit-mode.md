@@ -440,3 +440,13 @@ Read [ZAS audit](zas-audit.md) for an actual ZAS attempt. Main `xxx.zip` contain
 Capture the exact PLAN assignment for every parent/child, planned and observed role/model/effort, and any approved assignment revision. Never treat requested as observed. The preserved physical reviewer calls, failures, monitoring and cancellation cost all contribute to accepted-outcome cost; missing telemetry is UNKNOWN, not zero.
 
 When ZAS-LINK.json says USED, pass --zas-pack-dir to the same canonical finalizer. A companion failure writes PAIR_INCOMPLETE, preserving the already-valid parent; after one bounded artifact correction rerun the same command to finish the pair without redoing product checks. A NOT_USED link produces no companion. See zas-audit.md for exact commands and manifests.
+
+## 4.4 capture without scheduling gates
+
+The runtime does not use STATE.json or normalized dispatch/approval receipts. Read the real PLAN, FEATURE-STATE, TASK/HANDOFF/REVIEW and saved host returns. Stable task IDs and exact source heads remain facts; do not fabricate JSON to fit an older schema. PLAN/requirement hashes are computed once at pack finalization for archival integrity, never required to authorize every handoff.
+
+Track process-only command calls and outcomes separately from product checks: basic section validation, retired-gate invocation attempts, plan-format edits, historical evidence searches, elapsed observed spans and context re-reading. Count actual execution commands, not mentions in a search string. In parallel do not sum task runtimes as wall clock, and mark user absence/unattributed gaps separately.
+
+During execution, append only major events via the trace helper when convenient, or retain native tool results and concise phase notes. A broken logger is a telemetry gap, not a blocker. Do not run trace validation/summary on each event. At finalization, export once using existing atomic pack/companion utilities; one bounded correction only. Do not re-review product code to improve documentation.
+
+Forward evaluation must compare missing/skipped PLAN/delegation/review, escaped product defects, repair quality and original user outcome as well as saved tool/token cost. This release intentionally removes mechanical scheduling enforcement; no offline test proves unchanged model compliance.

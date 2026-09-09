@@ -64,3 +64,7 @@ Any admitted repair from any mode counts toward the same cumulative five-wave se
 
 The reviewer returns a result to the parent; the parent saves the complete report at the frozen output path, hashes it, and records actual dispatch/session identity before admission. No output path or missing actual report means INSUFFICIENT_EVIDENCE, never an implicit clean. The reviewer does not edit workflow state or accept a section. The companion context is DELEGATED_PASS.
 Include parent_section_id, optional subsection_id, original_lineage_id, review_id, mode, base/head, checks, candidates and coverage invalidations. SUBSECTION_DELTA does not create child acceptance; PARENT_RECONCILIATION completes the cumulative primary pass.
+
+## 4.4 packet representation
+
+Return readable Markdown with the actual requested scope, identities, head, evidence and gaps. No machine receipt schema, registry or plan-hash equality is required. Any hash field in the template is optional archival identity unless a real immutable artifact transfer requires it. Missing evidence is still a gap; missing JSON formatting is not. Main owns admission/scheduling, never the reviewer.

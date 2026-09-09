@@ -77,3 +77,7 @@ A real blocker requiring a new owner returns to the main agent for one explicit 
 ## Reset triggers
 
 - Material changes to API/schema/trust/persistence/state ownership/concurrency/deployment/section goal.
+
+## 4.4 packet representation
+
+Return readable Markdown with the actual requested scope, identities, head, evidence and gaps. No machine receipt schema, registry or plan-hash equality is required. Any hash field in the template is optional archival identity unless a real immutable artifact transfer requires it. Missing evidence is still a gap; missing JSON formatting is not. Main owns admission/scheduling, never the reviewer.

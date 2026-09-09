@@ -81,11 +81,11 @@ One parent branch/worktree by default; serial children, no concurrent sibling ch
 
 More than one parent **or more than one executable subsection** requires EXECUTE_WITH_COMMITS on a dedicated feature branch. A single parent with children cannot be used to evade the user's multi-part branch/commit rule. Partial child commits stay on the parent's branch until parent acceptance, unless a separately approved independent section is extracted.
 
-`workflow.py next-unit` proposes the next serial child from the actual state; it does not dispatch an agent. `acceptance-check` validates recorded gate evidence metadata, not the authenticity or completeness of arbitrary claims. Main must still verify Git ancestry, actual tests, artifacts and identities. The tool cannot enforce a sandbox by itself.
+Main chooses the next serial child from the readable plan and actual checkpoint results, then verifies Git, tests and real actors. There is no next-unit or acceptance-check CLI. Structural validation only catches malformed IDs/dependencies/profiles, never verifies acceptance.
 
 ## Migration and audit
 
-Old schema-4 plans without children still validate; schema remains 4; historical `workflow_revision=4.1` stays readable, new execution uses `workflow_revision=4.3`. Do not reinterpret accepted dotted IDs or rewrite old counters. For an active atomic section, finish its existing review/candidate boundary before adding a decomposition; never reset a live writer or require retroactive child evidence.
+The authoritative schedule is now Markdown with parent/child headings, explicit role links and dependency IDs. Legacy JSON is historical evidence, not an execution prerequisite; do not translate it to make an old gate pass. Do not reinterpret accepted dotted IDs or rewrite old counters. For an active atomic section, finish its existing review/candidate boundary before adding a decomposition; never reset a live writer or require retroactive child evidence.
 
 Audit distinguishes parent acceptance from checkpoint verification. Record parent/child/lineage, logical review ID, real reviewer ID, checkpoint base/head, inherited counter before/after, invalidated checkpoints, joint-oracle result and time/cost across the entire parent. Compare against flat sections by accepted outcome, not by artificially improving child pass rate or decreasing logical full-pass count.
 

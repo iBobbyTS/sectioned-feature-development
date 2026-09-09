@@ -28,9 +28,9 @@ No escalation for a normal bug, first finding, first hard cap, one ZAS outage/lo
 ## Freeze and package
 
 1. Persist a filled copy of the byte-preserved `assets/ADVISOR-REQUEST.template.md` with trigger facts and a precise question, not a persuasive preselected answer.
-2. Use `advisor_flow.py request` to set the barrier. Stop writers/reviewers using actual lifecycle tools; do not merely clear their IDs. Record final partial results. Confirm no actors remain active before packaging.
+2. Main records ADVISOR_REQUIRED and the requested decision in FEATURE-STATE.md. Stop writers/reviewers using actual lifecycle tools; do not merely clear their IDs. Record final partial results. Confirm no actors remain active before packaging.
 3. Freeze HEAD, dirty patch, requirements, PLAN-FULL, contracts, ledger and relevant ZAS observations. Audit OFF still requires these execution records.
-4. Use `advisor_flow.py package`, which calls `advisor_pack.py`: full current worktree (including ignored workflow state), normal `.git` or linked-worktree/common Git metadata, and a portable bundle when available. Tracked source is not silently excluded as “build output”. Preserve symlinks without following them. Do not mutate Git, reset, clean, or upload.
+4. Run the retained `advisor_pack.py` export helper directly: full current worktree (including ignored workflow state), normal `.git` or linked-worktree/common Git metadata, and a portable bundle when available. Tracked source is not silently excluded as “build output”. Preserve symlinks without following them. Do not mutate Git, reset, clean, or upload.
 5. Block on detected secret-like files/content; report paths only and ask the human. The scanner is best-effort and cannot certify compressed Git history is free of secrets. The human reviews sharing before forwarding. Never silently strip relevant evidence and call the pack complete.
 Before the request snapshot, allow active actors to stop and persist their final partial work; if HEAD changes afterward, packaging blocks and the request must be explicitly refreshed rather than silently using a stale decision packet.
 
@@ -38,11 +38,13 @@ Before the request snapshot, allow active actors to stop and persist their final
 7. Respond only with the paused state, path/hash, and handoff prompt (or precise packaging blocker). Do not continue normal development while waiting.
 
 ```bash
-python {skill-dir}/scripts/advisor_flow.py --repo /abs/repo request \
-  --request-id ADV-S01-001 --trigger ADV-04 --request-file /abs/repo/.agent-work/ADVISOR-DRAFT.md
-# Stop and record actual active agents, then:
-python {skill-dir}/scripts/advisor_flow.py --repo /abs/repo package
+# Save the completed original request template here first:
+# .agent-work/advisor/ADV-S01-001/ADVISOR-REQUEST.md
+python {skill-dir}/scripts/advisor_pack.py --repo /abs/repo \
+  --feature <feature-id> --trigger ADV-04 --request ADV-S01-001
 ```
+Main sets WAITING_EXTERNAL only after real actors stop and the export verifies. No workflow approval script is used.
+
 
 ## Human handoff
 
@@ -58,9 +60,9 @@ The skill need only know that an external Advisor exists; no model name is embed
 
 ## Result intake
 
-Save the result verbatim as `ADVISOR-RESULT.md` using `advisor_flow.py receive`. Record provenance/model only when actually provided. Receiving advice keeps the feature blocked at `WAITING_HUMAN_DECISION`.
+Save the result verbatim as `ADVISOR-RESULT.md` in the request directory; main records the actual provenance. Record provenance/model only when actually provided. Receiving advice keeps the feature blocked at `WAITING_HUMAN_DECISION`.
 
-The human explicitly accepts, rejects, or requests clarification. Save that actual message as a receipt with `request_id`, `decision`, `user_message_id`, `verbatim_user_message`. Use `advisor_flow.py adopt`; a model-authored approval string is not human authority. The receipt checks linkage, not cryptographic human authentication.
+The human explicitly accepts, rejects, or requests clarification. Save the actual human message and its decision/provenance with the request. Main applies only that authorized disposition. A model-authored approval is not human authority; no receipt schema or adopt CLI is required.
 
 Apply only the accepted bounded action; preserve accepted sections, history and original repair counters. Do not restart a clean streak, reset a budget, silently reopen a completed PLAN or infer merge/reset/push authority. A technical recommendation needing a plan revision still follows the existing bounded PLAN delta process.
 

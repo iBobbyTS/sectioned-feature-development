@@ -1,105 +1,22 @@
-# Feature State
+# Feature state — <feature-id>
 
-## Feature
+- Status: PLANNED / EXECUTING / BLOCKED / COMPLETED
+- Repository, branch, feature base, current candidate:
+- Execution mode and branch authority:
+- Invocation source/timing and user approval when needed:
+- Confirmed requirements / PLAN / original review references:
+- Main plan admission and remaining owner decisions:
+- Current unit and planned implementation role:
+- Actual active actor(s): ID, role/provider, unit, workspace, outstanding result:
+- Last completed action and evidence:
+- Next action and unmet prerequisite, or none:
+- Full-review slot counter / next provider / explicit overrides:
+- Per-parent primary coverage, open finding IDs, repair attempts, recovery-used:
+- Checkpoint/reconciliation and invalidated coverage, when children are used:
+- Accepted parent head → integrated feature head:
+- Final checks/head/readiness:
+- Advisor hold/trigger/pack/result/human adoption/restart, when triggered:
+- Audit ON/OFF, main ZIP / ZAS companion / finalization gap:
+- Closure date/head, or explicit reopen authority and preserved old plan:
 
-- Feature ID / slug:
-- Goal:
-- Execution mode: `PLAN_ONLY | EXECUTE_NO_COMMIT | EXECUTE_WITH_COMMITS`
-- Starting branch / selected branch base: `main | current-non-main | current-merged-into-main | repo-default-equivalent` / exact commit
-- Non-main branch choice authority: user message or `not-applicable`
-- Skill invocation source: `USER_EXPLICIT | CUSTOM_INSTRUCTIONS_AUTO | AGENT_DISCRETION`
-- Invocation timing: `FEATURE_START | MID_FEATURE`
-- Trigger evidence / negative evidence / predicted owners-sections-LOC:
-- Automatic invocation announced: `not-applicable | yes | no`
-- Automatic PLAN-FULL approval: `not-applicable | pending | approved | rejected | narrowed`
-- Approval message / timestamp:
-- Late-adoption head and preserved pre-skill work: `not-applicable` or exact head/diff summary
-- Audit mode: `LIVE | POST_HOC | OFF` (default `LIVE` while skill is under evaluation)
-- Audit trace path:
-- Exact requirements / Grill Me record path:
-- Audit pack required: `yes | no`
-- Audit pack state: `PENDING | BUILDING | COMPLETE | INCOMPLETE | FAILED | disabled`
-- Canonical audit ZIP / SHA-256:
-- Audit pack status / telemetry status / evidence consistency:
-- Feature base:
-- Current feature head:
-- Active artifact isolation: `clean | archived-before-base | legacy-contaminated | needs-archive`
-- `.agent-work` tracking state: `untracked-local-excluded | already-tracked-owner-decision-required | unknown`
-- Workflow adoption note: `new | prospective-mid-feature | legacy artifacts preserved prospectively`
-- Integration repair waves used: `0/5`
-- Integration automatic recovery used: `no | yes`
-- PLAN-FULL review status: `not-run | approved | blocked`
-- Reviewed plan SHA-256:
-- PLAN_DELTA recheck: `not-required | approved | blocked`
-- Open owner/plan decisions:
-
-## Orchestration identities and barrier
-
-- Main/orchestrator session ID:
-- Plan reviewer task/session ID:
-- Active implementer task/session ID:
-- Active repairer task/session ID:
-- Initial/delta reviewer task/session ID:
-- Final reviewer task/session ID:
-- Active section:
-- Active writer ID: `none` or stable ID
-- Active reviewer ID: `none` or stable ID
-- Frozen reviewed product/test head: `none` or exact commit/worktree fingerprint
-- Next allowed phase:
-- Sequence-gate violations: `none` or event IDs/details
-
-## Current section
-
-- ID/title:
-- Review intensity: `MECHANICAL | BOUNDED | HIGH_RISK`
-- Review assurance requested/resolved: `AUTO | ONE | TWO` / `ONE | TWO`
-- Assurance reasons/override:
-- Original section lineage:
-- Section base:
-- Current head:
-- Status: `PLANNED | PLAN_REVIEW | IMPLEMENTING | INITIAL_REVIEW | REPAIR_DELTA | CLEAN_A | FINAL_REVIEW | ACCEPTED | HARD_CAP_DIAGNOSIS | BLOCKED`
-- Allowed-to-edit owners/files/symbols/routes:
-- Inspect-only dependency paths/direct impact cone:
-- Explicitly excluded owners/mechanisms:
-- Allowed structural changes:
-- Foundational-vs-local decision: `not-applicable | local-patch-authorized | shared-owner-authorized | owner-decision-required`
-
-## Review state
-
-- Initial bounded review: `not-run | complete`
-- Open finding IDs:
-- Cumulative repair waves used: `0/5`
-- Exact product/test head covered by current evidence:
-- Clean A closure: `no | yes`
-- Final bounded review: `not-required | not-run | clean | findings`
-- Required assurance evidence satisfied: `no | yes`
-- Clean B final, if required: `not-required | no | yes`
-- Reset reason, if any:
-
-## Validation
-
-- Targeted checks:
-- Section/package checks:
-- Integration checks:
-- Evidence gaps/residual risk:
-
-## Recovery
-
-- Generation:
-- Backup ref:
-- Automatic hard-cap recovery used for original lineage: `no | yes`
-- Recovery classification:
-- Authorized named recovery wave or replacement boundary:
-- Preserved code/evidence:
-
-## Decisions and next action
-
-- Owner decisions required:
-- Rejected/non-blocking scope proposals:
-- Next action:
-
-## Section summary
-
-| Section | Original lineage | Base | Head | Status | Waves | Recovery used | Clean A | Clean B | Notes |
-|---|---|---|---|---|---:|---|---|---|---|
-| S01 | S01 |  |  |  | 0 | no |  |  |  |
+Only record applicable facts; no fixed JSON schema, synthetic IDs or hash-matching admission.

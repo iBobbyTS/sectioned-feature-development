@@ -36,3 +36,7 @@ Pass ID, logical parent pass, actual agent/session, provider/requested-vs-observ
 ## ZAS observation in 4.3.1
 
 Review scope, result signals and provider alternation are unchanged. Only the parent caller invokes the installed zcode_subagent_observe when it suspects meaningless looping; the five judgment definitions belong to that MCP description, not this review state machine. Observe includes calls without results and a verified public reasoning tail by default, never encrypted_content. Detailed telemetry is stored in the feature's paired xxx-zas.zip.
+
+## Agent-managed parent (4.4)
+
+The parent now schedules from readable files. Existing sfd-delegated-review/4.2 (and flat /4.0) denotes the same pass semantics, not a required JSON envelope. Plain Markdown with scope, actual identity, candidate head, evidence and candidates is valid. Do not demand registry, signed receipts, STATE.json, extra hashes or workflow.py approval. This does not weaken scope, ONE/TWO, fresh reviewers, candidate immutability or real tests.

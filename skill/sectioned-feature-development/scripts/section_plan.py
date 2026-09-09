@@ -1,393 +1,183 @@
 #!/usr/bin/env python3
-"""Validate, list, extract, fingerprint, and archive sectioned feature plans.
+"""Read-only structural PLAN helper; never an approval, actor, or scheduling gate.
 
-The validator is intentionally strict only about durable markers, minimum
-reviewability fields, unique IDs, and dependency integrity. Optional workflow
-fields produce warnings rather than retroactively invalidating product work.
+Format: ## S01 — title; optional ### S01.A — title.
+Every unit has one Implementer: [@impl_*](subagent://impl_*) and Depends on: field.
+No JSON schedule, required hashes, receipt schemas, Git lookup, or workflow state.
 """
-
 from __future__ import annotations
-
 import argparse
-import hashlib
-import re
-import shutil
-import sys
-from dataclasses import dataclass
-from datetime import datetime, timezone
+from dataclasses import dataclass, field, asdict
+import json
 from pathlib import Path
-from typing import Iterable
+import re
+import sys
 
-FEATURE_RE = re.compile(
-    r"<!--\s*FEATURE-CONTEXT:START\s*-->(.*?)"
-    r"<!--\s*FEATURE-CONTEXT:END\s*-->",
-    re.DOTALL | re.IGNORECASE,
-)
-SECTION_ID_PATTERN = r"S\d{2,}(?:\.\d+)*"
-SECTION_RE = re.compile(
-    rf"<!--\s*SECTION:({SECTION_ID_PATTERN}):START\s*-->(.*?)"
-    rf"<!--\s*SECTION:\1:END\s*-->",
-    re.DOTALL | re.IGNORECASE,
-)
-SECTION_MARKER_RE = re.compile(
-    rf"<!--\s*SECTION:({SECTION_ID_PATTERN}):(START|END)\s*-->", re.IGNORECASE
-)
-ID_RE = re.compile(rf"\b{SECTION_ID_PATTERN}\b", re.IGNORECASE)
-REQUIRES_LINE_RE = re.compile(
-    r"(?mi)^\s*[-*]?\s*(?:Requires|依赖于|前置(?:依赖)?)\s*:\s*(.+?)\s*$"
-)
+PROFILES = {'impl_nano','impl_mini','impl_std','impl_large'}
+HEADER = re.compile(r'^(#{2,3})\s+(S\d{2,}(?:[.\-][A-Z0-9]+)?)\s*(?:[—–:\-]\s*|\s+)(\S.*)$')
+FIELD = re.compile(r'^\s*(?:[-*]\s*)?(Implementer|Profile|实现者|实现代理|Depends on|Dependencies|依赖)\s*[:：]\s*(.*?)\s*$', re.I)
+LINK = re.compile(r'\[@(impl_[a-z]+)\]\(subagent://(impl_[a-z]+)\)')
+NONE = {'none','无','—','-','[]','无依赖'}
 
-FEATURE_REQUIRED: tuple[tuple[str, ...], ...] = (
-    ("Goal", "目标", "一句话目标"),
-    ("Observable behavior", "Observable Behavior", "用户/操作者可观察行为"),
-    ("Non-goals and unsupported environments", "Non-goals", "非目标"),
-    ("Feature acceptance criteria", "Full-feature Acceptance Criteria", "完整功能验收标准"),
-)
-FEATURE_RECOMMENDED: tuple[tuple[str, ...], ...] = (
-    ("Feature identity",),
-    ("Original user request",),
-    ("Requirement, example, and correction traceability",),
-    ("Minimum sufficient end-to-end outcome",),
-    ("Scope authority map",),
-    ("Constraints and invariants", "Global Invariants", "全局不变量"),
-    ("Ownership and state boundaries", "Ownership / State Boundary"),
-    ("Allowed structural changes",),
-    ("Validation tiers", "Full-feature Validation Commands", "完整功能验证命令"),
-)
-SECTION_REQUIRED: tuple[tuple[str, ...], ...] = (
-    ("Goal", "目标"),
-    ("Dependencies", "依赖"),
-    ("Expected scope and direct impact cone", "Expected Scope", "预计范围"),
-    ("Non-goals and deferred owner", "Non-goals", "非目标"),
-    ("Acceptance criteria", "Acceptance Criteria", "验收标准"),
-    ("Validation tiers", "Validation Commands", "验证命令"),
-)
-SECTION_RECOMMENDED: tuple[tuple[str, ...], ...] = (
-    ("Authority and necessity",),
-    ("Invariants", "Global Invariants", "全局不变量"),
-    ("Allowed structural changes",),
-    ("Reset triggers",),
-    ("Review intensity",),
-    ("Review assurance",),
-)
-
-
-@dataclass(frozen=True)
-class Section:
-    section_id: str
+@dataclass
+class Unit:
+    id: str
     title: str
-    body: str
+    parent: str | None
+    start: int
+    end: int
+    profile: str | None = None
+    depends_on: list[str] = field(default_factory=list)
+    field_counts: dict[str,int] = field(default_factory=dict)
 
-
-@dataclass(frozen=True)
-class ParsedPlan:
-    path: Path
+@dataclass
+class Plan:
     text: str
-    feature_context: str
-    sections: tuple[Section, ...]
-    warnings: tuple[str, ...]
+    units: list[Unit]
+    errors: list[str]
+    warnings: list[str]
 
 
-def _read(path: Path) -> str:
-    try:
-        return path.read_text(encoding="utf-8")
-    except FileNotFoundError as exc:
-        raise ValueError(f"plan not found: {path}") from exc
-    except UnicodeDecodeError as exc:
-        raise ValueError(f"plan is not valid UTF-8: {path}") from exc
-
-
-def _heading_present(body: str, aliases: Iterable[str]) -> bool:
-    for alias in aliases:
-        if re.search(rf"(?mi)^###\s+{re.escape(alias)}\s*$", body):
-            return True
-    return False
-
-
-def _title_for(section_id: str, body: str) -> str:
-    match = re.search(
-        rf"(?mi)^##\s+{re.escape(section_id)}\s*(?:[—–-]\s*)?(.+?)\s*$", body
-    )
-    return match.group(1).strip() if match else "<missing title>"
-
-
-def _marker_errors(text: str) -> list[str]:
+def parse(text: str) -> Plan:
+    lines = text.splitlines(keepends=True)
+    units: list[Unit] = []
     errors: list[str] = []
-    stack: list[str] = []
-    for marker in SECTION_MARKER_RE.finditer(text):
-        section_id = marker.group(1).upper()
-        kind = marker.group(2).upper()
-        if kind == "START":
-            if stack:
-                errors.append(
-                    f"nested section marker {section_id} inside {stack[-1]} is not allowed"
-                )
-            stack.append(section_id)
-        elif not stack:
-            errors.append(f"orphan END marker for {section_id}")
-        else:
-            started = stack.pop()
-            if started != section_id:
-                errors.append(f"mismatched marker: started {started}, ended {section_id}")
-    errors.extend(f"missing END marker for {section_id}" for section_id in stack)
-    return errors
-
-
-def _find_dependency_cycle(graph: dict[str, set[str]]) -> list[str] | None:
-    visiting: set[str] = set()
-    visited: set[str] = set()
-    stack: list[str] = []
-
-    def visit(node: str) -> list[str] | None:
-        if node in visited:
-            return None
-        if node in visiting:
-            start = stack.index(node)
-            return stack[start:] + [node]
-        visiting.add(node)
-        stack.append(node)
-        for dependency in sorted(graph.get(node, set())):
-            cycle = visit(dependency)
-            if cycle:
-                return cycle
-        stack.pop()
-        visiting.remove(node)
-        visited.add(node)
-        return None
-
-    for node in sorted(graph):
-        cycle = visit(node)
-        if cycle:
-            return cycle
-    return None
-
-
-def parse_plan(path: Path) -> ParsedPlan:
-    text = _read(path)
-    errors = _marker_errors(text)
     warnings: list[str] = []
-
-    feature_matches = list(FEATURE_RE.finditer(text))
-    if len(feature_matches) != 1:
-        errors.append("plan must contain exactly one FEATURE-CONTEXT START/END block")
-        feature_context = ""
-    else:
-        feature_context = feature_matches[0].group(1).strip()
-        if not feature_context:
-            errors.append("FEATURE-CONTEXT block is empty")
-
-    sections: list[Section] = []
-    seen: set[str] = set()
-    for match in SECTION_RE.finditer(text):
-        section_id = match.group(1).upper()
-        body = match.group(2).strip()
-        if section_id in seen:
-            errors.append(f"duplicate section ID: {section_id}")
-        seen.add(section_id)
-        if not body:
-            errors.append(f"{section_id} block is empty")
-        title = _title_for(section_id, body)
-        if title == "<missing title>":
-            errors.append(f"{section_id} is missing a '## {section_id} — title' heading")
-        for aliases in SECTION_REQUIRED:
-            if not _heading_present(body, aliases):
-                errors.append(f"{section_id} is missing required heading: {aliases[0]}")
-        for aliases in SECTION_RECOMMENDED:
-            if not _heading_present(body, aliases):
-                warnings.append(f"{section_id} is missing recommended heading: {aliases[0]}")
-        sections.append(Section(section_id=section_id, title=title, body=body))
-
-    if not sections:
-        errors.append("plan contains no complete SECTION blocks")
-
-    if feature_context:
-        for aliases in FEATURE_REQUIRED:
-            if not _heading_present(feature_context, aliases):
-                errors.append(
-                    f"FEATURE-CONTEXT is missing required heading: {aliases[0]}"
-                )
-        for aliases in FEATURE_RECOMMENDED:
-            if not _heading_present(feature_context, aliases):
-                warnings.append(
-                    f"FEATURE-CONTEXT is missing recommended heading: {aliases[0]}"
-                )
-
-    known = {section.section_id for section in sections}
-    graph: dict[str, set[str]] = {section_id: set() for section_id in known}
-    for section in sections:
-        dependency_block = re.search(
-            r"(?mis)^###\s+(?:Dependencies|依赖)\s*$\s*(.*?)"
-            r"(?=^###\s+|\Z)",
-            section.body,
-        )
-        if not dependency_block:
+    active: Unit | None = None
+    parent: str | None = None
+    fence: str | None = None
+    for index,line in enumerate(lines):
+        stripped=line.strip()
+        fm=re.match(r'^(`{3,}|~{3,})',stripped)
+        if fm:
+            mark=fm.group(1)
+            if fence is None: fence=mark
+            elif mark[0]==fence[0] and len(mark)>=len(fence): fence=None
             continue
-        block_text = dependency_block.group(1)
-        lines = REQUIRES_LINE_RE.findall(block_text)
-        refs = {
-            item.upper()
-            for line in lines
-            for item in ID_RE.findall(line)
-        } if lines else {item.upper() for item in ID_RE.findall(block_text)}
-
-        if section.section_id in refs:
-            errors.append(f"{section.section_id} cannot depend on itself")
-            refs.discard(section.section_id)
-        unknown = sorted(refs - known)
-        if unknown:
-            errors.append(
-                f"{section.section_id} references unknown dependency IDs: "
-                + ", ".join(unknown)
-            )
-        graph[section.section_id] = refs & known
-
-    cycle = _find_dependency_cycle(graph)
-    if cycle:
-        errors.append("dependency cycle: " + " -> ".join(cycle))
-
-    raw_starts = len(
-        re.findall(rf"<!--\s*SECTION:{SECTION_ID_PATTERN}:START\s*-->", text, re.IGNORECASE)
-    )
-    raw_ends = len(
-        re.findall(rf"<!--\s*SECTION:{SECTION_ID_PATTERN}:END\s*-->", text, re.IGNORECASE)
-    )
-    if raw_starts != len(sections) or raw_ends != len(sections):
-        errors.append(
-            "one or more section marker pairs could not be parsed; check IDs and matching END markers"
-        )
-
-    if errors:
-        raise ValueError("\n".join(f"- {error}" for error in errors))
-
-    return ParsedPlan(
-        path=path,
-        text=text,
-        feature_context=feature_context,
-        sections=tuple(sections),
-        warnings=tuple(warnings),
-    )
-
-
-def sha256_text(text: str) -> str:
-    return hashlib.sha256(text.encode("utf-8")).hexdigest()
-
-
-def command_validate(args: argparse.Namespace) -> int:
-    plan = parse_plan(Path(args.plan))
-    print(
-        f"valid: {plan.path} ({len(plan.sections)} sections, "
-        f"sha256={sha256_text(plan.text)})"
-    )
-    for warning in plan.warnings:
-        print(f"warning: {warning}", file=sys.stderr)
-    return 0
-
-
-def command_list(args: argparse.Namespace) -> int:
-    plan = parse_plan(Path(args.plan))
-    for section in plan.sections:
-        print(f"{section.section_id}\t{section.title}")
-    return 0
-
-
-def command_extract(args: argparse.Namespace) -> int:
-    plan = parse_plan(Path(args.plan))
-    requested = args.section.upper()
-    selected = next(
-        (section for section in plan.sections if section.section_id == requested), None
-    )
-    if selected is None:
-        available = ", ".join(section.section_id for section in plan.sections)
-        raise ValueError(f"unknown section {requested}; available: {available}")
-
-    output = Path(args.output)
-    if output.exists() and not args.force:
-        raise ValueError(f"output exists: {output}; pass --force to replace it")
-    output.parent.mkdir(parents=True, exist_ok=True)
-
-    timestamp = datetime.now(timezone.utc).astimezone().isoformat(timespec="seconds")
-    content = (
-        "# Current Section Plan\n\n"
-        "> Generated from the full plan. The source hash is informational and does not invalidate evidence by itself.\n\n"
-        f"- Source plan: `{plan.path}`\n"
-        f"- Source SHA-256: `{sha256_text(plan.text)}`\n"
-        f"- Section: `{selected.section_id}`\n"
-        f"- Extracted at: `{timestamp}`\n\n"
-        "## Feature Context\n\n"
-        f"{plan.feature_context}\n\n"
-        "## Current Section\n\n"
-        f"{selected.body}\n"
-    )
-    output.write_text(content, encoding="utf-8")
-    print(f"wrote: {output}")
-    return 0
+        if fence is not None: continue
+        hm=HEADER.match(line.rstrip())
+        if hm:
+            level,uid,title=hm.groups()
+            is_child=bool(re.search(r'[.\-]',uid))
+            if (level=='##' and is_child) or (level=='###' and not is_child):
+                errors.append(f'line {index+1}: use ## for parents and ### for children: {uid}')
+            if active: active.end=index
+            if not is_child: parent=uid
+            declared_parent=re.split(r'[.\-]',uid)[0] if is_child else None
+            if is_child and declared_parent!=parent:
+                errors.append(f'line {index+1}: {uid} must be nested below {declared_parent}')
+            active=Unit(uid,title,declared_parent,index,len(lines));units.append(active)
+            continue
+        # Unrelated ## ends the executable-unit area (e.g. final integration).
+        if re.match(r'^##\s+',line):
+            if active: active.end=index
+            active=None;parent=None
+            continue
+        if active:
+            match=FIELD.match(line.rstrip())
+            if not match: continue
+            label,value=match.groups()
+            kind='profile' if label.lower() in {'implementer','profile','实现者','实现代理'} else 'deps'
+            active.field_counts[kind]=active.field_counts.get(kind,0)+1
+            if active.field_counts[kind]>1:
+                errors.append(f'{active.id}: duplicate {kind} field')
+            if kind=='profile':
+                links=LINK.findall(value)
+                if len(links)!=1 or links[0][0]!=links[0][1] or links[0][0] not in PROFILES or value.strip()!=LINK.search(value).group(0):
+                    errors.append(f'{active.id}: one explicit linked impl profile is required; no AUTO/TBD/inheritance')
+                else: active.profile=links[0][0]
+            else:
+                clean=value.strip().strip('`')
+                if clean.lower() in NONE: active.depends_on=[]
+                else:
+                    deps=[x.strip().strip('`') for x in re.split(r'[,，、]',clean)]
+                    if any(not re.fullmatch(r'S\d{2,}(?:[.\-][A-Z0-9]+)?',x) for x in deps):
+                        errors.append(f'{active.id}: dependencies must be comma-separated IDs or none')
+                    else: active.depends_on=deps
+    if not units: errors.append('no business sections: use ## S01 — title')
+    ids: dict[str,Unit]={}
+    for u in units:
+        if u.id in ids: errors.append(f'duplicate unit ID: {u.id}')
+        ids[u.id]=u
+        if u.profile is None and not u.field_counts.get('profile'): errors.append(f'{u.id}: missing Implementer')
+        if not u.field_counts.get('deps'): errors.append(f'{u.id}: missing Depends on (use none for no dependency)')
+    for u in units:
+        if u.parent and (u.parent not in ids or ids[u.parent].parent is not None):
+            errors.append(f'{u.id}: missing business parent {u.parent}')
+        if len(u.depends_on)!=len(set(u.depends_on)): errors.append(f'{u.id}: repeated dependency')
+        for dep in u.depends_on:
+            if dep not in ids: errors.append(f'{u.id}: unknown dependency {dep}')
+            elif u.parent is None and ids[dep].parent is not None:
+                errors.append(f'{u.id}: external consumers depend on accepted parent, not child {dep}')
+            elif u.parent and ids[dep].parent!=u.parent:
+                errors.append(f'{u.id}: child dependencies are siblings only; put external dependencies on {u.parent}')
+    visiting:set[str]=set();done:set[str]=set()
+    def visit(uid:str,path:list[str]) -> None:
+        if uid in visiting:
+            errors.append('dependency cycle: '+' -> '.join(path+[uid]));return
+        if uid in done:return
+        visiting.add(uid)
+        for dep in ids[uid].depends_on:
+            if dep in ids:visit(dep,path+[uid])
+        visiting.remove(uid);done.add(uid)
+    for uid in ids:visit(uid,[])
+    for u in units:
+        if u.parent is None and sum(c.parent==u.id for c in units)==1:
+            warnings.append(f'{u.id}: a single child usually belongs in parent work steps, not a subsection')
+    if 'SFD_PLAN_V4' in text:
+        warnings.append('legacy machine block is not used; do not maintain it as a second plan authority')
+    return Plan(text,units,errors,warnings)
 
 
-def command_fingerprint(args: argparse.Namespace) -> int:
-    plan = parse_plan(Path(args.plan))
-    print(sha256_text(plan.text))
-    return 0
-
-
-def command_archive(args: argparse.Namespace) -> int:
-    source = Path(args.plan)
-    parse_plan(source)
-    destination_dir = Path(args.dest_dir)
-    destination_dir.mkdir(parents=True, exist_ok=True)
-    timestamp = args.timestamp or datetime.now().astimezone().strftime("%Y%m%d-%H%M")
-    destination = destination_dir / f"{timestamp}_FULL.md"
-    if destination.exists():
-        raise ValueError(f"archive destination exists: {destination}")
-    if args.move:
-        shutil.move(str(source), str(destination))
+def extract(plan:Plan,uid:str) -> str:
+    byid={u.id:u for u in plan.units}
+    if uid not in byid:raise ValueError(f'unknown section/subsection {uid}')
+    lines=plan.text.splitlines(keepends=True)
+    first=min(u.start for u in plan.units)
+    u=byid[uid]
+    context=''.join(lines[:first])
+    if u.parent:
+        parent=byid[u.parent]
+        context+=''.join(lines[parent.start:parent.end])
+        selected=''.join(lines[u.start:u.end])
     else:
-        shutil.copy2(source, destination)
-    print(f"archived: {destination}")
+        parts=[u]+[c for c in plan.units if c.parent==uid]
+        selected=''.join(''.join(lines[c.start:c.end]) for c in parts)
+    return context.rstrip()+ '\n\n'+selected.strip()+'\n'
+
+
+def main(argv:list[str]|None=None)->int:
+    p=argparse.ArgumentParser(description=__doc__)
+    sub=p.add_subparsers(dest='command',required=True)
+    for name in ['validate','list','extract']:
+        x=sub.add_parser(name);x.add_argument('plan',type=Path)
+        if name=='extract':x.add_argument('unit');x.add_argument('--output',type=Path)
+        else:x.add_argument('--json',action='store_true')
+    args=p.parse_args(argv)
+    try:plan=parse(args.plan.read_text(encoding='utf-8'))
+    except (OSError,UnicodeError) as exc:print(f'ERROR: {exc}',file=sys.stderr);return 2
+    if args.command=='validate':
+        result={'valid':not plan.errors,'sections':sum(u.parent is None for u in plan.units),'subsections':sum(u.parent is not None for u in plan.units),'errors':plan.errors,'warnings':plan.warnings,'scope':'structure only; no approval/acceptance/actor/test authenticity'}
+        if args.json:print(json.dumps(result,ensure_ascii=False,indent=2))
+        else:
+            for e in plan.errors:print('ERROR: '+e)
+            for w in plan.warnings:print('WARNING: '+w)
+            print(('VALID' if not plan.errors else 'INVALID')+f" — {result['sections']} sections, {result['subsections']} subsections; structure only")
+        return 1 if plan.errors else 0
+    if plan.errors:
+        print('\n'.join('ERROR: '+e for e in plan.errors),file=sys.stderr);return 1
+    if args.command=='list':
+        if args.json:print(json.dumps([asdict(u) for u in plan.units],ensure_ascii=False,indent=2))
+        else:
+            for u in plan.units:print(f"{u.id}\t{u.profile}\t{', '.join(u.depends_on) or 'none'}\t{u.title}")
+        return 0
+    try:content=extract(plan,args.unit)
+    except ValueError as exc:print(str(exc),file=sys.stderr);return 1
+    if args.output:
+        if args.output.resolve()==args.plan.resolve():
+            print('ERROR: extraction must not overwrite the authoritative plan',file=sys.stderr);return 2
+        args.output.parent.mkdir(parents=True,exist_ok=True);args.output.write_text(content,encoding='utf-8')
+    else:print(content,end='')
     return 0
 
-
-def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description=__doc__)
-    subparsers = parser.add_subparsers(dest="command", required=True)
-
-    validate = subparsers.add_parser("validate", help="validate plan structure")
-    validate.add_argument("plan")
-    validate.set_defaults(func=command_validate)
-
-    listing = subparsers.add_parser("list", help="list section IDs and titles")
-    listing.add_argument("plan")
-    listing.set_defaults(func=command_list)
-
-    extract = subparsers.add_parser("extract", help="extract one section")
-    extract.add_argument("plan")
-    extract.add_argument("section")
-    extract.add_argument("--output", required=True)
-    extract.add_argument("--force", action="store_true")
-    extract.set_defaults(func=command_extract)
-
-    fingerprint = subparsers.add_parser("fingerprint", help="print informational SHA-256")
-    fingerprint.add_argument("plan")
-    fingerprint.set_defaults(func=command_fingerprint)
-
-    archive = subparsers.add_parser("archive", help="copy or move full plan to archive")
-    archive.add_argument("plan")
-    archive.add_argument("--dest-dir", required=True)
-    archive.add_argument("--timestamp")
-    archive.add_argument("--move", action="store_true")
-    archive.set_defaults(func=command_archive)
-
-    return parser
-
-
-def main() -> int:
-    parser = build_parser()
-    args = parser.parse_args()
-    try:
-        return int(args.func(args))
-    except ValueError as exc:
-        print(str(exc), file=sys.stderr)
-        return 2
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
+if __name__=='__main__':raise SystemExit(main())

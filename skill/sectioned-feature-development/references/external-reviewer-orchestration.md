@@ -10,7 +10,7 @@
 
 ## Provider schedule
 
-The first code full-review slot uses [@code_reviewer](subagent://code_reviewer). PLAN authorship/review do not consume code full-review slots. Each later independent review session alternates provider: Astra → ZCode → Astra. Provider alternation is feature-local and persists across sections. A repair verification is not a new independent session.
+The first code full-review slot uses [@code_reviewer](subagent://code_reviewer). PLAN authorship/review do not consume code full-review slots. Each later independent review session alternates provider: Astra → ZCode → Astra. Provider alternation is feature-local and persists across sections in readable FEATURE-STATE; no slot-reservation CLI is required. A repair verification is not a new independent session.
 
 ## High-complexity PLAN review
 
@@ -37,6 +37,6 @@ One external reviewer transport/runtime failure permits one bounded retry. A fai
 
 ## Subsection primary pass and actual current MCP
 
-A decomposed business section reserves one primary logical code-review slot at its first checkpoint. Subsequent SUBSECTION_DELTA and PARENT_RECONCILIATION are continuations of that logical coverage, not additional full-review slots. Every physical call still counts in audit cost; same provider is not same session. The fresh parent FINAL consumes the next feature-wide slot. No independent final per child.
+A decomposed business section assigns one primary logical code-review slot at its first checkpoint. Subsequent SUBSECTION_DELTA and PARENT_RECONCILIATION are continuations of that logical coverage, not additional full-review slots. Every physical call still counts in audit cost; same provider is not same session. The fresh parent FINAL consumes the next feature-wide slot. No independent final per child.
 
-Use the nine actual `zcode_subagent_*` tools from zcode-mcp-adapter.md. Its send is queued and terminal tasks reject continuation. Record TERMINAL_CONTINUATION_UNSUPPORTED for an approved same-provider fresh delta; strict continuity blocks. Neither the MCP success status nor plan permission mode proves review cleanliness or read-only isolation.
+Use the actual lifecycle tools plus suspicion-only `zcode_subagent_observe` from zcode-mcp-adapter.md. Its send is queued and terminal tasks reject continuation. Record TERMINAL_CONTINUATION_UNSUPPORTED for an approved same-provider fresh delta; strict continuity blocks. Neither the MCP success status nor plan permission mode proves review cleanliness or read-only isolation.

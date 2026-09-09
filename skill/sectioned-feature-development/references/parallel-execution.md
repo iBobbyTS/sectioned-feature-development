@@ -10,7 +10,7 @@ Preserve dirty user work. From main, branch creation is authorized; from another
 
 ## Ready-node scheduling
 
-Use one orchestrator as schedule/state writer. Call `workflow.py ready` before dispatch. Workers do not edit the scheduler's state or choose siblings.
+Use one orchestrator as the readable schedule/state writer. Main checks the following dependency and isolation conditions before dispatch; no ready CLI or reservation database. Workers do not edit parent state or choose siblings. Repository primary-checkout/no-worktree restrictions take precedence.
 
 A section is ready when all prerequisites are accepted and integrated on the feature branch. A sibling can run concurrently only if:
 - both are explicitly marked parallel-eligible;
@@ -51,8 +51,8 @@ Merged candidate checks prove composition. Keep a final `unproven_composition` l
 
 Broad suites once per appropriate stable gate. If logs truncate, save original output and summarize mechanically, not rerun the entire suite merely to recount tests. No old green check can bless later unreviewed product edits.
 
-A blocked environment is reported separately from product defects. Feature closure stores final head, plan digest and outcome. `workflow.py follow-up` will never authorize appending a completed plan without an explicit user reopen request.
+A blocked environment is reported separately from product defects. Feature closure stores final head, plan digest and outcome. Main must not append to a completed plan without an explicit user reopen request; retain its closure and classify later work independently.
 
 ## Internal checkpoints
 
-Parent section DAG remains authoritative. Serial child commits stay on the parent branch; CHECKPOINT_VERIFIED only enables the next local child. Another parent cannot depend on that child ID or consume it as an accepted contract. Freeze reviewer workspace before each checkpoint, and block child dispatch on open/invalidated checkpoint findings. `next-unit` and `acceptance-check` provide metadata checks, not automatic dispatch or proof of runtime evidence.
+Parent section DAG remains authoritative. Serial child commits stay on the parent branch; CHECKPOINT_VERIFIED only enables the next local child. Another parent cannot depend on that child ID or consume it as an accepted contract. Freeze reviewer workspace before each checkpoint, and block child dispatch on open/invalidated checkpoint findings. Main selects the next child from actual checkpoint results and verifies the parent joint oracle before acceptance; no metadata validator grants either transition.

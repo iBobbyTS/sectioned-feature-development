@@ -73,13 +73,57 @@ def check_snapshot(page: dict, agent_id: str) -> dict:
             'coverage':'BOUNDED_SNAPSHOT' if all(cov[k] for k in ('tool_history_complete','reasoning_complete')) and not cov['dropped_events'] else 'GAPPED',
             'semantic_progress':'NOT_INFERRED','automatic_action':None}
 
+
+def compact_capabilities(status: dict, catalog: dict) -> dict:
+    """Approved compact contract only; no fabricated source or version proof."""
+    tools={t.get('name') if isinstance(t,dict) else t for t in catalog.get('tools',[])}
+    obs=status.get('capabilities',{}).get('observation',{})
+    if not REQUIRED_TOOLS.issubset(tools) or obs.get('public_reasoning_default') is not True or obs.get('defaults') != {'top_tools':3,'recent_calls_per_tool':5,'reasoning_chars':200}:
+        raise Invalid('ZAS_COMPACT_CONTRACT_MISMATCH')
+    return {'mode':'COMPACT_OBSERVATION_READY','source_provenance':'NOT_PUBLICLY_ECHOED','semantic_progress':'NOT_INFERRED'}
+
+
+def compact_snapshot(page: dict, agent_id: int) -> dict:
+    """Validate bounded wire content; tool-call correlation, not echoed ID, identifies task."""
+    if type(agent_id) is not int or not 10000000<=agent_id<=99999999: raise Invalid('TASK_ID_RANGE')
+    no_encrypted_content(page)
+    exact(page,{'tools','reasoning','coverage'},'COMPACT_OBSERVATION_SHAPE')
+    if len(json.dumps(page,ensure_ascii=False).encode('utf-8'))>65536: raise Invalid('OBSERVATION_OUT_OF_BOUND')
+    groups=page['tools']
+    if not isinstance(groups,list) or len(groups)>3: raise Invalid('TOOL_GROUP_BOUND')
+    names=set();seen=set();order=[];total=0
+    for g in groups:
+        exact(g,{'tool_name','call_count','recent_calls'},'TOOL_GROUP_SHAPE_INVALID')
+        name=g['tool_name'];count=g['call_count'];calls=g['recent_calls']
+        if not isinstance(name,str) or not name or name in names:raise Invalid('TOOL_NAME_INVALID')
+        names.add(name)
+        if not integer(count,1) or not isinstance(calls,list) or not 1<=len(calls)<=min(5,count):raise Invalid('TOOL_CALL_BOUND')
+        seqs=[]
+        for c in calls:
+            exact(c,{'seq','tool_call_id','arguments','arguments_truncated','redacted_fields'},'CALLS_ONLY_NO_RESULTS')
+            seq=c['seq'];cid=c['tool_call_id']
+            if not integer(seq,1) or not isinstance(cid,str) or not cid or cid in seen:raise Invalid('CALL_IDENTITY_OR_SEQUENCE_INVALID')
+            if not isinstance(c['arguments'],dict) or type(c['arguments_truncated']) is not bool or not integer(c['redacted_fields']):raise Invalid('CALL_ARGUMENTS_INVALID')
+            seen.add(cid);seqs.append(seq);total+=1
+        if seqs!=sorted(set(seqs),reverse=True):raise Invalid('RECENT_CALL_ORDER_INVALID')
+        order.append((-count,-seqs[0],name))
+    if order!=sorted(order):raise Invalid('TOP_TOOL_ORDER_INVALID')
+    r=page['reasoning'];exact(r,{'text','truncated'},'REASONING_SHAPE_INVALID')
+    if not isinstance(r['text'],str) or len(r['text'])>200 or type(r['truncated']) is not bool:raise Invalid('REASONING_CHARACTER_BOUND')
+    c=page['coverage'];exact(c,{'tool_history_complete','reasoning_complete','dropped_events'},'COVERAGE_REQUIRED')
+    if any(type(c[k]) is not bool for k in ('tool_history_complete','reasoning_complete')) or not integer(c['dropped_events']):raise Invalid('COVERAGE_INVALID')
+    return {'agent_id_from_call':agent_id,'identity_check':'CALL_CORRELATION_NOT_ATTESTED_BY_PAYLOAD','tool_groups':len(groups),'tool_calls':total,'reasoning_chars':len(r['text']),'source_provenance':'NOT_PUBLICLY_ECHOED','semantic_progress':'NOT_INFERRED','automatic_action':None,'coverage':'GAPPED' if not all(c[k] for k in ('tool_history_complete','reasoning_complete')) or c['dropped_events'] else 'BOUNDED_SNAPSHOT'}
+
 def main():
     p=argparse.ArgumentParser(description=__doc__);sub=p.add_subparsers(dest='command',required=True)
-    c=sub.add_parser('capabilities');c.add_argument('--status',type=Path,required=True);c.add_argument('--catalog',type=Path,required=True)
-    c=sub.add_parser('snapshot');c.add_argument('--page',type=Path,required=True);c.add_argument('--agent-id',required=True)
+    c=sub.add_parser('capabilities');c.add_argument('--compact',action='store_true');c.add_argument('--status',type=Path,required=True);c.add_argument('--catalog',type=Path,required=True)
+    c=sub.add_parser('snapshot');c.add_argument('--compact',action='store_true');c.add_argument('--page',type=Path,required=True);c.add_argument('--agent-id',required=True)
     a=p.parse_args()
     try:
-        result=capabilities(json.loads(a.status.read_text()),json.loads(a.catalog.read_text())) if a.command=='capabilities' else check_snapshot(json.loads(a.page.read_text()),a.agent_id)
+        if a.command=='capabilities':
+            result=(compact_capabilities if a.compact else capabilities)(json.loads(a.status.read_text()),json.loads(a.catalog.read_text()))
+        else:
+            result=compact_snapshot(json.loads(a.page.read_text()),int(a.agent_id)) if a.compact else check_snapshot(json.loads(a.page.read_text()),a.agent_id)
         print(json.dumps(result,ensure_ascii=False,indent=2));return 0
     except (Invalid,ValueError,TypeError,OSError,AttributeError,KeyError) as exc:
         print(json.dumps({'valid':False,'error':str(exc)}));return 2

@@ -1,0 +1,43 @@
+[
+  {
+    "input": "rollout-2026-09-09T09-41-26-01a086d4-c5a1-7b60-b2ba-b5f155dc688d(3).stats.json",
+    "metrics": {
+      "file": "rollout-2026-09-09T09-41-26-01a086d4-c5a1-7b60-b2ba-b5f155dc688d(3).jsonl",
+      "records": 198,
+      "tool_calls": 24,
+      "first_time": "2026-09-09T15:41:26.814Z",
+      "last_time": "2026-09-09T15:53:20.915Z",
+      "command_mentions_per_tool_call": {}
+    }
+  },
+  {
+    "input": "rollout-2026-09-09T10-08-28-01a086d4-c5a1-7b60-b2ba-b5f155dc688d_01a086ed-8510-7853-a199-35c44cf4ad47(3).stats.json",
+    "metrics": {
+      "file": "rollout-2026-09-09T10-08-28-01a086d4-c5a1-7b60-b2ba-b5f155dc688d_01a086ed-8510-7853-a199-35c44cf4ad47(3).jsonl",
+      "records": 557,
+      "tool_calls": 74,
+      "first_time": "2026-09-09T16:08:28.210Z",
+      "last_time": "2026-09-09T17:34:08.063Z",
+      "command_mentions_per_tool_call": {
+        "section_plan.py": 9,
+        "actual_spawn_calls": 4
+      }
+    }
+  },
+  {
+    "input": "rollout-2026-09-09T11-34-10-01a0873b-fce6-7c33-a5ff-e7060d1e5dee(2).stats.json",
+    "metrics": {
+      "file": "rollout-2026-09-09T11-34-10-01a0873b-fce6-7c33-a5ff-e7060d1e5dee(2).jsonl",
+      "records": 144,
+      "tool_calls": 19,
+      "first_time": "2026-09-09T17:35:05.420Z",
+      "last_time": "2026-09-09T17:43:01.383Z",
+      "command_mentions_per_tool_call": {
+        "ensure_agent_work_untracked.py": 2,
+        "section_plan.py": 2,
+        "workflow.py": 6,
+        "execution_artifacts.py": 4
+      }
+    }
+  }
+]

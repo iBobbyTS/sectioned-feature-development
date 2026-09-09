@@ -26,3 +26,7 @@ Return pass_signal CLEAN / MATERIAL_CANDIDATES / INSUFFICIENT_EVIDENCE. The inst
 - output: CHECKPOINT_VERIFIED only after parent admission; not ACCEPTED, not new budget.
 
 Compatibility: DELEGATED_PASS accepts legacy atomic `sfd-delegated-review/4.0`; new child packets use `sfd-delegated-review/4.2`.
+
+## 4.4 packet representation
+
+Return readable Markdown with the actual requested scope, identities, head, evidence and gaps. No machine receipt schema, registry or plan-hash equality is required. Any hash field in the template is optional archival identity unless a real immutable artifact transfer requires it. Missing evidence is still a gap; missing JSON formatting is not. Main owns admission/scheduling, never the reviewer.

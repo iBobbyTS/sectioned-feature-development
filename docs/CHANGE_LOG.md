@@ -1,3 +1,7 @@
+# 4.4 — 2026-09-09
+
+Agent-managed scheduling replaces workflow/execution_artifacts/advisor_flow gates; only basic section structure validation remains. Required saved artifacts, delegation, review, budgets and tests remain. Existing deterministic packaging/safety helpers retained. See version-history/v4.4.
+
 # 4.3.1 — 完整合并包（PLAN review 定点修订）
 
 - 合入19项已交付修订，保留正确的上传工作区改动。

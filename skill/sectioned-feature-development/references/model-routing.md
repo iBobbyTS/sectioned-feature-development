@@ -41,11 +41,11 @@ Return a small map with path/symbol/line, commit identity, claim→evidence, unk
 
 ## Frozen implementation assignment
 
-Each section and each child supplies its own `profile`, `model_reason`, and `task_features`. A parent profile is used for parent-level implementation/repair; it never fills in a missing child profile. Even a section delivered through children records the responsible parent tier. Prose must show the matching clickable agent level, and the schedule stores the exact role name.
+Each section and each child supplies its own `profile`, `model_reason`, and `task_features`. A parent profile is used for parent-level implementation/repair; it never fills in a missing child profile. Even a section delivered through children records the responsible parent tier. The plain PLAN must show the matching clickable role and its task-based rationale; no parallel JSON copy exists.
 
-`workflow.py` rejects missing, AUTO, obsolete, or unknown profiles. `execution_artifacts.py task` binds the extracted unit, profile and plan hash; `stage-start` rejects a differently registered implementer, a stale task, or a contradictory observed model/effort. A role link is not a launch receipt.
+The basic section validator checks that every parent/child names one supported impl role. Main then sends that role the actual current TASK and records the real tool-returned ID. Main checks task/plan consistency before dispatch; no registry, hash chain or stage-start CLI is required. A role link is not a real launch.
 
-Do not select a tier while dispatching. If genuine under-routing is observed, stop that unit, record the failure evidence, revise only affected unresolved assignments in PLAN-FULL, obtain bounded PLAN delta verification, regenerate task artifacts, and register the new real agent. Do not reopen accepted sections or reset the lineage. Runtime/auth/MCP failures are not evidence of model under-routing.
+Do not select a tier while dispatching. If genuine under-routing is observed, stop that unit, record the failure evidence, revise only affected unresolved assignments in PLAN-FULL, obtain bounded PLAN delta verification, refresh the task, and dispatch/record the new real agent. Do not reopen accepted sections or reset the lineage. Runtime/auth/MCP failures are not evidence of model under-routing.
 
 ## Escalation
 

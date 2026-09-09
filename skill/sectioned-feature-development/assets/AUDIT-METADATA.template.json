@@ -2,7 +2,7 @@
   "artifact_type": "sectioned-development-process-audit",
   "producer": {
     "name": "sectioned-feature-development",
-    "version": "4.1"
+    "version": "4.4"
   },
   "schema_version": 4,
   "repo": "example",
@@ -18,5 +18,5 @@
   "evidence_consistency": "CONSISTENT",
   "telemetry_status": "DEGRADED",
   "product_status": "INSUFFICIENT_EVIDENCE",
-  "workflow_revision": "4.1"
+  "workflow_revision": "4.4"
 }
