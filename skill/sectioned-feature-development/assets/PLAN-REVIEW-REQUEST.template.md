@@ -114,3 +114,7 @@ A clean result with zero material candidates is valid.
 The reviewer returns the complete result; main saves it once and records the actual task/session ID before admission. Missing actual review coverage remains INSUFFICIENT_EVIDENCE, never an implicit clean. An unavailable file format, output-path schema or hash field is not missing semantic evidence if the actual result is already present and preserved.
 
 Use readable Markdown: actual reviewer identity, plan revision/path or saved snapshot, original result, candidates, coverage, source references and gaps. No JSON envelope is required. Main writes dispositions beside the original report; it must not rewrite NEEDS_CORRECTION into a fictional reviewer approval. Plan author and reviewer are distinct real instances. Hashes may be computed for archive integrity, not to authorize ordinary corrections.
+
+## Native/external route and release
+
+The primary reviewer is a fresh native [@plan_reviewer](subagent://plan_reviewer). A selected independent GLM challenge is instead a direct ZAS MCP job, never [@code_reviewer](subagent://code_reviewer). Record actual dispatch route and returned ID beside the result. Neither reviewer spawns implementation or releases S01. The parent waits for all selected results, then performs admission and any required bounded correction/recheck before dispatching product work.

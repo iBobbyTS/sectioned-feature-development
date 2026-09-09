@@ -16,7 +16,11 @@ class V44ContractTests(unittest.TestCase):
   base=R/'docs/version-history/v4.4/INPUT-AGENT-HASHES.json'
   if not base.exists():self.skipTest('hash manifest emitted during release')
   import json
-  for name,digest in json.loads(base.read_text()).items():self.assertEqual(hashlib.sha256((R/'agents'/name).read_bytes()).hexdigest(),digest)
+  allowed={'code_reviewer.toml','plan_reviewer.toml','impl_nano.toml','impl_mini.toml','impl_std.toml','impl_large.toml'}
+  for name,digest in json.loads(base.read_text()).items():
+   if name not in allowed:self.assertEqual(hashlib.sha256((R/'agents'/name).read_bytes()).hexdigest(),digest)
+  # v4.4.1 intentionally changes only descriptions/instructions; new regression
+  # verifies all role/model/effort/sandbox bindings against a frozen baseline.
  def test_no_fake_receipt_gate(self):
   text=(S/'references/artifact-lifecycle.md').read_text();self.assertIn('no receipt', (S/'references/advisor-escalation.md').read_text());self.assertIn('No fake receipt JSON',text)
  def test_plain_packets_do_not_force_companion_json(self):

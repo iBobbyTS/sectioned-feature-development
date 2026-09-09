@@ -13,8 +13,9 @@
 - Repairer task/session ID(s):
 - Initial/delta reviewer task/session ID:
 - Final reviewer task/session ID:
+- Planned provider / actual native-or-ZAS dispatch tool and raw ID / override authority:
 - Role-separation check: `pass | fail | unknown`
-- Sequence-barrier check: `pass | violation-recorded | unknown`
+- Sequence-barrier check: `pass | violation-recorded | unknown`; actual result/admission before successor dispatch:
 - Frozen reviewed product/test head:
 - Allowed-to-edit owners/files/symbols/routes:
 - Inspect-only dependency paths/direct impact cone:

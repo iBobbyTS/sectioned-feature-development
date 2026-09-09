@@ -1,3 +1,11 @@
+# 4.4.1 — 2026-09-09
+
+- 明确 feature-wide PLAN 等待屏障、serial parent/child 真正闭合后的派发，以及预先批准的独立父级并行例外。
+- 原生 code_reviewer/plan_reviewer 与 ZAS MCP 分离：描述层、实际 dispatch、ID/lifecycle、覆盖例外和错误路由恢复一致。
+- 原结果保留、主线程 admission、普通 plan-only 修正、ONE/TWO/模型/预算/轮换均不改变；不恢复任何流程调度脚本。
+- 交接与路由事实复用现有状态、任务、review 和 audit；安装器和九个运行脚本逐字保留。
+- 仅指令/模板连线与离线回归，没有真实 Codex/ZAS 模型行为实验。
+
 # 4.4 — 2026-09-09
 
 Agent-managed scheduling replaces workflow/execution_artifacts/advisor_flow gates; only basic section structure validation remains. Required saved artifacts, delegation, review, budgets and tests remain. Existing deterministic packaging/safety helpers retained. See version-history/v4.4.

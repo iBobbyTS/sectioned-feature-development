@@ -450,3 +450,11 @@ Track process-only command calls and outcomes separately from product checks: ba
 During execution, append only major events via the trace helper when convenient, or retain native tool results and concise phase notes. A broken logger is a telemetry gap, not a blocker. Do not run trace validation/summary on each event. At finalization, export once using existing atomic pack/companion utilities; one bounded correction only. Do not re-review product code to improve documentation.
 
 Forward evaluation must compare missing/skipped PLAN/delegation/review, escaped product defects, repair quality and original user outcome as well as saved tool/token cost. This release intentionally removes mechanical scheduling enforcement; no offline test proves unchanged model compliance.
+
+## 4.4.1 sequence and route observations
+
+At real phase transitions, reuse the existing trace/FEATURE-STATE/review records to capture: the prerequisite being released, actual reviewer return before main admission, next dispatched unit, native-or-ZAS route/tool/returned ID, planned slot provider, and any explicit override or approved parallel exception. Do not create a receipt registry or record every unchanged poll.
+
+Check for SEQUENCE_GATE_VIOLATION (PLAN/serial parent/child review still pending when successor spawned) and REVIEW_ROUTE_MISMATCH (native role satisfied by a ZAS job, wrong lifecycle tool family, or invented native proxy). An explicitly planned isolated independent parent overlap is not a violation. Distinguish missing telemetry from proven misconduct. Preserve actual outputs, stopped actors, any changed candidate, corrective dispatch and costs without resetting logical slots or repair budgets.
+
+Only an actual ZAS attempt belongs in the paired xxx-zas.zip; a native role label, failed native launch, or native override must not create fabricated ZAS evidence. These observations work from ordinary handoff records with audit OFF and never add review, validation or dispatch gates.

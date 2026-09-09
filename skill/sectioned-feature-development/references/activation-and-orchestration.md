@@ -16,7 +16,22 @@ Main writes requirements/PLAN/state, admits findings and integrates commits; it 
 
 No role/profile label substitutes for a real tool-returned task/session ID. Record actual IDs in plain state; do not invent harness authenticity by hashing a self-authored receipt. Unknown observed model remains unknown.
 
-No machine ready/register gate exists. Before dispatch, main checks the actual dependency, candidate and actor situation. Wait for every live same-candidate reviewer before starting a writer. Finish/cancel actual actors, not only labels. One orchestrator serializes decisions. Required agent unavailability after one bounded retry is ORCHESTRATION_BLOCKED, not silent main-thread fallback.
+No machine ready/register gate exists. One orchestrator serializes decisions from actual results. Finish/cancel actual actors, not only labels. Required agent unavailability after one bounded retry is ORCHESTRATION_BLOCKED, not silent main-thread fallback.
+
+## Dispatch handoff
+
+Use this order before any actual implementation/repair dispatch. Record the conclusion in existing readable state/task text at real transitions, not at every poll.
+
+1. **PLAN is closed for execution:** every selected PLAN pass has returned and main has read/saved its report, disposed of candidates, completed ordinary corrections, and finished any required PLAN_DELTA. "User approved", "review submitted", "reviewer still running", or an early CLEAN comment cannot authorize S01. Optional high-complexity GLM review, once selected, must finish too. Do not spawn an idle implementer early; that is already an implementation dispatch.
+2. **The actual prerequisite is closed:** in serial execution the current parent is accepted under its ONE/TWO and checks; dependents additionally require its integration. Within one parent, the previous child must be CHECKPOINT_VERIFIED with no open admitted checkpoint defect. Merely completed code, an INITIAL clean, BLOCKED/ABANDONED state, or a cancelled reviewer does not release that dependency.
+3. **The right actor is used:** select the planned native impl role for writing. Native reviews use the native [@plan_reviewer](subagent://plan_reviewer) or [@code_reviewer](subagent://code_reviewer); external reviews go directly through ZAS MCP. Log route + returned ID, not a guessed identity.
+4. **No conflicting actor is live:** current-candidate review prohibits a writer. An independent parent can overlap only under the explicit parallel exception below. If a prerequisite reviewer is live, wait on that reviewer; if it failed without usable evidence, apply the bounded retry/block policy, not fake acceptance.
+
+Example handoff: "PLAN result read and admitted; S01 accepted at <head>, integrated at <head>; no conflicting actor; dispatch S02 to its planned native impl." During review: "S01 FINAL reviewer <route/id> still running; next action is wait, not S02 implementation."
+
+A review report is an observation; only main admission plus required coverage/checks closes a boundary. Main may reject unsupported candidates and perform ordinary plan-only corrections without obtaining a new matching-hash APPROVED. These sequencing rules do not reintroduce that retired gate.
+
+A current-unit repair is a permitted writer handoff only after the originating reviewer has returned and main has frozen admitted findings. It does not require the current parent to be accepted, and it does not authorize work on the next parent.
 
 ## Late activation
 
@@ -26,9 +41,11 @@ Automatic late activation still pauses after saved PLAN before review. Explicit 
 
 ## Parallel limits and violations
 
-Use independent parent worktrees only if repo rules allow them and PLAN lists non-conflicting dependencies/paths/contracts/resources. Same-parent children remain serial. Worktrees do not isolate shared DBs, ports, caches or Git common metadata automatically.
+Default to serial. Independent parent overlap requires the reviewed PLAN to explicitly name the parents permitted to overlap and their dependency/path/contract/resource isolation. An existing prose list or pair is sufficient; no parallel-group JSON or new validator field is required. Do not infer permission from separate filenames, an omitted dependency, or spare model capacity, and do not retroactively declare work parallel after a premature spawn. Same-parent children remain serial. Worktrees do not isolate shared DBs, ports, caches or Git common metadata automatically.
 
-If a writer touches a reviewed candidate: stop it, retain partial work, invalidate that in-flight pass only, and re-establish the correct parent boundary. Do not create another recovery section or rebuild the feature. If a successor started before a prerequisite was accepted/integrated, hold it until the actual dependency is closed.
+If a writer starts early, interrupt that actual writer and wait for it to stop; do not merely change its state label or let it finish "to save work." Retain its partial diff uncommitted and do not reset/revert user work. Record SEQUENCE_GATE_VIOLATION and the real actors/candidate. If the reviewed plan or product candidate changed, that in-flight pass cannot bless the changed snapshot; retain useful findings and close only the affected gap. If no reviewed input changed, preserve its valid result. Close the original prerequisite first, then reassess the held partial diff against the final plan/head before resuming. Do not create another recovery section, replay the feature or reset budgets.
+
+BLOCKED or ABANDONED is a stop, not a successful prerequisite. Main may separately schedule an explicitly independent parent within an approved parallel plan; it must not release a dependent successor.
 
 ## Completion and external hold
 

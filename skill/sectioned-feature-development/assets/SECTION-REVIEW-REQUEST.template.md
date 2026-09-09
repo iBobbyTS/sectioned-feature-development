@@ -4,15 +4,16 @@ Review the current section using `$code-review` as a **single-pass reviewer**. D
 
 ## Identity and sequence barrier
 
-- Reviewer task/session ID:
+- Planned provider and actual native-or-ZAS route/tool (native code_reviewer is never a ZAS alias):
+- Reviewer raw task/session or ZAS agent_id:
 - Main/orchestrator task/session ID:
 - Plan reviewer task/session ID:
 - Implementer task/session ID:
 - Repairer task/session ID, if any:
 - Reviewer is role-distinct as required for this mode: `yes`
-- No product writer is active: `yes`
+- No product writer touches this frozen candidate: `yes`; any other live parent has explicit parallel authority and isolation:
 - Frozen reviewed product/test head:
-- Next allowed phase after this reviewer completes:
+- Main-owned next action after actual result and admission; successor remains blocked until required acceptance:
 
 ## Review packet
 
@@ -54,7 +55,7 @@ For maintainability findings, identify whether the diff creates a second authori
 
 ## Mode-specific boundary
 
-- `INITIAL_BOUNDED`: review the complete section diff once using only risk lenses triggered by the frozen contract; batch root causes and record coverage. A clean result accepts an assurance-`ONE` bounded/high-risk section after required checks, but assurance `TWO` proceeds to final.
+- `INITIAL_BOUNDED`: review the complete section diff once using only risk lenses triggered by the frozen contract; batch root causes and record coverage. A clean result lets main accept an assurance-`ONE` bounded/high-risk section after required checks; the reviewer itself never accepts. Assurance `TWO` still proceeds to final.
 - `REPAIR_DELTA`: review only the repair range, frozen findings, and invalidated impact cone. Do not rescan unchanged original scope.
 - `FINAL_BOUNDED`: required after any repair, for assurance `TWO`, and for mechanical sections; omitted only after a clean initial assurance-`ONE` bounded/high-risk section. This is not another open-ended discovery pass. Verify the current diff against the contract, highest-risk changed path, repair impact cones, and accidental scope growth. Do not audit the repository or strengthen the contract.
 

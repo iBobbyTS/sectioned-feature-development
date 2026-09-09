@@ -3,7 +3,7 @@ name: sectioned-feature-development
 description: "Plan, delegate, review and deliver non-trivial changes as business sections with optional internal subsections. Use for roughly over 300 behavioral lines, over three owners, changed persistence/security/concurrency/routing/public-protocol/state semantics, an unclear impact cone or failed whole-change convergence. Merely touching a risky module does not trigger a small exact fix. Activate prospectively if work grows. Explicit invocation skips routine human plan approval, never a saved PLAN, independent review or real subagents. Automatic activation is announced and pauses after the first saved plan. Multiple sections/subsections require a dedicated branch and commits. Closed plans stay closed unless explicitly reopened. The agent schedules the workflow from readable artifacts; only basic section structure is mechanically checked, not JSON state, actor receipts or approval hashes. Preserves model tiers, safe parallelism, Astra/GLM reviews, external human Advisor and process audits."
 ---
 
-# Sectioned Feature Development 4.4
+# Sectioned Feature Development 4.4.1
 
 ## Core execution contract
 
@@ -17,6 +17,24 @@ description: "Plan, delegate, review and deliver non-trivial changes as business
 6. Accept the parent only with required coverage, closed findings and tests. Integrate accepted work, validate the final product head, close the plan, finalize audit if enabled, and report.
 
 This applies with audit OFF, one section, and explicit invocation. **There is no runtime `workflow.py`, `execution_artifacts.py`, `advisor_flow.py`, STATE.json, SFD_PLAN_V4 schedule or ready/register/approve/accept CLI.** Do not restore them or edit a product plan to satisfy their historical formats.
+
+## Stop before dispatch — review completion is not acceptance
+
+- **Global PLAN barrier:** before spawning any product/test implementer (including S01 or a parallel worker), every PLAN pass selected by policy for this revision must have actually returned: primary review, selected GLM challenge, and any genuinely required PLAN_DELTA. Main must read/save the results and resolve or evidence-back reject the material candidates. A submitted job, progress message, early candidate, poll timeout, or human approval of the plan is not completion. Do not pre-spawn a writer to scaffold, prepare tests, or "work while review finishes."
+- **Serial parent barrier:** S01 implementation complete or initial review CLEAN is not S01 accepted. Wait through applicable repair/delta, parent reconciliation, required final review and checks; main records acceptance, and any dependency is integrated, before dispatching S02. BLOCKED, ABANDONED or cancelled review does not satisfy a dependency. A bounded repair of the current unit is allowed after its reviewer returns and main admits the findings; it does not release a successor.
+- **Serial child barrier:** do not dispatch the next same-parent subsection until the current checkpoint review has returned, its material findings/delta are closed, and main records CHECKPOINT_VERIFIED. Parent acceptance still follows the existing assurance rules.
+- **Parallel exception is explicit, never inferred:** only named independent parents already authorized to overlap in the reviewed PLAN may overlap implementation/review in separate worktrees with no path/contract/resource conflict. Different files, missing dependency labels, or a waiting reviewer do not grant that authority. No plan-stage overlap; no same-parent child overlap. Repository no-parallel rules win.
+- **Before each real dispatch**, identify the completed prerequisite, any still-live reviewer/writer, and the exact native-or-ZAS route in the existing FEATURE-STATE/TASK/REVIEW record. A short prose handoff is enough; no new file, JSON schema, hash gate or command. If a required review is still running, wait on that actual actor instead of dispatching, editing status to "done", or asking for routine human approval.
+
+## Native role and ZAS MCP are different execution routes
+
+| Required work | Actual route | Identity and follow-up |
+|---|---|---|
+| Native PLAN review | Native Codex subagent mechanism selecting [@plan_reviewer](subagent://plan_reviewer) | Tool-returned native task/session ID; native wait/follow-up tools |
+| Native code-review slot | Native Codex subagent mechanism selecting [@code_reviewer](subagent://code_reviewer) | Tool-returned native task/session ID; native wait/follow-up tools |
+| ZCode/GLM review slot or selected PLAN challenge | Direct ZAS MCP `zcode_subagent_spawn`, followed by `zcode_subagent_poll` / `zcode_subagent_result` | ZAS-returned agent_id; ZAS lifecycle tools |
+
+**[@code_reviewer](subagent://code_reviewer) always means the native Codex role, never ZCode and never a wrapper that delegates to ZAS.** `$code-review` names the shared review instructions, not the provider. Do not satisfy a native slot with an MCP job, send a native ID to ZAS, or call a native reviewer merely to forward work to ZAS. Provider substitution requires explicit applicable user/repository authority and is recorded as an override, never an alias.
 
 ## How much to read
 
@@ -91,6 +109,7 @@ Independent parents may overlap only in separately authorized worktrees with no 
 Use `DELEGATED_PASS` with the companion code-review. `sfd-delegated-review/4.2` and flat compatibility `sfd-delegated-review/4.0` describe pass semantics, not a required JSON envelope. Plain Markdown containing the same information is valid.
 
 - Native full reviewer: fresh [@code_reviewer](subagent://code_reviewer); logical full-review slots alternate **native → ZCode GLM → native** across the feature. First is native. Delta/checkpoint/retry/advisor calls do not create new full slots.
+- Record planned provider, actual dispatch route and raw returned ID together for each logical review slot; a role/profile name or model self-description is not route evidence. Delta/retry does not advance the full-review counter.
 - The original reviewer owns same-pass falsification and supported delta follow-up. Fresh full passes have new identities. A terminal ZCode task cannot be resumed; same-provider fresh delta uses explicit `same_session=false / TERMINAL_CONTINUATION_UNSUPPORTED`, or blocks if strict continuity was required. Repository/user provider overrides are explicit and do not change implementation assignments.
 - `ONE`: clean initial can accept; with material repair, close findings via delta and require one fresh final full pass.
 - `TWO`: primary coverage/closure plus fresh independent final. Never two repeated whole-change scans after each repair.

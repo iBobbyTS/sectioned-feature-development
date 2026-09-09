@@ -13,7 +13,7 @@ Preserve dirty user work. From main, branch creation is authorized; from another
 Use one orchestrator as the readable schedule/state writer. Main checks the following dependency and isolation conditions before dispatch; no ready CLI or reservation database. Workers do not edit parent state or choose siblings. Repository primary-checkout/no-worktree restrictions take precedence.
 
 A section is ready when all prerequisites are accepted and integrated on the feature branch. A sibling can run concurrently only if:
-- both are explicitly marked parallel-eligible;
+- both are explicitly named as permitted to overlap in the reviewed PLAN (a readable list/pair is enough; no new schema);
 - neither depends transitively on the other;
 - no write/write or write/read path overlap;
 - no mutated/consumed contract collision;
@@ -39,7 +39,9 @@ Different worktrees still share Git common metadata, and tests may share externa
 
 For a section: IMPLEMENT → CHECK → frozen REVIEW → admitted REPAIR → CHECK → DELTA → optional independent FINAL → ACCEPTED → INTEGRATED.
 
-No writer changes the reviewed snapshot. But S02 may implement while independent S01 is under review in another worktree. S03 that consumes S01 waits for acceptance+integration, not merely code availability. Plan review finishes before any dependent product implementation.
+PLAN review finishes, its actual reports are read/saved, and main admission/delta closure completes before **any** product/test implementer is spawned, including all parallel roots. No writer changes a reviewed snapshot.
+
+Default is serial: if S01 is under review, do not spawn S02 merely to fill idle time. S02 may overlap only if the already reviewed PLAN explicitly names S01/S02 as parallel, both have accepted/integrated prerequisites, and their worktrees/paths/contracts/resources are independent. A missing dependency label or different files is not authorization. S03 consuming S01 always waits for acceptance+integration, not code availability, initial CLEAN, BLOCKED or ABANDONED. Existing explicit parallel plans need no format migration.
 
 Reserve global full review indexes deterministically before parallel dispatch. Failed dispatch retries keep the same reservation. Delta checks keep their original review ID. Actual agent IDs/provider errors and cancellation/reap status are recorded.
 

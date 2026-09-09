@@ -40,3 +40,9 @@ Review scope, result signals and provider alternation are unchanged. Only the pa
 ## Agent-managed parent (4.4)
 
 The parent now schedules from readable files. Existing sfd-delegated-review/4.2 (and flat /4.0) denotes the same pass semantics, not a required JSON envelope. Plain Markdown with scope, actual identity, candidate head, evidence and candidates is valid. Do not demand registry, signed receipts, STATE.json, extra hashes or workflow.py approval. This does not weaken scope, ONE/TWO, fresh reviewers, candidate immutability or real tests.
+
+## Route and release boundary (4.4.1)
+
+A native [@code_reviewer](subagent://code_reviewer) invocation stays native and never calls another ZAS reviewer. A ZAS MCP invocation stays external and is recorded using its actual returned agent_id. The shared Skill name is not provider identity. A provider override requires applicable explicit authority; do not self-substitute or relabel an output.
+
+Progress text, an early CLEAN comment, cancelled/failed execution, or a completed runtime with unread result never releases an implementer. Even a valid final pass result is not parent acceptance: main must read/save it, admit candidates, close required evidence, and release the specific next unit. Do not send "start S02" to another agent. Previously authorized isolated parallel parents remain valid; serial successors and same-parent children wait.

@@ -20,7 +20,9 @@ The parent `$sectioned-feature-development` orchestrator owns scope, admission, 
 
 The plan reviewer must never code-review the same feature. The initial reviewer is distinct from the implementer/repairer and may be reused only for delta closure. The final reviewer is fresh and distinct from the plan reviewer, implementer, repairer, and initial/delta reviewer. Record stable task/session IDs; a profile label alone is not identity. The main agent may admit findings but may not implement or repair product code.
 
-A reviewer runs against a frozen product/test head. No writer may edit the reviewed range until the reviewer completes or is explicitly cancelled. Do not start a later section until the current section is accepted, blocked, or abandoned.
+A reviewer runs against a frozen product/test head. No writer may edit the reviewed range until the reviewer returns or is explicitly cancelled and stopped. Cancellation does not provide review coverage. In the serial path, a later section waits for current-parent acceptance under all required review/check obligations, plus prerequisite integration. BLOCKED and ABANDONED do not satisfy dependencies. Only explicitly authorized independent parents in isolated worktrees may overlap as defined by parallel-execution.md. Main, not reviewer CLEAN or process completion, closes the handoff.
+
+[@code_reviewer](subagent://code_reviewer) is the native Codex reviewer role only. A scheduled GLM slot is a direct ZAS MCP job using the same `$code-review` methodology, not that native role and not an extra reviewer layered on top. Record actual route and returned ID.
 
 Use:
 

@@ -3,7 +3,8 @@
 - context: DELEGATED_PASS
 - protocol: sfd-delegated-review/4.2
 - feature/run/section/pass ID / full-pass index (delta: original pass):
-- provider/profile/instance/session or agent_id:
+- Planned provider / actual route: native Codex role OR direct ZAS MCP (not an alias):
+- Actual dispatch tool / raw returned instance/session or agent_id; override authority if different:
 - scope: INITIAL_BOUNDED / REPAIR_DELTA / FINAL_BOUNDED / INTEGRATION
 - exact base/head or single-section no-commit fingerprint:
 - approved requirements/AC, exclusions, owner paths and review snapshot:
@@ -11,6 +12,8 @@
 - reused check evidence with head/environment/command digest:
 - delta only: admitted root causes, closure criteria, repair range and invalidated cone:
 - external only: terminal/session-continuity status; fingerprint pre/post:
+
+Use only the dispatched route: native [@code_reviewer](subagent://code_reviewer) is not ZAS; `$code-review` is the shared method, not a provider selector. Return to main, not to an implementer/successor.
 
 Read actual relevant code; report causally reachable, material defects and uncertainty. Do not implement, rewrite the contract, run a second review loop or decide feature acceptance. Return pass identity, coverage, candidates with evidence, checks and gaps. The parent performs admission and applies repair budgets.
 

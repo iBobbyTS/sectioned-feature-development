@@ -8,6 +8,8 @@
 
 ## Installed contract
 
+This reference is for direct external ZAS MCP calls only. [@code_reviewer](subagent://code_reviewer) is a native Codex role, not this service. When the schedule selects ZCode/GLM, main calls the actual ZAS tool directly; it does not spawn a native reviewer as an MCP proxy. Use the raw ZAS agent_id in ZAS poll/result/control calls, never a native task ID. Shared `$code-review` instructions do not change the route or identity.
+
 The user installs the updated ZAS implementation before using this Skill. Require all ten tools: `zcode_subagent_status`, `zcode_subagent_spawn`, `zcode_subagent_poll`, `zcode_subagent_list`, `zcode_subagent_send`, `zcode_subagent_respond`, `zcode_subagent_cancel`, `zcode_subagent_result`, `zcode_subagent_close`, and `zcode_subagent_observe`.
 
 The pre-slim installation declares `zas-observation/1.1`, public reasoning/source flags and 3/5/200 limits. The user-approved MCP slimming contract instead omits public protocol/generation/source identity echoes but retains the ten tools, usable status, `public_reasoning_default=true` and the same defaults. Inspect the actual tools/list input/output schemas and status once at first use (or an observed service restart/contract change). Do not demand intentionally removed metadata or reinstall an older contract. A genuine unsupported tool/limit/type is a capability blocker; missing archival hashes are not. No remote field attests model identity by itself. Development of the slimming feature itself uses the explicit native reviewer override, not this live service.
