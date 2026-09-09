@@ -1,0 +1,13 @@
+{
+  "schema": "zas-public-reasoning-source/1",
+  "status": "REQUIRES_LOCAL_RUNTIME_PROBE",
+  "runtime_path": "/Applications/ZCode.app/Contents/Resources/glm/zcode.cjs",
+  "runtime_version": null,
+  "event_discriminator_pointer": null,
+  "event_discriminator_value": null,
+  "delta_pointer": null,
+  "probe_evidence": null,
+  "confirmed_at": null,
+  "explicitly_excluded_key": "encrypted_content",
+  "release_blocker_until_verified": true
+}

@@ -5,10 +5,11 @@
 2. [Bootstrap](#bootstrap)
 3. [Plan author to saved PLAN](#plan-author-to-saved-plan)
 4. [Independent PLAN review to admission](#independent-plan-review-to-admission)
-5. [One executable task and real delegation](#one-executable-task-and-real-delegation)
-6. [Handoff review and acceptance](#handoff-review-and-acceptance)
-7. [Continuation completion and follow-up](#continuation-completion-and-follow-up)
-8. [Checks and limits](#checks-and-limits)
+5. [Parent-only local plan correction](#parent-only-local-plan-correction)
+6. [One executable task and real delegation](#one-executable-task-and-real-delegation)
+7. [Handoff review and acceptance](#handoff-review-and-acceptance)
+8. [Continuation completion and follow-up](#continuation-completion-and-follow-up)
+9. [Checks and limits](#checks-and-limits)
 
 ## Authority and files
 
@@ -76,6 +77,37 @@ python {skill-dir}/scripts/execution_artifacts.py --repo . approve-plan \
 ```
 
 The source response must contain the recorded native/MCP agent/thread/session ID. The helper cannot authenticate a fabricated file or validate a model's reasoning: main still checks the actual tool return and semantic admission. No need to add cryptographic attestation or a proof server.
+
+## Parent-only local plan correction
+
+The independent reviewer supplies candidates; the parent owns admission. Do not force a fresh APPROVED report for every changed PLAN hash. Retain the exact reviewed plan snapshot and unmodified reviewer report before correcting the canonical plan.
+
+The existing `approve-plan` command accepts either (a) the original exact-plan APPROVED path or (b) an explicit `PARENT_PLAN_CORRECTION` admission in the same PLAN-REVIEW ledger. Path (b) requires the raw report hash, the applied plan hash, a disposition/reason/evidence for every original candidate, and, when PLAN bytes changed, the original snapshot plus changed regions and a `NO_BOUNDARY_CHANGE` justification. The helper revalidates the current plan and rejects changed known scheduling/owner/model/requirement boundaries. It cannot certify prose semantics: the parent must check outcome, trust/state/public interfaces and required validation independently. Such a boundary change uses the existing bounded PLAN_DELTA, never this shortcut. A change to check commands/references additionally requires `plan_correction.validation_equivalence` explaining which pre-existing acceptance it expresses; it must not drop a required check or add an unapproved one.
+
+Example admission envelope (replace all placeholders with actual evidence):
+
+```json
+{
+  "decision": "APPROVED",
+  "unresolved_findings": [],
+  "closure_mode": "PARENT_PLAN_CORRECTION",
+  "review_report_sha256": "<actual original report hash>",
+  "applied_plan_sha256": "<actual final PLAN hash>",
+  "candidate_dispositions": [
+    {"id": "P1", "disposition": "CLOSED_PLAN_ONLY", "reason": "<bounded correction>", "evidence": "<requirement/source/plan delta>"}
+  ],
+  "plan_correction": {
+    "classification": "NO_BOUNDARY_CHANGE",
+    "reason": "<why the same approved outcome and boundaries remain>",
+    "changed_regions": ["<actual changed plan region>"],
+    "reviewed_plan": {"path": ".agent-work/evidence/plan-reviewed.md", "sha256": "<original PLAN hash>"}
+  }
+}
+```
+
+`REJECTED` and `DEFERRED_NIT` dispositions also require a reason and evidence. Do not mark a blocker closed merely by changing its label. Unchanged-plan rejection needs no invented plan delta. The original report can still say NEEDS_CORRECTION; STATE keeps its result/reviewed hash separately from the effective plan and parent approval. Missing original candidates/snapshot, an open owner decision, a changed known boundary, an active reviewer, or edited evidence blocks this path.
+
+Use this existing gate only after real review termination. It does not add a new reviewer, create a second ledger, reset a plan/repair budget, or reopen accepted work. Old exact approved-plan receipts remain valid without migration.
 
 ## One executable task and real delegation
 

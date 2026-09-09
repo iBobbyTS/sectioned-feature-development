@@ -1,0 +1,55 @@
+{
+  "base": "sectioned-feature-development(5).zip",
+  "overlay": "sfd-4.3.1-plan-review-fix-files.zip",
+  "overlay_files": 19,
+  "version": "4.3.1",
+  "documentation_source": "sectioned-feature-development-v4.3.1-project.zip",
+  "history_preserved": true,
+  "tests": [
+    {
+      "name": "project-tests",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "exit_code": 0,
+      "seconds": 37.992
+    },
+    {
+      "name": "tool-tests",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "skill/sectioned-feature-development/scripts",
+        "-v"
+      ],
+      "exit_code": 0,
+      "seconds": 37.05
+    },
+    {
+      "name": "section-plan-assertions",
+      "command": [
+        "python",
+        "skill/sectioned-feature-development/scripts/test_section_plan.py"
+      ],
+      "exit_code": 0,
+      "seconds": 13.869
+    }
+  ],
+  "preserved_input_history_files": 158,
+  "sources": {
+    "sectioned-feature-development(5).zip": "b9b8d8f56597640cf7ca0eaa5d07a48d0ff51f6acddb415947bab59f0f6625b6",
+    "sfd-4.3.1-plan-review-fix-files.zip": "a998a8546962b7463e94b972d18d1359c77b4421806340a70fc096c9dd95bad8",
+    "sectioned-feature-development-v4.3.1-project.zip": "cf45248eb6b832e3c62e076ad19a24dfb8cdec1fcfa181292587922e661eeef4"
+  },
+  "no_new_workflow_changes": true,
+  "no_live_model_or_zas_validation": true
+}

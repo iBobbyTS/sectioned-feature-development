@@ -1,63 +1,86 @@
 #!/usr/bin/env python3
-"""Validate caller-side ZAS observation identity/cursors; never decides semantic progress or cancels an agent."""
+"""Validate ZAS compact observation facts. No model, progress classifier, timer, or cancel."""
 from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
-from typing import Any
 
-PROTOCOL='zas-observation/1'
-BASE_TOOLS={'zcode_subagent_'+n for n in ('status','spawn','poll','list','send','respond','cancel','result','close')}
+PROTOCOL = 'zas-observation/1.1'
+BASE_TOOLS = {'zcode_subagent_' + n for n in ('status','spawn','poll','list','send','respond','cancel','result','close')}
+REQUIRED_TOOLS = BASE_TOOLS | {'zcode_subagent_observe'}
+class Invalid(ValueError): pass
 
-class Invalid(ValueError):pass
+def no_encrypted_content(value):
+    if isinstance(value, dict):
+        if 'encrypted_content' in value: raise Invalid('ENCRYPTED_CONTENT_EXCLUDED')
+        for v in value.values(): no_encrypted_content(v)
+    elif isinstance(value, list):
+        for v in value: no_encrypted_content(v)
+
+def exact(obj, fields, code):
+    if not isinstance(obj,dict) or set(obj) != set(fields): raise Invalid(code)
+
+def integer(value, minimum=0):
+    return type(value) is int and value >= minimum
 
 def capabilities(status: dict, catalog: dict) -> dict:
     tools={t.get('name') if isinstance(t,dict) else t for t in catalog.get('tools',[])}
-    if not BASE_TOOLS.issubset(tools):raise Invalid('CURRENT_LIFECYCLE_TOOL_MISSING')
+    if not REQUIRED_TOOLS.issubset(tools): raise Invalid('ZAS_INSTALLATION_CONTRACT_MISMATCH')
     obs=status.get('capabilities',{}).get('observation',{})
-    enhanced=(obs.get('protocol')==PROTOCOL and 'zcode_subagent_observe' in tools)
-    return {'mode':'ENHANCED_OBSERVATION' if enhanced else 'BETA_BASELINE_LIMITED',
-            'observation_usable':enhanced,'service_generation':status.get('service_generation','UNKNOWN'),
-            'public_content_supported':enhanced and obs.get('public_content') is True,
-            'maturity':'CONTROLLED_BETA','semantic_progress':'NOT_INFERRED'}
+    if (obs.get('protocol') != PROTOCOL or obs.get('public_reasoning_default') is not True
+        or obs.get('runtime_source_verified') is not True
+        or obs.get('defaults') != {'top_tools':3,'recent_calls_per_tool':5,'reasoning_chars':200}):
+        raise Invalid('ZAS_INSTALLATION_CONTRACT_MISMATCH')
+    return {'mode':'OBSERVATION_READY','observation_usable':True,
+            'service_generation':status.get('service_generation','UNKNOWN'),
+            'semantic_progress':'NOT_INFERRED'}
 
-def check_window(page: dict, agent_id: str, after_seq: int=0, stream_id: str|None=None, public_content_authorized: bool=False) -> dict:
-    if page.get('schema')!=PROTOCOL or page.get('agent_id')!=agent_id:raise Invalid('OBSERVATION_IDENTITY_MISMATCH')
-    epoch=page.get('stream_id');gap=page.get('gap')
-    if not isinstance(epoch,str) or not epoch or not isinstance(gap,dict) or type(gap.get('present')) is not bool:raise Invalid('OBSERVATION_STREAM_OR_GAP_MISSING')
-    if stream_id and stream_id!=epoch and not gap['present']:raise Invalid('STREAM_CHANGED_WITHOUT_GAP')
-    first=page.get('first_available_seq');nxt=page.get('next_seq')
-    if any(type(x) is not int or x<0 for x in (after_seq,first,nxt)):raise Invalid('INVALID_SEQUENCE')
-    if stream_id in {None,epoch} and nxt<after_seq:raise Invalid('CURSOR_REGRESSED')
-    if first>after_seq+1 and stream_id in {None,epoch} and not gap['present']:raise Invalid('RETENTION_GAP_UNDECLARED')
-    events=page.get('events')
-    if not isinstance(events,list) or len(events)>100 or len(json.dumps(page,ensure_ascii=False).encode('utf-8'))>65536:raise Invalid('OBSERVATION_WINDOW_OUT_OF_BOUND')
-    if type(page.get('has_more')) is not bool:raise Invalid('PAGINATION_STATE_MISSING')
-    last=-1;count=0
-    for event in events:
-        seq=event.get('seq')
-        if type(seq) is not int or seq<first or seq<=last or seq>nxt:raise Invalid('EVENT_SEQUENCE_INVALID')
-        if stream_id in {None,epoch} and seq<=after_seq:raise Invalid('EVENT_CURSOR_REPLAY')
-        if event.get('agent_id',agent_id)!=agent_id:raise Invalid('CROSS_AGENT_EVENT')
-        if event.get('visibility') not in {'metadata','runtime_public'}:raise Invalid('UNSUPPORTED_PRIVATE_VISIBILITY')
-        if event.get('content') is not None:
-            if not public_content_authorized or event.get('visibility')!='runtime_public':raise Invalid('PUBLIC_CONTENT_NOT_AUTHORIZED')
-        last=seq;count+=1
-    loss=page.get('loss')
-    if not isinstance(loss,dict) or any(type(loss.get(k)) is not int or loss[k]<0 for k in ('dropped_events','redacted_fields','truncated_events')):raise Invalid('LOSS_ACCOUNTING_REQUIRED')
-    # Gaps/empty event lists never imply no-progress; the orchestrator must reason with the task.
-    return {'agent_id':agent_id,'stream_id':epoch,'next_seq':nxt,'event_count':count,
-            'coverage':'GAPPED' if gap['present'] or loss['dropped_events'] else 'BOUNDED_WINDOW',
+def check_snapshot(page: dict, agent_id: str) -> dict:
+    no_encrypted_content(page)
+    exact(page, {'schema','agent_id','service_generation','snapshot_seq','count_scope','tools','reasoning','coverage'}, 'OBSERVATION_SHAPE_INVALID')
+    if page['schema']!=PROTOCOL or page['agent_id']!=agent_id: raise Invalid('OBSERVATION_IDENTITY_MISMATCH')
+    if not isinstance(page['service_generation'],str) or not page['service_generation']: raise Invalid('GENERATION_MISSING')
+    if not integer(page['snapshot_seq']) or page['count_scope']!='agent_lifetime': raise Invalid('COUNT_SCOPE_OR_SEQUENCE_INVALID')
+    if len(json.dumps(page,ensure_ascii=False).encode('utf-8'))>65536: raise Invalid('OBSERVATION_OUT_OF_BOUND')
+    groups=page['tools']
+    if not isinstance(groups,list) or len(groups)>3: raise Invalid('TOOL_GROUP_BOUND')
+    names=set(); seen=set(); order=[]; total=0
+    for group in groups:
+        exact(group, {'tool_name','call_count','recent_calls'}, 'TOOL_GROUP_SHAPE_INVALID')
+        name=group['tool_name'];count=group['call_count'];calls=group['recent_calls']
+        if not isinstance(name,str) or not name or name in names: raise Invalid('TOOL_NAME_INVALID')
+        names.add(name)
+        if not integer(count,1) or not isinstance(calls,list) or not 1<=len(calls)<=min(5,count): raise Invalid('TOOL_CALL_BOUND')
+        seqs=[]
+        for call in calls:
+            exact(call, {'seq','tool_call_id','arguments','arguments_truncated','redacted_fields'}, 'CALLS_ONLY_NO_RESULTS')
+            seq=call['seq'];cid=call['tool_call_id']
+            if not integer(seq,1) or seq>page['snapshot_seq'] or not isinstance(cid,str) or not cid or cid in seen: raise Invalid('CALL_IDENTITY_OR_SEQUENCE_INVALID')
+            if not isinstance(call['arguments'],dict) or type(call['arguments_truncated']) is not bool or not integer(call['redacted_fields']): raise Invalid('CALL_ARGUMENTS_INVALID')
+            seen.add(cid);seqs.append(seq);total+=1
+        if seqs!=sorted(set(seqs),reverse=True): raise Invalid('RECENT_CALL_ORDER_INVALID')
+        order.append((-count,-seqs[0],name))
+    if order!=sorted(order): raise Invalid('TOP_TOOL_ORDER_INVALID')
+    r=page['reasoning'];exact(r,{'text','char_count','truncated','source'},'REASONING_SHAPE_INVALID')
+    if not isinstance(r['text'],str) or len(r['text'])>200 or type(r['char_count']) is not int or r['char_count']!=len(r['text']) or type(r['truncated']) is not bool: raise Invalid('REASONING_CHARACTER_BOUND')
+    src=r['source'];exact(src,{'status','runtime_version','event_type','delta_pointer'},'REASONING_SOURCE_REQUIRED')
+    if src['status']!='VERIFIED_RUNTIME_PUBLIC' or any(not isinstance(src[k],str) or not src[k] for k in ('runtime_version','event_type','delta_pointer')) or not src['delta_pointer'].startswith('/') or 'encrypted_content' in src['delta_pointer'].split('/'):
+        raise Invalid('REASONING_SOURCE_UNVERIFIED')
+    cov=page['coverage'];exact(cov,{'tool_history_complete','reasoning_complete','dropped_events'},'COVERAGE_REQUIRED')
+    if any(type(cov[k]) is not bool for k in ('tool_history_complete','reasoning_complete')) or not integer(cov['dropped_events']): raise Invalid('COVERAGE_INVALID')
+    return {'agent_id':agent_id,'service_generation':page['service_generation'],'snapshot_seq':page['snapshot_seq'],
+            'tool_groups':len(groups),'tool_calls':total,'reasoning_chars':r['char_count'],
+            'coverage':'BOUNDED_SNAPSHOT' if all(cov[k] for k in ('tool_history_complete','reasoning_complete')) and not cov['dropped_events'] else 'GAPPED',
             'semantic_progress':'NOT_INFERRED','automatic_action':None}
 
 def main():
     p=argparse.ArgumentParser(description=__doc__);sub=p.add_subparsers(dest='command',required=True)
     c=sub.add_parser('capabilities');c.add_argument('--status',type=Path,required=True);c.add_argument('--catalog',type=Path,required=True)
-    c=sub.add_parser('window');c.add_argument('--page',type=Path,required=True);c.add_argument('--agent-id',required=True);c.add_argument('--after-seq',type=int,default=0);c.add_argument('--stream-id');c.add_argument('--public-content-authorized',action='store_true')
+    c=sub.add_parser('snapshot');c.add_argument('--page',type=Path,required=True);c.add_argument('--agent-id',required=True)
     a=p.parse_args()
     try:
-        if a.command=='capabilities':result=capabilities(json.loads(a.status.read_text()),json.loads(a.catalog.read_text()))
-        else:result=check_window(json.loads(a.page.read_text()),a.agent_id,a.after_seq,a.stream_id,a.public_content_authorized)
+        result=capabilities(json.loads(a.status.read_text()),json.loads(a.catalog.read_text())) if a.command=='capabilities' else check_snapshot(json.loads(a.page.read_text()),a.agent_id)
         print(json.dumps(result,ensure_ascii=False,indent=2));return 0
-    except (Invalid,ValueError,TypeError,OSError,AttributeError) as exc:print(json.dumps({'valid':False,'error':str(exc)}));return 2
+    except (Invalid,ValueError,TypeError,OSError,AttributeError,KeyError) as exc:
+        print(json.dumps({'valid':False,'error':str(exc)}));return 2
 if __name__=='__main__':raise SystemExit(main())

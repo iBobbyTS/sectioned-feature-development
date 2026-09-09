@@ -41,7 +41,7 @@ REQUIRED_FILES = {
     "ADVISOR-AUDIT.md",
 }
 PROCESS_KIND = "sectioned-development-process-audit"
-EXCLUDED_GENERATED = {"PACK-METADATA.json", "PACK-MANIFEST.sha256"}
+EXCLUDED_GENERATED = {"PACK-METADATA.json", "PACK-MANIFEST.json", "PACK-MANIFEST.sha256"}
 UNSAFE_PARTS = {
     ".git", "node_modules", ".venv", "venv", "__pycache__", ".pytest_cache",
     ".mypy_cache", ".ruff_cache", "dist", "build", "DerivedData", ".next",
@@ -112,7 +112,7 @@ def iter_pack_files(pack_dir: Path, *, include_generated: bool = False) -> list[
         if not path.is_file():
             continue
         rel = path.relative_to(pack_dir).as_posix()
-        if not include_generated and rel in EXCLUDED_GENERATED:
+        if rel == "PACK-MANIFEST.sha256" or (not include_generated and rel in EXCLUDED_GENERATED):
             continue
         files.append(path)
     return files
@@ -145,6 +145,8 @@ def validate_pack_files(pack_dir: Path) -> tuple[list[str], list[str]]:
         rel = path.relative_to(pack_dir)
         if path.is_symlink() or any(a.is_symlink() for a in path.parents if a != pack_dir.parent):
             errors.append(f"symlink evidence: {rel}")
+        if rel.name in {"ZAS-AUDIT.md", "ZAS-RUNS.jsonl"}: errors.append(f"ZAS evidence belongs in the companion ZIP: {rel}")
+        if path.suffix.lower()==".sha256": errors.append(f"new SHA256 files are disabled: {rel}")
         if path.suffix.lower()==".zip":errors.append(f"foreign nested audit/archive forbidden: {rel}")
         if any(part in UNSAFE_PARTS for part in rel.parts):
             errors.append(f"unsafe generated/build/cache path: {rel.as_posix()}")
@@ -209,13 +211,13 @@ def load_trace_status(trace: Path | None) -> tuple[str, list[str]]:
     return str(payload.get("telemetry_status", "INVALID")), list(payload.get("warnings", [])) + list(payload.get("errors", []))
 
 
-def canonical_paths(repo: Path, feature_id: str, product_head: str, desktop_root: Path) -> tuple[Path, Path]:
+def canonical_paths(repo: Path, feature_id: str, product_head: str, desktop_root: Path) -> Path:
     del product_head  # identity is recorded in metadata; the path stays stable across bounded corrections
     repo_name = sanitize_component(repo.name)
     feature = sanitize_component(feature_id)
     desktop_root.mkdir(parents=True, exist_ok=True)
     zip_path = desktop_root / f"{repo_name}-{feature}-sectioned-audit.zip"
-    return zip_path, zip_path.with_suffix(zip_path.suffix + ".sha256")
+    return zip_path
 
 
 def write_metadata_and_manifest(
@@ -252,9 +254,10 @@ def write_metadata_and_manifest(
         encoding="utf-8",
     )
     entries = file_entries(pack_dir, include_generated=True)
-    entries = [entry for entry in entries if entry["path"] != "PACK-MANIFEST.sha256"]
-    lines = [f"{entry['sha256']}  {entry['path']}" for entry in entries]
-    (pack_dir / "PACK-MANIFEST.sha256").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    entries = [entry for entry in entries if entry["path"] != "PACK-MANIFEST.json"]
+    (pack_dir / "PACK-MANIFEST.json").write_text(
+        json.dumps({"schema_version": 1, "files": entries}, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+    )
 
 
 def deterministic_zip(pack_dir: Path, destination: Path) -> None:
@@ -269,26 +272,30 @@ def deterministic_zip(pack_dir: Path, destination: Path) -> None:
 
 def verify_zip(zip_path: Path) -> list[str]:
     errors: list[str] = []
-    if not zip_path.is_file():
-        return [f"ZIP does not exist: {zip_path}"]
-    with zipfile.ZipFile(zip_path, "r") as archive:
-        names = set(archive.namelist())
-        if "PACK-MANIFEST.sha256" not in names:
-            return ["ZIP missing PACK-MANIFEST.sha256"]
-        manifest = archive.read("PACK-MANIFEST.sha256").decode("utf-8")
-        for line in manifest.splitlines():
-            if not line.strip():
-                continue
-            expected, rel = line.split("  ", 1)
-            if rel not in names:
-                errors.append(f"manifest member missing from ZIP: {rel}")
-                continue
-            actual = hashlib.sha256(archive.read(rel)).hexdigest()
-            if actual != expected:
-                errors.append(f"manifest mismatch: {rel}")
-        bad = archive.testzip()
-        if bad:
-            errors.append(f"ZIP CRC failure: {bad}")
+    if not zip_path.is_file(): return [f"ZIP does not exist: {zip_path}"]
+    try:
+        with zipfile.ZipFile(zip_path, "r") as archive:
+            names = set(archive.namelist())
+            if len(names) != len(archive.namelist()): return ["duplicate ZIP members"]
+            if "PACK-MANIFEST.json" in names:
+                manifest_name = "PACK-MANIFEST.json"
+                entries = json.loads(archive.read(manifest_name))["files"]
+                pairs = [(row["sha256"], row["path"]) for row in entries]
+            elif "PACK-MANIFEST.sha256" in names:  # Read-only legacy verification.
+                manifest_name = "PACK-MANIFEST.sha256"
+                pairs = [line.split("  ", 1) for line in archive.read(manifest_name).decode().splitlines() if line.strip()]
+            else: return ["ZIP missing manifest"]
+            expected_names = {rel for _, rel in pairs}
+            if len(expected_names) != len(pairs) or names != expected_names | {manifest_name}:
+                errors.append("manifest/ZIP member set mismatch")
+            for expected, rel in pairs:
+                if rel not in names: errors.append(f"manifest member missing: {rel}"); continue
+                if hashlib.sha256(archive.read(rel)).hexdigest() != expected:
+                    errors.append(f"manifest mismatch: {rel}")
+            bad = archive.testzip()
+            if bad: errors.append(f"ZIP CRC failure: {bad}")
+    except (OSError, ValueError, KeyError, TypeError, zipfile.BadZipFile) as exc:
+        errors.append(f"invalid ZIP/manifest: {exc}")
     return errors
 
 
@@ -371,6 +378,25 @@ def command_check(args: argparse.Namespace) -> int:
     return 1 if result["errors"] else 0
 
 
+def finish_pair(args: argparse.Namespace, zip_path: Path, state_path: Path, result: dict[str, Any]) -> dict[str, Any]:
+    from zas_audit_pack import complete_optional_pair
+    stage = Path(args.zas_pack_dir).expanduser() if getattr(args, "zas_pack_dir", None) else None
+    try:
+        paired = complete_optional_pair(zip_path, stage)
+    except (ValueError, OSError, KeyError, TypeError, zipfile.BadZipFile) as exc:
+        write_state(state_path, status="PAIR_INCOMPLETE", zip_path=zip_path, zip_sha256=sha256_file(zip_path),
+                    source_fingerprint=result["source_fingerprint"], errors=[str(exc)], warnings=result["warnings"])
+        raise PackError(f"ZAS companion incomplete; retain existing process ZIP: {exc}") from exc
+    write_state(state_path, status="COMPLETE", zip_path=zip_path, zip_sha256=sha256_file(zip_path),
+                source_fingerprint=result["source_fingerprint"], errors=[], warnings=result["warnings"])
+    state = json.loads(state_path.read_text())
+    state["zas_companion"] = paired
+    temp = state_path.with_name(state_path.name + ".pair.tmp")
+    temp.write_text(json.dumps(state, indent=2, sort_keys=True) + "\n")
+    os.replace(temp, state_path)
+    return paired
+
+
 def command_finalize(args: argparse.Namespace) -> int:
     if args.pack_status not in STATUS_PACK:
         raise PackError(f"invalid pack status: {args.pack_status}")
@@ -384,7 +410,7 @@ def command_finalize(args: argparse.Namespace) -> int:
         raise PackError("preflight failed: " + "; ".join(result["errors"]))
 
     desktop_root = Path(args.desktop_root).expanduser().resolve()
-    zip_path, sha_path = canonical_paths(result["repo"], args.feature_id, result["product_head"], desktop_root)
+    zip_path = canonical_paths(result["repo"], args.feature_id, result["product_head"], desktop_root)
     lock_path = state_path.with_name("FINALIZE.lock")
     with exclusive_lock(lock_path):
         if state_path.exists() and zip_path.exists():
@@ -393,13 +419,15 @@ def command_finalize(args: argparse.Namespace) -> int:
             except (OSError, json.JSONDecodeError):
                 existing = {}
             if (
-                existing.get("status") == "COMPLETE"
+                existing.get("status") in {"COMPLETE", "PAIR_INCOMPLETE"}
                 and existing.get("source_fingerprint") == result["source_fingerprint"]
                 and existing.get("canonical_zip") == str(zip_path)
                 and not verify_zip(zip_path)
             ):
+                pair = finish_pair(args, zip_path, state_path, result)
                 print(json.dumps({
                     "status": "COMPLETE",
+                    "zas_companion": pair,
                     "idempotent": True,
                     "canonical_zip": str(zip_path),
                     "sha256": sha256_file(zip_path),
@@ -432,14 +460,11 @@ def command_finalize(args: argparse.Namespace) -> int:
             raise PackError("ZIP verification failed: " + "; ".join(verify_errors))
         os.replace(temp, zip_path)
         zip_sha = sha256_file(zip_path)
-        sha_temp = sha_path.with_name(sha_path.name + f".tmp-{uuid.uuid4().hex}")
-        sha_temp.write_text(f"{zip_sha}  {zip_path.name}\n", encoding="utf-8")
-        os.replace(sha_temp, sha_path)
-        write_state(state_path, status="COMPLETE", zip_path=zip_path, zip_sha256=zip_sha,
-                    source_fingerprint=result["source_fingerprint"], errors=[], warnings=result["warnings"])
+        pair = finish_pair(args, zip_path, state_path, result)
 
     print(json.dumps({
         "status": "COMPLETE",
+        "zas_companion": pair,
         "idempotent": False,
         "canonical_zip": str(zip_path),
         "sha256": zip_sha,
@@ -479,6 +504,7 @@ def build_parser() -> argparse.ArgumentParser:
     add_common(finalize)
     finalize.add_argument("--desktop-root", default="~/Desktop/audit-pack")
     finalize.add_argument("--state")
+    finalize.add_argument("--zas-pack-dir", help="paired ZAS staging directory when ZAS-LINK.json says USED")
     finalize.add_argument("--pack-status", choices=sorted(STATUS_PACK), default="COMPLETE")
     finalize.add_argument("--telemetry-status", choices=sorted(STATUS_TELEMETRY))
     finalize.add_argument("--evidence-consistency", choices=sorted(STATUS_EVIDENCE), default="CONSISTENT")

@@ -47,6 +47,12 @@ Do not:
 - review unchanged plan regions in `PLAN_DELTA`;
 - start another reviewer loop or later act as a code reviewer/implementer/repairer for this feature.
 
+## Stop boundary and sufficient detail
+
+Use the sufficient-detail rules in references/section-planning.md. Missing not-yet-implemented files with a named creation owner, private helper/API choices, and unconsumed probe schemas are not blockers by themselves. Identify the existing consumer/requirement and the concrete failure before requiring more detail. Do not require feature execution evidence at PLAN time.
+
+Return candidates only, not an admission ledger or an instruction to run another full review. In PLAN_DELTA, cover only the admitted correction and its invalidated dependency edges; a new off-cone hypothesis is not permission to restart discovery. Ordinary corrections and rejections are parent decisions with preserved original evidence; never rewrite NEEDS_CORRECTION as a reviewer CLEAN.
+
 ## Candidate classes
 
 Use exactly one:
@@ -106,4 +112,4 @@ A clean result with zero material candidates is valid.
 ## 4.2 durable handoff
 
 The reviewer returns a result to the parent; the parent saves the complete report at the frozen output path, hashes it, and records actual dispatch/session identity before admission. No output path or missing actual report means INSUFFICIENT_EVIDENCE, never an implicit clean. The reviewer does not edit workflow state or accept a section. The companion context is DELEGATED_PASS.
-Return a small JSON envelope with actor_id, result (APPROVED / NEEDS_CORRECTION / OWNER_DECISION), plan_sha256, candidates, coverage and source references, alongside the full report. Parent admission is stored separately with decision and unresolved_findings. The plan writer and reviewer must be different actual agents.
+Return a small JSON envelope with actor_id, result (APPROVED / NEEDS_CORRECTION / OWNER_DECISION), plan_sha256, candidates, coverage and source references, alongside the full report. Parent admission is stored separately with decision and unresolved_findings. The main plan author and reviewer must be different actual agents. APPROVED in the saved gate is the parent admission; the original reviewer result/hash remains separately preserved.

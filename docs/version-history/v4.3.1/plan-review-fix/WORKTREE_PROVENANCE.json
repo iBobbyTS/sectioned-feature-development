@@ -1,0 +1,142 @@
+[
+  {
+    "status": " M",
+    "path": "docs/version-history/v4.2/AUDIT_INTAKE.csv",
+    "equals_delivered_431": true,
+    "uploaded_sha256": "a279b58c02c59ac4472cd61906ea1005fca4c8ab3af30f9f6be4096a32b3d134",
+    "decision": "保留：与已交付4.3.1逐字一致"
+  },
+  {
+    "status": " M",
+    "path": "skill/sectioned-feature-development/SKILL.md",
+    "equals_delivered_431": false,
+    "uploaded_sha256": "da8ba102ff9b1798f90f6e8ce2508d22a44a175bbc0533a7865561ae2a819f3d",
+    "decision": "混合改动：去除原生强制叠加GLM，保留原有时序和正确diagnose（适用文件）"
+  },
+  {
+    "status": " M",
+    "path": "skill/sectioned-feature-development/VERSION",
+    "equals_delivered_431": true,
+    "uploaded_sha256": "8722a3e4c8ef0feb2e7a669f5f854c72d5d6390b25598f9745dc95e5ffe51dce",
+    "decision": "保留：与已交付4.3.1逐字一致"
+  },
+  {
+    "status": " M",
+    "path": "skill/sectioned-feature-development/agents/openai.yaml",
+    "equals_delivered_431": true,
+    "uploaded_sha256": "315de638194b00ca1069915d2a115e27bdeb67c3a9827f620f08da042b75a8e0",
+    "decision": "保留：与已交付4.3.1逐字一致"
+  },
+  {
+    "status": " M",
+    "path": "skill/sectioned-feature-development/assets/ZAS-ATTEMPT.template.json",
+    "equals_delivered_431": true,
+    "uploaded_sha256": "405345f98b0e25b0e719d849594081fa6145c95884bb4d64d6edf92b2210159a",
+    "decision": "保留：与已交付4.3.1逐字一致"
+  },
+  {
+    "status": " M",
+    "path": "skill/sectioned-feature-development/references/artifact-lifecycle.md",
+    "equals_delivered_431": false,
+    "uploaded_sha256": "75b17e4366eb1105681d951e2782b5bc411089771c7f9f0840a607291036d925",
+    "decision": "混合改动：去除原生强制叠加GLM，保留原有时序和正确diagnose（适用文件）"
+  },
+  {
+    "status": " M",
+    "path": "skill/sectioned-feature-development/references/artifact-schemas.md",
+    "equals_delivered_431": true,
+    "uploaded_sha256": "967ea7b5a2f6e524f1062ffd1ad32924dc8420d6ccc46a6e95a1b3b7ab7afab3",
+    "decision": "保留：与已交付4.3.1逐字一致"
+  },
+  {
+    "status": " M",
+    "path": "skill/sectioned-feature-development/references/audit-mode.md",
+    "equals_delivered_431": true,
+    "uploaded_sha256": "59d74c5b9720142b3449c98ccd71bb62a9cae740e005d3f1651a73c6f9fe86b4",
+    "decision": "保留：与已交付4.3.1逐字一致"
+  },
+  {
+    "status": " M",
+    "path": "skill/sectioned-feature-development/references/external-reviewer-orchestration.md",
+    "equals_delivered_431": false,
+    "uploaded_sha256": "c2fb5accf0aba6c39192289e666f9abcce57a277ca48e62de596f374891c0a03",
+    "decision": "混合改动：去除原生强制叠加GLM，保留原有时序和正确diagnose（适用文件）"
+  },
+  {
+    "status": " M",
+    "path": "skill/sectioned-feature-development/references/subsections.md",
+    "equals_delivered_431": false,
+    "uploaded_sha256": "5e04d8f971761ebce181153b45b83faa89b48e6d8ad4c775d91e2a1243d190cf",
+    "decision": "混合改动：去除原生强制叠加GLM，保留原有时序和正确diagnose（适用文件）"
+  },
+  {
+    "status": " M",
+    "path": "skill/sectioned-feature-development/references/zas-audit.md",
+    "equals_delivered_431": true,
+    "uploaded_sha256": "ce6f84ed1819b13ddaba94272771039c529a7aaed658701a10459bce86cf19bf",
+    "decision": "保留：与已交付4.3.1逐字一致"
+  },
+  {
+    "status": " M",
+    "path": "skill/sectioned-feature-development/references/zas-progress-supervision.md",
+    "equals_delivered_431": true,
+    "uploaded_sha256": "9b1203428d6a2e4ecda55f87500d03082d1e80062f5803b4a6be891d3bad3241",
+    "decision": "保留：与已交付4.3.1逐字一致"
+  },
+  {
+    "status": " M",
+    "path": "skill/sectioned-feature-development/references/zcode-mcp-adapter.md",
+    "equals_delivered_431": false,
+    "uploaded_sha256": "15240b216379b13e6da64e9a87da444241d8715fb4cfe0c9a45e9375bbf9b380",
+    "decision": "混合改动：去除原生强制叠加GLM，保留原有时序和正确diagnose（适用文件）"
+  },
+  {
+    "status": " M",
+    "path": "skill/sectioned-feature-development/scripts/advisor_pack.py",
+    "equals_delivered_431": true,
+    "uploaded_sha256": "0fb00be0f74106f3f64094c5eee390a12bcfe49f2f8be93a447a40a807413d10",
+    "decision": "保留：与已交付4.3.1逐字一致"
+  },
+  {
+    "status": " M",
+    "path": "skill/sectioned-feature-development/scripts/audit_finalize.py",
+    "equals_delivered_431": true,
+    "uploaded_sha256": "23c40d796b87fa0669f6f5e1824f117747345854ed7ccf5241a5f80769cbdaf3",
+    "decision": "保留：与已交付4.3.1逐字一致"
+  },
+  {
+    "status": " M",
+    "path": "skill/sectioned-feature-development/scripts/process_audit.py",
+    "equals_delivered_431": true,
+    "uploaded_sha256": "865f13e54715814e9f140d45c118e29bf199d55da7ba9674f3b3d4b9c69cd5ae",
+    "decision": "保留：与已交付4.3.1逐字一致"
+  },
+  {
+    "status": " M",
+    "path": "skill/sectioned-feature-development/scripts/zas_evidence.py",
+    "equals_delivered_431": true,
+    "uploaded_sha256": "cee5bd9ea95c54fd57337c576f3b2821bc98f1b4f9b98e7c868671eb2f38e753",
+    "decision": "保留：与已交付4.3.1逐字一致"
+  },
+  {
+    "status": "??",
+    "path": "skill/sectioned-feature-development/assets/ZAS-IDENTITY.template.json",
+    "equals_delivered_431": true,
+    "uploaded_sha256": "a6e74a1b158f3132f28b0e28794a0e928093fca7bff117b153525feecdb22956",
+    "decision": "保留：与已交付4.3.1逐字一致"
+  },
+  {
+    "status": "??",
+    "path": "skill/sectioned-feature-development/assets/ZAS-LINK.template.json",
+    "equals_delivered_431": true,
+    "uploaded_sha256": "82ff66a978a73fb281e2edf16b5da22e2370eac6ae8e8c877a19d6c141b4ae60",
+    "decision": "保留：与已交付4.3.1逐字一致"
+  },
+  {
+    "status": "??",
+    "path": "skill/sectioned-feature-development/scripts/zas_audit_pack.py",
+    "equals_delivered_431": true,
+    "uploaded_sha256": "ab1b11dc990a315b2bf006b48c505078153fb4984b4ff41e81789691eb8d3dc6",
+    "decision": "保留：与已交付4.3.1逐字一致"
+  }
+]

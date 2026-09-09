@@ -1,0 +1,116 @@
+[
+  {
+    "path": "VERSION",
+    "operation": "replace",
+    "before_sha256": "ba639ab79c7470c675fc78c9f702bcafe048f44ef03468b12f81f05393d1803b",
+    "after_sha256": "8722a3e4c8ef0feb2e7a669f5f854c72d5d6390b25598f9745dc95e5ffe51dce"
+  },
+  {
+    "path": "agents/plan_reviewer.toml",
+    "operation": "replace",
+    "before_sha256": "4d73a92524b82187a613afd8f89a33227d57fa53f27b2c3a576efd3daf929d0e",
+    "after_sha256": "bcad63a9c10c924ec32c7f55871514773cd1b82b639e850d6a6f9c2657ef2f78"
+  },
+  {
+    "path": "docs/contracts/zas-observation-v1.1.schema.json",
+    "operation": "add",
+    "before_sha256": null,
+    "after_sha256": "b6b52128051f3082ffac93508914d5c2d73b8d1342658b757f381bf961a43d4a"
+  },
+  {
+    "path": "docs/contracts/zas-observe-tool.json",
+    "operation": "add",
+    "before_sha256": null,
+    "after_sha256": "e9c37ef6c6fabda2e6a2c270e1586ecf72154262056eb41caffeb4c0d70107aa"
+  },
+  {
+    "path": "docs/contracts/zas-public-reasoning-source.template.json",
+    "operation": "add",
+    "before_sha256": null,
+    "after_sha256": "e1e95c3c202eb4ab623d0b5e04dd94bf4e96b84d8f104e4652d89e220df0fb82"
+  },
+  {
+    "path": "skill/code-review/SKILL.md",
+    "operation": "replace",
+    "before_sha256": "cec353d70e91a99ce0d6c14f3c460417e808d0a876cf8b6d2ef0e3d70b0b017b",
+    "after_sha256": "fe927d0651ce5b7cfffecb897cb2d801c97ccdb21777b3e9023f24043636418c"
+  },
+  {
+    "path": "skill/code-review/references/delegated-pass.md",
+    "operation": "replace",
+    "before_sha256": "61afde852a214e1e3a80e22624116676036815105b286660ea071a0dc5c4a577",
+    "after_sha256": "9cebc2708e3096ad47b5705c60fbf2ce4347dee5a5eb26a16c3d90df1be5ed14"
+  },
+  {
+    "path": "skill/sectioned-feature-development/SKILL.md",
+    "operation": "replace",
+    "before_sha256": "da8ba102ff9b1798f90f6e8ce2508d22a44a175bbc0533a7865561ae2a819f3d",
+    "after_sha256": "343a84f01cb19edae11cd00b8557db926743d567a8a780a369012dbfcd2d4b29"
+  },
+  {
+    "path": "skill/sectioned-feature-development/assets/PLAN-REVIEW-REQUEST.template.md",
+    "operation": "replace",
+    "before_sha256": "8a0075e2d8eede75c215758c1aa65aef8600eb480c669fc78986276e52838e3e",
+    "after_sha256": "67458487c9437f834351d21b555e76beb8682092f5ded8f11ca3daa6e4601ae7"
+  },
+  {
+    "path": "skill/sectioned-feature-development/references/artifact-lifecycle.md",
+    "operation": "replace",
+    "before_sha256": "75b17e4366eb1105681d951e2782b5bc411089771c7f9f0840a607291036d925",
+    "after_sha256": "a6f512601c993c7ed2ff92c2344cb563d5a7d3f894db9cc85d55d1b540d5493c"
+  },
+  {
+    "path": "skill/sectioned-feature-development/references/external-reviewer-orchestration.md",
+    "operation": "replace",
+    "before_sha256": "c2fb5accf0aba6c39192289e666f9abcce57a277ca48e62de596f374891c0a03",
+    "after_sha256": "9b565bf527ff9d19898d73a375a8603fc81ee500d74470d6e41159e229acc146"
+  },
+  {
+    "path": "skill/sectioned-feature-development/references/section-planning.md",
+    "operation": "replace",
+    "before_sha256": "9905953e3ce96dc22e187983b305fe26a97fc95c3b380712be85ed6246377217",
+    "after_sha256": "b4b9aa98025adba7916015ddb15c8d0b8c9029108f523e812b3d7aff1786a319"
+  },
+  {
+    "path": "skill/sectioned-feature-development/references/subsections.md",
+    "operation": "replace",
+    "before_sha256": "5e04d8f971761ebce181153b45b83faa89b48e6d8ad4c775d91e2a1243d190cf",
+    "after_sha256": "6ed3d07414b4f08d9e863d278373e7689707dcf6feecbf710255120b91ce61ca"
+  },
+  {
+    "path": "skill/sectioned-feature-development/references/zcode-mcp-adapter.md",
+    "operation": "replace",
+    "before_sha256": "15240b216379b13e6da64e9a87da444241d8715fb4cfe0c9a45e9375bbf9b380",
+    "after_sha256": "ba53dbe5f7a76f6c0785f4dbc3eb73aa58c437b5801d6b6dd99183f7c225bc0c"
+  },
+  {
+    "path": "skill/sectioned-feature-development/scripts/execution_artifacts.py",
+    "operation": "replace",
+    "before_sha256": "e9faf8fd7880edf5a9ef411db45a266a705310dffaf4be9dd9a1e6556952f490",
+    "after_sha256": "4bc0af998a665c23b3d2bfdc87ba97763ce6f2b06dee19c0936172071bbcb63d"
+  },
+  {
+    "path": "tests/test_plan_admission_regression.py",
+    "operation": "add",
+    "before_sha256": null,
+    "after_sha256": "2c341c461019b49882153ad0f0c2bf56cc4345521def7780eb533621ce232cf0"
+  },
+  {
+    "path": "tests/test_project.py",
+    "operation": "replace",
+    "before_sha256": "562fe08ae5686bafaf171cf0e0d20014812e0791b711bfbb050ca6b81f1adbdc",
+    "after_sha256": "4454582b98433d418f58308ccaf0ad1926b55c66467c8f4d5ad352c0c8c47af3"
+  },
+  {
+    "path": "tests/test_v431_audit_pair.py",
+    "operation": "add",
+    "before_sha256": null,
+    "after_sha256": "ca41c4fd6eaebe4e6f542cff4223741ee05266be3ba0af16f8200c122e32c6f5"
+  },
+  {
+    "path": "tests/test_v43_zas.py",
+    "operation": "replace",
+    "before_sha256": "c314e9369aa9b62045cc217503a57c25b6601f8d674eb112299db45307b13426",
+    "after_sha256": "016a3f5db5c4cb542254f1ac7c702658639f140a3848db5edb22ac285c15bdc2"
+  }
+]

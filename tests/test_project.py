@@ -27,7 +27,8 @@ class ProjectTests(unittest.TestCase):
   actual=json.loads((R/'docs/version-history/v4.3/SOURCE-zcode-subagent-public-api.json').read_text())
   names={'zcode_subagent_'+n for n in ['status','spawn','poll','list','send','respond','cancel','result','close']}
   self.assertTrue(all(n in t for n in names))
-  self.assertIn('PROPOSED',t)
+  self.assertIn('zas-observation/1.1',t)
+  self.assertNotIn('BETA_BASELINE_LIMITED',t)
   self.assertIn('zcode_subagent_observe',t)
   self.assertNotIn('`zcode_review_continue`',t)
  def test_active_doc_links(self):

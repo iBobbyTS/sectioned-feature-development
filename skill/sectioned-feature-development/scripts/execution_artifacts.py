@@ -141,6 +141,66 @@ def check_plan(repo,plan_path,allow_draft=False):
  if not allow_draft and p['status'] not in {'FROZEN','APPROVED'}:raise w.Invalid('PLAN_NOT_APPROVED')
  return p
 
+def plan_boundary(schedule):
+ """Known scheduling/ownership boundaries; prose semantics still require parent admission.
+
+ Check commands/references may be repaired to express already-required validation.
+ This comparison cannot certify arbitrary natural-language plan changes.
+ """
+ def clean(value, root=False):
+  if isinstance(value,dict):
+   ignored={'status','checks'} if root else {'check_ids','checkpoint_checks','joint_checks'}
+   return {k:clean(v) for k,v in value.items() if k not in ignored}
+  if isinstance(value,list):return [clean(v) for v in value]
+  return value
+ return clean(schedule,True)
+
+def validate_plan_admission(repo,plan,head,reviewer,report,admission,report_ref):
+ """Preserve independent candidates and permit the v3.9 parent-only local correction.
+
+ This is not a replacement for PLAN_DELTA on changed semantic boundaries.
+ """
+ if report.get('actor_id')!=reviewer or report.get('result') not in {'APPROVED','NEEDS_CORRECTION','OWNER_DECISION'}:
+  raise w.Invalid('REAL_PLAN_REVIEW_RESULT_REQUIRED')
+ if admission.get('decision')!='APPROVED' or admission.get('unresolved_findings')!=[]:
+  raise w.Invalid('MAIN_ADMISSION_REQUIRED')
+ # Backward-compatible exact-plan approval: no new receipt is required for old valid evidence.
+ if report['result']=='APPROVED' and report.get('plan_sha256')==head:
+  return {'mode':'REVIEWER_APPROVED_EXACT_PLAN','reviewed_plan_sha256':head,'review_result':report['result']}
+ if report['result']=='OWNER_DECISION':raise w.Invalid('PLAN_OWNER_DECISION_REMAINS_OPEN')
+ if report.get('gaps'):raise w.Invalid('PLAN_REVIEW_EVIDENCE_GAPS_OPEN')
+ if admission.get('closure_mode')!='PARENT_PLAN_CORRECTION' or admission.get('review_report_sha256')!=report_ref['sha256']:
+  raise w.Invalid('EXPLICIT_PARENT_PLAN_CORRECTION_REQUIRED')
+ if admission.get('applied_plan_sha256')!=head:raise w.Invalid('PARENT_CORRECTION_HEAD_MISMATCH')
+ candidates=report.get('candidates')
+ if not isinstance(candidates,list):raise w.Invalid('ORIGINAL_PLAN_CANDIDATES_REQUIRED')
+ ids=[c.get('id') if isinstance(c,dict) else None for c in candidates]
+ if any(not isinstance(i,str) or not i for i in ids) or len(ids)!=len(set(ids)):
+  raise w.Invalid('UNIQUE_PLAN_CANDIDATE_IDS_REQUIRED')
+ dispositions=admission.get('candidate_dispositions')
+ if not isinstance(dispositions,list) or len(dispositions)!=len(ids) or {x.get('id') for x in dispositions if isinstance(x,dict)}!=set(ids):
+  raise w.Invalid('EVERY_PLAN_CANDIDATE_REQUIRES_DISPOSITION')
+ for item in dispositions:
+  if item.get('disposition') not in {'REJECTED','DEFERRED_NIT','CLOSED_PLAN_ONLY'} or not item.get('reason') or not item.get('evidence'):
+   raise w.Invalid('PLAN_DISPOSITION_REASON_AND_EVIDENCE_REQUIRED')
+ # Same-plan rejection of ungrounded candidates is a parent admission, not a fake reviewer clean.
+ if report.get('plan_sha256')==head:
+  if any(x['disposition']=='CLOSED_PLAN_ONLY' for x in dispositions):
+   raise w.Invalid('PLAN_CORRECTION_WITHOUT_PLAN_CHANGE')
+  return {'mode':'PARENT_ADMISSION_UNCHANGED_PLAN','reviewed_plan_sha256':head,'review_result':report['result']}
+ correction=admission.get('plan_correction',{})
+ if correction.get('classification')!='NO_BOUNDARY_CHANGE' or not correction.get('reason') or not correction.get('changed_regions'):
+  raise w.Invalid('PLAN_DELTA_REQUIRED_FOR_BOUNDARY_CHANGE')
+ snapshot=verify(correction.get('reviewed_plan'),repo)
+ if w.digest(snapshot)!=report.get('plan_sha256'):raise w.Invalid('ORIGINAL_REVIEWED_PLAN_HASH_MISMATCH')
+ # Both snapshots must be valid machine plans; broken drafts are fixed before paid review.
+ prior=w.load_plan(snapshot)
+ if plan_boundary(prior)!=plan_boundary(plan):raise w.Invalid('PLAN_DELTA_REQUIRED_FOR_BOUNDARY_CHANGE')
+ if prior!=plan and not correction.get('validation_equivalence'):
+  raise w.Invalid('VALIDATION_DELTA_JUSTIFICATION_REQUIRED')
+ return {'mode':'PARENT_PLAN_CORRECTION','reviewed_plan_sha256':report['plan_sha256'],
+         'review_result':report['result'],'reviewed_plan':correction['reviewed_plan']}
+
 def plan_evidence(p,state,h,repo):
  if not Path(repo,'.agent-work/PLAN-FULL.md').is_file():raise w.Invalid('PLAN_FILE_MISSING')
  if w.digest(Path(repo)/'.agent-work/PLAN-FULL.md')!=h:raise w.Invalid('PLAN_FILE_HASH_MISMATCH')
@@ -157,24 +217,25 @@ def plan_evidence(p,state,h,repo):
  for a in state.get('active',[]):
   if a.get('status')=='RESERVED':continue
   verify_actor(state,a.get('actor_id'),repo)
- verify(review['admission'],repo)
+ admission_path=verify(review['admission'],repo)
+ validate_plan_admission(repo,p,h,review['actor_id'],obj(rp),obj(admission_path),review['artifact'])
  return rp
 
 def record_plan(repo,author,author_output,reviewer,review_output,admission,user_approval):
  state=load(repo);path=repo/'.agent-work/PLAN-FULL.md';p=check_plan(repo,path)
+ if state.get('active'):raise w.Invalid('PLAN_REVIEW_OR_WRITER_STILL_ACTIVE')
  if state['feature_id']!=p['feature_id'] or state['run_id']!=p['run_id']:raise w.Invalid('FEATURE_ID_MISMATCH')
  if state.get('completion') or (repo/'.agent-work/CLOSURE.json').exists():raise w.Invalid('CLOSED_PLAN_REQUIRES_EXPLICIT_REOPEN')
  state['requirements']=proof(repo/p['requirements_path'],repo)
  state['plan_author']={'actor_id':author,'artifact':proof(author_output,repo)}
  state['plan_review']={'actor_id':reviewer,'artifact':proof(review_output,repo),'admission':proof(admission,repo),
   'result':'APPROVED','plan_sha256':w.digest(path),'unresolved_findings':[]}
- # Main must record actual review result, not turn arbitrary text into approval.
- report=obj(review_output)
- if report.get('result')!='APPROVED' or report.get('plan_sha256')!=w.digest(path) or report.get('actor_id')!=reviewer:
-  raise w.Invalid('REVIEW_REPORT_DOES_NOT_APPROVE_THIS_PLAN')
- admission_data=obj(admission)
- if admission_data.get('decision')!='APPROVED' or admission_data.get('unresolved_findings')!=[]:
-  raise w.Invalid('MAIN_ADMISSION_REQUIRED')
+ # Independent review and parent admission are distinct; never rewrite the raw report.
+ report=obj(review_output);admission_data=obj(admission)
+ closure=validate_plan_admission(repo,p,w.digest(path),reviewer,report,admission_data,state['plan_review']['artifact'])
+ state['plan_review']['closure']=closure
+ state['plan_review']['review_result']=report['result']
+ state['plan_review']['reviewed_plan_sha256']=report['plan_sha256']
  state['plan_sha256']=w.digest(path);state['plan_review_status']='APPROVED';state['user_plan_approval']=user_approval
  for s in p['sections']:state['sections'].setdefault(s['id'],{'status':'PENDING','integrated':False,'repair_waves':0})
  state['status']='ACTIVE';state['next_action']='FREEZE_READY_SECTION';plan_evidence(p,state,w.digest(path),repo)
@@ -237,6 +298,7 @@ def ready_files(repo):
 
 def task(repo,sid):
  state=load(repo);path=repo/'.agent-work/PLAN-FULL.md';p=check_plan(repo,path)
+ if state.get('active'):raise w.Invalid('PLAN_REVIEW_OR_WRITER_STILL_ACTIVE')
  plan_evidence(p,state,w.digest(path),repo)
  result=w.next_unit(p,state,sid,w.digest(path))
  if not result.get('next'):raise w.Invalid('TASK_NOT_READY: '+str(result))

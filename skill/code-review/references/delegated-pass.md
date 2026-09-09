@@ -32,3 +32,7 @@ Use the real original reviewer session for bounded follow-up when possible. Curr
 ## Return
 
 Pass ID, logical parent pass, actual agent/session, provider/requested-vs-observed model, parent/child IDs, exact base/head, coverage and pending behavior, checks reused/newly run/gaps, candidate evidence and proposed classification, checkpoint invalidations and joint-oracle result where applicable. No edits, repairs, commits, other subagents or final section acceptance.
+
+## ZAS observation in 4.3.1
+
+Review scope, result signals and provider alternation are unchanged. Only the parent caller invokes the installed zcode_subagent_observe when it suspects meaningless looping; the five judgment definitions belong to that MCP description, not this review state machine. Observe includes calls without results and a verified public reasoning tail by default, never encrypted_content. Detailed telemetry is stored in the feature's paired xxx-zas.zip.

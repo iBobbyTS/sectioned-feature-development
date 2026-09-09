@@ -3,15 +3,15 @@ name: sectioned-feature-development
 description: "Plan, review, delegate, integrate and audit non-trivial changes as bounded business sections with optional internal subsections. Use for work over roughly 300 behavioral lines, over three owners, material persistence/schema/security/auth/concurrency/routing/public-protocol/process/state changes, unclear impact cones or failed whole-change convergence. Touching a high-risk module alone is insufficient for a local fix, one-off script or mechanical edit. Activate prospectively when small work grows. Explicit invocation skips routine user approval, never saved plans, real subagents, handoffs or review. Auto invocation is announced and pauses after the first saved PLAN-FULL before review. Multiple sections require a dedicated branch and commits. Reclassify later requests after completion instead of appending a closed plan. Supports model tiers, isolated parallel worktrees, Astra/GLM review and external Advisor handoff through the human."
 ---
 
-## V4.3 — preserved execution contract, frozen implementation tiers, beta ZAS, external Advisor
+## V4.3.1 — preserved execution contract, installed ZAS observation, paired audits
 
 This version is rebased on the actual v3.9 tag; unproven simplifications are not carried forward. Read [artifact lifecycle](references/artifact-lifecycle.md) at activation: audit OFF never removes PLAN, real delegation, handoff, review or acceptance records. Use stable review identities, Astra/GLM alternation, isolated candidates, and the external Advisor via human handoff according to [external reviewer orchestration](references/external-reviewer-orchestration.md) and [Advisor escalation](references/advisor-escalation.md); Audit records these events but never authorizes them.
 
-## 4.3 execution deltas
+## 4.3.1 execution deltas (4.3 implementation roles unchanged)
 
 - Keep the uploaded 4.2.1 main-thread PLAN authoring choice: main writes the canonical complete PLAN-FULL; [@plan_reviewer](subagent://plan_reviewer) is still a genuinely independent subagent. Main never substitutes for implementation/repair workers.
 - Before PLAN review, every business section **and** every subsection has its own explicit `profile` in PLAN-FULL: [@impl_nano](subagent://impl_nano), [@impl_mini](subagent://impl_mini), [@impl_std](subagent://impl_std), or [@impl_large](subagent://impl_large). No AUTO/TBD/inherited child assignment. The task packet and actual delegated role must match that frozen plan. An execution-time model change first needs a bounded plan revision and corresponding delta review, retaining accepted work and budgets.
-- ZAS is a controlled-test beta integration. Preserve native/ZCode full-review alternation and all existing acceptance requirements. Read [current and proposed ZAS adapter](references/zcode-mcp-adapter.md) and [progress supervision](references/zas-progress-supervision.md). Discover tools/capabilities; never send old API fields or pretend the proposed observation endpoint already exists.
+- The updated ZAS observation interface is an installation prerequisite. Preserve native/ZCode full-review alternation and existing acceptance. Read [ZAS adapter](references/zcode-mcp-adapter.md) and [suspicion-only observation](references/zas-progress-supervision.md). Use observe only for suspected meaningless loops; the calling model follows the MCP description, never a daemon classifier. Public verified reasoning is enabled by default; exclude encrypted_content. No old-server fallback.
 - Restore the 3.9 external Advisor workflow: trigger → stop → full repository/Git pack → human handoff → wait → verbatim result and human adoption. No native advisor subagent. Advisor remains independent of audit and ordinary ZAS diagnostics.
 
 ## Authority and safety
@@ -49,7 +49,7 @@ Read [references/activation-and-orchestration.md](references/activation-and-orch
 ## Development audit mode
 While this skill is under evaluation, audit is `LIVE` by default. Disable it only when the user explicitly requests `audit off`; a late request uses `POST_HOC`. At activation read [references/audit-mode.md](references/audit-mode.md), initialize the append-only trace and exact requirement record, and keep audit observational: it adds no reviewer, test, acceptance criterion, repair, or implementation scope.
 
-For audit reconstruction, the agent is authorized to read only the relevant Codex session files under `~/.codex/sessions` and `~/.codex-multi-2/sessions`. Select by repository path, feature time window, and feature/task evidence; do not copy unrelated sessions or raw secret-bearing payloads. The working pack remains under `.agent-work`; the one canonical ZIP is finalized atomically under `~/Desktop/audit-pack/`. This output directory accepts ONLY process-audit packs produced by this skill with `kind=sectioned-development-process-audit` and feature/run identity. Code/security audits, runtime/conformance experiments and unrelated ZIPs go elsewhere; referenced auxiliary evidence is not another workflow sample.
+For audit reconstruction, the agent is authorized to read only the relevant Codex session files under `~/.codex/sessions` and `~/.codex-multi-2/sessions`. Select by repository path, feature time window, and feature/task evidence; do not copy unrelated sessions or raw secret-bearing payloads. The working pack remains under `.agent-work`; the canonical process ZIP is finalized under `~/Desktop/audit-pack/`, plus its `xxx-zas.zip` companion when ZAS was used. Each ZIP is atomically replaced, with pairing state kept locally. This directory accepts only this skill’s typed process packs and their typed ZAS companions tied to the same feature/run; a companion is not a second feature sample. No `.sha256` files are emitted. Code/security audits, runtime/conformance experiments and unrelated ZIPs go elsewhere; referenced auxiliary evidence is not another workflow sample.
 
 ## Non-negotiable anti-expansion rules
 
@@ -143,7 +143,7 @@ The full v3.9 parent-stage/recovery sequence is retained in [artifact lifecycle]
    - a repository-required gate/rule or current production contract;
    - an unavoidable correctness dependency, with a causal explanation of why the smaller existing path cannot satisfy the requested outcome.
    Remove items whose only authority is the draft plan, another section, a reviewer, or a desire for stronger proof.
-6. Dispatch a real the main orchestrator (plan author) with the persisted confirmed requirements and necessary source. It returns the COMPLETE plan text; because it is read-only, the main agent must write `.agent-work/PLAN-FULL.md`, initialize `.agent-work/STATE.json` and render `FEATURE-STATE.md` BEFORE validation or independent review. Use the full bundled template and record:
+6. The main orchestrator authors the COMPLETE plan from the persisted confirmed requirements and necessary source, then writes `.agent-work/PLAN-FULL.md`, initialize `.agent-work/STATE.json` and render `FEATURE-STATE.md` BEFORE validation or independent review. Use the full bundled template and record:
    - requested outcome and observable behavior;
    - existing repository invariants and authoritative constraints;
    - explicit non-goals and unsupported environments;
@@ -200,6 +200,8 @@ The validator checks durable markers, minimum headings, unique IDs, and dependen
 
 ### Mandatory pre-implementation plan review
 
+Preserve the original reviewer result. Ordinary no-boundary corrections and rejected candidates use the explicit parent-admission path in artifact-lifecycle.md; a changed plan hash alone does not require a fresh full review. Private implementation details are blockers only with existing consumer authority and a concrete failure.
+
 After `PLAN-FULL.md` passes mechanical validation and before the first product-code section begins, dispatch one fresh read-only plan reviewer using the bundled request. This gate is mandatory for `EXECUTE_*`; in `PLAN_ONLY`, run it when the requested deliverable includes a reviewed plan. For mid-feature adoption, review only the active unaccepted and future remaining plan.
 
 The reviewer compares the original request, authority map, repository rules/current contracts, relevant source seams, PLAN-FULL, exclusions, and validation tiers. It reviews in this order:
@@ -245,7 +247,7 @@ Role identity and sequencing are mandatory; profile choice is secondary. The pla
 
 Mandatory named roles (fresh instances where independence is required; no textual role label counts as a spawn):
 
-- plan authorship: the main orchestrator (plan author), Astra xhigh, returns full draft for parent persistence;
+- plan authorship: the main orchestrator, Astra xhigh, writes the complete canonical draft and preserves each reviewed proposal;
 - plan review: a distinct [@plan_reviewer](subagent://plan_reviewer), Astra xhigh; high-complexity GLM challenge follows the existing finite PLAN policy;
 - implementation/repair: [@impl_large](subagent://impl_large) Astra medium, [@impl_std](subagent://impl_std) Sol medium, [@impl_mini](subagent://impl_mini) Terra high, or [@impl_nano](subagent://impl_nano) Luna xhigh, using evidence in [model routing](references/model-routing.md);
 - code/integration review: [@code_reviewer](subagent://code_reviewer), Astra high, alternating with actual ZCode GLM review via [adapter](references/zcode-mcp-adapter.md);
@@ -271,6 +273,15 @@ In `EXECUTE_WITH_COMMITS`, stage only intended product/test/user-document files 
 For `delivery_mode=SUBSECTIONS`, execute serial real product increments under one parent contract. Reserve one primary review slot, review each increment as `SUBSECTION_DELTA`, and finish it by `PARENT_RECONCILIATION` over the cumulative diff/joint oracles. Each child has a concrete consumer and safe intermediate state; a checkpoint does not unlock another section. ONE with no material repair can accept after reconciliation; otherwise the existing fresh parent FINAL remains required. There is no per-child final/PLAN review/repair budget. See [subsections](references/subsections.md).
 
 ## Phase 3: Patchset-style section review
+
+### Review sequencing gate
+
+- Before dispatching any code reviewer for a section/parent, its implementation or repair worker must have finished the applicable scope and required local validation, returned its final handoff, and stopped writing. The parent must persist the handoff, record validation results, and freeze the candidate HEAD (or dirty-diff fingerprint in no-commit mode). For decomposed parents, this gate applies to the completed increment being checkpoint-reviewed, not to future increments.
+- Do not pre-create, pre-start, or pre-dispatch a reviewer with instructions to wait for implementation or another reviewer. Dispatch itself is gated; an idle or waiting reviewer is not an exception.
+- The same section/parent has at most one active reviewer, including internal, external, checkpoint, reconciliation, and final reviewers. The next reviewer may be dispatched only after the prior invocation has actually completed or its cancellation/terminal failure has been confirmed through the lifecycle tool, and its outcome has been persisted. A timeout, silence, cancellation request, or locally cleared actor ID does not establish termination.
+- Before the next dispatch, the parent must admit the prior result, satisfy the prerequisites of the next review mode, and confirm the applicable frozen candidate and packet. Cancellation or failure does not count as a clean review or unlock a dependent final review. `ONE`/`TWO` assurance never authorizes concurrent reviewers of the same parent.
+- Initial, repair-delta, final, and applicable integration reviews follow their serial state-machine gates. A permitted bounded retry must wait for the previous invocation to terminate and reuse or explicitly replace its single review slot; do not launch concurrent retries. Independently isolated parents retain their existing DAG permissions; this rule does not serialize unrelated sections globally.
+
 
 For `MECHANICAL`, run deterministic checks and one `FINAL_BOUNDED`; mechanical review is always single-evidence. If it reveals a real semantic boundary, reclassify before acceptance. For `BOUNDED/HIGH_RISK`, follow the resolved `ONE`/`TWO` assurance semantics below.
 

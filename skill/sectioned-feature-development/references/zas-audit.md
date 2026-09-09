@@ -1,64 +1,72 @@
-# ZAS beta audit within the process audit
+# ZAS audit — paired with the process pack
 
-## Contents
-- [Separation](#separation)
-- [One attempt record](#one-attempt-record)
-- [Progress and lifecycle evidence](#progress-and-lifecycle-evidence)
-- [Interpretation](#interpretation)
+## Purpose
 
-## Separation
+Record actual ZAS review attempts, control failures, caller observations and resource cleanup for later ZAS and Sectioned analysis. This is observational: no extra reviewer, test, model call, observation call or repair is run solely to populate the audit.
 
-ZAS is an external beta runtime under controlled real-project testing. Runtime monitoring is necessary even with audit OFF; that does not silently re-enable audit. When audit is LIVE, record only facts from the actual task. Do not spawn extra probes or run test tasks to improve this record.
+## Two archives, one feature
 
-`~/Desktop/audit-pack/` receives ONLY the sectioned process pack. Include ZAS-AUDIT.md and ZAS-RUNS.jsonl inside it. Standalone ZAS diagnose/compatibility/live-test packs go to a different purpose directory, such as `~/Desktop/zas-diagnostics/`; the process pack references selected evidence/hash and does not count them as extra features.
+If the process archive is `~/Desktop/audit-pack/xxx.zip`, the associated ZAS archive is exactly `~/Desktop/audit-pack/xxx-zas.zip`. It is not an independent feature/sample. All ZAS attempts of that feature/run share this one companion; do not create one ZIP per Agent or timestamp.
 
-## One attempt record
+The main ZIP retains ordinary workflow evidence, aggregate costs and a small `ZAS-LINK.json`. Detailed ZAS reports, the attempt ledger, selected observations and lifecycle/diagnostic receipts live only in the companion. Minimal ZAS lifecycle events already present in the process trace need not be removed; never duplicate the full payloads.
 
-Use `assets/ZAS-ATTEMPT.template.json`. Fields may be null/UNKNOWN with a reason; never invent IDs or observed versions. Capture once per physical attempt:
+If ZAS was not used, write `status=NOT_USED` and `companion_filename=null` in the main link; do not publish an empty companion. Standalone runtime/conformance/diagnostic archives remain outside this reserved folder. The paired companion is the only added exception and must carry typed association, not just a filename suffix.
 
-- feature/run, parent/child/original lineage, logical review slot and physical attempt;
-- native/ZCode scheduled provider, task and plan hashes, exact base/candidate/worktree fingerprint;
-- actual MCP returned agent_id, server service_generation/API schema, deployed ZAS build/version and runtime/CLI/model version if exposed;
-- capability profile: BASELINE_LIMITED or ENHANCED_OBSERVATION; actual source of that claim;
-- spawn request/response, non-idempotent unknown outcome reconciliation, WORKSPACE_BUSY ownership handling;
-- planned versus actual reviewer model, observed UNKNOWN when only server default is known;
-- poll/observe cursors, output bytes/calls, distinct snapshots, duplicates avoided, reconnect/gaps;
-- permission request/response effective policy, queued send disposition and eventual delivery evidence;
-- lifecycle outcome and semantic review result separately, full result pages/hash (caller vs server provenance);
-- cancellation request, terminal time, resources_reaped time, close confirmation, release/workspace check;
-- protocol/runtime/auth/semantic-task failure classification, first failure vs cleanup outcome;
-- raw result/check/handoff/admission references and any partial/invalidated evidence.
+## Working artifacts
 
-No model prompt secrets, raw unrelated runtime transcripts, private reasoning or global log dumps. Bounded already-public excerpts used for semantic judgement are allowed only under the authorized content policy. Hash/reference each selected window once, including dropped/redacted/truncated counts.
+Keep under `.agent-work`:
 
-## Progress and lifecycle evidence
+```text
+.agent-work/audit-packs/{feature-id}/current/ZAS-LINK.json
+.agent-work/audit-packs/{feature-id}/zas/
+  ZAS-IDENTITY.json
+  ZAS-AUDIT.md
+  ZAS-RUNS.jsonl
+  observations/    # only snapshots actually inspected because of suspicion
+  receipts/        # safe result/diagnostic/control evidence
+```
 
-For a supervision decision, preserve:
+The companion identity has `kind=sectioned-development-zas-audit`, `producer=sectioned-feature-development`, and the same feature_id/run_id as the main pack. The finalizer adds parent filename, parent exact ZIP hash and source HEAD. The main link does not include the companion hash, avoiding a circular digest dependency.
 
-- trigger: scheduled checkpoint or repeated no-new-information cycles, not raw string similarity;
-- current task subgoal and expected next artifact/evidence;
-- considered event IDs, same/different read ranges or observed content version, tool effect/result summaries and optional authorized public reasoning;
-- classification PROGRESSING / EXPECTED_WAIT / NEEDS_CLARIFICATION / NO_PROGRESS_LOOP / INSUFFICIENT_OBSERVABILITY;
-- alternatives ruled out, brief evidence-backed explanation and uncertainty;
-- action: continue, clarify, cancel, budget stop, or blocked;
-- eventual outcome and human correction/false-positive label when available.
+No `.sha256` file is created, beside or inside the new packs. Integrity values remain in existing JSON manifests/receipts; hashes are metadata, not additional output files. Do not delete historical checksum files or rewrite prior archives merely for this change.
 
-Do not report an empty/truncated observation window as proof of no progress. Do not treat no file modifications as a stalled review. Transport retries and session replacements count as physical calls/cost, not new independent clean evidence or product repairs.
+## Attempt contents
 
-## Interpretation
+Use `assets/ZAS-ATTEMPT.template.json`, one row per physical attempt, including failed spawn before an Agent ID exists. Record only actual values:
 
-Separate cost and defects among:
+- feature/run, business section/subsection/lineage, logical review slot and physical attempt ID;
+- actual Agent/session/turn/request/message IDs where exposed, source provenance and deployed generation/build;
+- requested/observed model/effort as available; configuration is not an observed model;
+- frozen candidate/head/plan/task fingerprints and read-only-result comparison;
+- lifecycle transitions, permission waits, message disposition, result completeness and first failure;
+- suspicion, `snapshot_seq`, selected tool calls/200-character reasoning tail, caller assessment/action and uncertainty;
+- cancel/reap/close timing and result, workspace release, retry/fallback and later human correction;
+- measured counts/time/tokens or UNKNOWN, never invented zero.
 
-1. tested application defect (admitted under existing review causality);
-2. task packet/PLAN misconfiguration;
-3. model no-progress/semantic reasoning problem;
-4. ZAS adapter/lifecycle/control error;
-5. upstream ZCode runtime/protocol/model rejection;
-6. host environment/credentials;
-7. telemetry gap.
+The five assessment definitions exist in the MCP description only. ZAS supplies facts; it must not emit an automatic semantic label, loop score or cancellation recommendation. Retain the caller's short assessment as caller-originated evidence, not as a daemon verdict.
 
-If evidence does not select one, report UNRESOLVED rather than blame GLM or restart daemon blindly. Summarize cleanup leaks, cancel latency, progress-monitor false positives, observation volume, retry outcomes, same-session gaps, and final usable independent-review rate. These measurements inform later ZAS work; audit does not automatically create a new section or change the tested application.
+No hidden/private/encrypted payloads or tool outputs are part of observe snapshots. Do not crawl unrelated session/log directories. Reuse the existing bounded diagnose path only for a concrete failure; do not export logs for every healthy task. Lifetime counters and rolling windows must not be summed as independent work.
 
-External Advisor events are a different record: raw human-returned decision and human adoption, not a ZAS review or native subagent call.
+## Finalization and recovery
 
-Use `assets/ZAS-ATTEMPT.template.json` for one physical attempt. The new trace family is `zas`; append only material lifecycle/supervision events, not every poll. `zas_evidence.py` validates capability/window metadata but intentionally returns semantic_progress=NOT_INFERRED. Parent judgment and later human labels remain separately recorded.
+Prepare main link and companion staging before finalization. Use the existing canonical command with one added argument when ZAS was used:
+
+```bash
+python {skill-dir}/scripts/audit_finalize.py finalize \
+  --repo . --feature-id {feature-id} \
+  --pack-dir .agent-work/audit-packs/{feature-id}/current \
+  --trace .agent-work/audit/{feature-id}/TRACE.jsonl \
+  --feature-base {base} --product-head {head} \
+  --desktop-root ~/Desktop/audit-pack \
+  --zas-pack-dir .agent-work/audit-packs/{feature-id}/zas
+```
+
+The parent is published first and the companion is bound to its exact bytes. Each ZIP is atomically replaced, but the two paths are not falsely described as one filesystem transaction. If companion finalization fails, retain the valid parent and record `PAIR_INCOMPLETE`. Rerun the same command after one bounded artifact-only correction; reuse the parent unchanged and finish the same `xxx-zas.zip`. Do not generate a new timestamp, re-run models, or call the pair complete while one member is missing/stale.
+
+A separate `zas_audit_pack.py finalize --parent-zip ... --pack-dir ...` can re-publish only companion evidence. Validate with `zas_audit_pack.py verify --parent-zip ... --zip ...`. A parent replacement makes an old companion stale until re-bound from the same feature/run evidence.
+
+## Intake and analysis
+
+`process_audit.py intake` marks a ZAS archive `ZAS_COMPANION_CANDIDATE`, never `PROCESS` or another feature. Validate kind/producer/feature/run, exact parent filename/hash and internal JSON manifest before association. A missing/wrong/stale parent is a pairing gap; do not guess by title. Keep the main and companion costs linked, count each physical attempt once.
+
+Separate application defects, task/PLAN issues, caller model judgment, ZAS lifecycle/control faults, ZCode runtime rejection, host environment and telemetry gaps. Diagnose only what evidence supports. Advisor handoffs remain a different artifact purpose and keep their existing external/human workflow.

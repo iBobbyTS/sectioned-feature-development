@@ -1,4 +1,4 @@
 interface:
   display_name: "Sectioned Feature Development"
-  short_description: "Frozen impl tiers, beta ZAS, external Advisor"
-  default_prompt: "Use $sectioned-feature-development; preserve the full plan, delegation and review lifecycle. Freeze each section/subsection implementation tier in PLAN-FULL; use capability-gated beta ZAS and the external human Advisor without expanding scope."
+  short_description: "Bounded delivery, compact ZAS observe, paired audit"
+  default_prompt: "Use $sectioned-feature-development with frozen implementation tiers and the installed ZAS observation contract; observe only on suspected loops and publish a paired ZAS audit without changing review assurance."

@@ -41,7 +41,7 @@ def safe_path(value: str) -> PurePosixPath:
  p=PurePosixPath(value)
  if not value or p.is_absolute() or '..' in p.parts or '\\' in value or any(c in value for c in '\n\r'):
   raise Invalid('unsafe evidence path')
- if any(x in BLOCKED for x in p.parts) or any(x.startswith('.env') for x in p.parts) or p.suffix.lower() in {'.zip','.pem','.key','.p12','.pfx'}:
+ if any(x in BLOCKED for x in p.parts) or any(x.startswith('.env') for x in p.parts) or p.suffix.lower() in {'.zip','.pem','.key','.p12','.pfx','.sha256'}:
   raise Invalid('foreign archive/cache/secret path forbidden')
  return p
 
@@ -128,7 +128,7 @@ def verify(path: Path) -> dict:
   validate_payload(m,payload)
  return {'valid':True,'feature_id':m['feature_id'],'run_id':m['run_id'],'sha256':sha(path.read_bytes())}
 
-def publish(root: Path, output: Path, replace: bool=False) -> dict:
+def publish(root: Path, output: Path, replace: bool=False, zas_pack_dir: Path|None=None) -> dict:
  m,files=inputs(root)
  output=output.expanduser();output.mkdir(parents=True,exist_ok=True)
  path=output/f'{m["repo"]}-{m["feature_id"]}-{m["run_id"]}-sfd-audit.zip'
@@ -136,7 +136,9 @@ def publish(root: Path, output: Path, replace: bool=False) -> dict:
  if path.exists():
   with zipfile.ZipFile(path) as z:
    if set(z.namelist())==set(files) and all(z.read(k)==v for k,v in files.items()):
-    return {**verify(path),'path':str(path.resolve()),'reused':True}
+    from zas_audit_pack import complete_optional_pair
+    pair=complete_optional_pair(path,zas_pack_dir)
+    return {**verify(path),'path':str(path.resolve()),'reused':True,'zas_companion':pair}
   if not replace:raise Invalid('canonical pack differs; one explicit --replace after correction, no timestamp retry')
  fd,tmp=tempfile.mkstemp(prefix='.sfd-',suffix='.zip',dir=output);os.close(fd)
  try:
@@ -145,16 +147,22 @@ def publish(root: Path, output: Path, replace: bool=False) -> dict:
     info=zipfile.ZipInfo(name,date_time=(2026,1,1,0,0,0));info.compress_type=zipfile.ZIP_DEFLATED
     info.external_attr=0o100600<<16;z.writestr(info,data)
   result=verify(Path(tmp));os.replace(tmp,path)
-  # Sidecar is part of this protocol, not another audit purpose.
-  side=path.with_suffix('.zip.sha256');side.write_text(result['sha256']+'  '+path.name+'\n')
-  return {**result,'path':str(path.resolve()),'reused':False}
+  from zas_audit_pack import complete_optional_pair
+  pair=complete_optional_pair(path,zas_pack_dir)
+  return {**result,'path':str(path.resolve()),'reused':False,'zas_companion':pair}
  finally:
   if os.path.exists(tmp):os.unlink(tmp)
 
 def intake(path: Path) -> dict:
  try:
   with zipfile.ZipFile(path) as z:
-   ns=z.namelist();ms=[n for n in ns if n.rsplit('/',1)[-1]=='metadata.json']
+   ns=z.namelist()
+   if 'ZAS-IDENTITY.json' in ns:
+    ident=json.loads(z.read('ZAS-IDENTITY.json'))
+    if ident.get('kind')=='sectioned-development-zas-audit' and ident.get('producer')==PRODUCER:
+     return {'class':'ZAS_COMPANION_CANDIDATE','count_as_feature':False,'needs':'verify paired parent filename, identity and exact hash using zas_audit_pack.py'}
+    return {'class':'EXCLUDED_AUXILIARY','reason':'invalid ZAS companion identity'}
+   ms=[n for n in ns if n.rsplit('/',1)[-1]=='metadata.json']
    for n in ms:
     m=json.loads(z.read(n))
     if m.get('artifact_type')==TYPE and m.get('schema_version')==4:
@@ -173,13 +181,13 @@ def intake(path: Path) -> dict:
 def main():
  ap=argparse.ArgumentParser(description=__doc__);sp=ap.add_subparsers(dest='cmd',required=True)
  q=sp.add_parser('manifest');q.add_argument('staging',type=Path);q.add_argument('files',nargs='+')
- q=sp.add_parser('publish');q.add_argument('staging',type=Path);q.add_argument('--output',type=Path,default=Path('~/Desktop/audit-pack'));q.add_argument('--replace',action='store_true')
+ q=sp.add_parser('publish');q.add_argument('staging',type=Path);q.add_argument('--output',type=Path,default=Path('~/Desktop/audit-pack'));q.add_argument('--replace',action='store_true');q.add_argument('--zas-pack-dir',type=Path)
  for n in ('verify','intake'):
   q=sp.add_parser(n);q.add_argument('archive',type=Path)
  a=ap.parse_args()
  try:
   if a.cmd=='manifest':result=manifest(a.staging,a.files)
-  elif a.cmd=='publish':result=publish(a.staging,a.output,a.replace)
+  elif a.cmd=='publish':result=publish(a.staging,a.output,a.replace,a.zas_pack_dir)
   elif a.cmd=='verify':result=verify(a.archive)
   else:result=intake(a.archive)
   print(json.dumps(result,ensure_ascii=False,indent=2));return 0

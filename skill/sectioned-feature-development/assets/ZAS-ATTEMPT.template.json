@@ -1,5 +1,5 @@
 {
-  "schema": "sfd-zas-attempt/1",
+  "schema": "sfd-zas-attempt/1.1",
   "feature_id": null,
   "run_id": null,
   "section_id": null,
@@ -14,13 +14,18 @@
   "plan_sha256": null,
   "task_sha256": null,
   "service_generation": null,
-  "zas_build": {"value": null, "source": "UNKNOWN"},
-  "runtime_model": {"requested": null, "observed": null, "source": "UNKNOWN"},
-  "protocol_profile": "BASELINE_LIMITED",
+  "zas_build": {
+    "value": null,
+    "source": "UNKNOWN"
+  },
+  "runtime_model": {
+    "requested": null,
+    "observed": null,
+    "source": "UNKNOWN"
+  },
+  "protocol_profile": "zas-observation/1.1",
   "capability_receipt": null,
   "lifecycle_receipts": [],
-  "observation_windows": [],
-  "progress_assessments": [],
   "task_outcome": null,
   "semantic_review_result": null,
   "first_error": null,
@@ -32,6 +37,13 @@
   "result_pages": [],
   "result_sha256": null,
   "hash_provenance": null,
-  "cost": {"calls": null, "bytes": null, "elapsed_ms": null, "tokens": null},
-  "gaps": []
+  "cost": {
+    "calls": null,
+    "bytes": null,
+    "elapsed_ms": null,
+    "tokens": null
+  },
+  "gaps": [],
+  "observation_snapshots": [],
+  "caller_assessments": []
 }

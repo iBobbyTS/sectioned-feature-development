@@ -213,11 +213,11 @@ python {skill-dir}/scripts/audit_finalize.py finalize \
 The finalizer:
 
 - holds a feature-local lock;
-- creates `PACK-METADATA.json` and `PACK-MANIFEST.sha256`;
+- creates `PACK-METADATA.json` and `PACK-MANIFEST.json`;
 - writes a temporary ZIP;
 - verifies its manifest;
 - atomically replaces the canonical ZIP;
-- writes the sidecar SHA-256 and `PACK-STATE.json`;
+- writes `PACK-STATE.json` with internal hash metadata; no `.sha256` sidecar;
 - returns the existing canonical ZIP unchanged when the source fingerprint is identical.
 
 Do not append another “pack generated” event and rebuild solely to make that event appear inside the ZIP. `PACK-METADATA.json` and `PACK-STATE.json` are the authoritative finalization record.
@@ -423,7 +423,7 @@ For every external Advisor escalation record: trigger ID, threshold evidence, fr
 
 ## 4.2 process-only namespace and inherited model/subsection records
 
-`~/Desktop/audit-pack/` and this skill's `.agent-work/audit-packs/` are reserved for this skill's process audits only. New packs require PROCESS-IDENTITY.json with kind `sectioned-development-process-audit`, producer `sectioned-feature-development`, feature_id, run_id, feature_base and source_head. A code/security audit, runtime conformance result, external Advisor repository export, screenshot archive or arbitrary ZIP is not a process sample. Place it outside these directories; the process pack may reference its hash/path as supporting evidence without copying it as a second audit. Do not delete/move legacy user archives; classify them during intake.
+`~/Desktop/audit-pack/` and this skill's `.agent-work/audit-packs/` are reserved for this skill's process audits and explicitly paired ZAS companions only. Main packs require PROCESS-IDENTITY.json with kind `sectioned-development-process-audit`, producer `sectioned-feature-development`, feature_id, run_id, feature_base and source_head. A code/security audit, runtime conformance result, external Advisor repository export, screenshot archive or arbitrary ZIP is not a process sample. Place it outside these directories; the process pack may reference its hash/path as supporting evidence without copying it as a second audit. Do not delete/move legacy user archives; classify them during intake.
 
 The canonical writer remains the retained v3.9 `audit_finalize.py`: atomic ZIP, manifest/CRC, exact Git base/head checks, local PACK-STATE, idempotent reuse and one bounded correction. The inherited `process_audit.py` offers typed/legacy intake and v4 compatibility; it does not replace the required v3.9 analyses or secretly export another pack.
 
@@ -433,8 +433,10 @@ For subsections distinguish logical parent review ID from real call count; check
 
 Audit OFF disables only telemetry/pack, not required PLAN, task, contract, handoff, reviews, real actors, recovery/closure evidence. Failed/missing measurements may degrade telemetry, but do not manufacture product repairs or rerun gates. Product-data token exports are not Agent development cost.
 
-## 4.3 ZAS controlled-test evidence
+## 4.3.1 paired ZAS evidence
 
-Read [ZAS audit](zas-audit.md) for an actual ZAS attempt. Capture ZAS-AUDIT.md plus one ZAS-RUNS.jsonl ledger, selected safe observation pages and diagnostic receipts. These are part of this process pack, not independent development samples. Runtime-only ZAS tests and standalone diagnostics stay outside the reserved audit folder.
+Read [ZAS audit](zas-audit.md) for an actual ZAS attempt. Main `xxx.zip` contains only a small ZAS-LINK.json plus aggregate workflow/cost events. Export detailed ZAS-AUDIT.md, ZAS-RUNS.jsonl, selected observation snapshots and receipts to `xxx-zas.zip` in the same directory. Pair by typed feature/run identity and exact parent hash; do not count the companion as another feature. No .sha256 files. Unrelated runtime-only tests/diagnostics stay outside this reserved folder.
 
 Capture the exact PLAN assignment for every parent/child, planned and observed role/model/effort, and any approved assignment revision. Never treat requested as observed. The preserved physical reviewer calls, failures, monitoring and cancellation cost all contribute to accepted-outcome cost; missing telemetry is UNKNOWN, not zero.
+
+When ZAS-LINK.json says USED, pass --zas-pack-dir to the same canonical finalizer. A companion failure writes PAIR_INCOMPLETE, preserving the already-valid parent; after one bounded artifact correction rerun the same command to finish the pair without redoing product checks. A NOT_USED link produces no companion. See zas-audit.md for exact commands and manifests.

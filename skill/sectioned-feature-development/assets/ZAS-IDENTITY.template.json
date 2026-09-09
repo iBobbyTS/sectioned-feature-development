@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "kind": "sectioned-development-zas-audit",
+  "producer": "sectioned-feature-development",
+  "feature_id": "REPLACE",
+  "run_id": "REPLACE",
+  "coverage": "COMPLETE_WITH_GAPS"
+}

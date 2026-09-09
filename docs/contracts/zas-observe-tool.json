@@ -1,0 +1,189 @@
+{
+  "name": "zcode_subagent_observe",
+  "description": "仅在怀疑 zcode subagent 陷入无意义循环时才调用，检查最近公开推理和工具调用过程；不要用于健康任务的例行轮询。只读已捕获的本 Agent 数据，不启动模型或工具。默认按本 Agent 任务生命周期内的调用次数选最多的 3 类工具，每类返回最近最多 5 次调用（名称、ID、参数，不含结果），并返回已验证公开 reasoning delta 合并后的最新 200 个 Unicode 字符。encrypted_content 始终排除。ZAS 不判断循环、不返回进展标签、不自动取消。调用方结合当前任务与这些事实判断：PROGRESSING（新增事实或有效推进）；EXPECTED_WAIT（有目的的计算、权限或外部等待）；NEEDS_CLARIFICATION（具体输入或决定缺失）；NO_PROGRESS_LOOP（无新信息的等价行动循环，且合理重读、等待、状态变化等解释已排除）；INSUFFICIENT_OBSERVABILITY（截断、缺口或缺少上下文，不能断言循环）。相同文本、重复 read 或 true/echo 本身不是循环；没有工具结果也不能推断工具成功、文件未变化或任务失败。判断和取消由调用方独立决定。",
+  "inputSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "agent_id"
+    ],
+    "properties": {
+      "agent_id": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "outputSchema": {
+    "title": "ZAS suspicion-only observation 4.3.1",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "schema",
+      "agent_id",
+      "service_generation",
+      "snapshot_seq",
+      "count_scope",
+      "tools",
+      "reasoning",
+      "coverage"
+    ],
+    "properties": {
+      "schema": {
+        "const": "zas-observation/1.1"
+      },
+      "agent_id": {
+        "type": "string",
+        "minLength": 1
+      },
+      "service_generation": {
+        "type": "string",
+        "minLength": 1
+      },
+      "snapshot_seq": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "count_scope": {
+        "const": "agent_lifetime"
+      },
+      "tools": {
+        "type": "array",
+        "maxItems": 3,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "tool_name",
+            "call_count",
+            "recent_calls"
+          ],
+          "properties": {
+            "tool_name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "call_count": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "recent_calls": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 5,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "seq",
+                  "tool_call_id",
+                  "arguments",
+                  "arguments_truncated",
+                  "redacted_fields"
+                ],
+                "properties": {
+                  "seq": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "tool_call_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "arguments": {
+                    "type": "object"
+                  },
+                  "arguments_truncated": {
+                    "type": "boolean"
+                  },
+                  "redacted_fields": {
+                    "type": "integer",
+                    "minimum": 0
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "reasoning": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "text",
+          "char_count",
+          "truncated",
+          "source"
+        ],
+        "properties": {
+          "text": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "char_count": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 200
+          },
+          "truncated": {
+            "type": "boolean"
+          },
+          "source": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "status",
+              "runtime_version",
+              "event_type",
+              "delta_pointer"
+            ],
+            "properties": {
+              "status": {
+                "const": "VERIFIED_RUNTIME_PUBLIC"
+              },
+              "runtime_version": {
+                "type": "string",
+                "minLength": 1
+              },
+              "event_type": {
+                "type": "string",
+                "minLength": 1
+              },
+              "delta_pointer": {
+                "type": "string",
+                "pattern": "^/"
+              }
+            }
+          }
+        }
+      },
+      "coverage": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "tool_history_complete",
+          "reasoning_complete",
+          "dropped_events"
+        ],
+        "properties": {
+          "tool_history_complete": {
+            "type": "boolean"
+          },
+          "reasoning_complete": {
+            "type": "boolean"
+          },
+          "dropped_events": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      }
+    }
+  },
+  "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+  }
+}

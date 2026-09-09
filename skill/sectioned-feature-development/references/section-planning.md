@@ -241,11 +241,21 @@ Every `PLAN_BLOCKER` must include:
 
 The main agent owns admission. Record one compact ledger in `.agent-work/reviews/PLAN-REVIEW.md`; do not create RAW/ADMISSION pairs. A missing original example/test mapping is a `PLAN_BLOCKER`; an obsolete instruction retained after a user correction is `PLAN_SCOPE_EXPANSION`.
 
+### Sufficient detail, not a fully prewritten implementation
+
+A plan is executable when the required outcome, cross-owner interfaces, current owners, dependency order, allowed edits, meaningful checks and safe intermediate states are clear. A reviewer must identify a concrete ambiguity that could produce an authority-backed failure, not merely request more detail.
+
+- A new test/probe/source file may be absent before implementation when its owning section and create-before-run responsibility are declared. Its absence alone is not a blocker.
+- Internal helper names, exact private types/library calls, probe output filenames and private JSON layouts are normally implementer decisions. Freeze them only when an existing public/shared consumer or repository requirement needs that exact contract. Cite that authority; do not turn a suggestion into a new acceptance obligation.
+- Review verifies declaration of required checks; it does not require the unfinished feature's tests/build/live results before implementation. Schema/check-ID/heading repairs belong to the parent and deterministic validators before paid review.
+- Temporary migration coexistence may be explicitly allowed until the consuming section removes the old owner. Do not demand a future consumer/adaptor in an earlier section's acceptance; move that consumer-specific evidence to its owning section or integration.
+- Each candidate proposes a bounded correction. The reviewer does not write an admission ledger, approve its own suggested scope, demand an additional full review, or decide that a new R2/R3 label resets the review allowance.
+
 ### Finite recheck rule
 
 After ordinary corrections, rerun the plan validator and proceed. A second reviewer pass is allowed only as one fresh `PLAN_DELTA` recheck when admitted corrections materially change the feature outcome, section graph, primary owner, public contract, state/trust/persistence boundary, or external seam. It checks only changed plan text and dependency consequences.
 
-No clean streak, third pass, hard-cap recovery, recursive planning agent, evidence rehabilitation, or plan-review-only section is permitted. An unresolved material issue after `PLAN_DELTA` blocks implementation pending the real decision.
+No clean streak, third full pass, hard-cap recovery, recursive planning agent, evidence rehabilitation, or plan-review-only section is permitted. The one conditional high-complexity ZCode challenge in external-reviewer-orchestration.md is distinct from a primary-review retry; it does not authorize native full reviews R2/R3/... . A changed plan hash, report filename, run suffix, or rejection by the reviewer does not reset this policy. An unresolved material issue after `PLAN_DELTA` blocks implementation pending the real decision. Do not let a reviewer request the next full pass. Preserve valid coverage; see artifact-lifecycle.md for parent-only local correction admission without falsifying the original reviewer result.
 
 ## Examples
 

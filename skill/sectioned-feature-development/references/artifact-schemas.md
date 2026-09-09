@@ -198,3 +198,7 @@ Audit records are observational: they create no product authority, review findin
 - Never stage or commit `.agent-work/**`; archive/update it locally at section acceptance, hard-cap recovery, or final feature boundaries.
 - A newer artifact schema applies prospectively and does not require migration of completed work.
 - Do not mix commits/findings/reviews from another feature ID into current state or audit metrics.
+
+## ZAS companion output (4.3.1)
+
+ZAS-LINK.json belongs to the main process pack; ZAS-IDENTITY.json, ZAS-AUDIT.md, ZAS-RUNS.jsonl and detailed evidence belong to the paired xxx-zas.zip. Both remain one feature/run. Hashes remain JSON fields; no .sha256 files are emitted. See [ZAS audit](zas-audit.md).

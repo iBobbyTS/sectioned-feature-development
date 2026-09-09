@@ -104,7 +104,7 @@ def build(repo,feature,trigger,request,output_dir):
    bad=z.testzip()
    if bad:raise ValueError('zip crc failure: '+bad)
   os.replace(archive,target)
- digest=sha(target);target.with_suffix('.zip.sha256').write_text(digest+'  '+target.name+'\n')
+ digest=sha(target)
  receipt={'path':str(target),'sha256':digest,'file_count':len(manifest),'head':head,'git_bundle_verified':True,'request_id':request,'share_status':'HUMAN_REVIEW_REQUIRED'}
  (req.parent/'PACKAGE-RECEIPT.json').write_text(json.dumps(receipt,indent=2)+'\n')
  return receipt

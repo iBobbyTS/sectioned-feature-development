@@ -1,4 +1,23 @@
+# 4.3.1 — 完整合并包（PLAN review 定点修订）
+
+- 合入19项已交付修订，保留正确的上传工作区改动。
+- 修复普通PLAN修正也必须重新取得exact-hash APPROVED的admission冲突；保留原报告与快照、候选处置及边界变化检查。
+- 撤销无授权的“原生必做＋ZCode额外审查”，恢复原full-review交替；保留正确时序与新版诊断说明。
+- 同步遗漏的4.3.1版本、README、ZAS合同、配套code-review和回归测试。
+- 本次只生成完整分发包，未再修改运行脚本；原版本历史保持。
+
 # 4.3 — 2026-09-07
+
+## 4.3.1 — 用户确认的 ZAS 观察与配对审计
+
+- observe仅用于疑似无意义循环；固定top3工具、各last5调用、无结果、200字符公开reasoning尾部。
+- 本机确认唯一reasoning字段，默认采集；encrypted_content在新增采集/日志/导出路径主动排除；无opt-in模式。
+- 五种判断仅写MCP description，不在ZAS/Skill脚本增加自动分类器。
+- 详细ZAS证据从主包移至同目录xxx-zas.zip；typed identity+parent hash关联，失败后复用parent恢复。
+- 不再创建.sha256文件，完整性hash保留在JSON；旧档案只读兼容，不重写历史。
+- 先部署ZAS观测更新再用Skill；移除旧服务fallback，保留真实运行失败处理。
+- 模型角色/计划profile、执行artifact、review交替与预算、subsection/并行、外部Advisor不变。
+
 
 - 基于上传4.2.1工作区增量更新，保留主线程计划作者的本地决定。
 - 实现角色改为impl_nano/mini/std/large；每section/subsection在PLAN冻结，派发匹配。
