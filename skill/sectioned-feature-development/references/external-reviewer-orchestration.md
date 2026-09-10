@@ -16,7 +16,7 @@ There are two disjoint execution routes:
 | Route | Dispatch | Wait/result/control | Meaning |
 |---|---|---|---|
 | Native Codex | Native subagent mechanism selects [@plan_reviewer](subagent://plan_reviewer) or [@code_reviewer](subagent://code_reviewer) | Native host tools using the returned task/session ID | These named roles are native, not ZAS aliases |
-| ZAS MCP | Direct `zcode_subagent_spawn` | `zcode_subagent_poll`, `zcode_subagent_result`, then applicable send/cancel/close with returned agent_id | External ZCode/GLM runtime, not a Codex native role |
+| ZAS MCP | Direct `zcode_subagent_spawn` | `zcode_subagent_wait`, `zcode_subagent_result`, then applicable send/cancel/close with returned agent_id | External ZCode/GLM runtime, not a Codex native role |
 
 `$code-review` is a provider-neutral instruction set. Giving it to a ZAS job does not turn that job into [@code_reviewer](subagent://code_reviewer). Likewise, a native task mentioning GLM or ZCode is not evidence that MCP ran. Never spawn [@code_reviewer](subagent://code_reviewer) to proxy another ZAS review: each slot has one actual reviewer, not a native-plus-external stack.
 

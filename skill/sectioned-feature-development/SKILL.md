@@ -33,7 +33,7 @@ This applies with audit OFF, one section, and explicit invocation. **There is no
 |---|---|---|
 | Native PLAN review | Native Codex subagent mechanism selecting [@plan_reviewer](subagent://plan_reviewer) | Tool-returned native task/session ID; native wait/follow-up tools |
 | Native code-review slot | Native Codex subagent mechanism selecting [@code_reviewer](subagent://code_reviewer) | Tool-returned native task/session ID; native wait/follow-up tools |
-| ZCode/GLM review slot or selected PLAN challenge | Direct ZAS MCP `zcode_subagent_spawn`, followed by `zcode_subagent_poll` / `zcode_subagent_result` | ZAS-returned agent_id; ZAS lifecycle tools |
+| ZCode/GLM review slot or selected PLAN challenge | Direct ZAS MCP `zcode_subagent_spawn`, followed by `zcode_subagent_wait` / `zcode_subagent_result` | ZAS-returned agent_id; ZAS lifecycle tools |
 
 **[@code_reviewer](subagent://code_reviewer) always means the native Codex role, never ZCode and never a wrapper that delegates to ZAS.** `$code-review` names the shared review instructions, not the provider. Do not satisfy a native slot with an MCP job, send a native ID to ZAS, or call a native reviewer merely to forward work to ZAS. Provider substitution requires explicit applicable user/repository authority and is recorded as an override, never an alias.
 
