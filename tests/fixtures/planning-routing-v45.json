@@ -1,0 +1,172 @@
+{
+  "kind": "manual_forward_evaluation_scenarios",
+  "automatic_model_evaluation_performed": false,
+  "common_load": [
+    "router.md",
+    "universal.md"
+  ],
+  "cases": [
+    {
+      "id": "svelte-java",
+      "evidence": "Changed Svelte TypeScript browser request and Spring Java controller response; Java build and version confirmed. No persistence semantics change.",
+      "load": [
+        "domains/full-stack.md",
+        "adapters/frameworks/svelte-sveltekit.md",
+        "languages/java.md",
+        "boundary-handoff.md",
+        "languages/typescript.md",
+        "adapters/frameworks/spring.md"
+      ],
+      "exclude": [
+        "languages/python.md",
+        "concerns/data-evolution.md"
+      ],
+      "oracle": "one actual browser-client request/Java response fixture; no automatic new schema framework"
+    },
+    {
+      "id": "sveltekit-only",
+      "evidence": "Single-repo SvelteKit group reorder; actual action and named sibling reader change; no Java/JVM owner. Changed source is TypeScript.",
+      "load": [
+        "domains/full-stack.md",
+        "adapters/frameworks/svelte-sveltekit.md",
+        "boundary-handoff.md",
+        "languages/typescript.md"
+      ],
+      "exclude": [
+        "languages/java.md"
+      ],
+      "oracle": "groupIds/baselineGroupIds, real action decoder, visible/global response and named reader are mapped"
+    },
+    {
+      "id": "swift-rust-helper",
+      "evidence": "Swift macOS UI starts/cancels an existing Rust helper; IPC output and late-result owner change.",
+      "load": [
+        "languages/swift.md",
+        "adapters/platforms/macos.md",
+        "adapters/frameworks/swiftui-appkit.md",
+        "languages/rust.md",
+        "boundary-handoff.md",
+        "concerns/async-lifecycle.md",
+        "domains/desktop-apps.md"
+      ],
+      "exclude": [
+        "domains/full-stack.md",
+        "adapters/frameworks/svelte-sveltekit.md"
+      ],
+      "oracle": "one parent retains request identity/cancel/reap and UI update contract"
+    },
+    {
+      "id": "python-cli",
+      "evidence": "Python CLI import transaction semantics change; existing DB, no web UI.",
+      "load": [
+        "languages/python.md",
+        "concerns/data-evolution.md",
+        "domains/cli-automation.md"
+      ],
+      "exclude": [
+        "domains/full-stack.md",
+        "languages/java.md"
+      ],
+      "oracle": "real CLI outcome plus relevant invalid-row/partial-failure case; no Django assumption"
+    },
+    {
+      "id": "sync-rust",
+      "evidence": "Synchronous Rust library change under explicit Sectioned request; no process or async state.",
+      "load": [
+        "languages/rust.md",
+        "domains/libraries-sdks.md"
+      ],
+      "exclude": [
+        "concerns/async-lifecycle.md",
+        "concerns/external-integration.md",
+        "adapters/runtimes/tokio.md"
+      ],
+      "oracle": "no Tokio checklist unless a real dependency appears"
+    },
+    {
+      "id": "unknown-elixir",
+      "evidence": "Elixir HTTP backend changes; no Elixir playbook, client contract changes.",
+      "load": [
+        "boundary-handoff.md",
+        "concerns/external-integration.md",
+        "domains/backend-services.md"
+      ],
+      "exclude": [
+        "languages/java.md",
+        "languages/python.md"
+      ],
+      "oracle": "universal fallback and version-specific source at actual seam; no missing-module gate"
+    },
+    {
+      "id": "mac-host-only",
+      "evidence": "User uses Mac to edit Python service; no native Swift app in change.",
+      "load": [
+        "languages/python.md",
+        "domains/backend-services.md"
+      ],
+      "exclude": [
+        "languages/swift.md",
+        "adapters/platforms/macos.md",
+        "adapters/frameworks/swiftui-appkit.md"
+      ],
+      "oracle": "host OS alone never selects native app planning"
+    },
+    {
+      "id": "unused-language",
+      "evidence": "Svelte component-only interaction; repository has untouched Rust utility.",
+      "load": [
+        "adapters/frameworks/svelte-sveltekit.md",
+        "domains/web-frontend.md"
+      ],
+      "exclude": [
+        "languages/rust.md",
+        "domains/full-stack.md"
+      ],
+      "oracle": "repository inventory does not cause all-stack loading"
+    },
+    {
+      "id": "data-not-migration",
+      "evidence": "Full-stack display reads unchanged DB field; no query or transaction semantics change.",
+      "load": [
+        "domains/full-stack.md",
+        "boundary-handoff.md"
+      ],
+      "exclude": [
+        "concerns/data-evolution.md"
+      ],
+      "oracle": "no migration/backfill compatibility invented from unchanged storage"
+    },
+    {
+      "id": "cardinality",
+      "evidence": "Requested search improvement enumerates alternatives per syllable; actual input combinatorics hazard.",
+      "load": [
+        "concerns/performance.md"
+      ],
+      "exclude": [],
+      "oracle": "input family/cardinality/error-preserving bound; no new benchmark platform"
+    },
+    {
+      "id": "planned-vs-observed",
+      "evidence": "New service endpoint not implemented yet, real existing consumer identified.",
+      "load": [
+        "boundary-handoff.md"
+      ],
+      "exclude": [],
+      "oracle": "PLANNED input/output with create-before-run check; no fabricated captured response"
+    },
+    {
+      "id": "duplicate-rollback",
+      "evidence": "Svelte + Java + full-stack + changed transaction; UI and DB rollback differ. Actual Spring transaction interception confirmed.",
+      "load": [
+        "adapters/frameworks/svelte-sveltekit.md",
+        "languages/java.md",
+        "domains/full-stack.md",
+        "concerns/data-evolution.md",
+        "boundary-handoff.md",
+        "adapters/frameworks/spring.md"
+      ],
+      "exclude": [],
+      "oracle": "one boundary with UI and DB consequences, not one plan/review per route"
+    }
+  ]
+}

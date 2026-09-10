@@ -1,0 +1,559 @@
+[
+  {
+    "path": "languages/javascript.md",
+    "title": "JavaScript",
+    "axis": "language",
+    "match": "Changed JavaScript logic, Promise/callback composition or module boundary.",
+    "exclude": "a build tool happens to be written in JavaScript; Node.js/browser/framework behavior is a separate adapter.",
+    "sources": [
+      "js"
+    ]
+  },
+  {
+    "path": "languages/typescript.md",
+    "title": "TypeScript",
+    "axis": "language",
+    "match": "Changed .ts/.tsx source or a public declaration/generic contract.",
+    "exclude": "the repository only contains a TypeScript-based dependency; TypeScript alone does not imply React, browser or Node.",
+    "sources": [
+      "ts",
+      "js"
+    ]
+  },
+  {
+    "path": "languages/python.md",
+    "title": "Python",
+    "axis": "language",
+    "match": "Changed Python application, library, CLI or job source.",
+    "exclude": "an unrelated script exists, or the host runs Python; .py does not imply Django, FastAPI, asyncio or free-threading.",
+    "sources": [
+      "python",
+      "pyproject"
+    ]
+  },
+  {
+    "path": "languages/java.md",
+    "title": "Java",
+    "axis": "language",
+    "match": "Actual Java source, class/module API or Java runtime behavior is changed.",
+    "exclude": "a backend exists; Kotlin or another JVM language is not Java, and Java does not imply Spring.",
+    "sources": [
+      "java"
+    ]
+  },
+  {
+    "path": "languages/csharp.md",
+    "title": "C#",
+    "axis": "language",
+    "match": "Changed C# logic or .NET-facing public types.",
+    "exclude": "the feature is web, desktop or a game; those are independent domain choices.",
+    "sources": [
+      "csharp"
+    ]
+  },
+  {
+    "path": "languages/c.md",
+    "title": "C",
+    "axis": "language",
+    "match": "Changed C translation units, headers or a C ABI boundary.",
+    "exclude": "a C++ source or a native dependency exists without changes to C code.",
+    "sources": [
+      "c"
+    ]
+  },
+  {
+    "path": "languages/cpp.md",
+    "title": "C++",
+    "axis": "language",
+    "match": "Changed C++ objects/templates, ownership, concurrency or binary interface.",
+    "exclude": "a build tool uses C++; C and C++ are not interchangeable planning modes.",
+    "sources": [
+      "cpp"
+    ]
+  },
+  {
+    "path": "languages/go.md",
+    "title": "Go",
+    "axis": "language",
+    "match": "Changed Go package, executable or concurrency contract.",
+    "exclude": "Go is installed as tooling; a Go binary can be CLI, service or SDK.",
+    "sources": [
+      "go"
+    ]
+  },
+  {
+    "path": "languages/rust.md",
+    "title": "Rust",
+    "axis": "language",
+    "match": "Changed Rust crate, binary, trait/serde contract or FFI owner.",
+    "exclude": "Cargo or a Rust-based utility is installed; Rust alone does not imply Tokio.",
+    "sources": [
+      "rust",
+      "cargo"
+    ]
+  },
+  {
+    "path": "languages/swift.md",
+    "title": "Swift",
+    "axis": "language",
+    "match": "Changed Swift source, actor/task, value/reference or public module boundary.",
+    "exclude": "the host is a Mac; server-side Swift is not a macOS UI project.",
+    "sources": [
+      "swift"
+    ]
+  },
+  {
+    "path": "languages/kotlin.md",
+    "title": "Kotlin",
+    "axis": "language",
+    "match": "Changed Kotlin source, coroutine/Flow contract or Java interop.",
+    "exclude": "a JVM service or Android dependency exists; Android and Spring are optional adapters.",
+    "sources": [
+      "kotlin"
+    ]
+  },
+  {
+    "path": "languages/php.md",
+    "title": "PHP",
+    "axis": "language",
+    "match": "Changed PHP request, command, package or long-lived worker source.",
+    "exclude": "the application is a website; PHP does not imply Laravel or WordPress.",
+    "sources": [
+      "php"
+    ]
+  },
+  {
+    "path": "languages/ruby.md",
+    "title": "Ruby",
+    "axis": "language",
+    "match": "Changed Ruby method/module, IO, extension boundary or package.",
+    "exclude": "Rails is mentioned but not on the changed path; Ruby is also used for CLI and libraries.",
+    "sources": [
+      "ruby"
+    ]
+  },
+  {
+    "path": "languages/dart.md",
+    "title": "Dart",
+    "axis": "language",
+    "match": "Changed Dart library, async stream/future or isolate boundary.",
+    "exclude": "Flutter is present in another package; Dart does not imply mobile or Flutter.",
+    "sources": [
+      "dart"
+    ]
+  },
+  {
+    "path": "languages/sql.md",
+    "title": "SQL",
+    "axis": "language",
+    "match": "SQL queries, schema/constraint expressions or database-visible semantics are changed.",
+    "exclude": "a database dependency exists, or an ORM reads unchanged fields.",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "path": "languages/bash-posix-shell.md",
+    "title": "Bash / POSIX shell",
+    "axis": "language",
+    "match": "Changed shell scripts or shell command composition.",
+    "exclude": "a command is executed somewhere; PowerShell and other shells have different languages.",
+    "sources": [
+      "shell"
+    ]
+  },
+  {
+    "path": "languages/powershell.md",
+    "title": "PowerShell",
+    "axis": "language",
+    "match": "Changed .ps1/.psm1 or PowerShell command/parameter logic.",
+    "exclude": "the target is Windows; PowerShell may be cross-platform and Windows may use other languages.",
+    "sources": [
+      "pwsh"
+    ]
+  },
+  {
+    "path": "languages/r.md",
+    "title": "R",
+    "axis": "language",
+    "match": "Changed R analysis/package/statistical transformation.",
+    "exclude": "a data task exists; R is a language, scientific/data work is a separate domain.",
+    "sources": [
+      "r"
+    ]
+  },
+  {
+    "path": "languages/lua.md",
+    "title": "Lua",
+    "axis": "language",
+    "match": "Changed Lua code or a Lua embedding boundary.",
+    "exclude": "a game engine includes Lua internally; inspect version and host APIs (including LuaJIT/Luau differences).",
+    "sources": [
+      "lua"
+    ]
+  },
+  {
+    "path": "languages/html-css.md",
+    "title": "HTML / CSS (markup and style languages)",
+    "axis": "language",
+    "match": "Changed HTML semantics, form controls, styles or layout selectors.",
+    "exclude": "a frontend exists without markup/style changes; this is not a JavaScript framework route.",
+    "sources": [
+      "html"
+    ]
+  },
+  {
+    "path": "adapters/frameworks/react.md",
+    "title": "React",
+    "axis": "adapter/framework",
+    "match": "Changed React components/hooks or React-owned state.",
+    "exclude": "JS/TS code exists or a component library is installed.",
+    "sources": [
+      "react"
+    ]
+  },
+  {
+    "path": "adapters/frameworks/nextjs.md",
+    "title": "Next.js",
+    "axis": "adapter/framework",
+    "match": "Changed Next.js routing, Server/Client Components, mutation or caching path.",
+    "exclude": "a React app exists; inspect App/Pages Router and installed version.",
+    "sources": [
+      "next"
+    ]
+  },
+  {
+    "path": "adapters/frameworks/vue-nuxt.md",
+    "title": "Vue / Nuxt",
+    "axis": "adapter/framework",
+    "match": "Changed Vue components/reactivity or a confirmed Nuxt server/render path.",
+    "exclude": "a JS/TS project exists; Nuxt-specific API behavior requires actual Nuxt evidence.",
+    "sources": [
+      "vue"
+    ]
+  },
+  {
+    "path": "adapters/frameworks/angular.md",
+    "title": "Angular",
+    "axis": "adapter/framework",
+    "match": "Changed Angular component, service, router or dependency lifetime.",
+    "exclude": "TypeScript code exists without Angular owners.",
+    "sources": [
+      "angular"
+    ]
+  },
+  {
+    "path": "adapters/frameworks/django.md",
+    "title": "Django",
+    "axis": "adapter/framework",
+    "match": "Changed Django view/model/ORM/transaction/migration code.",
+    "exclude": "Python code or a database exists; framework activation needs imports/settings and the changed owner.",
+    "sources": [
+      "django",
+      "django-migration"
+    ]
+  },
+  {
+    "path": "adapters/frameworks/fastapi.md",
+    "title": "FastAPI",
+    "axis": "adapter/framework",
+    "match": "Changed FastAPI route/dependency/serialization or lifespan behavior.",
+    "exclude": "Python, ASGI or Pydantic exists elsewhere; inspect actual route and dependency graph.",
+    "sources": [
+      "fastapi"
+    ]
+  },
+  {
+    "path": "adapters/frameworks/spring.md",
+    "title": "Spring",
+    "axis": "adapter/framework",
+    "match": "Changed Spring-managed controller/service/transaction/lifecycle path.",
+    "exclude": "Java/Kotlin source exists; unknown JVM frameworks use universal fallback.",
+    "sources": [
+      "spring",
+      "spring-rollback"
+    ]
+  },
+  {
+    "path": "adapters/frameworks/aspnet-core.md",
+    "title": "ASP.NET Core",
+    "axis": "adapter/framework",
+    "match": "Changed ASP.NET Core endpoint, middleware, DI service or background lifecycle.",
+    "exclude": "C# source exists; .NET desktop/game/library code is not ASP.NET.",
+    "sources": [
+      "aspnet",
+      "csharp"
+    ]
+  },
+  {
+    "path": "adapters/frameworks/rails.md",
+    "title": "Ruby on Rails",
+    "axis": "adapter/framework",
+    "match": "Changed Rails route/model/callback/transaction or job path.",
+    "exclude": "Ruby code exists; non-Rails code does not inherit callback conventions.",
+    "sources": [
+      "rails"
+    ]
+  },
+  {
+    "path": "adapters/frameworks/laravel.md",
+    "title": "Laravel",
+    "axis": "adapter/framework",
+    "match": "Changed Laravel controller/Eloquent/job/lifecycle code.",
+    "exclude": "PHP source exists without Laravel owners.",
+    "sources": [
+      "laravel",
+      "php"
+    ]
+  },
+  {
+    "path": "adapters/frameworks/flutter.md",
+    "title": "Flutter",
+    "axis": "adapter/framework",
+    "match": "Changed Flutter widgets, navigation, model binding or plugin boundary.",
+    "exclude": "Dart code exists or a mobile target is mentioned.",
+    "sources": [
+      "flutter",
+      "dart"
+    ]
+  },
+  {
+    "path": "adapters/frameworks/swiftui-appkit.md",
+    "title": "SwiftUI / AppKit",
+    "axis": "adapter/framework",
+    "match": "Changed SwiftUI views/model binding or AppKit delegate/bridge behavior.",
+    "exclude": "Swift is used on a server or macOS hosts an unrelated service.",
+    "sources": [
+      "swiftui",
+      "swift"
+    ]
+  },
+  {
+    "path": "adapters/runtimes/nodejs.md",
+    "title": "Node.js",
+    "axis": "adapter/runtime",
+    "match": "Changed Node runtime-specific stream, process, file, worker or module behavior.",
+    "exclude": "JavaScript/TypeScript runs in a browser or another host.",
+    "sources": [
+      "node",
+      "js"
+    ]
+  },
+  {
+    "path": "adapters/runtimes/tokio.md",
+    "title": "Tokio",
+    "axis": "adapter/runtime",
+    "match": "Changed Tokio select/task/channel/process path in real Rust source.",
+    "exclude": "Rust or async syntax exists without Tokio.",
+    "sources": [
+      "tokio",
+      "tokio-process"
+    ]
+  },
+  {
+    "path": "adapters/platforms/macos.md",
+    "title": "macOS",
+    "axis": "adapter/platform",
+    "match": "Changed macOS app/window/helper/XPC/device or packaged launch behavior.",
+    "exclude": "development happens on a Mac; Python/Rust service hosting alone is insufficient.",
+    "sources": [
+      "apple-distribution",
+      "swiftui"
+    ]
+  },
+  {
+    "path": "adapters/platforms/apple-mobile.md",
+    "title": "iOS / iPadOS",
+    "axis": "adapter/platform",
+    "match": "Changed Apple mobile scenes, app lifecycle, permission, storage or delivery path.",
+    "exclude": "Swift/Dart/JS is present; confirm the actual Apple target.",
+    "sources": [
+      "apple-scenes"
+    ]
+  },
+  {
+    "path": "adapters/platforms/android.md",
+    "title": "Android",
+    "axis": "adapter/platform",
+    "match": "Changed Android lifecycle/component, permission, data or packaged behavior.",
+    "exclude": "Java/Kotlin/Dart source exists; the language does not prove Android.",
+    "sources": [
+      "android"
+    ]
+  },
+  {
+    "path": "adapters/platforms/browser.md",
+    "title": "Browser web platform",
+    "axis": "adapter/platform",
+    "match": "Changed browser DOM/events/fetch/history/storage/worker semantics.",
+    "exclude": "a web-related repository exists but the touched path is server-only.",
+    "sources": [
+      "html",
+      "js"
+    ]
+  },
+  {
+    "path": "adapters/frameworks/svelte-sveltekit.md",
+    "title": "Svelte / SvelteKit",
+    "axis": "adapter/framework",
+    "match": "Changed Svelte components or SvelteKit action/load/endpoint/consumer code.",
+    "exclude": "Svelte is merely an unused dependency.",
+    "sources": [
+      "svelte",
+      "svelte-state"
+    ]
+  },
+  {
+    "path": "domains/web-frontend.md",
+    "title": "Web frontend / interaction",
+    "axis": "domain",
+    "match": "A requested change concerns browser-visible interaction, navigation, rendering or client state.",
+    "exclude": "the repository has a frontend that this task does not change.",
+    "sources": [
+      "pact",
+      "html"
+    ]
+  },
+  {
+    "path": "domains/backend-services.md",
+    "title": "Backend services / APIs",
+    "axis": "domain",
+    "match": "The task changes a service handler, business operation, job consumer or exposed API.",
+    "exclude": "the project is full-stack but only a UI style changes.",
+    "sources": [
+      "pact",
+      "sql"
+    ]
+  },
+  {
+    "path": "domains/desktop-apps.md",
+    "title": "Desktop applications",
+    "axis": "domain",
+    "match": "A requested feature changes window/document/editor/device/helper workflows in a desktop application.",
+    "exclude": "the developer is on a desktop machine; CLI services are separate domains.",
+    "sources": [
+      "swiftui",
+      "apple-distribution"
+    ]
+  },
+  {
+    "path": "domains/mobile-apps.md",
+    "title": "Mobile applications",
+    "axis": "domain",
+    "match": "The change targets a mobile user workflow or its platform lifecycle/data behavior.",
+    "exclude": "Kotlin, Swift, Dart or a mobile SDK appears in unrelated code.",
+    "sources": [
+      "android",
+      "apple-scenes",
+      "flutter"
+    ]
+  },
+  {
+    "path": "domains/cli-automation.md",
+    "title": "CLI / automation / developer tooling",
+    "axis": "domain",
+    "match": "A requested outcome is a command, build/developer utility, batch script or terminal automation.",
+    "exclude": "a command is used merely to build a different product.",
+    "sources": [
+      "pyproject",
+      "pwsh",
+      "node"
+    ]
+  },
+  {
+    "path": "domains/libraries-sdks.md",
+    "title": "Libraries / SDKs / reusable packages",
+    "axis": "domain",
+    "match": "A public reusable library/API/package is the deliverable or changes observably.",
+    "exclude": "a project uses dependencies but only application internals change.",
+    "sources": [
+      "semver",
+      "cargo",
+      "pyproject"
+    ]
+  },
+  {
+    "path": "domains/systems-daemons.md",
+    "title": "Systems software / daemons / local IPC",
+    "axis": "domain",
+    "match": "The feature changes a long-lived service, IPC/protocol handler, process lifecycle or resource owner.",
+    "exclude": "Rust/C++ is present or an app launches unchanged tooling.",
+    "sources": [
+      "node",
+      "tokio-process"
+    ]
+  },
+  {
+    "path": "domains/cloud-platform-devops.md",
+    "title": "Cloud / platform / DevOps",
+    "axis": "domain",
+    "match": "Deployment/configuration/IaC/CI/service-operability behavior is the requested change.",
+    "exclude": "an app is deployed in cloud but only local business logic changes.",
+    "sources": [
+      "kubernetes"
+    ]
+  },
+  {
+    "path": "domains/data-engineering.md",
+    "title": "Data engineering / pipelines / analytics delivery",
+    "axis": "domain",
+    "match": "The change ingests/transforms/materializes datasets or alters delivery to analytical/operational consumers.",
+    "exclude": "Python/SQL exists or a page reads unchanged database fields.",
+    "sources": [
+      "airflow",
+      "sql"
+    ]
+  },
+  {
+    "path": "domains/ai-ml.md",
+    "title": "AI / ML / model-enabled features",
+    "axis": "domain",
+    "match": "The product change concerns training/evaluation/inference, retrieval, model outputs or agent/tool behavior.",
+    "exclude": "the coding assistant uses an LLM; every coded task is not an AI domain task.",
+    "sources": [
+      "ml"
+    ]
+  },
+  {
+    "path": "domains/scientific-computing.md",
+    "title": "Scientific / numerical / simulation software",
+    "axis": "domain",
+    "match": "The change computes a scientific/numerical result or modifies a simulation/analysis contract.",
+    "exclude": "Python/R/C++ exists; the domain follows the task outcome.",
+    "sources": [
+      "r",
+      "pytorch"
+    ]
+  },
+  {
+    "path": "domains/embedded-iot.md",
+    "title": "Embedded / IoT / device control",
+    "axis": "domain",
+    "match": "The feature changes firmware, hardware interaction, sensor/control pipeline or constrained-device state.",
+    "exclude": "C/Rust exists without a device boundary; do not infer hardware from language.",
+    "sources": [
+      "zephyr"
+    ]
+  },
+  {
+    "path": "domains/games-realtime.md",
+    "title": "Games / real-time interactive media",
+    "axis": "domain",
+    "match": "The feature changes gameplay, simulation/render timing, entity lifecycle or interactive media behavior.",
+    "exclude": "C#/C++/Lua exists; engine and language are separate.",
+    "sources": [
+      "godot"
+    ]
+  },
+  {
+    "path": "domains/full-stack.md",
+    "title": "Full-stack application delivery",
+    "axis": "domain",
+    "match": "One requested outcome crosses UI/client, service/data and direct readers.",
+    "exclude": "Only local frontend or backend behavior changes in a larger repository.",
+    "sources": [
+      "small-cl",
+      "pact"
+    ]
+  }
+]

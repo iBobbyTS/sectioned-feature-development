@@ -1,0 +1,1 @@
+帮我按照adaptive-debugging的这个思路（提前搜索学习归纳好知识，需要用的时候在skill内路由），更新到4.5：上网搜索传统开发和agentic开发时Plan步骤的最佳实践和不同类型项目的重点。在skill里做好文件路由，未命中时也要有一个可以通用的方案。下面是我做的比较多的类型（swift macos, python, rust, svelte, full stack），我目标的设计是可以同时命中多个组合，比如同时命中full stack、svelte和java来做一个全栈项目的规划（我只是举个例子，需要支持拼装，lmdo的项目并不是java后端）

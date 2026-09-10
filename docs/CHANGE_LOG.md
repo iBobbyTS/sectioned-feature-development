@@ -1,3 +1,21 @@
+# 4.5 — 2026-09-09
+
+## 4.5.1 — 规划知识按领域／语言分离
+
+- 原混合 domains 拆为独立工程 domains、languages、明确分类的 framework/runtime/platform adapters，并扩展常用覆盖；横切 concerns 不变。
+- 选择实际变更路径，允许多个维度组合和部分未知，不要求全轴命中或加载全库。
+- 迁移五个旧知识文件的职责，保留 shared boundary handoff、scope authority和原执行流程；只更新既有PLAN/reviewer/audit路由文字。
+- 九份运行脚本、安装器、配套 code-review 与模型绑定不变；不增加门禁或review。
+
+
+- 以当前上传4.4.1工作树为基线，保留 FINAL_ANSWER/completed 与 native/ZAS 序列规则。
+- 新增可组合规划知识库：通用回退、共享边界、full-stack、Swift/macOS、Python、Rust、Svelte、Java及四类横切 concern。
+- PLAN→producer HANDOFF→consumer TASK 传递同一具体请求/响应/状态样例；计划阶段标记 planned/source/observed，不伪造尚未执行的接口。
+- 主线程与独立 PLAN reviewer 按需读取；资料不产生新需求、模型升级、section/reviewer或框架。九个运行脚本、安装器与code-review逐字不变。
+- Audit复用现有文件记录路由、实际合同、遗漏类别与成本；没有新字段校验或额外运行。
+- 七个agent绑定不变，仅plan_reviewer指令增加路由。历史资料保持，不复制previous-version baseline。
+- 修正两项原输入已失败的历史归档测试，改核对真实输入哈希；无真实模型任务性能实验。
+
 # 4.4.1 — 2026-09-09
 
 - 明确 feature-wide PLAN 等待屏障、serial parent/child 真正闭合后的派发，以及预先批准的独立父级并行例外。

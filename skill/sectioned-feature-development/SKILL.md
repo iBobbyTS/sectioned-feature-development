@@ -3,7 +3,7 @@ name: sectioned-feature-development
 description: "Plan, delegate, review and deliver non-trivial changes as business sections with optional internal subsections. Use for roughly over 300 behavioral lines, over three owners, changed persistence/security/concurrency/routing/public-protocol/state semantics, an unclear impact cone or failed whole-change convergence. Merely touching a risky module does not trigger a small exact fix. Activate prospectively if work grows. Explicit invocation skips routine human plan approval, never a saved PLAN, independent review or real subagents. Automatic activation is announced and pauses after the first saved plan. Multiple sections/subsections require a dedicated branch and commits. Closed plans stay closed unless explicitly reopened. The agent schedules the workflow from readable artifacts; only basic section structure is mechanically checked, not JSON state, actor receipts or approval hashes. Preserves model tiers, safe parallelism, Astra/GLM reviews, external human Advisor and process audits."
 ---
 
-# Sectioned Feature Development 4.4.1
+# Sectioned Feature Development 4.5.1
 
 ## Core execution contract
 
@@ -43,7 +43,7 @@ Read this root file once per fresh context. Then load only the reference for the
 
 - Bootstrapping, handoffs, resumption and closure: [artifact lifecycle](references/artifact-lifecycle.md).
 - Trigger, late adoption, branch and actor responsibilities: [activation](references/activation-and-orchestration.md).
-- Authoring or materially changing a plan: [section planning](references/section-planning.md).
+- Authoring or materially changing a plan: [section planning](references/section-planning.md), then the [composable planning router](references/planning/router.md) and only its applicable files. The universal file is the unmatched-dimension fallback; do not preload the library.
 - First code review/repair: [bounded review](references/bounded-review.md).
 - Security, compatibility or mechanism-growth candidate: [scope control](references/scope-control.md).
 - Subsections / parallel work only when used: [subsections](references/subsections.md), [parallel execution](references/parallel-execution.md).
@@ -52,6 +52,14 @@ Read this root file once per fresh context. Then load only the reference for the
 - Hard cap / external Advisor only when triggered: [recovery](references/recovery-and-migration.md), [Advisor](references/advisor-escalation.md).
 - Final integration: [integration and tests](references/integration-and-testing.md).
 - Audit capture/finalization: [audit](references/audit-mode.md), with [ZAS companion](references/zas-audit.md) only if ZAS was used.
+
+## Composable planning knowledge, not additional authority
+
+During existing PLAN authoring, route from the real changed path using [planning/router.md](references/planning/router.md). Read the universal method plus applicable domain/language/adapter/concern files; Domains and languages are independent; frameworks, runtimes and platforms have separate adapter guides. Full-stack + Svelte + Java is valid only when actual source supports each axis. Unknown technology uses the universal fallback, not an invented stack or extra gate.
+
+Merge the selected questions into one PLAN. For a changed boundary, carry one concrete source-inspected/observed or explicitly planned request/response example through producer, real consumer and checks. Classify named consumers as EDIT, VERIFY_UNCHANGED or OUT_OF_SCOPE based on the approved outcome. Producer HANDOFF supplies the actual example; consumer TASK consumes that same contract rather than guessing keys, filtering or decoder semantics.
+
+The existing independent PLAN reviewer checks the selected evidence and missing seams in its one authorized pass. Domain count never creates a new section, model tier, reviewer, framework or acceptance criterion. Missing labels are not blockers without a concrete authority-backed failure. No routing script, JSON schedule, receipt, approval hash, routine web research or new gate is introduced. Details stay in the applicable references and existing PLAN/TASK/HANDOFF; accepted work is not reopened for this release.
 
 ## Authority, activation and Git
 

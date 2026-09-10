@@ -7,6 +7,9 @@
 - Approved outcome and parent invariant:
 - Allowed edit owners / direct inspect paths / exclusions:
 - Concrete AC and targeted checks:
+- Task-relevant planning reference/excerpt only (not the whole library):
+- Changed boundary example/source: producer request/response/encoding/state; SOURCE_INSPECTED / OBSERVED / PLANNED / UNKNOWN:
+- Consumer uses that same contract; named downstream readers to EDIT / VERIFY_UNCHANGED; actual client/check path:
 - For repair: admitted finding IDs, exact closure criteria and repair range:
 - Parent dispatch handoff: PLAN review/admission closed; prerequisite parent accepted+integrated or previous child checkpoint verified; current repair finding if applicable:
 - Other active actors / shared resources / candidate barrier; explicit reviewed-PLAN parallel exception if applicable:

@@ -11,6 +11,7 @@
 7. [Plan-review gate](#plan-review-gate)
 8. [Triggered plan-review lenses](#triggered-plan-review-lenses)
 9. [Examples](#examples)
+10. [Composable knowledge](#composable-knowledge)
 
 ## Purpose
 
@@ -27,6 +28,16 @@ The plan should answer:
 - What exact code and semantic impact cone may change?
 - Which behavior is deliberately not part of this section?
 - What evidence is sufficient to accept it?
+
+## Composable knowledge
+
+Before drafting section boundaries, read [planning/router.md](planning/router.md) and universal, then only domain/language/adapter/concern files activated by the actual changed path. Use its generic fallback for unknown stacks. This is the existing PLAN phase, not an extra review, pass, script or user approval.
+
+Record selected paths and short evidence-based reasons in PLAN. Resolve overlapping advice into one boundary/example and one check. The independent PLAN reviewer uses the same selected source references but not the author's prior conversation or another reviewer's verdict. A missing route name or unselected irrelevant checklist item never blocks; a concrete failure needs existing authority.
+
+For producer/consumer work, use [boundary-handoff](planning/boundary-handoff.md): original example -> actual request serialization -> owner/state -> response -> actual named consumers. Label source-inspected, observed, planned and unknown evidence. PLAN can specify a future test and its create-before-run owner; it need not execute unfinished code. Handoff replaces planned samples with actual producer evidence; consumers must use the same real shape.
+
+If a user-named downstream reader needs changes, give it an edit owner now, not only inspect permission or a late cleanup section. If unchanged, explain the source/check proving preservation. Do not split one invariant just to match library files or model names. Reuse the existing parent/subsection, assurance, scope and finite review policies below.
 
 ## Choose the first slice
 
@@ -155,7 +166,8 @@ Provide only:
 - repository rules/current production contracts;
 - relevant source/architecture seams needed to verify buildability;
 - PLAN-FULL and explicit exclusions;
-- validation tiers and any unresolved external assumptions.
+- validation tiers and any unresolved external assumptions;
+- selected planning reference paths/reasons, the shared boundary examples and named consumer ownership (no additional routing report).
 
 Do not prime the reviewer with a desired verdict or proposed additional architecture.
 
@@ -171,6 +183,8 @@ Review in this order; do not spend time making an unnecessary mechanism internal
 6. **Scope proportionality:** no process/evidence-only section, generalized hardening, future-proofing, or proof system; validation is tiered rather than broad-suite-per-edit.
 7. **Contract integrity:** section boundaries preserve correct intermediate states and do not hide cross-section API/schema/state mismatches.
 8. **Assurance proportionality:** `ONE`/`TWO` is explicit or resolved from actual semantic risk; module labels, repository size, or test count alone do not force dual evidence.
+
+Within these checks, verify that a selected domain/language/adapter/concern really occurs in the changed path and the concrete example survives the actual producer/consumer boundary. Route omissions matter only if they expose a material plan defect; a playbook suggestion alone is `PLAN_NIT` or `PLAN_SCOPE_EXPANSION`, not new authority. Distinguish PLAN_OMISSION from PLAN_ALREADY_REQUIRED_BUT_NOT_IMPLEMENTED; the latter is not solved by extending the plan indefinitely.
 
 It does not perform repository audit, propose a preferred architecture merely because it is cleaner, add unrequested edge cases, or write implementation details beyond the minimum correction needed to make the existing plan executable.
 

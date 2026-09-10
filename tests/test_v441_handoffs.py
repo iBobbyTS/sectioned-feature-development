@@ -8,8 +8,8 @@ import unittest
 R = Path(__file__).resolve().parents[1]
 S = R / 'skill/sectioned-feature-development'
 C = R / 'skill/code-review'
-V = R / 'docs/version-history/v4.4.1'
-BASE = json.loads((V/'BASELINE.json').read_text())
+V = R / 'docs/version-history/v4.5/appendix'
+BASE = json.loads((V/'PRESERVATION.json').read_text())
 
 def text(path):
     return path.read_text()
@@ -127,8 +127,8 @@ class V441HandoffContractTests(unittest.TestCase):
 
     def test_version_and_frontmatter(self):
         import re
-        self.assertEqual(text(R/'VERSION').strip(),'4.4.1')
-        self.assertEqual(text(S/'VERSION').strip(),'4.4.1')
+        self.assertEqual(text(R/'VERSION').strip(),'4.5.1')
+        self.assertEqual(text(S/'VERSION').strip(),'4.5.1')
         for skill in [S,C]:
             source=text(skill/'SKILL.md')
             match=re.match(r'^---\n(.*?)\n---\n',source,re.S)

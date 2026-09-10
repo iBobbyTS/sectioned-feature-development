@@ -1,0 +1,7 @@
+input,classification,evidence_status,use
+adaptive-debugging.zip,KNOWLEDGE_ARCHITECTURE,not-a-development-run,core+multi-domain routing; no debug workflow imported
+sectioned-feature-development(6).zip,PROJECT_BASELINE,not-an-audit-sample,actual 4.4.1 HEAD 50b3d43 plus dirty historic CSV preserved
+lmdo-website-musician-group-reorder-sectioned-audit.zip,PREVIOUSLY_ANALYZED_PROCESS,limited-original-rollout,payload/consumer/implementation handoff omissions; not a new merge audit
+zcode-mcp-mcp-public-contract-slim-20260909-sectioned-audit.zip,PREVIOUSLY_ANALYZED_PROCESS,insufficient-product-evidence,claims not independently verified; no new product findings
+two_tasks_v441_analysis/delivery/ANALYSIS.md,PRIOR_ANALYSIS,secondary-to-original-evidence,specific frontloading observations; do not recalculate missing metrics
+skill-creator.zip,PACKAGING_SPEC,not-an-audit-sample,Skill/metadata/progressive-reference validation spec

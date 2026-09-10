@@ -5,7 +5,9 @@ sys.path.insert(0,str(S/'scripts'));import zas_evidence as z
 class V44ContractTests(unittest.TestCase):
  def test_retired_execution_gates_not_installed(self):
   for f in ['workflow.py','execution_artifacts.py','advisor_flow.py']:
-   self.assertFalse((S/'scripts'/f).exists());self.assertTrue((R/'docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/scripts'/f).exists())
+   self.assertFalse((S/'scripts'/f).exists())
+  # Uploaded project contract deliberately excludes previous-version baselines.
+  # Actual supplied history bytes are covered by PRESERVATION.json tests.
  def test_no_machine_schedule_templates(self):
   self.assertFalse((S/'assets/STATE.template.json').exists());self.assertFalse((S/'assets/SUBSECTION-SCHEDULE.example.json').exists())
  def test_core_obligations_not_lost(self):

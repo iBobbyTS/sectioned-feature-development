@@ -1,0 +1,10 @@
+skill/sectioned-feature-development -> /home/oai/.codex/skills/sectioned-feature-development
+skill/code-review -> /home/oai/.codex/skills/code-review
+agents/code_explorer.toml -> /home/oai/.codex/agents/code_explorer.toml
+agents/code_reviewer.toml -> /home/oai/.codex/agents/code_reviewer.toml
+agents/impl_large.toml -> /home/oai/.codex/agents/impl_large.toml
+agents/impl_mini.toml -> /home/oai/.codex/agents/impl_mini.toml
+agents/impl_nano.toml -> /home/oai/.codex/agents/impl_nano.toml
+agents/impl_std.toml -> /home/oai/.codex/agents/impl_std.toml
+agents/plan_reviewer.toml -> /home/oai/.codex/agents/plan_reviewer.toml
+DRY_RUN: no files changed. --apply installs; --replace backs up existing targets first.

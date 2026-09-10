@@ -1,0 +1,9 @@
+./tmp/tmpbx9okqoe/demo-repo/.agent-work/audit/demo/TRACE.jsonl
+./tmp/tmpkvg3uio7/demo-repo/.agent-work/audit/demo/TRACE.jsonl
+./tmp/tmppfyhaedm/demo-repo/.agent-work/audit/demo/TRACE.jsonl
+./tmp/tmp_amkyj2b/demo-repo/.agent-work/audit/demo/TRACE.jsonl
+...........
+----------------------------------------------------------------------
+Ran 15 tests in 21.957s
+
+OK

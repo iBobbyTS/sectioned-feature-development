@@ -13,6 +13,16 @@
 写原始业务结果、已确认修正、真实输入/反例、现有生产合同与最小充分实现。
 不由 PLAN 自创需求，不为审核回执添加产品机制。
 
+## 规划知识路由与边界样例
+
+- 实际命中的 domain / language / adapter (framework/runtime/platform) / concern 文件、对应源码理由及关键版本限制：只列命中项；未知技术用 universal。
+- 多个模块合并到同一计划；选中资料不是新需求，不为每个模块新建 section、测试或 review。
+- 真实边界（如无则省略）：权威 → producer/serializer → 输入样例 → 状态/响应 → 实际 consumer → 可判错检查。
+- 样例来源：SOURCE_INSPECTED / OBSERVED / PLANNED / UNKNOWN；未实施接口不能伪装已运行。
+- 明确需求点名的读者：EDIT / VERIFY_UNCHANGED / OUT_OF_SCOPE 及必要理由；生产者 HANDOFF 和消费者 TASK 复用同一份样例。
+
+本段是人可读内容，没有新 JSON、路由校验器或审批门禁。一个局部改动不需要填满所有技术清单。
+
 ## 调度与最终验证
 
 - 顺序：S01，然后 S02。

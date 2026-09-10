@@ -16,6 +16,8 @@
 12. [Safety](#safety)
 13. [Final response](#final-response)
 
+14. [4.5 planning knowledge observations](#45-planning-knowledge-observations)
+
 ## Purpose and defaults
 
 Audit mode measures whether sectioned development improved correctness without creating avoidable planning, review, validation, or process work.
@@ -458,3 +460,15 @@ At real phase transitions, reuse the existing trace/FEATURE-STATE/review records
 Check for SEQUENCE_GATE_VIOLATION (PLAN/serial parent/child review still pending when successor spawned) and REVIEW_ROUTE_MISMATCH (native role satisfied by a ZAS job, wrong lifecycle tool family, or invented native proxy). An explicitly planned isolated independent parent overlap is not a violation. Distinguish missing telemetry from proven misconduct. Preserve actual outputs, stopped actors, any changed candidate, corrective dispatch and costs without resetting logical slots or repair budgets.
 
 Only an actual ZAS attempt belongs in the paired xxx-zas.zip; a native role label, failed native launch, or native override must not create fabricated ZAS evidence. These observations work from ordinary handoff records with audit OFF and never add review, validation or dispatch gates.
+
+## 4.5 planning knowledge observations
+
+Since 4.5.1, record selected domain, language, framework/runtime/platform adapter and concern independently in the same existing route notes. Record mistaken implication (for example Python→Django or Swift→macOS), unnecessary module loading and a missing-dimension fallback only when actually observed. Do not demand a selection in every dimension.
+
+Reuse the existing PLAN/TASK/HANDOFF/review/cost documents, not a new mandatory report or gate. Capture selected planning modules and source-based reasons, unmatched-stack fallback, a materially unresolved version/seam and any bounded lookup/probe actually done. Record which concrete request/response/encoding/state example was shared across the producer handoff and consumer task, and whether a user-named downstream reader was EDIT or VERIFY_UNCHANGED with evidence.
+
+For material findings classify the explanation, when evidence supports it, as ROUTE_MISSED, PLAN_OMISSION, PLAN_ALREADY_REQUIRED_BUT_NOT_IMPLEMENTED, IMPLEMENTATION_DEFECT, EVIDENCE_GAP or UNKNOWN. These are observational labels, not new admission classes or a second defect count. Distinguish a module not selected from the same risk already covered by other source evidence. A route label omission is not a product defect.
+
+Capture actual added reading/probe effort, duplicate research or repeat file loading when observable, and late consumer/contract repair. Do not claim that a library prevented a finding without a comparable task/result; record available outcomes and uncertainties. Do not request extra agents, rerun checks or reconstruct full histories merely to fill route metrics. New-library adoption does not invalidate accepted plans or require retroactive task rewriting.
+
+Existing typed main/ZAS pairing, audit OFF behavior and all product/review/safety policies stay unchanged. Copy actual relevant plan/task/handoff contents rather than path-only placeholder prose. The library is knowledge, not source of new acceptance criteria.

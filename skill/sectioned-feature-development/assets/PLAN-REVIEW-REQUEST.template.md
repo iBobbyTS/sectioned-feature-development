@@ -7,7 +7,14 @@ You are a fresh, read-only implementation-plan reviewer. Review the plan before 
 - Reviewer task/session ID:
 - This ID is distinct from the main agent and every future implementer/code reviewer: `yes`
 
+## Routed planning evidence
+
+Read the Sectioned Skill's `references/planning/router.md`, universal and only the selected applicable files. Confirm routes against the actual changed path; unknown technologies use the generic fallback. Check the concrete producer/consumer example (including serializer and filtered/global meaning) and user-named readers inside this existing pass. An omitted route label alone is not a blocker, and a library checklist cannot add authority. Do not spawn one reviewer per module, expand private implementation detail or request a fresh full review for wording. In PLAN_DELTA, inspect only the changed route/boundary and invalidated dependencies.
+
 ## Inputs
+
+- Selected planning reference paths + applicability/source reasons:
+- Shared boundary examples and consumer ownership; observed/source-inspected/planned/unknown labels:
 
 - Feature ID:
 - Original user request / later explicit decisions / superseded guidance:

@@ -1,0 +1,32 @@
+..................................................................................E...................F.
+======================================================================
+ERROR: test_history_and_unrelated_policies_unchanged (test_v441_handoffs.V441HandoffContractTests.test_history_and_unrelated_policies_unchanged)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/sfd45/output/sectioned-feature-development/tests/test_v441_handoffs.py", line 30, in test_history_and_unrelated_policies_unchanged
+    self.assertEqual(digest(R/name), value, name)
+                     ~~~~~~^^^^^^^^
+  File "/mnt/data/sfd45/output/sectioned-feature-development/tests/test_v441_handoffs.py", line 18, in digest
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.13/pathlib/_abc.py", line 625, in read_bytes
+    with self.open(mode='rb') as f:
+         ~~~~~~~~~^^^^^^^^^^^
+  File "/usr/lib/python3.13/pathlib/_local.py", line 539, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/mnt/data/sfd45/output/sectioned-feature-development/docs/version-history/v4.4/baseline-v3.9/SKILL.md'
+
+======================================================================
+FAIL: test_retired_execution_gates_not_installed (test_v44_contract.V44ContractTests.test_retired_execution_gates_not_installed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/sfd45/output/sectioned-feature-development/tests/test_v44_contract.py", line 8, in test_retired_execution_gates_not_installed
+    self.assertFalse((S/'scripts'/f).exists());self.assertTrue((R/'docs/version-history/v4.4/baseline-v4.3.1/skill/sectioned-feature-development/scripts'/f).exists())
+                                               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 104 tests in 25.469s
+
+FAILED (failures=1, errors=1)

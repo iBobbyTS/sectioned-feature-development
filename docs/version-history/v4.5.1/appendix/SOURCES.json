@@ -1,0 +1,292 @@
+{
+  "survey-tech": [
+    "Stack Overflow 2025 technology survey",
+    "https://survey.stackoverflow.co/2025/technology",
+    "Primary survey; broad coverage signal, not an unbiased census or a route oracle."
+  ],
+  "survey-roles": [
+    "Stack Overflow 2025 developer roles",
+    "https://survey.stackoverflow.co/2025/developers",
+    "Primary survey; role categories inform domain coverage; no market-share claim."
+  ],
+  "octoverse": [
+    "GitHub Octoverse 2025",
+    "https://github.blog/news-insights/octoverse/octoverse-a-new-developer-joins-github-every-second-as-ai-leads-typescript-to-1/",
+    "Primary repository-activity report; contributor activity is not job/task frequency."
+  ],
+  "small-cl": [
+    "Google small changes",
+    "https://google.github.io/eng-practices/review/developer/small-cls.html",
+    "Traditional engineering guidance, not a quantitative rule for section size."
+  ],
+  "pact": [
+    "Pact consumer guidance",
+    "https://docs.pact.io/consumer",
+    "Actual consumer code versus a test-only client; no mandatory Pact adoption."
+  ],
+  "semver": [
+    "Semantic Versioning 2.0.0",
+    "https://semver.org/",
+    "Applies if the project adopts this versioning contract; not authority to add compatibility."
+  ],
+  "js": [
+    "MDN promises",
+    "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises",
+    "Language/host asynchronous composition and cancellation distinction."
+  ],
+  "ts": [
+    "TypeScript narrowing",
+    "https://www.typescriptlang.org/docs/handbook/2/narrowing.html",
+    "Static refinement; inspect runtime validation separately."
+  ],
+  "python": [
+    "Python asyncio tasks",
+    "https://docs.python.org/3/library/asyncio-task.html",
+    "Current standard-library snapshot; actual interpreter version governs."
+  ],
+  "pyproject": [
+    "Python packaging pyproject",
+    "https://packaging.python.org/en/latest/guides/writing-pyproject-toml/",
+    "Metadata and installed entry-point planning."
+  ],
+  "java": [
+    "Dev.java exceptions",
+    "https://dev.java/learn/exceptions/",
+    "Language exception/resource handling; not a Spring contract."
+  ],
+  "csharp": [
+    "C# asynchronous programming",
+    "https://learn.microsoft.com/en-us/dotnet/csharp/asynchronous-programming/",
+    "Task composition and observation; actual target framework governs."
+  ],
+  "c": [
+    "Clang UndefinedBehaviorSanitizer",
+    "https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html",
+    "Examples of runtime UB detection; not complete proof or a required new sanitizer gate."
+  ],
+  "cpp": [
+    "C++ Core Guidelines",
+    "https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines",
+    "Ownership/RAII/interface guidance, not mandatory repository modernization."
+  ],
+  "go": [
+    "Go context",
+    "https://go.dev/blog/context",
+    "Go cancellation/deadline propagation; does not prescribe a server architecture."
+  ],
+  "rust": [
+    "Rust ownership",
+    "https://doc.rust-lang.org/book/ch04-00-understanding-ownership.html",
+    "Language resource ownership; no inference about Tokio."
+  ],
+  "cargo": [
+    "Cargo features",
+    "https://doc.rust-lang.org/cargo/reference/features.html",
+    "Supported build configurations, not a Cartesian test mandate."
+  ],
+  "swift": [
+    "Swift book concurrency source",
+    "https://raw.githubusercontent.com/swiftlang/swift-book/main/TSPL.docc/LanguageGuide/Concurrency.md",
+    "Official source used because rendered docs are a JavaScript shell."
+  ],
+  "kotlin": [
+    "Kotlin coroutines basics",
+    "https://kotlinlang.org/docs/coroutines-basics.html",
+    "Coroutine structure; actual kotlinx.coroutines dependency/configuration governs."
+  ],
+  "php": [
+    "PHP type juggling",
+    "https://www.php.net/manual/en/language.types.type-juggling.php",
+    "Conversion contexts and version sensitivity."
+  ],
+  "ruby": [
+    "Ruby IO",
+    "https://ruby-doc.org/3.4.1/IO.html",
+    "Reference API; deployed Ruby version governs."
+  ],
+  "dart": [
+    "Dart concurrency",
+    "https://dart.dev/language/concurrency",
+    "Event loop/isolate distinction; not a Flutter requirement."
+  ],
+  "sql": [
+    "PostgreSQL transaction isolation",
+    "https://www.postgresql.org/docs/current/transaction-iso.html",
+    "One database example only; never generalize its defaults to all SQL engines."
+  ],
+  "shell": [
+    "GNU Bash manual",
+    "https://www.gnu.org/software/bash/manual/html_node/Shell-Syntax.html",
+    "Official indexed manual text; direct page fetch timed out. POSIX versus Bash is explicitly distinguished."
+  ],
+  "pwsh": [
+    "PowerShell pipelines",
+    "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_pipelines",
+    "Object pipelines and native-command boundaries; host/version matter."
+  ],
+  "r": [
+    "R language definition",
+    "https://cran.r-project.org/doc/manuals/r-release/R-lang.html",
+    "Vector, missing-value and evaluation semantics."
+  ],
+  "lua": [
+    "Lua 5.4 manual",
+    "https://www.lua.org/manual/5.4/manual.html",
+    "Specific reference; LuaJIT/Luau/host variants must be separately confirmed."
+  ],
+  "html": [
+    "HTML forms specification",
+    "https://html.spec.whatwg.org/multipage/forms.html",
+    "Browser form semantics; CSS/layout checks remain concrete browser evidence."
+  ],
+  "svelte": [
+    "SvelteKit form actions",
+    "https://svelte.dev/docs/kit/form-actions",
+    "Form/action result encoding, not interchangeable with arbitrary JSON."
+  ],
+  "svelte-state": [
+    "SvelteKit state",
+    "https://svelte.dev/docs/kit/state-management",
+    "Request and navigation state boundaries."
+  ],
+  "react": [
+    "React effects",
+    "https://react.dev/learn/you-might-not-need-an-effect",
+    "Derived state and avoiding redundant effects."
+  ],
+  "next": [
+    "Next.js server/client components",
+    "https://nextjs.org/docs/app/getting-started/server-and-client-components",
+    "Router/version-specific server/client boundary."
+  ],
+  "vue": [
+    "Vue SSR",
+    "https://vuejs.org/guide/scaling-up/ssr.html",
+    "Request isolation and hydration; Nuxt-specific APIs require installed-version evidence."
+  ],
+  "angular": [
+    "Angular lifecycle",
+    "https://angular.dev/guide/components/lifecycle",
+    "Component initialization/update/destruction; not a change-detection migration mandate."
+  ],
+  "django": [
+    "Django 5.2 transactions",
+    "https://docs.djangoproject.com/en/5.2/topics/db/transactions/",
+    "Atomic/on_commit and in-memory state distinction."
+  ],
+  "django-migration": [
+    "Django 5.2 migrations",
+    "https://docs.djangoproject.com/en/5.2/topics/migrations/",
+    "Historical model state; inherited verified v4.5 source."
+  ],
+  "fastapi": [
+    "FastAPI async",
+    "https://fastapi.tiangolo.com/async/",
+    "Sync/async framework boundary; inspect actual dependency and client behavior."
+  ],
+  "spring": [
+    "Spring declarative transactions",
+    "https://docs.spring.io/spring-framework/reference/data-access/transaction/declarative/annotations.html",
+    "Proxy interception/self-invocation; configured rollback rules still need inspection."
+  ],
+  "spring-rollback": [
+    "Spring rollback rules",
+    "https://docs.spring.io/spring-framework/reference/data-access/transaction/declarative/rolling-back.html",
+    "Inherited v4.5 source; configuration/version qualify defaults."
+  ],
+  "aspnet": [
+    "ASP.NET Core DI",
+    "https://learn.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection",
+    "Actual service lifetime and scope boundary."
+  ],
+  "rails": [
+    "Rails callbacks",
+    "https://guides.rubyonrails.org/active_record_callbacks.html",
+    "Callback/transaction placement; not proof of external-effect atomicity."
+  ],
+  "laravel": [
+    "Laravel 12 queues",
+    "https://laravel.com/framework/docs/12.x/queues",
+    "Job execution/retry/commit ordering in a versioned framework."
+  ],
+  "flutter": [
+    "Flutter architecture guide",
+    "https://docs.flutter.dev/app-architecture/guide",
+    "State/data responsibilities; recommendations are not obligatory migrations."
+  ],
+  "swiftui": [
+    "Apple SwiftUI model data",
+    "https://developer.apple.com/documentation/SwiftUI/Model-data",
+    "Official indexed text supports source-of-truth/state/binding claims; dynamic page fetch was limited."
+  ],
+  "apple-distribution": [
+    "Apple Developer ID distribution",
+    "https://developer.apple.com/developer-id/",
+    "Inherited v4.5 source; packaging/entitlements only when changed."
+  ],
+  "apple-scenes": [
+    "Apple UIKit scenes",
+    "https://developer.apple.com/documentation/uikit/scenes",
+    "Official indexed text describes UI instances/lifecycle; no beta API adoption."
+  ],
+  "android": [
+    "Android app architecture",
+    "https://developer.android.com/topic/architecture",
+    "Process/component lifecycle and state ownership; no mandatory app rewrite."
+  ],
+  "node": [
+    "Node streams",
+    "https://nodejs.org/api/stream.html",
+    "Completion/backpressure/resource ownership; not a language definition."
+  ],
+  "tokio": [
+    "Tokio select",
+    "https://docs.rs/tokio/latest/tokio/macro.select.html",
+    "Operation-specific cancellation safety."
+  ],
+  "tokio-process": [
+    "Tokio process Command",
+    "https://docs.rs/tokio/latest/tokio/process/struct.Command.html",
+    "kill_on_drop is configurable; child lifecycle not proved by handle drop."
+  ],
+  "kubernetes": [
+    "Kubernetes pod lifecycle",
+    "https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/",
+    "Deployment lifecycle example only; Kubernetes is not assumed."
+  ],
+  "airflow": [
+    "Airflow best practices",
+    "https://airflow.apache.org/docs/apache-airflow/stable/best-practices.html",
+    "Partitioned/retriable tasks as one implementation example."
+  ],
+  "ml": [
+    "Google Rules of ML",
+    "https://developers.google.com/machine-learning/guides/rules-of-ml",
+    "Pipeline/metric and training-serving concerns; not a requirement for a new ML platform."
+  ],
+  "pytorch": [
+    "PyTorch reproducibility source",
+    "https://raw.githubusercontent.com/pytorch/pytorch/main/docs/source/notes/randomness.md",
+    "Official source fallback for redirected HTML; toolchain/device limits apply."
+  ],
+  "zephyr": [
+    "Zephyr interrupts",
+    "https://docs.zephyrproject.org/latest/kernel/services/interrupts.html",
+    "ISR context restrictions as one RTOS example, not all devices."
+  ],
+  "godot": [
+    "Godot idle/physics processing",
+    "https://docs.godotengine.org/en/stable/tutorials/scripting/idle_and_physics_processing.html",
+    "Different update clocks as one engine example."
+  ],
+  "openai-skills": [
+    "OpenAI build skills",
+    "https://developers.openai.com/codex/skills/",
+    "Current official progressive-disclosure guidance; not evidence of this Skill performance."
+  ],
+  "claude-skills": [
+    "Anthropic skill authoring",
+    "https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices",
+    "Current official variation/reference guidance; not a new workflow requirement."
+  ]
+}

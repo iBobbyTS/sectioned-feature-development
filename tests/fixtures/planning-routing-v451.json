@@ -1,0 +1,800 @@
+{
+  "kind": "manual_forward_evaluation_scenarios",
+  "automatic_model_evaluation_performed": false,
+  "common_load": [
+    "router.md",
+    "universal.md"
+  ],
+  "runtime_router_added": false,
+  "cases": [
+    {
+      "id": "python-cli",
+      "evidence": "A packaged Python command imports records into existing SQLite; import atomicity changes.",
+      "selected": {
+        "domains": [
+          "domains/cli-automation.md"
+        ],
+        "languages": [
+          "languages/python.md"
+        ],
+        "adapters": [],
+        "concerns": [
+          "concerns/data-evolution.md"
+        ]
+      },
+      "exclude": [
+        "adapters/frameworks/django.md",
+        "domains/full-stack.md"
+      ],
+      "oracle": "Only evidence-matched guidance; same actual owner/consumer contract.",
+      "fallback": null
+    },
+    {
+      "id": "python-service",
+      "evidence": "Python FastAPI handler changes request validation, sync I/O remains an existing dependency.",
+      "selected": {
+        "domains": [
+          "domains/backend-services.md"
+        ],
+        "languages": [
+          "languages/python.md"
+        ],
+        "adapters": [
+          "adapters/frameworks/fastapi.md"
+        ],
+        "concerns": []
+      },
+      "exclude": [
+        "adapters/frameworks/django.md",
+        "domains/ai-ml.md"
+      ],
+      "oracle": "Only evidence-matched guidance; same actual owner/consumer contract.",
+      "fallback": null
+    },
+    {
+      "id": "python-ml",
+      "evidence": "Python training feature changes target normalization and inference use of that feature.",
+      "selected": {
+        "domains": [
+          "domains/ai-ml.md"
+        ],
+        "languages": [
+          "languages/python.md"
+        ],
+        "adapters": [],
+        "concerns": []
+      },
+      "exclude": [],
+      "oracle": "Training/inference fixture and existing evaluation protocol; no language-based web assumptions.",
+      "fallback": null
+    },
+    {
+      "id": "python-data",
+      "evidence": "Python batch pipeline materializes partitioned rows for existing analytics reader.",
+      "selected": {
+        "domains": [
+          "domains/data-engineering.md"
+        ],
+        "languages": [
+          "languages/python.md",
+          "languages/sql.md"
+        ],
+        "adapters": [],
+        "concerns": [
+          "concerns/data-evolution.md"
+        ]
+      },
+      "exclude": [
+        "adapters/frameworks/django.md"
+      ],
+      "oracle": "Only evidence-matched guidance; same actual owner/consumer contract.",
+      "fallback": null
+    },
+    {
+      "id": "java-cli",
+      "evidence": "Java command reads a file and returns a typed machine-readable exit result.",
+      "selected": {
+        "domains": [
+          "domains/cli-automation.md"
+        ],
+        "languages": [
+          "languages/java.md"
+        ],
+        "adapters": [],
+        "concerns": []
+      },
+      "exclude": [
+        "adapters/frameworks/spring.md",
+        "domains/full-stack.md"
+      ],
+      "oracle": "Only evidence-matched guidance; same actual owner/consumer contract.",
+      "fallback": null
+    },
+    {
+      "id": "java-service",
+      "evidence": "Spring Java controller changes an actual transaction entry and wire DTO.",
+      "selected": {
+        "domains": [
+          "domains/backend-services.md"
+        ],
+        "languages": [
+          "languages/java.md"
+        ],
+        "adapters": [
+          "adapters/frameworks/spring.md"
+        ],
+        "concerns": [
+          "concerns/data-evolution.md"
+        ]
+      },
+      "exclude": [],
+      "oracle": "Only evidence-matched guidance; same actual owner/consumer contract.",
+      "fallback": null
+    },
+    {
+      "id": "svelte-java",
+      "evidence": "Svelte TypeScript client + existing Java Spring API change together.",
+      "selected": {
+        "domains": [
+          "domains/full-stack.md"
+        ],
+        "languages": [
+          "languages/typescript.md",
+          "languages/java.md"
+        ],
+        "adapters": [
+          "adapters/frameworks/svelte-sveltekit.md",
+          "adapters/frameworks/spring.md"
+        ],
+        "concerns": []
+      },
+      "exclude": [],
+      "oracle": "One real request/response and actual decoder, no one-section-per-route.",
+      "fallback": null
+    },
+    {
+      "id": "sveltekit-only",
+      "evidence": "Only SvelteKit TypeScript action/load and component change; no Java source.",
+      "selected": {
+        "domains": [
+          "domains/full-stack.md"
+        ],
+        "languages": [
+          "languages/typescript.md"
+        ],
+        "adapters": [
+          "adapters/frameworks/svelte-sveltekit.md"
+        ],
+        "concerns": []
+      },
+      "exclude": [
+        "languages/java.md",
+        "adapters/frameworks/spring.md"
+      ],
+      "oracle": "LMDO is not inferred to have Java from the user example.",
+      "fallback": null
+    },
+    {
+      "id": "typescript-cli",
+      "evidence": "TypeScript Node stream-based CLI changes cancellation/pipe closure.",
+      "selected": {
+        "domains": [
+          "domains/cli-automation.md"
+        ],
+        "languages": [
+          "languages/typescript.md"
+        ],
+        "adapters": [
+          "adapters/runtimes/nodejs.md"
+        ],
+        "concerns": [
+          "concerns/async-lifecycle.md"
+        ]
+      },
+      "exclude": [
+        "domains/web-frontend.md",
+        "adapters/frameworks/react.md"
+      ],
+      "oracle": "Only evidence-matched guidance; same actual owner/consumer contract.",
+      "fallback": null
+    },
+    {
+      "id": "javascript-node-api",
+      "evidence": "Plain JavaScript Node API changes streaming responses.",
+      "selected": {
+        "domains": [
+          "domains/backend-services.md"
+        ],
+        "languages": [
+          "languages/javascript.md"
+        ],
+        "adapters": [
+          "adapters/runtimes/nodejs.md"
+        ],
+        "concerns": []
+      },
+      "exclude": [
+        "languages/typescript.md",
+        "adapters/frameworks/nextjs.md"
+      ],
+      "oracle": "Only evidence-matched guidance; same actual owner/consumer contract.",
+      "fallback": null
+    },
+    {
+      "id": "react-component",
+      "evidence": "React TypeScript interaction changes locally; backend remains unchanged.",
+      "selected": {
+        "domains": [
+          "domains/web-frontend.md"
+        ],
+        "languages": [
+          "languages/typescript.md"
+        ],
+        "adapters": [
+          "adapters/frameworks/react.md"
+        ],
+        "concerns": []
+      },
+      "exclude": [
+        "domains/full-stack.md",
+        "adapters/frameworks/nextjs.md"
+      ],
+      "oracle": "Only evidence-matched guidance; same actual owner/consumer contract.",
+      "fallback": null
+    },
+    {
+      "id": "next-fullstack",
+      "evidence": "Next.js TypeScript server-client serialization boundary changes, no separate effect issue.",
+      "selected": {
+        "domains": [
+          "domains/full-stack.md"
+        ],
+        "languages": [
+          "languages/typescript.md"
+        ],
+        "adapters": [
+          "adapters/frameworks/nextjs.md"
+        ],
+        "concerns": []
+      },
+      "exclude": [
+        "adapters/frameworks/react.md"
+      ],
+      "oracle": "Do not load React solely for hierarchy; choose if a separate state/effect concern arises.",
+      "fallback": null
+    },
+    {
+      "id": "vue-ssr",
+      "evidence": "Vue TypeScript SSR app changes request state isolation; Nuxt absent.",
+      "selected": {
+        "domains": [
+          "domains/full-stack.md"
+        ],
+        "languages": [
+          "languages/typescript.md"
+        ],
+        "adapters": [
+          "adapters/frameworks/vue-nuxt.md"
+        ],
+        "concerns": []
+      },
+      "exclude": [],
+      "oracle": "Use Vue SSR facts; do not prescribe Nuxt APIs.",
+      "fallback": null
+    },
+    {
+      "id": "angular-dotnet",
+      "evidence": "Angular TypeScript client and C# ASP.NET service response change.",
+      "selected": {
+        "domains": [
+          "domains/full-stack.md"
+        ],
+        "languages": [
+          "languages/typescript.md",
+          "languages/csharp.md"
+        ],
+        "adapters": [
+          "adapters/frameworks/angular.md",
+          "adapters/frameworks/aspnet-core.md"
+        ],
+        "concerns": []
+      },
+      "exclude": [],
+      "oracle": "Only evidence-matched guidance; same actual owner/consumer contract.",
+      "fallback": null
+    },
+    {
+      "id": "swift-server",
+      "evidence": "Swift Linux server route changes; no native UI.",
+      "selected": {
+        "domains": [
+          "domains/backend-services.md"
+        ],
+        "languages": [
+          "languages/swift.md"
+        ],
+        "adapters": [],
+        "concerns": []
+      },
+      "exclude": [
+        "adapters/platforms/macos.md",
+        "adapters/frameworks/swiftui-appkit.md"
+      ],
+      "oracle": "Only evidence-matched guidance; same actual owner/consumer contract.",
+      "fallback": "framework adapter"
+    },
+    {
+      "id": "swift-macos",
+      "evidence": "SwiftUI macOS window starts/cancels Rust helper; Rust is synchronous.",
+      "selected": {
+        "domains": [
+          "domains/desktop-apps.md",
+          "domains/systems-daemons.md"
+        ],
+        "languages": [
+          "languages/swift.md",
+          "languages/rust.md"
+        ],
+        "adapters": [
+          "adapters/frameworks/swiftui-appkit.md",
+          "adapters/platforms/macos.md"
+        ],
+        "concerns": [
+          "concerns/async-lifecycle.md"
+        ]
+      },
+      "exclude": [
+        "adapters/runtimes/tokio.md"
+      ],
+      "oracle": "Only evidence-matched guidance; same actual owner/consumer contract.",
+      "fallback": null
+    },
+    {
+      "id": "swift-mobile",
+      "evidence": "SwiftUI iOS scene state is changed.",
+      "selected": {
+        "domains": [
+          "domains/mobile-apps.md"
+        ],
+        "languages": [
+          "languages/swift.md"
+        ],
+        "adapters": [
+          "adapters/frameworks/swiftui-appkit.md",
+          "adapters/platforms/apple-mobile.md"
+        ],
+        "concerns": []
+      },
+      "exclude": [
+        "adapters/platforms/macos.md"
+      ],
+      "oracle": "No AppKit NSView/window or Mac signing rules applied to this scene.",
+      "fallback": null
+    },
+    {
+      "id": "kotlin-server",
+      "evidence": "Kotlin JVM server service changes; Android absent.",
+      "selected": {
+        "domains": [
+          "domains/backend-services.md"
+        ],
+        "languages": [
+          "languages/kotlin.md"
+        ],
+        "adapters": [],
+        "concerns": []
+      },
+      "exclude": [
+        "languages/java.md",
+        "adapters/platforms/android.md"
+      ],
+      "oracle": "Only evidence-matched guidance; same actual owner/consumer contract.",
+      "fallback": "server framework"
+    },
+    {
+      "id": "kotlin-android",
+      "evidence": "Kotlin Android lifecycle-bound request changes.",
+      "selected": {
+        "domains": [
+          "domains/mobile-apps.md"
+        ],
+        "languages": [
+          "languages/kotlin.md"
+        ],
+        "adapters": [
+          "adapters/platforms/android.md"
+        ],
+        "concerns": [
+          "concerns/async-lifecycle.md"
+        ]
+      },
+      "exclude": [],
+      "oracle": "Only evidence-matched guidance; same actual owner/consumer contract.",
+      "fallback": null
+    },
+    {
+      "id": "dart-flutter",
+      "evidence": "Flutter Dart mobile screen changes request state.",
+      "selected": {
+        "domains": [
+          "domains/mobile-apps.md"
+        ],
+        "languages": [
+          "languages/dart.md"
+        ],
+        "adapters": [
+          "adapters/frameworks/flutter.md"
+        ],
+        "concerns": []
+      },
+      "exclude": [
+        "languages/kotlin.md",
+        "languages/swift.md"
+      ],
+      "oracle": "Only evidence-matched guidance; same actual owner/consumer contract.",
+      "fallback": null
+    },
+    {
+      "id": "csharp-desktop",
+      "evidence": "C# desktop view model changes; ASP.NET absent.",
+      "selected": {
+        "domains": [
+          "domains/desktop-apps.md"
+        ],
+        "languages": [
+          "languages/csharp.md"
+        ],
+        "adapters": [],
+        "concerns": []
+      },
+      "exclude": [
+        "adapters/frameworks/aspnet-core.md"
+      ],
+      "oracle": "Only evidence-matched guidance; same actual owner/consumer contract.",
+      "fallback": "Windows UI framework"
+    },
+    {
+      "id": "go-service",
+      "evidence": "Go handler changes timeout propagation.",
+      "selected": {
+        "domains": [
+          "domains/backend-services.md"
+        ],
+        "languages": [
+          "languages/go.md"
+        ],
+        "adapters": [],
+        "concerns": [
+          "concerns/async-lifecycle.md"
+        ]
+      },
+      "exclude": [
+        "languages/java.md",
+        "adapters/runtimes/nodejs.md"
+      ],
+      "oracle": "Only evidence-matched guidance; same actual owner/consumer contract.",
+      "fallback": null
+    },
+    {
+      "id": "rust-sync",
+      "evidence": "Synchronous Rust crate exports a new typed conversion; no runtime.",
+      "selected": {
+        "domains": [
+          "domains/libraries-sdks.md"
+        ],
+        "languages": [
+          "languages/rust.md"
+        ],
+        "adapters": [],
+        "concerns": []
+      },
+      "exclude": [
+        "adapters/runtimes/tokio.md",
+        "concerns/async-lifecycle.md"
+      ],
+      "oracle": "Only evidence-matched guidance; same actual owner/consumer contract.",
+      "fallback": null
+    },
+    {
+      "id": "rust-tokio",
+      "evidence": "Tokio Rust daemon shutdown and pipe handling changes.",
+      "selected": {
+        "domains": [
+          "domains/systems-daemons.md"
+        ],
+        "languages": [
+          "languages/rust.md"
+        ],
+        "adapters": [
+          "adapters/runtimes/tokio.md"
+        ],
+        "concerns": [
+          "concerns/async-lifecycle.md"
+        ]
+      },
+      "exclude": [],
+      "oracle": "Only evidence-matched guidance; same actual owner/consumer contract.",
+      "fallback": null
+    },
+    {
+      "id": "c-firmware",
+      "evidence": "C firmware ISR/DMA buffer ownership changes in an actual RTOS.",
+      "selected": {
+        "domains": [
+          "domains/embedded-iot.md"
+        ],
+        "languages": [
+          "languages/c.md"
+        ],
+        "adapters": [],
+        "concerns": []
+      },
+      "exclude": [
+        "languages/cpp.md"
+      ],
+      "oracle": "Only evidence-matched guidance; same actual owner/consumer contract.",
+      "fallback": "actual RTOS/board"
+    },
+    {
+      "id": "cpp-game",
+      "evidence": "C++ game simulation changes fixed-tick update.",
+      "selected": {
+        "domains": [
+          "domains/games-realtime.md"
+        ],
+        "languages": [
+          "languages/cpp.md"
+        ],
+        "adapters": [],
+        "concerns": []
+      },
+      "exclude": [
+        "domains/embedded-iot.md"
+      ],
+      "oracle": "Only evidence-matched guidance; same actual owner/consumer contract.",
+      "fallback": "actual engine"
+    },
+    {
+      "id": "lua-extension",
+      "evidence": "Lua extension for a non-game host changes bindings.",
+      "selected": {
+        "domains": [
+          "domains/libraries-sdks.md"
+        ],
+        "languages": [
+          "languages/lua.md"
+        ],
+        "adapters": [],
+        "concerns": []
+      },
+      "exclude": [
+        "domains/games-realtime.md"
+      ],
+      "oracle": "Only evidence-matched guidance; same actual owner/consumer contract.",
+      "fallback": "host binding"
+    },
+    {
+      "id": "php-laravel",
+      "evidence": "PHP Laravel job dispatch/commit sequence changes.",
+      "selected": {
+        "domains": [
+          "domains/backend-services.md"
+        ],
+        "languages": [
+          "languages/php.md"
+        ],
+        "adapters": [
+          "adapters/frameworks/laravel.md"
+        ],
+        "concerns": [
+          "concerns/async-lifecycle.md",
+          "concerns/data-evolution.md"
+        ]
+      },
+      "exclude": [],
+      "oracle": "Only evidence-matched guidance; same actual owner/consumer contract.",
+      "fallback": null
+    },
+    {
+      "id": "ruby-rails",
+      "evidence": "Ruby Rails save callback sends existing outbound notification.",
+      "selected": {
+        "domains": [
+          "domains/backend-services.md"
+        ],
+        "languages": [
+          "languages/ruby.md"
+        ],
+        "adapters": [
+          "adapters/frameworks/rails.md"
+        ],
+        "concerns": [
+          "concerns/data-evolution.md"
+        ]
+      },
+      "exclude": [],
+      "oracle": "Only evidence-matched guidance; same actual owner/consumer contract.",
+      "fallback": null
+    },
+    {
+      "id": "r-science",
+      "evidence": "R analysis package changes missing-value/shape handling.",
+      "selected": {
+        "domains": [
+          "domains/scientific-computing.md"
+        ],
+        "languages": [
+          "languages/r.md"
+        ],
+        "adapters": [],
+        "concerns": []
+      },
+      "exclude": [
+        "domains/ai-ml.md",
+        "languages/python.md"
+      ],
+      "oracle": "Only evidence-matched guidance; same actual owner/consumer contract.",
+      "fallback": null
+    },
+    {
+      "id": "bash-deploy",
+      "evidence": "Existing POSIX/Bash release script changes pipe failure handling.",
+      "selected": {
+        "domains": [
+          "domains/cloud-platform-devops.md"
+        ],
+        "languages": [
+          "languages/bash-posix-shell.md"
+        ],
+        "adapters": [],
+        "concerns": []
+      },
+      "exclude": [
+        "languages/powershell.md"
+      ],
+      "oracle": "Actual shell dialect; no Bash arrays/pipefail imposed on POSIX sh.",
+      "fallback": null
+    },
+    {
+      "id": "powershell-deploy",
+      "evidence": "PowerShell native-command pipeline deploy task changes.",
+      "selected": {
+        "domains": [
+          "domains/cloud-platform-devops.md"
+        ],
+        "languages": [
+          "languages/powershell.md"
+        ],
+        "adapters": [],
+        "concerns": []
+      },
+      "exclude": [
+        "languages/bash-posix-shell.md"
+      ],
+      "oracle": "Only evidence-matched guidance; same actual owner/consumer contract.",
+      "fallback": null
+    },
+    {
+      "id": "html-css",
+      "evidence": "HTML/CSS form semantics/layout changes; JS is unchanged.",
+      "selected": {
+        "domains": [
+          "domains/web-frontend.md"
+        ],
+        "languages": [
+          "languages/html-css.md"
+        ],
+        "adapters": [
+          "adapters/platforms/browser.md"
+        ],
+        "concerns": []
+      },
+      "exclude": [
+        "languages/javascript.md",
+        "adapters/frameworks/react.md"
+      ],
+      "oracle": "Only evidence-matched guidance; same actual owner/consumer contract.",
+      "fallback": null
+    },
+    {
+      "id": "sql-dialect",
+      "evidence": "SQL query changes on SQLite, no Python implementation changes.",
+      "selected": {
+        "domains": [
+          "domains/backend-services.md"
+        ],
+        "languages": [
+          "languages/sql.md"
+        ],
+        "adapters": [],
+        "concerns": []
+      },
+      "exclude": [
+        "languages/python.md",
+        "adapters/frameworks/django.md"
+      ],
+      "oracle": "Do not assume PostgreSQL isolation defaults.",
+      "fallback": "SQLite-specific contract"
+    },
+    {
+      "id": "partial-unknown",
+      "evidence": "Svelte TypeScript client + unlisted Elixir backend changed together.",
+      "selected": {
+        "domains": [
+          "domains/full-stack.md"
+        ],
+        "languages": [
+          "languages/typescript.md"
+        ],
+        "adapters": [
+          "adapters/frameworks/svelte-sveltekit.md"
+        ],
+        "concerns": []
+      },
+      "exclude": [
+        "languages/java.md",
+        "languages/python.md"
+      ],
+      "oracle": "Svelte + an unknown backend keeps known matches and universal, not a forced substitute.",
+      "fallback": "Elixir language/framework"
+    },
+    {
+      "id": "unknown-domain",
+      "evidence": "Unlisted language in a new domain, user already chose sectioned; source ABI unknown.",
+      "selected": {
+        "domains": [],
+        "languages": [],
+        "adapters": [],
+        "concerns": [
+          "concerns/external-integration.md"
+        ]
+      },
+      "exclude": [],
+      "oracle": "universal core and targeted source/probe; missing playbook is not a blocker.",
+      "fallback": "domain/language/adapter"
+    },
+    {
+      "id": "host-not-target",
+      "evidence": "Developer is on macOS; changed product is Python API only.",
+      "selected": {
+        "domains": [
+          "domains/backend-services.md"
+        ],
+        "languages": [
+          "languages/python.md"
+        ],
+        "adapters": [],
+        "concerns": []
+      },
+      "exclude": [
+        "adapters/platforms/macos.md",
+        "domains/desktop-apps.md"
+      ],
+      "oracle": "Only evidence-matched guidance; same actual owner/consumer contract.",
+      "fallback": null
+    },
+    {
+      "id": "unused-stack",
+      "evidence": "Svelte JS component changes; repository contains untouched Java/Python code.",
+      "selected": {
+        "domains": [
+          "domains/web-frontend.md"
+        ],
+        "languages": [
+          "languages/javascript.md"
+        ],
+        "adapters": [
+          "adapters/frameworks/svelte-sveltekit.md"
+        ],
+        "concerns": []
+      },
+      "exclude": [
+        "languages/java.md",
+        "languages/python.md",
+        "domains/full-stack.md"
+      ],
+      "oracle": "Only evidence-matched guidance; same actual owner/consumer contract.",
+      "fallback": null
+    }
+  ]
+}
