@@ -1,0 +1,10 @@
+skill/sectioned-feature-development -> <default-CODEX_HOME>/skills/sectioned-feature-development
+skill/code-review -> <default-CODEX_HOME>/skills/code-review
+agents/code_explorer.toml -> <default-CODEX_HOME>/agents/code_explorer.toml
+agents/code_reviewer.toml -> <default-CODEX_HOME>/agents/code_reviewer.toml
+agents/impl_large.toml -> <default-CODEX_HOME>/agents/impl_large.toml
+agents/impl_mini.toml -> <default-CODEX_HOME>/agents/impl_mini.toml
+agents/impl_nano.toml -> <default-CODEX_HOME>/agents/impl_nano.toml
+agents/impl_std.toml -> <default-CODEX_HOME>/agents/impl_std.toml
+agents/plan_reviewer.toml -> <default-CODEX_HOME>/agents/plan_reviewer.toml
+DRY_RUN: no files changed. --apply installs; --replace backs up existing targets first.

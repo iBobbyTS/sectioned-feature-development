@@ -1,0 +1,5 @@
+source_id,source,kind,use
+prior-analysis,ANALYSIS.md,SOURCE_ANALYSIS,已完成的Audit交接缺失核查；本次仅据此修改说明
+prior-evidence,EVIDENCE.md,SOURCE_EVIDENCE,原文片段与版本范围；不重新导出rollout
+prior-metrics,METRICS.json,SOURCE_METRICS,仅保留原分析口径，不再计算产品效率
+current-code,sectioned-feature-development(8).zip,SKILL_BASELINE,753c9ff实际工作树；含3份历史CSV修改

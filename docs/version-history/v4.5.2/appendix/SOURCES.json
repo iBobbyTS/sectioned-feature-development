@@ -1,0 +1,23 @@
+{
+  "baseline_head": "753c9ff",
+  "baseline_version": "4.5.1",
+  "input_archive": "sectioned-feature-development(8).zip",
+  "input_archive_sha256": "d5f58248d0eff16c364f231275fbd89e3b9bd027f442371b075c0ddb992ed16b",
+  "analysis_sources": [
+    {
+      "name": "ANALYSIS.md",
+      "sha256": "5c8250f23995108bf83e4255e969463003fad66b5c3565f22c1850571c405735"
+    },
+    {
+      "name": "EVIDENCE.md",
+      "sha256": "00e7b85e960f6546a1e2d37eefb22f20645fd77eae5d44339e90da230db5fd80"
+    },
+    {
+      "name": "METRICS.json",
+      "sha256": "4bcf5cbd2fe2d63cf21af2a26e8eed9b9c3990c122cbee0bdd0388e31715246c"
+    }
+  ],
+  "new_external_research": false,
+  "product_remediation_performed": false,
+  "raw_rollouts_copied": false
+}

@@ -122,8 +122,8 @@ class V45PlanningKnowledgeTests(unittest.TestCase):
             self.assertFalse((S/'scripts'/name).exists())
 
     def test_version_is_primary_only_no_companion_protocol_bump(self):
-        self.assertEqual(text(R/'VERSION').strip(),'4.5.1')
-        self.assertEqual(text(S/'VERSION').strip(),'4.5.1')
+        self.assertEqual(text(R/'VERSION').strip(),'4.5.2')
+        self.assertEqual(text(S/'VERSION').strip(),'4.5.2')
         self.assertIn('sfd-delegated-review/4.2',text(R/'skill/code-review/references/delegated-pass.md'))
 
     def test_preserves_local_native_final_event_condition(self):

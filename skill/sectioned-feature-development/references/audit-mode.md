@@ -29,14 +29,29 @@ While this skill is under evaluation:
 - a request after work started uses `POST_HOC` for earlier events and `LIVE` from adoption onward;
 - audit does not authorize or require more implementation, reviewers, tests, probes, or product scope.
 
-Record the mode in `FEATURE-STATE.md` before planning. Initialize:
+Before planning, or resumed dispatch in a fresh context, main reads this reference once and records the following in existing `FEATURE-STATE.md`:
+
+```text
+Audit mode: LIVE (default) / OFF (explicit user instruction and provenance)
+Audit scope: current feature/run + actual evidence location + available source-session pointers
+Audit delivery: PENDING (while active) / COMPLETE / INCOMPLETE / OFF
+Audit next: preserve phase evidence; finalize after product closure
+```
+
+This is ordinary prose, not a required JSON schema or a script gate. A one-section, no-commit, explicitly invoked or continued task does not opt out. When OFF, no telemetry/pack is required, but all execution/review/check obligations remain.
+
+Create or reuse the current-feature evidence location and exact requirement record. The existing helper layout is:
 
 ```text
 .agent-work/audit/{feature-id}/
-├── TRACE.jsonl
+├── TRACE.jsonl       # when the optional trace helper is used
 ├── REQUIREMENTS.md
-└── PACK-STATE.json
+└── PACK-STATE.json    # written by the finalizer, not a startup prerequisite
 ```
+
+Use one authoritative requirement record and save actual returned results once; references may point to existing PLAN/TASK/HANDOFF/REVIEW/evidence files until pack assembly. Do not hand-maintain duplicate business contracts or synthesize receipts for dispatch.
+
+On takeover/compaction, carry this same feature's Audit mode/authority, evidence scope, source sessions and pending delivery. A missing state line is not evidence of `audit off`: retain LIVE prospectively and mark earlier capture gaps UNKNOWN/RECONSTRUCTED. A continuation is not another feature/sample. Inspect only the relevant gap, not every historical session. Ordinary status replies, owner pauses and interruptions preserve PENDING; no ZIP is required per turn.
 
 The audit working pack lives at:
 
@@ -105,7 +120,7 @@ If Grill Me was not used, write `Grill Me: not used`. If the session source is u
 
 ## Live trace
 
-Use `scripts/audit_trace.py`. Record major events only:
+At the real phase transition, retain the original result plus a concise note in existing artifacts, or append through `scripts/audit_trace.py` when convenient. Main owns capture and final assembly; workers return their actual work/check results and do not build separate audit packs. Record major events only:
 
 - audit/requirement initialization and user corrections;
 - invocation source, trigger/negative evidence, activation announcement, and automatic-plan approval outcome;
@@ -147,25 +162,25 @@ Product readiness and audit delivery are separate. A feature may be `mergeable` 
 
 ## Completion obligation
 
-When audit is active, the main agent must not send the final feature-completion response until one of these is true:
+When product implementation, required review and final checks close, mark the business PLAN closed at its actual candidate. In FEATURE-STATE keep the product/readiness verdict separately from `Audit delivery: PENDING` and `Next: finalize current-feature audit`. A closed product PLAN is not permission to drop the audit, reopen the business scope, or set `Next: none`.
 
-- `PACK-STATE.json` is `COMPLETE` and the canonical ZIP verifies; or
-- one bounded correction attempt failed and the response explicitly reports `AUDIT_PACK_INCOMPLETE`, the preserved working-pack path, and the validator error.
+Before the final feature-delivery response, main must establish and explicitly report one outcome:
 
-Before implementation begins, set:
+- **COMPLETE:** the canonical main ZIP verifies and every required `xxx-zas.zip` verifies against that parent; give actual paths and the pack's separate status/telemetry/evidence gaps. A verified COMPLETE_WITH_GAPS pack is deliverable with its limitations, not a claim of complete measurements.
+- **OFF:** cite the explicit user instruction that disabled audit. Omission from state, a new session, one section, no commits or unavailable application checks do not establish OFF.
+- **AUDIT_PACK_INCOMPLETE:** report the real packaging obstacle, actual attempt and at most one bounded artifact-only correction, and the preserved working path. If invocation was impossible (tool/permission unavailable or explicit interruption), say so instead of inventing a validator failure. Missing/stale required ZAS pairing is incomplete even if the parent ZIP already exists.
 
-```text
-audit_pack_required = yes
-audit_pack_state = PENDING
-```
+Use the existing finalizer receipt when produced; do not create fake `PACK-STATE.json` or normalized events to obtain permission to proceed. No repeated correction loop, timestamped ZIP series or unperformed finalizer failure claim. Product readiness remains whatever its real code/review/check evidence supports; Audit delivery may remain incomplete without inventing a product defect.
 
-At `feature_completed`, immediately transition to audit finalization. Context compaction does not remove this obligation; reread `FEATURE-STATE.md` and `PACK-STATE.json` before final reporting.
+At `feature_completed`, proceed to Audit assembly/finalization before the final feature handoff. Compaction/takeover inherits this duty: reread FEATURE-STATE and any already-existing receipt/pair state as relevant. A progress reply, owner decision or interrupted execution keeps PENDING; it need not finalize the entire pack on that turn.
 
-Do not rely on memory or a final checklist buried in prior context.
+A later request is classified separately and does not erase an unfinished audit of the closed feature. Keep original candidate/source evidence separate; an earlier CLEAN cannot cover a later code delta. Do not reactivate accepted sections or redo old projects merely to adopt this updated description.
 
 ## Canonical pack workflow
 
 ### 1. Prepare once
+
+Main assembles the existing current-feature requirements, actual PLAN history, HANDOFF/review results, checks, source/Git evidence and relevant session excerpts. Copy the contents or exact included evidence, not prose placeholders saying only that a file exists on the local machine. Missing original material is a gap; do not rerun product work to replace it.
 
 Populate the working pack under:
 
@@ -383,7 +398,9 @@ A local config may be represented by a redacted schema/diff summary when it is p
 
 ## Final response
 
-Report only:
+For the final feature handoff, state product readiness separately and include the explicit Audit COMPLETE / OFF / AUDIT_PACK_INCOMPLETE outcome from Completion obligation. Give the actual main/required companion paths when delivered; otherwise give user OFF authority or the actual obstacle and retained working directory. Do not imply the whole workflow is complete while Audit is silently pending.
+
+For an audit-focused summary use the following existing fields; this full table is not required on every development status reply:
 
 ```text
 Pack status:

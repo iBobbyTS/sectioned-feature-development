@@ -3,20 +3,34 @@ name: sectioned-feature-development
 description: "Plan, delegate, review and deliver non-trivial changes as business sections with optional internal subsections. Use for roughly over 300 behavioral lines, over three owners, changed persistence/security/concurrency/routing/public-protocol/state semantics, an unclear impact cone or failed whole-change convergence. Merely touching a risky module does not trigger a small exact fix. Activate prospectively if work grows. Explicit invocation skips routine human plan approval, never a saved PLAN, independent review or real subagents. Automatic activation is announced and pauses after the first saved plan. Multiple sections/subsections require a dedicated branch and commits. Closed plans stay closed unless explicitly reopened. The agent schedules the workflow from readable artifacts; only basic section structure is mechanically checked, not JSON state, actor receipts or approval hashes. Preserves model tiers, safe parallelism, Astra/GLM reviews, external human Advisor and process audits."
 ---
 
-# Sectioned Feature Development 4.5.1
+# Sectioned Feature Development 4.5.2
 
 ## Core execution contract
 
 **The main agent schedules; scripts do not grant permission to proceed.** Keep the reviewed business contract, real delegated work, tests and independent review. Do not make a new workflow programming project out of an implementation task.
 
-1. Main reads the task and repository rules, identifies the actual feature/base/branch, writes a complete canonical `.agent-work/PLAN-FULL.md`, and maintains one concise `FEATURE-STATE.md`.
+1. Main reads the task and repository rules, identifies the actual feature/base/branch, and records the Audit mode, evidence scope and delivery pending state as specified below **before planning or resumed dispatch**. Main writes a complete canonical `.agent-work/PLAN-FULL.md` and maintains one concise `FEATURE-STATE.md`.
 2. Run `section_plan.py validate` once for the first plan and after structural changes to IDs, dependencies, parents or planned implementation roles. It checks only that structure. Ordinary wording edits do not require another run.
 3. Obtain an actual independent PLAN review, save its result once, and record main's candidate admission. Ordinary plan-only corrections do not require a new reviewer APPROVED at a matching hash.
 4. For each ready section/subsection, save a bounded TASK, **actually spawn the planned implementer**, wait for its real result, save a HANDOFF, and freeze the product candidate before review.
 5. Main admits real findings; a delegated worker repairs them; reviewers verify the bounded delta and required independent final evidence. Record real IDs and checks, not fabricated schema receipts.
-6. Accept the parent only with required coverage, closed findings and tests. Integrate accepted work, validate the final product head, close the plan, finalize audit if enabled, and report.
+6. Accept the parent only with required coverage, closed findings and tests. Integrate accepted work, validate the final product head and close the business plan. When Audit is enabled, keep delivery PENDING until the canonical pack/pair is complete or a real delivery obstacle is explicitly reported; only then send the final feature-delivery response.
 
 This applies with audit OFF, one section, and explicit invocation. **There is no runtime `workflow.py`, `execution_artifacts.py`, `advisor_flow.py`, STATE.json, SFD_PLAN_V4 schedule or ready/register/approve/accept CLI.** Do not restore them or edit a product plan to satisfy their historical formats.
+
+## Audit handoff — required, not an extra product gate
+
+**Audit remains LIVE by default; only an explicit user `audit off` disables it.** User-explicit invocation, one section, no-commit mode, a `continue` request, an environment gap or a new session never silently opts out.
+
+- **Activate / take over:** before planning or resumed dispatch, read [audit-mode.md](references/audit-mode.md) once in this context. In existing FEATURE-STATE record `Audit mode: LIVE`, `Audit delivery: PENDING`, current feature/run, evidence location and available source-session pointers. For OFF, retain the user's explicit authority. Reuse existing current-feature evidence; a missing Audit line is not permission to turn it off.
+- **Preserve at real transitions:** save the actual request/Grill Me corrections, reviewer and worker results, candidate/check references, model attempts and scope decisions once in the existing artifacts or trace. Main owns the one final pack; workers return evidence, not their own audit packs. Keep unknown history UNKNOWN/RECONSTRUCTED rather than inventing LIVE events. Do not log every read/poll or add product work for telemetry.
+- **Resume:** carry the same feature's Audit mode, scope, source sessions and pending delivery across continuation/compaction/takeover. Inspect only missing relevant evidence. Status replies and interruptions preserve PENDING; they do not require a fresh ZIP each turn.
+- **Finish:** close the business PLAN at its actual delivered candidate, but retain `Audit delivery: PENDING` and `Next: finalize current-feature audit` until the packaging outcome is known. Never write `Next: none` while Audit is pending. Use the existing atomic finalizer, with at most one bounded artifact-only correction after failure. Keep working evidence when reporting a real obstacle; do not fabricate a finalizer failure or silently call it complete.
+- **Final feature-delivery reply:** state product readiness separately and include **Audit COMPLETE** with the actual main ZIP and required companion; **Audit OFF** with explicit user authority; or **AUDIT_PACK_INCOMPLETE** with the real obstacle, actual attempt/correction (or why invocation was impossible) and preserved working directory. A COMPLETE_WITH_GAPS pack may be delivered with its gaps stated. A missing/stale required companion is incomplete, not complete.
+
+Only this skill's process pack belongs at `~/Desktop/audit-pack/xxx.zip`; actual ZAS attempts use `xxx-zas.zip`. No actual ZAS means NOT_USED, not an empty companion. No `.sha256` sidecars. A later request is new work by default: it neither erases the original pending audit nor inherits its earlier CLEAN as evidence for new code. Preserve the closed boundary and prior evidence without reopening the old PLAN for packaging.
+
+Only the basic section structure check is a routine **process validator**. Retained safe-file/pack/session/trace/ZAS utilities run only for their corresponding operation, never to schedule or admit code. Audit OFF does not waive execution artifacts; Audit gaps never require another reviewer, test, repair, Advisor or ZAS call. Do not restore JSON state, actor receipts, approval hashes or ready/register/approve gates.
 
 ## Stop before dispatch — review completion is not acceptance
 
@@ -51,7 +65,7 @@ Read this root file once per fresh context. Then load only the reference for the
 - Actual ZAS call only: [ZAS adapter](references/zcode-mcp-adapter.md); observe only on suspicion, using [progress supervision](references/zas-progress-supervision.md).
 - Hard cap / external Advisor only when triggered: [recovery](references/recovery-and-migration.md), [Advisor](references/advisor-escalation.md).
 - Final integration: [integration and tests](references/integration-and-testing.md).
-- Audit capture/finalization: [audit](references/audit-mode.md), with [ZAS companion](references/zas-audit.md) only if ZAS was used.
+- Audit at activation/takeover and finalization: [audit](references/audit-mode.md), read once per fresh context before planning/resumed dispatch; reread relevant completion instructions at final handoff. Read [ZAS companion](references/zas-audit.md) only for actual ZAS use. Do not reread the full reference at every dispatch.
 
 ## Composable planning knowledge, not additional authority
 
@@ -135,19 +149,11 @@ External human Advisor remains a rare independent path even audit OFF. Apply the
 
 Before final integration, list `unproven_composition`; only a nonempty concrete list warrants another integration reviewer. Targeted checks follow affected changes, section/package checks cover the frozen candidate, final feature checks cover the assembled product. Reuse unchanged-head/environment evidence; a new reviewer does not mean fresh CI. Later product/test edits require closure of the changed range, not repeating accepted history.
 
-Close with exact delivered head, real review/check references, known environment/product gaps and remaining owner decisions. Record COMPLETED and archive the local workset only under applicable file-operation authority. Never leave the old plan open merely to accommodate a future request.
-
-## Audit and safe utilities
-
-Audit remains LIVE by default. Preserve the actual request/Grill Me corrections, phase results, model assignment/actual attempts, repair cost, reviewer slots, parallel wait/conflicts, and external Advisor outcomes. Record major transitions, not every grep. Do not block implementation on telemetry schema gaps or rebuild past metadata.
-
-Only the basic section structure check is a routine **process validator**. Retained helpers perform deterministic operations: safe Git exclude, atomic process/paired ZAS ZIP packaging, bounded session extraction, optional trace summaries, Advisor Git export, optional ZAS wire-response validation. Use each only when its operation occurs; they do not schedule or admit code.
-
-Final audit: use the retained atomic canonical finalizer once, with one bounded audit-only correction if needed. Pack failures are separately reported; they cannot invent a code finding. Only this Skill's typed process pack belongs at `~/Desktop/audit-pack/xxx.zip`; ZAS details belong at `xxx-zas.zip`, never unrelated audits or `.sha256` sidecars. No extra model call or test to improve an audit record.
+Close with exact delivered head, real review/check references, known environment/product gaps and remaining owner decisions. Record product COMPLETED separately from Audit delivery; preserve the current-feature workset until the required pack is delivered or retain its exact location for an incomplete handoff. Archive only under applicable file-operation authority. Never leave the old plan open merely to accommodate a future request.
 
 ## Brownfield continuation
 
-For a new session on an existing approved feature: inspect the current requirements, PLAN, actual source/Git and the relevant original reviewer result once. Preserve valid code and findings. If only old JSON/receipt formats are absent, write a concise handoff note and proceed under this version; do not manufacture approval, actor IDs or old hashes. If the report belongs to another feature, do not reuse it. Missing genuine review coverage calls for the smallest necessary independent pass; metadata translation alone never does.
+For a new session on an existing approved feature: inspect the current requirements, PLAN, actual source/Git and the relevant original reviewer result once. Also inherit its Audit mode, scope, evidence pointers and pending delivery before resuming; a new session is not a new feature or implicit audit off. Do not reconstruct unrelated historical tasks. Preserve valid code and findings. If only old JSON/receipt formats are absent, write a concise handoff note and proceed under this version; do not manufacture approval, actor IDs or old hashes. If the report belongs to another feature, do not reuse it. Missing genuine review coverage calls for the smallest necessary independent pass; metadata translation alone never does.
 
 ## Non-negotiable anti-expansion rules
 

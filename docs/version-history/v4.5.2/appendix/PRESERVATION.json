@@ -1,0 +1,62 @@
+{
+  "input_head": "753c9ff",
+  "all_input_files_retained": 378,
+  "existing_changed_files": {
+    "VERSION": {
+      "input": "67e28833d99a5cb09ef3142c738e71d538589fdb21cbed46bbd447b4bbf30060",
+      "output": "43e9fb767a7c3ee185de160da7cea73984111c95dd0c4a9e0a58d5f0e9464746"
+    },
+    "README.md": {
+      "input": "e3739c1a5fa16f9fabffb5f8cdf40928e97650f14de73be591fbb7abb157f47b",
+      "output": "c85c8eab745c5c69629bfc985c48a7259a9802f1610222c26a8cded227e34ac1"
+    },
+    "tests/test_v45_planning.py": {
+      "input": "c328e8a3bd237cee11d8afe35f5bb52658ddfa545da1199d67b89a0263e20989",
+      "output": "105d93c6217f3ed253c959db75ede4205f5741c833d1f792df0b345b3d710bb8"
+    },
+    "tests/test_project.py": {
+      "input": "4454582b98433d418f58308ccaf0ad1926b55c66467c8f4d5ad352c0c8c47af3",
+      "output": "1ce0c17e95b2c980ec06b8c1287ea88cad42d4a9ab33566b2aec9bd181260a68"
+    },
+    "tests/test_v441_handoffs.py": {
+      "input": "c1aec29133bf63c2fd187cbd032ca9def3bb2a75d4c19b7a62e772b895238f87",
+      "output": "f5d6836ff20e7e2983c66be30778ed00c25c0127c7efa45a0afe2eb290d14797"
+    },
+    "docs/CHANGE_LOG.md": {
+      "input": "75dbc859ce653a07b79dc064a979e95ebfe137080e67e2c43bf6c89e3347bd8c",
+      "output": "f5ded79587583aa648ad895aa917e10fb23d8a35b2db0fde98d39e3b946f443c"
+    },
+    "skill/sectioned-feature-development/VERSION": {
+      "input": "67e28833d99a5cb09ef3142c738e71d538589fdb21cbed46bbd447b4bbf30060",
+      "output": "43e9fb767a7c3ee185de160da7cea73984111c95dd0c4a9e0a58d5f0e9464746"
+    },
+    "skill/sectioned-feature-development/SKILL.md": {
+      "input": "3a98bbdffa8d0cb9f2bb72571729a125da434e18a3b404fb47c5d607c70c3d7b",
+      "output": "1daa8d3272695d4d60a39214382d488d9f0cd48560e58be8f67b6639570e17e0"
+    },
+    "skill/sectioned-feature-development/assets/FEATURE-STATE.template.md": {
+      "input": "3d89c25cbb9b680fb1a2f5679c895f8f86f1013ba0be3f3c62d479583180651a",
+      "output": "414f9be51921aa664aeaf7c8b8b65d83a33feae030973354113dc84fb1abd325"
+    },
+    "skill/sectioned-feature-development/references/audit-mode.md": {
+      "input": "dc9a9ae32a4d3d41defefcfd090f0863769c6256d0e4c1efac7446e5118a3125",
+      "output": "96585383c27cbf984f3cb53a70537b0f9d9eab64658508cedffb69d9871c29d1"
+    },
+    "skill/sectioned-feature-development/references/artifact-lifecycle.md": {
+      "input": "f81703143e91f775939fc483309c8950fce9ce0beee2b1aa337de85c6cb87aa3",
+      "output": "d96115425d6e4c0c20f52dae072eb7587e66f93440a21a76924d83b5f198c455"
+    }
+  },
+  "protected_counts": {
+    "prior_history": 220,
+    "agents": 7,
+    "companion": 9,
+    "skill_script_files": 14,
+    "planning_library": 65
+  },
+  "runtime_scripts_changed": false,
+  "installer_changed": false,
+  "agent_configs_changed": false,
+  "companion_changed": false,
+  "old_history_changed": false
+}

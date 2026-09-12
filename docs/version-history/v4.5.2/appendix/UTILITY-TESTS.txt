@@ -1,0 +1,24 @@
+test_nontriggers_do_not_include_first_hard_cap (test_advisor_pack.AdvisorTriggerTests.test_nontriggers_do_not_include_first_hard_cap) ... ok
+test_finalize_is_canonical_atomic_and_idempotent (test_audit_finalize.AuditFinalizeTest.test_finalize_is_canonical_atomic_and_idempotent) ... /tmp/tmp2gckpnbr/demo-repo/.agent-work/audit/demo/TRACE.jsonl
+ok
+test_foreign_audit_kind_is_rejected (test_audit_finalize.AuditFinalizeTest.test_foreign_audit_kind_is_rejected) ... /tmp/tmpr3pwacqa/demo-repo/.agent-work/audit/demo/TRACE.jsonl
+ok
+test_raw_session_jsonl_is_rejected (test_audit_finalize.AuditFinalizeTest.test_raw_session_jsonl_is_rejected) ... /tmp/tmpr6r1jkji/demo-repo/.agent-work/audit/demo/TRACE.jsonl
+ok
+test_stale_identity_head_is_rejected (test_audit_finalize.AuditFinalizeTest.test_stale_identity_head_is_rejected) ... /tmp/tmpa9ma8jdl/demo-repo/.agent-work/audit/demo/TRACE.jsonl
+ok
+test_concurrent_append_uses_unique_monotonic_sequences (test_audit_trace.AuditTraceTest.test_concurrent_append_uses_unique_monotonic_sequences) ... ok
+test_current_family_event_is_valid (test_audit_trace.AuditTraceTest.test_current_family_event_is_valid) ... ok
+test_init_append_validate_and_summary (test_audit_trace.AuditTraceTest.test_init_append_validate_and_summary) ... ok
+test_invalid_invocation_source_is_rejected (test_audit_trace.AuditTraceTest.test_invalid_invocation_source_is_rejected) ... ok
+test_sequence_gap_and_unknown_event_degrade_but_do_not_invalidate (test_audit_trace.AuditTraceTest.test_sequence_gap_and_unknown_event_degrade_but_do_not_invalidate) ... ok
+test_structured_result_summary_does_not_crash (test_audit_trace.AuditTraceTest.test_structured_result_summary_does_not_crash) ... ok
+test_accepts_equivalent_existing_pattern (test_ensure_agent_work_untracked.EnsureAgentWorkUntrackedTests.test_accepts_equivalent_existing_pattern) ... ok
+test_adds_local_exclude_and_is_idempotent (test_ensure_agent_work_untracked.EnsureAgentWorkUntrackedTests.test_adds_local_exclude_and_is_idempotent) ... ok
+test_refuses_when_agent_work_is_tracked (test_ensure_agent_work_untracked.EnsureAgentWorkUntrackedTests.test_refuses_when_agent_work_is_tracked) ... ok
+test_extracts_repo_user_messages_and_redacts_secret (test_session_evidence.SessionEvidenceTest.test_extracts_repo_user_messages_and_redacts_secret) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 21.443s
+
+OK

@@ -26,8 +26,15 @@ class V441HandoffContractTests(unittest.TestCase):
         self.assertEqual(digest(R/'scripts/install.py'), BASE['installer_sha256'])
 
     def test_history_and_unrelated_policies_unchanged(self):
+        # These two files had an authorized poll->wait change in supplied HEAD 753c9ff.
+        # Keep historical snapshots untouched; pin only those files to the actual input.
+        actual = json.loads((R/'docs/version-history/v4.5.2/appendix/INPUT-HASHES.json').read_text())
+        inherited_changes = {
+            'skill/sectioned-feature-development/references/external-reviewer-orchestration.md',
+            'skill/sectioned-feature-development/references/zcode-mcp-adapter.md',
+        }
         for name, value in {**BASE['unchanged_history'], **BASE['unchanged_policy_files']}.items():
-            self.assertEqual(digest(R/name), value, name)
+            self.assertEqual(digest(R/name), actual[name] if name in inherited_changes else value, name)
 
     def test_seven_roles_bindings_stay_the_same(self):
         current = {p.name:tomllib.loads(text(p)) for p in (R/'agents').glob('*.toml')}
@@ -127,8 +134,8 @@ class V441HandoffContractTests(unittest.TestCase):
 
     def test_version_and_frontmatter(self):
         import re
-        self.assertEqual(text(R/'VERSION').strip(),'4.5.1')
-        self.assertEqual(text(S/'VERSION').strip(),'4.5.1')
+        self.assertEqual(text(R/'VERSION').strip(),'4.5.2')
+        self.assertEqual(text(S/'VERSION').strip(),'4.5.2')
         for skill in [S,C]:
             source=text(skill/'SKILL.md')
             match=re.match(r'^---\n(.*?)\n---\n',source,re.S)

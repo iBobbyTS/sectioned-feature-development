@@ -25,7 +25,8 @@ class ProjectTests(unittest.TestCase):
   t=(R/'skill/sectioned-feature-development/references/zcode-mcp-adapter.md').read_text()
   import json
   actual=json.loads((R/'docs/version-history/v4.3/SOURCE-zcode-subagent-public-api.json').read_text())
-  names={'zcode_subagent_'+n for n in ['status','spawn','poll','list','send','respond','cancel','result','close']}
+  # Input commit 753c9ff already renamed the adapter's public wait tool.
+  names={'zcode_subagent_'+n for n in ['status','spawn','wait','list','send','respond','cancel','result','close']}
   self.assertTrue(all(n in t for n in names))
   self.assertIn('zas-observation/1.1',t)
   self.assertNotIn('BETA_BASELINE_LIMITED',t)

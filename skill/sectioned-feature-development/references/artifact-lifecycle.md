@@ -18,9 +18,9 @@ This is mandatory execution behavior even audit OFF. Main owns scheduling and wr
 
 ## Bootstrap and plan
 
-1. Confirm actual repository/feature/branch and preserve unrelated work. Exclude `.agent-work` once.
+1. Confirm actual repository/feature/branch and preserve unrelated work. Exclude `.agent-work` once. Before planning, read [audit-mode.md](audit-mode.md) once in this context and record Audit mode (LIVE by default), explicit OFF authority if any, current feature/run evidence scope and delivery PENDING (or explicitly authorized OFF) in FEATURE-STATE. Create/reuse the current-feature evidence location; do not create a receipt registry or fake PACK-STATE.
 2. Save confirmed user requirements, superseded instructions and real examples; preserve original dialogue for audit when available, but give workers the self-contained confirmed contract rather than irrelevant chat.
-3. Main writes complete PLAN-FULL before asking a reviewer to read it. Include models, dependencies, intermediate safety and acceptance. Select the applicable [planning knowledge](planning/router.md); merge its evidence-backed questions into this same plan, including concrete boundary examples and named consumer ownership when relevant. Label planned examples rather than claiming unrun output. Write a short FEATURE-STATE with status PLANNED, actual base and next action.
+3. Main writes complete PLAN-FULL before asking a reviewer to read it. Include models, dependencies, intermediate safety and acceptance. Select the applicable [planning knowledge](planning/router.md); merge its evidence-backed questions into this same plan, including concrete boundary examples and named consumer ownership when relevant. Label planned examples rather than claiming unrun output. Write a short FEATURE-STATE with product status PLANNED, actual base and next action; keep the Audit fields established at entry rather than replacing them with a product-only summary.
 4. Validate only IDs/dependencies/parenting/impl choices. A same-file plan that passes this basic check still needs semantic review.
 5. For automatic activation wait for first-plan human approval; explicit implementation bypasses only that pause.
 
@@ -43,15 +43,19 @@ Already reviewed plans can resume from their actual current-feature evidence. Di
 7. On admitted defects, use a real delegated repairer, targeted tests and delta verification. On acceptance, record the actual justification and head. No script is asked to grant acceptance.
 8. In parallel, integrate accepted worker commits serially into the feature branch; record integrated head before consumers start.
 
-A worker can return Markdown. Do not make it emit a custom machine receipt solely to unlock the next phase. Content must be truthful and adequate: missing test/review evidence is not fixed by changing a label.
+A worker can return Markdown. Do not make it emit a custom machine receipt solely to unlock the next phase. Content must be truthful and adequate: missing test/review evidence is not fixed by changing a label. These same saved outputs and phase notes are the live audit evidence; main preserves their candidate/feature attribution once, without extra worker audit tasks or per-poll logging.
 
 ## Recovery and completion
 
-After compaction or takeover, read current PLAN, FEATURE-STATE and active TASK/review. For every actor marked live or unresolved, consult its actual native-or-ZAS lifecycle before dispatch; unknown liveness is not implicit completion, and writing a new label cannot stop an actor. Read raw evidence only for the unresolved point; do not enumerate every historical workflow file. Preserve missing historical metadata as UNKNOWN. At hard cap, record the compact diagnosis and backup ref only when actually needed.
+After compaction or takeover, read current PLAN, FEATURE-STATE and active TASK/review. Read the Audit handoff for this same feature and inherit its LIVE/OFF authority, run/evidence/source-session pointers and pending delivery. A missing line defaults to LIVE prospectively with historical gaps marked, not implicit OFF or permission to manufacture past events. Read an existing finalization receipt only when needed; its absence before packaging is not a dispatch gate. For every actor marked live or unresolved, consult its actual native-or-ZAS lifecycle before dispatch; unknown liveness is not implicit completion, and writing a new label cannot stop an actor. Read raw evidence only for the unresolved point; do not enumerate every historical workflow file. Preserve missing historical metadata as UNKNOWN. At hard cap, record the compact diagnosis and backup ref only when actually needed.
 
-When implementation, required review and final checks are complete, append closure date/head/readiness to FEATURE-STATE and mark the PLAN closed without changing its approved business text. Preserve its old version when an explicit reopen is authorized. Default later requests get fresh classification.
+When implementation, required review and final checks are complete, append closure date/head/readiness to FEATURE-STATE and mark the business PLAN closed without changing its approved business text. Product completion is not Audit delivery: when Audit is enabled leave `Audit delivery: PENDING` and `Next: finalize current-feature audit`, then package the already-saved evidence before the final feature-delivery reply. Do not set `Next: none` while this obligation remains.
 
-Audit packaging uses these real artifacts. Audit OFF changes no above behavior. Audit helper failure does not invalidate already-established product evidence.
+Report Audit COMPLETE with actual main/required ZAS paths, OFF with explicit user authority, or AUDIT_PACK_INCOMPLETE with a real obstacle, actual correction or inability to invoke packaging, and preserved working path. A product-ready result may coexist with incomplete Audit; never fabricate success or redo product gates for the pack. A status update, owner pause or interruption only carries the pending handoff; it need not emit another ZIP.
+
+Preserve the old PLAN/version and any Audit handoff when starting separately classified later work. Do not add that later delta to the old closed contract or cite an earlier CLEAN as its review. Resolve any existing pending packaging from its original frozen evidence, not the later worktree disguised as the earlier candidate. No automatic re-audit of already delivered historical tasks is required by this update.
+
+Audit packaging uses these real artifacts. Audit OFF changes no execution behavior. Audit helper failure does not invalidate already-established product evidence. Archive only after evidence is safe; incomplete delivery retains the working directory for later recovery without opening the business PLAN.
 
 ## Bounded recovery from format trouble
 

@@ -1,6 +1,19 @@
-# Sectioned Feature Development 4.5.1
+# Sectioned Feature Development 4.5.2
 
-本版纠正 4.5 的知识分类：**domain 与 language 独立，框架／运行时／平台再放入 adapters**。覆盖范围不再局限于用户举例；仅改规划资料与接线，不增加脚本机械校验、流程阶段、review 轮数或模型组合。
+本版只恢复 Audit 的明确操作交接：**默认 LIVE、启动登记、接管继承、产品完成后封包、最终回复明确交付结果**。不补救本轮旧任务，不恢复机械调度门禁，不修改运行脚本、规划知识库、七份 Agent 或配套 code-review。
+
+## 4.5.2 的 Audit 交付责任
+
+- 主线程在规划／接管派发前读 Audit reference 一次，在现有 FEATURE-STATE 写明模式、当前 feature/run、证据位置和 PENDING。只有用户明确 `audit off` 才关闭。
+- 实施时保存原始需求、更正、真实 worker/reviewer 输出、候选与检查证据一次。trace 工具可选；不记录每个 grep/poll，不要求 worker 各自封包。
+- continue、新会话、compaction 均继承当前功能的 Audit 待办；普通状态回复、人工澄清和中断不用每次出 ZIP。
+- 业务 PLAN 应按实际完成边界关闭；Audit 未交付时不能同时写 `Next: none`。用已有 finalizer 收口主包，真实 ZAS 调用才有同名 `-zas.zip`。
+- 最终 feature 交付单独报告 Audit COMPLETE、显式 OFF 或实际 AUDIT_PACK_INCOMPLETE。只允许一次有界 audit-only 修正；缺日志不重跑 review／测试、不造历史 LIVE 事件、不升级产品 scope。
+- 后续新要求独立分类，不把新修改或旧 CLEAN 混进已关闭合同；升级不要求重新审计、重审或重做历史项目。
+
+[本轮修改](docs/version-history/v4.5.2/UPDATES.md) · [验证与边界](docs/version-history/v4.5.2/VALIDATION.md)
+
+4.5.1 的四轴规划继续保留：**domain 与 language 独立，框架／运行时／平台再放入 adapters**；不新增脚本校验、review 轮数或模型组合。
 
 ## 四轴组合式规划
 
@@ -33,7 +46,7 @@ PLAN 仍区分 SOURCE_INSPECTED / OBSERVED / PLANNED / UNKNOWN；producer HANDOF
 
 ## 执行顺序
 
-主线程写完整 REQUIREMENTS 与 PLAN-FULL → 一次基础结构校验 → 实际独立 PLAN review → 主线程 admission → 保存当前 TASK 并真实委派 → HANDOFF／候选冻结 → bounded review／delta repair／必要 fresh final → 父级验收、集成与最终验证 → 关闭计划 → 规范 Audit。
+主线程写完整 REQUIREMENTS 与 PLAN-FULL → 一次基础结构校验 → 实际独立 PLAN review → 主线程 admission → 保存当前 TASK 并真实委派 → HANDOFF／候选冻结 → bounded review／delta repair／必要 fresh final → 父级验收、集成与最终验证 → 关闭业务计划、保留 Audit PENDING → canonical Audit 完成或真实失败说明 → 最终交付。
 
 自动触发仍在第一份 PLAN 后等人工批准；显式调用仅免这一暂停。Audit OFF 不免执行产物。大于一个业务 section 或一个可执行 subsection 必须独立分支与提交。已完成功能后新增需求重新评估。
 
@@ -65,7 +78,7 @@ PLAN 仍区分 SOURCE_INSPECTED / OBSERVED / PLANNED / UNKNOWN；producer HANDOF
 - [@code_reviewer](subagent://code_reviewer)：Astra high。
 - [@code_explorer](subagent://code_explorer)：Luna xhigh，只做有界证据地图。
 
-七个角色及全部 model/effort/sandbox 配置保持。本版只有 plan_reviewer 的知识路由措辞按新分类调整；其余六份角色逐字保留。任务—模型分级仍是待真实样本验证的策略，不是已证明成本最优。Grill Me 在界面使用 Astra high 仍是起始建议，只写在 README；确认后的自包含需求合同可单独交接，原访谈保留为审计 provenance。
+七个角色及全部 model/effort/sandbox 配置保持。本版七份 Agent 全部逐字保留；4.5.1 的知识路由措辞继续适用。任务—模型分级仍是待真实样本验证的策略，不是已证明成本最优。Grill Me 在界面使用 Astra high 仍是起始建议，只写在 README；确认后的自包含需求合同可单独交接，原访谈保留为审计 provenance。
 
 ## 安装
 
@@ -74,11 +87,11 @@ python3 scripts/install.py                      # dry run
 python3 scripts/install.py --apply --replace    # 备份后完整替换两份 Skill 和七份 Agent
 ```
 
-**必须更新完整项目中的两份 Skill 和七份 Agent，不只替换根 SKILL.md。** 描述层的 native/ZAS 区分位于 agent TOML，旧会话可能已缓存旧配置，优先在更新后使用新会话。
+**本次必须一并更新主 Skill 的根文件、artifact lifecycle、FEATURE-STATE 模板和 audit-mode，而不是只替换根 SKILL.md。** 完整项目仍附两份 Skill 和七份 Agent；Agent 与 code-review 内容没有变化。已安装完整 4.5.1 时，可备份后用单独 Skill ZIP 完整替换该主 Skill 目录；完整项目安装命令仍为下列已有命令。新会话读取新版，进行中任务只前瞻继承当前待办，不补造历史证据。
 
 尊重 `$CODEX_HOME`（默认 `~/.codex`）；不覆盖 AGENTS.md/global config/无关 Agent。必须完整替换同名 Skill，不以增量覆盖留下旧 gate 脚本。安装器按确切目标先备份，因此这不授权清除产品仓库内容。
 
-新会话读到 4.5.1 后，不再“升级”旧计划的 JSON schema。保存旧状态为历史，核对当前业务计划、相关真实 review 和 source/Git 一次，继续未接受部分。真实缺口仍需有界补证据，不能造回执。
+新会话读到 4.5.2 后，不再“升级”旧计划的 JSON schema。保存旧状态为历史，核对当前业务计划、相关真实 review 和 source/Git 一次，继续未接受部分。真实缺口仍需有界补证据，不能造回执。
 
 ## 文件
 
