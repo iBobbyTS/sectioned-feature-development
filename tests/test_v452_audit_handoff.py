@@ -11,6 +11,7 @@ R = Path(__file__).resolve().parents[1]
 S = R / 'skill/sectioned-feature-development'
 H = R / 'docs/version-history/v4.5.2'
 BASE = json.loads((H/'appendix/INPUT-HASHES.json').read_text())
+CHANGED_453 = set(json.loads((R/'docs/version-history/v4.5.3/appendix/AUTHORIZED-CHANGES.json').read_text()))
 AUDIT_FILES = {
     'SKILL.md', 'references/artifact-lifecycle.md',
     'assets/FEATURE-STATE.template.md', 'references/audit-mode.md',
@@ -113,7 +114,7 @@ class AuditHandoff452Tests(unittest.TestCase):
         prefixes = ('skill/sectioned-feature-development/scripts/', 'scripts/', 'agents/',
                     'skill/code-review/', 'skill/sectioned-feature-development/references/planning/')
         for rel, expected in BASE.items():
-            if rel.startswith(prefixes):
+            if rel.startswith(prefixes) and rel not in CHANGED_453:
                 self.assertEqual(digest(R/rel), expected, rel)
         expected_scripts = {rel for rel in BASE if rel.startswith('skill/sectioned-feature-development/scripts/')}
         actual_scripts = {p.relative_to(R).as_posix() for p in (S/'scripts').rglob('*')
@@ -126,12 +127,12 @@ class AuditHandoff452Tests(unittest.TestCase):
                 self.assertEqual(digest(R/rel), expected, rel)
             if rel.startswith('skill/sectioned-feature-development/'):
                 short=rel.removeprefix('skill/sectioned-feature-development/')
-                if short not in AUDIT_FILES | {'VERSION'}:
+                if short not in AUDIT_FILES | {'VERSION'} and rel not in CHANGED_453:
                     self.assertEqual(digest(R/rel), expected, rel)
 
     def test_release_version_primary_only(self):
-        self.assertEqual((R/'VERSION').read_text().strip(), '4.5.2')
-        self.assertEqual((S/'VERSION').read_text().strip(), '4.5.2')
+        self.assertEqual((R/'VERSION').read_text().strip(), '4.5.3')
+        self.assertEqual((S/'VERSION').read_text().strip(), '4.5.3')
         self.assertIn('sfd-delegated-review/4.2', (R/'skill/code-review/references/delegated-pass.md').read_text())
 
 

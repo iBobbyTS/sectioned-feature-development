@@ -106,7 +106,7 @@ When adopting/activating mid-feature:
 2. Preserve correct code, accepted sections, tests, closed findings, and applicable review coverage; do not rewrite history or restart from base merely for workflow purity.
 3. Resolve branch transition before continuing:
    - on `main` with uncommitted work, create/switch to the feature branch and carry the worktree changes;
-   - on non-`main`, ask the three-way base choice;
+   - on an unrelated non-`main` branch, ask the user to choose a base: `main`, the current branch, or `main` after an explicitly authorized merge; continuing an already authorized feature branch needs no repeat choice;
    - when feature commits already exist on local `main`, create a safety branch at current HEAD and ask before restoring/rewriting `main`.
 4. Build/review a prospective plan only for active unaccepted and remaining work. If activation was automatic, stop before plan review for user approval.
 5. Continue with delta review when a repair is already in progress; otherwise use one bounded final review if prior coverage cannot be reconstructed economically.

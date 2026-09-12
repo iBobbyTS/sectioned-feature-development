@@ -12,6 +12,7 @@ K=S/'references/planning'
 H=R/'docs/version-history/v4.5.1'
 INVENTORY=json.loads((H/'appendix/KNOWLEDGE_INVENTORY.json').read_text())
 BASE=json.loads((H/'appendix/INPUT-HASHES.json').read_text())
+CHANGED_453=set(json.loads((R/'docs/version-history/v4.5.3/appendix/AUTHORIZED-CHANGES.json').read_text()))
 CASES=json.loads((R/'tests/fixtures/planning-routing-v451.json').read_text())
 C={c['id']:c for c in CASES['cases']}
 
@@ -23,7 +24,7 @@ class Taxonomy451Tests(unittest.TestCase):
         self.assertEqual(len(list((K/'domains').glob('*.md')))-1,14)
         self.assertEqual(len(list((K/'languages').glob('*.md')))-1,20)
         self.assertEqual(len(list((K/'adapters').glob('*/*.md'))),19)
-        self.assertEqual(len(list((K/'concerns').glob('*.md'))),4)
+        self.assertEqual(len([p for p in (K/'concerns').glob('*.md') if p.name != 'INDEX.md']),4)
         self.assertEqual(len(INVENTORY),53)
 
     def test_domains_have_no_language_framework_platform_files(self):
@@ -52,12 +53,12 @@ class Taxonomy451Tests(unittest.TestCase):
     def test_indexes_are_bounded_catalogs_not_autoload(self):
         s=t(K/'router.md')
         for value in ['Do not preload','No requirement to select an entry from every axis',
-                      'Do not compute a Cartesian product','smallest set of guides','only relevant selected guides']:
+                      'Do not compute a Cartesian product','smallest set of guides','relevant selected guides']:
             self.assertIn(value,s)
 
     def test_existing_shared_core_and_concerns_unchanged(self):
-        paths=['references/planning/universal.md','references/planning/boundary-handoff.md']
-        paths += [p.relative_to(S).as_posix() for p in (K/'concerns').glob('*.md')]
+        paths=['references/planning/boundary-handoff.md']  # Universal entry policy is explicitly changed in 4.5.3.
+        paths += [p.relative_to(S).as_posix() for p in (K/'concerns').glob('*.md') if p.name != 'INDEX.md']
         for rel in paths:
             key='skill/sectioned-feature-development/'+rel
             self.assertEqual(hashlib.sha256((S/rel).read_bytes()).hexdigest(),BASE[key],key)

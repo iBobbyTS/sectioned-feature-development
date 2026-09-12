@@ -1,6 +1,6 @@
 # Planning composition examples
 
-These are hypothetical routing examples and maintainer evaluation cases, not measured model outcomes and not facts about the user's repositories. Always use the actual changed source and requirements. Common entry: router + universal; boundary-handoff is added only for a shared changed contract.
+These are hypothetical routing examples and maintainer evaluation cases, not measured model outcomes and not facts about the user's repositories. Always use the actual changed source and requirements. Common entry: router + all four short catalogs, then the source-matched guides. Universal is loaded only for a named uncovered part; boundary-handoff is added only for a shared changed contract.
 
 ## Contents
 
@@ -52,7 +52,7 @@ A table row is not a mandatory load set: select the smallest applicable guides f
 
 The supplied LMDO audit identified mismatched request keys/baseline, an incorrect visible-only assumption about the server response, and a named sibling reader still sorting by name. It does not establish the implementation of an unrelated project.
 
-For that class of task, route **universal + boundary-handoff + domain full-stack + the actual JavaScript/TypeScript language + Svelte/SvelteKit adapter**; add data-evolution/async-lifecycle only for the actual transaction or interaction changes. Do not add Java: the user's Java example is not evidence of LMDO's backend.
+For that class of task, after inspecting all four catalogs, route **domain full-stack + the actual JavaScript/TypeScript language + Svelte/SvelteKit adapter + boundary-handoff**; use universal only for an additional named uncovered boundary; add data-evolution/async-lifecycle only for the actual transaction or interaction changes. Do not add Java: the user's Java example is not evidence of LMDO's backend.
 
 A compact illustrative boundary entry could be:
 

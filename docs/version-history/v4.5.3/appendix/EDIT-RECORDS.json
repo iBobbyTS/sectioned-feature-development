@@ -1,0 +1,362 @@
+[
+  {
+    "path": "skill/sectioned-feature-development/SKILL.md",
+    "line_in_input": 83,
+    "category": "wording",
+    "reason": "The named mode, branch and timing are mandatory; no inference from list position.",
+    "before": "requires the last mode and a dedicated non-main feature branch before further code edits. Resolve an explicit no-commit conflict with the owner.",
+    "after": "requires `EXECUTE_WITH_COMMITS` and a dedicated non-main feature branch **before the next product/test edit**. Record the selected mode and branch explicitly in PLAN-FULL and FEATURE-STATE. Do not treat an existing feature branch, a plan-only request or an explicit no-commit instruction as permission to omit the execution-mode decision; resolve any conflict before implementation."
+  },
+  {
+    "path": "skill/sectioned-feature-development/SKILL.md",
+    "line_in_input": 3,
+    "category": "wording",
+    "reason": "The discovery description must name the same exact mode and threshold as the body.",
+    "before": "Multiple sections/subsections require a dedicated branch and commits.",
+    "after": "More than one section or executable subsection requires EXECUTE_WITH_COMMITS and a dedicated non-main branch."
+  },
+  {
+    "path": "skill/sectioned-feature-development/SKILL.md",
+    "line_in_input": 12,
+    "category": "wording",
+    "reason": "Name the exact actor, mode or rule instead of a positional reference.",
+    "before": "as specified below **before planning or resumed dispatch**",
+    "after": "under **Audit handoff — required, not an extra product gate** **before planning or resumed dispatch**"
+  },
+  {
+    "path": "skill/sectioned-feature-development/SKILL.md",
+    "line_in_input": 37,
+    "category": "wording",
+    "reason": "Name the exact actor, mode or rule instead of a positional reference.",
+    "before": "If an earlier `MESSAGE` conflicts with `FINAL_ANSWER`, the latter controls",
+    "after": "If an earlier `MESSAGE` conflicts with `FINAL_ANSWER`, `FINAL_ANSWER` controls"
+  },
+  {
+    "path": "skill/sectioned-feature-development/SKILL.md",
+    "line_in_input": 84,
+    "category": "wording",
+    "reason": "Name the exact actor, mode or rule instead of a positional reference.",
+    "before": "ask the user's three-way base choice unless this is continuation on the already authorized feature branch",
+    "after": "ask the user to choose branching from `main`, branching from the current branch, or merging the current branch into `main` before branching, unless continuing the already authorized feature branch"
+  },
+  {
+    "path": "skill/sectioned-feature-development/SKILL.md",
+    "line_in_input": 173,
+    "category": "wording",
+    "reason": "Name the exact actor, mode or rule instead of a positional reference.",
+    "before": "Later corrections mark conflicting earlier guidance `SUPERSEDED`; do not preserve both.",
+    "after": "Later corrections mark conflicting earlier guidance `SUPERSEDED`; retain superseded guidance as provenance only, not as an active requirement."
+  },
+  {
+    "path": "skill/sectioned-feature-development/references/scope-control.md",
+    "line_in_input": 66,
+    "category": "wording",
+    "reason": "Name the exact actor, mode or rule instead of a positional reference.",
+    "before": "If the last answer is yes, omit it.",
+    "after": "If the feature remains correct without the proposed mechanism, omit that mechanism."
+  },
+  {
+    "path": "skill/sectioned-feature-development/references/model-routing.md",
+    "line_in_input": 52,
+    "category": "wording",
+    "reason": "Name the exact actor, mode or rule instead of a positional reference.",
+    "before": "Only the first supports changing implementation models.",
+    "after": "Only a model/semantic error supports changing implementation models; plan/requirement errors, environment/tooling errors and missing evidence do not by themselves justify changing the implementation model."
+  },
+  {
+    "path": "skill/sectioned-feature-development/references/section-planning.md",
+    "line_in_input": 187,
+    "category": "wording",
+    "reason": "Name the exact actor, mode or rule instead of a positional reference.",
+    "before": "the latter is not solved by extending the plan indefinitely.",
+    "after": "`PLAN_ALREADY_REQUIRED_BUT_NOT_IMPLEMENTED` is not solved by extending the plan indefinitely."
+  },
+  {
+    "path": "skill/sectioned-feature-development/references/section-planning.md",
+    "line_in_input": 317,
+    "category": "wording",
+    "reason": "Name the exact actor, mode or rule instead of a positional reference.",
+    "before": "the latter needs the exact requirement and production test in the task packet, not more plan reviewers.",
+    "after": "`PLAN_ALREADY_REQUIRED_BUT_NOT_IMPLEMENTED` needs the exact requirement and production test in the task packet, not more plan reviewers."
+  },
+  {
+    "path": "skill/sectioned-feature-development/references/activation-and-orchestration.md",
+    "line_in_input": 28,
+    "category": "wording",
+    "reason": "Name the exact actor, mode or rule instead of a positional reference.",
+    "before": "under the explicit parallel exception below.",
+    "after": "under [Parallel limits and violations](#parallel-limits-and-violations)."
+  },
+  {
+    "path": "skill/sectioned-feature-development/references/recovery-and-migration.md",
+    "line_in_input": 109,
+    "category": "wording",
+    "reason": "Name the exact actor, mode or rule instead of a positional reference.",
+    "before": "on non-`main`, ask the three-way base choice;",
+    "after": "on an unrelated non-`main` branch, ask the user to choose a base: `main`, the current branch, or `main` after an explicitly authorized merge; continuing an already authorized feature branch needs no repeat choice;"
+  },
+  {
+    "path": "skill/sectioned-feature-development/references/activation-and-orchestration.md",
+    "line_in_input": 9,
+    "category": "wording",
+    "reason": "Name the exact actor, mode or rule instead of a positional reference.",
+    "before": "Multiple business sections or multiple executable children require committed work on a dedicated non-main branch.",
+    "after": "More than one business section or more than one executable subsection requires `EXECUTE_WITH_COMMITS` and a dedicated non-main feature branch before further product/test edits. Write the mode and authorized branch into PLAN-FULL and FEATURE-STATE; a no-commit conflict must be resolved before implementation."
+  },
+  {
+    "path": "skill/sectioned-feature-development/references/parallel-execution.md",
+    "line_in_input": 5,
+    "category": "wording",
+    "reason": "Restate the existing global rule including subsections; no new commit cadence.",
+    "before": "`len(sections)>1` implies `EXECUTE_WITH_COMMITS`, a non-main dedicated feature branch and coherent implementation/repair commits. This also holds after late adoption or a plan revision adds a second section.",
+    "after": "More than one business section **or more than one executable subsection** requires `EXECUTE_WITH_COMMITS`, a dedicated non-main feature branch and coherent implementation/repair commits. This also holds after late adoption or a plan revision crosses either threshold."
+  },
+  {
+    "path": "skill/sectioned-feature-development/references/artifact-lifecycle.md",
+    "line_in_input": 41,
+    "category": "wording",
+    "reason": "Name each mode and preserve existing coherent-commit responsibility rather than creating one commit per section.",
+    "before": "Commit only intended code/tests/docs when authorized.",
+    "after": "In `EXECUTE_WITH_COMMITS`, make the coherent implementation/repair commits required by the approved workflow, containing only intended product code/tests/docs. Do not skip these commits merely because the work is already on a feature branch. In `EXECUTE_NO_COMMIT`, do not commit; that mode cannot execute more than one business section or more than one executable subsection."
+  },
+  {
+    "path": "skill/sectioned-feature-development/assets/FEATURE-STATE.template.md",
+    "line_in_input": 5,
+    "category": "template",
+    "reason": "Name the exact actor, mode or rule instead of a positional reference.",
+    "before": "- Execution mode and branch authority:",
+    "after": "- Execution mode: PLAN_ONLY / EXECUTE_NO_COMMIT / EXECUTE_WITH_COMMITS (choose one; multiple business sections or executable subsections require EXECUTE_WITH_COMMITS):\n- Dedicated feature branch and explicit base authority:"
+  },
+  {
+    "path": "skill/sectioned-feature-development/assets/PLAN-FULL.template.md",
+    "line_in_input": 6,
+    "category": "template",
+    "reason": "Name the exact actor, mode or rule instead of a positional reference.",
+    "before": "- Execution mode: EXECUTE_WITH_COMMITS",
+    "after": "- Execution mode: EXECUTE_WITH_COMMITS\n- Mode rule: 多于一个业务 section 或多于一个可执行 subsection，必须在下一次产品/测试修改前使用 EXECUTE_WITH_COMMITS 和独立非 main feature branch；不得执行时自行省略提交。"
+  },
+  {
+    "path": "skill/sectioned-feature-development/references/planning/domains/INDEX.md",
+    "line_in_input": 3,
+    "category": "routing",
+    "reason": "Name the exact actor, mode or rule instead of a positional reference.",
+    "before": "Read only to locate a relevant guide. Select all applicable **changed** paths, not every installed technology. This index is not a checklist or requirement source.",
+    "after": "Inspect this catalog once, alongside the other three catalogs, in each fresh PLAN-authoring/review context. Select all applicable **changed** paths and read their relevant guides, not every installed technology or linked file. This index is not a product checklist or requirement source."
+  },
+  {
+    "path": "skill/sectioned-feature-development/references/planning/domains/INDEX.md",
+    "line_in_input": 22,
+    "category": "routing",
+    "reason": "Name the exact actor, mode or rule instead of a positional reference.",
+    "before": "Missing coverage uses [universal](../universal.md) plus actual concerns. A guide selects questions, not architecture, model tier, section count or extra tests.",
+    "after": "After inspecting all four catalogs and reading actual matches, use [universal](../universal.md) only for a named uncovered part. Retain independent matches; a non-applicable dimension does not need fallback. A guide selects questions, not architecture, model tier, section count or extra tests."
+  },
+  {
+    "path": "skill/sectioned-feature-development/references/planning/languages/INDEX.md",
+    "line_in_input": 3,
+    "category": "routing",
+    "reason": "Name the exact actor, mode or rule instead of a positional reference.",
+    "before": "Read only to locate a relevant guide. Select all applicable **changed** paths, not every installed technology. This index is not a checklist or requirement source.",
+    "after": "Inspect this catalog once, alongside the other three catalogs, in each fresh PLAN-authoring/review context. Select all applicable **changed** paths and read their relevant guides, not every installed technology or linked file. This index is not a product checklist or requirement source."
+  },
+  {
+    "path": "skill/sectioned-feature-development/references/planning/languages/INDEX.md",
+    "line_in_input": 28,
+    "category": "routing",
+    "reason": "Name the exact actor, mode or rule instead of a positional reference.",
+    "before": "Missing coverage uses [universal](../universal.md) plus actual concerns. A guide selects questions, not architecture, model tier, section count or extra tests.",
+    "after": "After inspecting all four catalogs and reading actual matches, use [universal](../universal.md) only for a named uncovered part. Retain independent matches; a non-applicable dimension does not need fallback. A guide selects questions, not architecture, model tier, section count or extra tests."
+  },
+  {
+    "path": "skill/sectioned-feature-development/references/planning/adapters/INDEX.md",
+    "line_in_input": 3,
+    "category": "routing",
+    "reason": "Name the exact actor, mode or rule instead of a positional reference.",
+    "before": "Read only to locate a relevant guide. Select all applicable **changed** paths, not every installed technology. This index is not a checklist or requirement source.",
+    "after": "Inspect this catalog once, alongside the other three catalogs, in each fresh PLAN-authoring/review context. Select all applicable **changed** paths and read their relevant guides, not every installed technology or linked file. This index is not a product checklist or requirement source."
+  },
+  {
+    "path": "skill/sectioned-feature-development/references/planning/adapters/INDEX.md",
+    "line_in_input": 27,
+    "category": "routing",
+    "reason": "Name the exact actor, mode or rule instead of a positional reference.",
+    "before": "Missing coverage uses [universal](../universal.md) plus actual concerns. A guide selects questions, not architecture, model tier, section count or extra tests.",
+    "after": "After inspecting all four catalogs and reading actual matches, use [universal](../universal.md) only for a named uncovered part. Retain independent matches; a non-applicable dimension does not need fallback. A guide selects questions, not architecture, model tier, section count or extra tests."
+  },
+  {
+    "path": "skill/sectioned-feature-development/references/planning/universal.md",
+    "line_in_input": 1,
+    "category": "routing",
+    "reason": "Name the exact actor, mode or rule instead of a positional reference.",
+    "before": "# Universal planning method and unmatched-stack fallback\n\nUse for every activated PLAN. The existing section-planning protocol still owns authority, review counts, roles and scope; this method supplies the decisions needed to make the plan executable.",
+    "after": "# Universal fallback for uncovered planning boundaries\n\nUse only after [router.md](router.md) and all four domain/language/adapter/concern catalogs have been inspected and matched specialized guides have been read. Apply this method only to the named uncovered part; do not replace available specialized guidance. If no specialized guide applies, this file may support the whole plan. A non-applicable dimension is not a gap. Common authority, scope and review obligations remain in the existing section-planning protocol and root Skill, regardless of whether this fallback is loaded."
+  },
+  {
+    "path": "skill/sectioned-feature-development/SKILL.md",
+    "line_in_input": 72,
+    "category": "routing",
+    "reason": "Name the exact actor, mode or rule instead of a positional reference.",
+    "before": "During existing PLAN authoring, route from the real changed path using [planning/router.md](references/planning/router.md). Read the universal method plus applicable domain/language/adapter/concern files; Domains and languages are independent; frameworks, runtimes and platforms have separate adapter guides. Full-stack + Svelte + Java is valid only when actual source supports each axis. Unknown technology uses the universal fallback, not an invented stack or extra gate.",
+    "after": "During existing PLAN authoring, first read [planning/router.md](references/planning/router.md) and **all four short catalogs**: [domains](references/planning/domains/INDEX.md), [languages](references/planning/languages/INDEX.md), [adapters](references/planning/adapters/INDEX.md), [concerns](references/planning/concerns/INDEX.md). Then read the guides matched to the actual changed path **before drafting their plan decisions**. Only after these matches are inspected may `universal.md` cover a specifically named uncovered part. Never skip catalogs or available specialized guides by choosing universal first. Catalog inspection does not mean reading every linked file or forcing a match on every axis. Reuse complete reads within the same planning context. Domains/languages remain independent; full-stack + Svelte + Java is valid only with actual source evidence."
+  },
+  {
+    "path": "skill/sectioned-feature-development/SKILL.md",
+    "line_in_input": 76,
+    "category": "routing",
+    "reason": "Name the exact actor, mode or rule instead of a positional reference.",
+    "before": "The existing independent PLAN reviewer checks the selected evidence and missing seams in its one authorized pass.",
+    "after": "The existing independent PLAN reviewer independently inspects the four catalogs, reads relevant matched guides, and checks the selected evidence and missing seams in its one authorized pass. Record the actual four-axis selections and any named universal fallback in the existing PLAN routing paragraph, not a new report."
+  },
+  {
+    "path": "skill/sectioned-feature-development/references/artifact-lifecycle.md",
+    "line_in_input": 23,
+    "category": "routing",
+    "reason": "Name the exact actor, mode or rule instead of a positional reference.",
+    "before": "Select the applicable [planning knowledge](planning/router.md); merge its evidence-backed questions into this same plan,",
+    "after": "Use [planning/router.md](planning/router.md): inspect the four domain/language/adapter/concern catalogs, read the actual matching guides, and use universal only for named uncovered parts; merge the evidence-backed questions into this same plan,"
+  },
+  {
+    "path": "agents/plan_reviewer.toml",
+    "line_in_input": 14,
+    "category": "routing",
+    "reason": "The actual native reviewer must follow catalog-first routing rather than receiving contradictory developer instructions.",
+    "before": "For PLAN work, resolve references/planning/router.md from the selected sectioned-feature-development Skill root; read universal and only evidence-matched domain/language/adapter/concern files. Compose them in this single pass. Check the actual producer/consumer request-response example and user-named readers, not route-label compliance. Missing playbook coverage falls back to universal; no library item creates product authority. Report PLAN omissions separately from behavior already specified but not implemented. No extra reviewer, receipt, route script or full-plan recheck is authorized by this library.\nSelect domains and languages independently; framework, runtime and platform adapters are separate evidence-based matches. No language implies a domain or framework; partial matches retain universal fallback. Do not preload indexes or add review per guide.",
+    "after": "For PLAN work, resolve references/planning/router.md from the selected sectioned-feature-development Skill root. Inspect all four short catalogs (domains/INDEX.md, languages/INDEX.md, adapters/INDEX.md, concerns/INDEX.md) once in this planning context, then read the matching guides before reviewing their plan decisions. Do not use the author's route list or a familiar stack as a substitute for catalog inspection. Use universal.md only for a specifically named uncovered part, after retaining all independent matches; it is not the default first read. Catalog inspection is not permission to load every linked guide or force every axis to match.\nSelect domains and languages independently; framework, runtime and platform adapters are separate evidence-based matches. Compose the relevant guides in this single pass. Check the actual producer/consumer request-response example and user-named readers, not cosmetic route-label compliance. A library item creates no product authority. Distinguish PLAN_OMISSION from PLAN_ALREADY_REQUIRED_BUT_NOT_IMPLEMENTED. No extra reviewer, receipt, route script or full-plan recheck is authorized by this library. Reuse complete reads in this context; PLAN_DELTA reads only affected routes and boundaries."
+  },
+  {
+    "path": "skill/sectioned-feature-development/assets/PLAN-REVIEW-REQUEST.template.md",
+    "line_in_input": 12,
+    "category": "routing",
+    "reason": "Name the exact actor, mode or rule instead of a positional reference.",
+    "before": "Read the Sectioned Skill's `references/planning/router.md`, universal and only the selected applicable files. Confirm routes against the actual changed path; unknown technologies use the generic fallback.",
+    "after": "Read the Sectioned Skill's `references/planning/router.md` and all four short catalogs (domain, language, adapter, concern) once in this context, then read the guides matched to actual source before reviewing the plan. Do not rely solely on the author's route list. Use universal only for a named uncovered part after retaining independent matches."
+  },
+  {
+    "path": "skill/sectioned-feature-development/assets/PLAN-FULL.template.md",
+    "line_in_input": 19,
+    "category": "routing",
+    "reason": "Name the exact actor, mode or rule instead of a positional reference.",
+    "before": "- 实际命中的 domain / language / adapter (framework/runtime/platform) / concern 文件、对应源码理由及关键版本限制：只列命中项；未知技术用 universal。",
+    "after": "- 四维目录已检查：domains/INDEX.md、languages/INDEX.md、adapters/INDEX.md、concerns/INDEX.md；不复制全目录。\n- Domain / Language / Adapter / Concern：各写实际读取的命中文件与源码理由；未适用写 NOT_APPLICABLE，已有指南覆盖相同问题可写 COVERED_BY。\n- Universal fallback：not needed，或明确尚未覆盖的技术/边界及理由；先保留并读取所有独立命中项，不能因一个未知后端就整项只用 universal。"
+  },
+  {
+    "path": "skill/sectioned-feature-development/references/planning/examples.md",
+    "line_in_input": 3,
+    "category": "routing",
+    "reason": "Name the exact actor, mode or rule instead of a positional reference.",
+    "before": "Common entry: router + universal; boundary-handoff is added only for a shared changed contract.",
+    "after": "Common entry: router + all four short catalogs, then the source-matched guides. Universal is loaded only for a named uncovered part; boundary-handoff is added only for a shared changed contract."
+  },
+  {
+    "path": "skill/sectioned-feature-development/references/planning/examples.md",
+    "line_in_input": 55,
+    "category": "routing",
+    "reason": "Name the exact actor, mode or rule instead of a positional reference.",
+    "before": "route **universal + boundary-handoff + domain full-stack + the actual JavaScript/TypeScript language + Svelte/SvelteKit adapter**;",
+    "after": "after inspecting all four catalogs, route **domain full-stack + the actual JavaScript/TypeScript language + Svelte/SvelteKit adapter + boundary-handoff**; use universal only for an additional named uncovered boundary;"
+  },
+  {
+    "path": "skill/sectioned-feature-development/SKILL.md",
+    "line_in_input": 6,
+    "category": "release",
+    "reason": "Name the exact actor, mode or rule instead of a positional reference.",
+    "before": "# Sectioned Feature Development 4.5.2",
+    "after": "# Sectioned Feature Development 4.5.3"
+  },
+  {
+    "path": "skill/sectioned-feature-development/references/section-planning.md",
+    "line_in_input": 34,
+    "category": "routing",
+    "reason": "Keep all live entry points consistent with catalog-first, specialized-first routing.",
+    "before": "Before drafting section boundaries, read [planning/router.md](planning/router.md) and universal, then only domain/language/adapter/concern files activated by the actual changed path. Use its generic fallback for unknown stacks. This is the existing PLAN phase, not an extra review, pass, script or user approval.",
+    "after": "Before drafting section boundaries, read [planning/router.md](planning/router.md) and the four short catalogs: domains/INDEX.md, languages/INDEX.md, adapters/INDEX.md and concerns/INDEX.md under references/planning/. Read the specialized guides matching the actual changed path next. Use universal only for a named uncovered part after catalog inspection and matched-guide reading; do not substitute universal for an available relevant guide. This is the existing PLAN phase, not an extra review, pass, script or user approval."
+  },
+  {
+    "path": "skill/sectioned-feature-development/references/section-planning.md",
+    "line_in_input": 36,
+    "category": "routing",
+    "reason": "Keep all live entry points consistent with catalog-first, specialized-first routing.",
+    "before": "Record selected paths and short evidence-based reasons in PLAN. Resolve overlapping advice into one boundary/example and one check. The independent PLAN reviewer uses the same selected source references but not the author's prior conversation or another reviewer's verdict.",
+    "after": "Record the four-axis assessment, paths actually read, short evidence-based reasons and any named universal fallback in the existing PLAN routing paragraph. Resolve overlapping advice into one boundary/example and one check. The independent PLAN reviewer checks the four catalogs and source to confirm matches and find omitted relevant guides; the author's selection list is evidence, not the entire available library. Do not supply the author's prior conversation or another reviewer's verdict."
+  },
+  {
+    "path": "skill/sectioned-feature-development/SKILL.md",
+    "line_in_input": 83,
+    "category": "wording",
+    "reason": "Spell out mode actions, while retaining plan-only tasks and original commit granularity.",
+    "before": "- `PLAN_ONLY`, `EXECUTE_NO_COMMIT`, and `EXECUTE_WITH_COMMITS` remain.",
+    "after": "- Execution modes: `PLAN_ONLY` permits planning/review only; `EXECUTE_NO_COMMIT` permits authorized implementation without commits; `EXECUTE_WITH_COMMITS` requires the approved coherent implementation/repair commits. A multi-unit plan may be prepared in `PLAN_ONLY`; product/test implementation must obey the following requirement."
+  },
+  {
+    "path": "README.md",
+    "line_in_input": 1,
+    "category": "release",
+    "reason": "Version increment.",
+    "before": "# Sectioned Feature Development 4.5.2",
+    "after": "# Sectioned Feature Development 4.5.3"
+  },
+  {
+    "path": "README.md",
+    "line_in_input": 3,
+    "category": "release",
+    "reason": "Keep all live entry points consistent with catalog-first, specialized-first routing.",
+    "before": "本版只恢复 Audit 的明确操作交接：**默认 LIVE、启动登记、接管继承、产品完成后封包、最终回复明确交付结果**。不补救本轮旧任务，不恢复机械调度门禁，不修改运行脚本、规划知识库、七份 Agent 或配套 code-review。",
+    "after": "本版只澄清容易漏读的执行要求，并将规划资料改为**先查看四维目录 → 读取实际命中的专用指南 → 仅对未覆盖部分使用 universal**。明确写出 EXECUTE_WITH_COMMITS，不用“最后一种模式”指代。保留 4.5.2 的完整 Audit 交接，不恢复机械调度门禁，不修改九份运行脚本、安装器、模型绑定或配套 code-review。"
+  },
+  {
+    "path": "README.md",
+    "line_in_input": 14,
+    "category": "release",
+    "reason": "Keep all live entry points consistent with catalog-first, specialized-first routing.",
+    "before": "[本轮修改](docs/version-history/v4.5.2/UPDATES.md) · [验证与边界](docs/version-history/v4.5.2/VALIDATION.md)",
+    "after": "[本轮修改](docs/version-history/v4.5.3/UPDATES.md) · [模糊措辞逐项检查](docs/version-history/v4.5.3/WORDING_REVIEW.md) · [验证与边界](docs/version-history/v4.5.3/VALIDATION.md)"
+  },
+  {
+    "path": "README.md",
+    "line_in_input": 20,
+    "category": "routing",
+    "reason": "Keep all live entry points consistent with catalog-first, specialized-first routing.",
+    "before": "入口是 [router](skill/sectioned-feature-development/references/planning/router.md)。先读 universal，然后按当前变更的真实证据选择各轴；无需每轴都选，不读取全库，也不生成语言×领域组合模板。",
+    "after": "入口是 [router](skill/sectioned-feature-development/references/planning/router.md)。计划作者与独立 PLAN reviewer 都先完整查看 domain、language、adapter、concern 四份短目录，了解可用资料，再读取实际变更路径匹配的专用指南。只有已查目录和匹配指南仍未覆盖的部分，才用 universal；全部已覆盖就不读 universal。每个新规划上下文只查目录一次，不读取全库、不强制每轴命中、不生成语言×领域组合模板。"
+  },
+  {
+    "path": "README.md",
+    "line_in_input": 27,
+    "category": "routing",
+    "reason": "Keep all live entry points consistent with catalog-first, specialized-first routing.",
+    "before": "| **横切 concern：4 份** | data-evolution、async-lifecycle、external-integration、performance | 在 router 中按实际改变的语义选择 |",
+    "after": "| **横切 concern：4 份** | data-evolution、async-lifecycle、external-integration、performance | [concerns](skill/sectioned-feature-development/references/planning/concerns/INDEX.md) |"
+  },
+  {
+    "path": "README.md",
+    "line_in_input": 51,
+    "category": "wording",
+    "reason": "Explicit threshold in Chinese; distinguish selected execution mode from per-section commit count.",
+    "before": "大于一个业务 section 或一个可执行 subsection 必须独立分支与提交。",
+    "after": "业务 section 数量 >1 **或**可执行 subsection 数量 >1，必须在下一次产品/测试修改前使用 `EXECUTE_WITH_COMMITS` 和独立非 main feature branch，并按原有 coherent implementation/repair 节奏提交；这不是新增“每节恰好一个 commit”的要求。"
+  },
+  {
+    "path": "README.md",
+    "line_in_input": 81,
+    "category": "release",
+    "reason": "Keep all live entry points consistent with catalog-first, specialized-first routing.",
+    "before": "本版七份 Agent 全部逐字保留；4.5.1 的知识路由措辞继续适用。",
+    "after": "本版仅更新 [@plan_reviewer](subagent://plan_reviewer) 的参考资料读取指令；七份 Agent 的 name/model/effort/sandbox/description 保持，另六份 Agent 逐字不变。"
+  },
+  {
+    "path": "README.md",
+    "line_in_input": 90,
+    "category": "release",
+    "reason": "Keep all live entry points consistent with catalog-first, specialized-first routing.",
+    "before": "**本次必须一并更新主 Skill 的根文件、artifact lifecycle、FEATURE-STATE 模板和 audit-mode，而不是只替换根 SKILL.md。** 完整项目仍附两份 Skill 和七份 Agent；Agent 与 code-review 内容没有变化。已安装完整 4.5.1 时，可备份后用单独 Skill ZIP 完整替换该主 Skill 目录；完整项目安装命令仍为下列已有命令。新会话读取新版，进行中任务只前瞻继承当前待办，不补造历史证据。",
+    "after": "**本次必须同时更新完整主 Skill 和 `agents/plan_reviewer.toml`，不能只替换根 SKILL.md。** 完整项目仍附两份 Skill 和七份 Agent，配套 code-review 内容和协议不变。单独 Skill ZIP 不包含个人 agents 目录的配置；自行安装时需同步本次 plan_reviewer 文件。新会话读取新版，进行中任务仅前瞻采用，不因新增目录记录重开已接受计划、补造读取证据或重跑审查。"
+  },
+  {
+    "path": "README.md",
+    "line_in_input": 94,
+    "category": "release",
+    "reason": "Keep all live entry points consistent with catalog-first, specialized-first routing.",
+    "before": "新会话读到 4.5.2 后",
+    "after": "新会话读到 4.5.3 后"
+  }
+]

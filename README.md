@@ -1,6 +1,6 @@
-# Sectioned Feature Development 4.5.2
+# Sectioned Feature Development 4.5.3
 
-本版只恢复 Audit 的明确操作交接：**默认 LIVE、启动登记、接管继承、产品完成后封包、最终回复明确交付结果**。不补救本轮旧任务，不恢复机械调度门禁，不修改运行脚本、规划知识库、七份 Agent 或配套 code-review。
+本版只澄清容易漏读的执行要求，并将规划资料改为**先查看四维目录 → 读取实际命中的专用指南 → 仅对未覆盖部分使用 universal**。明确写出 EXECUTE_WITH_COMMITS，不用“最后一种模式”指代。保留 4.5.2 的完整 Audit 交接，不恢复机械调度门禁，不修改九份运行脚本、安装器、模型绑定或配套 code-review。
 
 ## 4.5.2 的 Audit 交付责任
 
@@ -11,20 +11,20 @@
 - 最终 feature 交付单独报告 Audit COMPLETE、显式 OFF 或实际 AUDIT_PACK_INCOMPLETE。只允许一次有界 audit-only 修正；缺日志不重跑 review／测试、不造历史 LIVE 事件、不升级产品 scope。
 - 后续新要求独立分类，不把新修改或旧 CLEAN 混进已关闭合同；升级不要求重新审计、重审或重做历史项目。
 
-[本轮修改](docs/version-history/v4.5.2/UPDATES.md) · [验证与边界](docs/version-history/v4.5.2/VALIDATION.md)
+[本轮修改](docs/version-history/v4.5.3/UPDATES.md) · [模糊措辞逐项检查](docs/version-history/v4.5.3/WORDING_REVIEW.md) · [验证与边界](docs/version-history/v4.5.3/VALIDATION.md)
 
 4.5.1 的四轴规划继续保留：**domain 与 language 独立，框架／运行时／平台再放入 adapters**；不新增脚本校验、review 轮数或模型组合。
 
 ## 四轴组合式规划
 
-入口是 [router](skill/sectioned-feature-development/references/planning/router.md)。先读 universal，然后按当前变更的真实证据选择各轴；无需每轴都选，不读取全库，也不生成语言×领域组合模板。
+入口是 [router](skill/sectioned-feature-development/references/planning/router.md)。计划作者与独立 PLAN reviewer 都先完整查看 domain、language、adapter、concern 四份短目录，了解可用资料，再读取实际变更路径匹配的专用指南。只有已查目录和匹配指南仍未覆盖的部分，才用 universal；全部已覆盖就不读 universal。每个新规划上下文只查目录一次，不读取全库、不强制每轴命中、不生成语言×领域组合模板。
 
 | 轴 | 现有覆盖 | 文件入口 |
 |---|---|---|
 | **工程领域 domain：14 类** | Web 前端、后端服务、全栈、桌面应用、移动应用、CLI/自动化、库/SDK、系统/常驻服务、云平台/DevOps、数据工程、AI/ML、科学计算、嵌入式/IoT、游戏/实时应用 | [domains](skill/sectioned-feature-development/references/planning/domains/INDEX.md) |
 | **语言 language：20 份指南** | JavaScript、TypeScript、Python、Java、C#、C、C++、Go、Rust、Swift、Kotlin、PHP、Ruby、Dart、SQL、Bash/POSIX shell、PowerShell、R、Lua、HTML/CSS | [languages](skill/sectioned-feature-development/references/planning/languages/INDEX.md) |
 | **技术适配 adapter：19 份** | Frameworks：Svelte/SvelteKit、React、Next.js、Vue/Nuxt、Angular、Django、FastAPI、Spring、ASP.NET Core、Rails、Laravel、Flutter、SwiftUI/AppKit；Runtimes：Node.js、Tokio；Platforms：macOS、Apple mobile、Android、browser | [adapters](skill/sectioned-feature-development/references/planning/adapters/INDEX.md) |
-| **横切 concern：4 份** | data-evolution、async-lifecycle、external-integration、performance | 在 router 中按实际改变的语义选择 |
+| **横切 concern：4 份** | data-evolution、async-lifecycle、external-integration、performance | [concerns](skill/sectioned-feature-development/references/planning/concerns/INDEX.md) |
 
 这里的 domain 是工程任务领域，不是金融/医疗等业务行业；行业语义与合规仍由真实需求和仓库 authority 输入，不能从资料名推断。语言目录同时容纳查询、脚本、标记/样式语言，**不是声称 HTML/CSS/SQL 都是通用编程语言**。覆盖是结合公开开发者调查、仓库活动和领域代表性设计的常用集合，不是精确排名，也不等于只支持这些技术。
 
@@ -48,7 +48,7 @@ PLAN 仍区分 SOURCE_INSPECTED / OBSERVED / PLANNED / UNKNOWN；producer HANDOF
 
 主线程写完整 REQUIREMENTS 与 PLAN-FULL → 一次基础结构校验 → 实际独立 PLAN review → 主线程 admission → 保存当前 TASK 并真实委派 → HANDOFF／候选冻结 → bounded review／delta repair／必要 fresh final → 父级验收、集成与最终验证 → 关闭业务计划、保留 Audit PENDING → canonical Audit 完成或真实失败说明 → 最终交付。
 
-自动触发仍在第一份 PLAN 后等人工批准；显式调用仅免这一暂停。Audit OFF 不免执行产物。大于一个业务 section 或一个可执行 subsection 必须独立分支与提交。已完成功能后新增需求重新评估。
+自动触发仍在第一份 PLAN 后等人工批准；显式调用仅免这一暂停。Audit OFF 不免执行产物。业务 section 数量 >1 **或**可执行 subsection 数量 >1，必须在下一次产品/测试修改前使用 `EXECUTE_WITH_COMMITS` 和独立非 main feature branch，并按原有 coherent implementation/repair 节奏提交；这不是新增“每节恰好一个 commit”的要求。已完成功能后新增需求重新评估。
 
 ## 4.4.1 的两项强化
 
@@ -78,7 +78,7 @@ PLAN 仍区分 SOURCE_INSPECTED / OBSERVED / PLANNED / UNKNOWN；producer HANDOF
 - [@code_reviewer](subagent://code_reviewer)：Astra high。
 - [@code_explorer](subagent://code_explorer)：Luna xhigh，只做有界证据地图。
 
-七个角色及全部 model/effort/sandbox 配置保持。本版七份 Agent 全部逐字保留；4.5.1 的知识路由措辞继续适用。任务—模型分级仍是待真实样本验证的策略，不是已证明成本最优。Grill Me 在界面使用 Astra high 仍是起始建议，只写在 README；确认后的自包含需求合同可单独交接，原访谈保留为审计 provenance。
+七个角色及全部 model/effort/sandbox 配置保持。本版仅更新 [@plan_reviewer](subagent://plan_reviewer) 的参考资料读取指令；七份 Agent 的 name/model/effort/sandbox/description 保持，另六份 Agent 逐字不变。任务—模型分级仍是待真实样本验证的策略，不是已证明成本最优。Grill Me 在界面使用 Astra high 仍是起始建议，只写在 README；确认后的自包含需求合同可单独交接，原访谈保留为审计 provenance。
 
 ## 安装
 
@@ -87,13 +87,19 @@ python3 scripts/install.py                      # dry run
 python3 scripts/install.py --apply --replace    # 备份后完整替换两份 Skill 和七份 Agent
 ```
 
-**本次必须一并更新主 Skill 的根文件、artifact lifecycle、FEATURE-STATE 模板和 audit-mode，而不是只替换根 SKILL.md。** 完整项目仍附两份 Skill 和七份 Agent；Agent 与 code-review 内容没有变化。已安装完整 4.5.1 时，可备份后用单独 Skill ZIP 完整替换该主 Skill 目录；完整项目安装命令仍为下列已有命令。新会话读取新版，进行中任务只前瞻继承当前待办，不补造历史证据。
+**本次必须同时更新完整主 Skill 和 `agents/plan_reviewer.toml`，不能只替换根 SKILL.md。** 完整项目仍附两份 Skill 和七份 Agent，配套 code-review 内容和协议不变。单独 Skill ZIP 不包含个人 agents 目录的配置；自行安装时需同步本次 plan_reviewer 文件。新会话读取新版，进行中任务仅前瞻采用，不因新增目录记录重开已接受计划、补造读取证据或重跑审查。
 
 尊重 `$CODEX_HOME`（默认 `~/.codex`）；不覆盖 AGENTS.md/global config/无关 Agent。必须完整替换同名 Skill，不以增量覆盖留下旧 gate 脚本。安装器按确切目标先备份，因此这不授权清除产品仓库内容。
 
-新会话读到 4.5.2 后，不再“升级”旧计划的 JSON schema。保存旧状态为历史，核对当前业务计划、相关真实 review 和 source/Git 一次，继续未接受部分。真实缺口仍需有界补证据，不能造回执。
+新会话读到 4.5.3 后，不再“升级”旧计划的 JSON schema。保存旧状态为历史，核对当前业务计划、相关真实 review 和 source/Git 一次，继续未接受部分。真实缺口仍需有界补证据，不能造回执。
 
 ## 文件
+
+- [4.5.3 输入/核查](docs/version-history/v4.5.3/AUDIT_PACK_ANALYSIS.md)
+- [4.5.3 证据等级](docs/version-history/v4.5.3/RESEARCH.md)
+- [4.5.3 修改说明](docs/version-history/v4.5.3/UPDATES.md)
+- [4.5.3 保留核验](docs/version-history/v4.5.3/RETENTION.md)
+- [4.5.3 验证记录](docs/version-history/v4.5.3/VALIDATION.md)
 
 - [4.5.1 输入分析](docs/version-history/v4.5.1/AUDIT_PACK_ANALYSIS.md)
 - [4.5.1 外部研究与覆盖依据](docs/version-history/v4.5.1/RESEARCH.md)

@@ -1,6 +1,6 @@
-# Universal planning method and unmatched-stack fallback
+# Universal fallback for uncovered planning boundaries
 
-Use for every activated PLAN. The existing section-planning protocol still owns authority, review counts, roles and scope; this method supplies the decisions needed to make the plan executable.
+Use only after [router.md](router.md) and all four domain/language/adapter/concern catalogs have been inspected and matched specialized guides have been read. Apply this method only to the named uncovered part; do not replace available specialized guidance. If no specialized guide applies, this file may support the whole plan. A non-applicable dimension is not a gap. Common authority, scope and review obligations remain in the existing section-planning protocol and root Skill, regardless of whether this fallback is loaded.
 
 ## Outcome and real path
 

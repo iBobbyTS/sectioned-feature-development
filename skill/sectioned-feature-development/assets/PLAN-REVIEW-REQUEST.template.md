@@ -9,7 +9,7 @@ You are a fresh, read-only implementation-plan reviewer. Review the plan before 
 
 ## Routed planning evidence
 
-Read the Sectioned Skill's `references/planning/router.md`, universal and only the selected applicable files. Confirm routes against the actual changed path; unknown technologies use the generic fallback. Check the concrete producer/consumer example (including serializer and filtered/global meaning) and user-named readers inside this existing pass. An omitted route label alone is not a blocker, and a library checklist cannot add authority. Do not spawn one reviewer per module, expand private implementation detail or request a fresh full review for wording. In PLAN_DELTA, inspect only the changed route/boundary and invalidated dependencies.
+Read the Sectioned Skill's `references/planning/router.md` and all four short catalogs (domain, language, adapter, concern) once in this context, then read the guides matched to actual source before reviewing the plan. Do not rely solely on the author's route list. Use universal only for a named uncovered part after retaining independent matches. Check the concrete producer/consumer example (including serializer and filtered/global meaning) and user-named readers inside this existing pass. An omitted route label alone is not a blocker, and a library checklist cannot add authority. Do not spawn one reviewer per module, expand private implementation detail or request a fresh full review for wording. In PLAN_DELTA, inspect only the changed route/boundary and invalidated dependencies.
 
 ## Inputs
 

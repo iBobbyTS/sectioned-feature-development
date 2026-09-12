@@ -1,0 +1,17 @@
+test_child_is_not_independent_feature (test_v431_audit_pair.PairTests.test_child_is_not_independent_feature) ... ok
+test_encrypted_content_cannot_enter_selected_evidence (test_v431_audit_pair.PairTests.test_encrypted_content_cannot_enter_selected_evidence) ... ok
+test_idempotent_pair_reuses_both (test_v431_audit_pair.PairTests.test_idempotent_pair_reuses_both) ... ok
+test_main_cannot_embed_detailed_zas_payload (test_v431_audit_pair.PairTests.test_main_cannot_embed_detailed_zas_payload) ... ok
+test_mismatched_companion_name_rejected (test_v431_audit_pair.PairTests.test_mismatched_companion_name_rejected) ... ok
+test_missing_companion_does_not_report_completion (test_v431_audit_pair.PairTests.test_missing_companion_does_not_report_completion) ... ok
+test_no_zas_no_companion (test_v431_audit_pair.PairTests.test_no_zas_no_companion) ... ok
+test_paired_name_and_no_checksum_files (test_v431_audit_pair.PairTests.test_paired_name_and_no_checksum_files) ... ok
+test_parent_manifest_contains_no_sha_file_and_tamper_rejected (test_v431_audit_pair.PairTests.test_parent_manifest_contains_no_sha_file_and_tamper_rejected) ... ok
+test_parent_replacement_invalidates_companion (test_v431_audit_pair.PairTests.test_parent_replacement_invalidates_companion) ... ok
+test_stale_or_forged_companion_hash_blocked (test_v431_audit_pair.PairTests.test_stale_or_forged_companion_hash_blocked) ... ok
+test_wrong_run_rejected_then_only_companion_fixed (test_v431_audit_pair.PairTests.test_wrong_run_rejected_then_only_companion_fixed) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 32.885s
+
+OK

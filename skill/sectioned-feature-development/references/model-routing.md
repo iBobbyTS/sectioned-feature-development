@@ -49,7 +49,7 @@ Do not select a tier while dispatching. If genuine under-routing is observed, st
 
 ## Escalation
 
-First classify a failed attempt: model/semantic error, plan/requirement error, environment/tooling error, or missing evidence. Only the first supports changing implementation models. One bounded under-routing attempt is enough to reconsider; do not exhaust a Luna→Terra→Sol→Astra ladder. Reassign only the unsolved root cause and preserve valid work.
+First classify a failed attempt: model/semantic error, plan/requirement error, environment/tooling error, or missing evidence. Only a model/semantic error supports changing implementation models; plan/requirement errors, environment/tooling errors and missing evidence do not by themselves justify changing the implementation model. One bounded under-routing attempt is enough to reconsider; do not exhaust a Luna→Terra→Sol→Astra ladder. Reassign only the unsolved root cause and preserve valid work.
 
 Log actual selected profile, reason, requested/observed model+effort, context bytes, attempt and parent IDs, findings, repair model/time/tokens, validation/integration cost and user-discovered escapes. Never report a requested model as observed when the harness does not expose it.
 

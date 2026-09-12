@@ -1,6 +1,6 @@
 # Language planning index
 
-Read only to locate a relevant guide. Select all applicable **changed** paths, not every installed technology. This index is not a checklist or requirement source.
+Inspect this catalog once, alongside the other three catalogs, in each fresh PLAN-authoring/review context. Select all applicable **changed** paths and read their relevant guides, not every installed technology or linked file. This index is not a product checklist or requirement source.
 
 | Route | Select from evidence | Guide |
 |---|---|---|
@@ -25,4 +25,4 @@ Read only to locate a relevant guide. Select all applicable **changed** paths, n
 | Swift | Changed Swift source, actor/task, value/reference or public module boundary. | [swift.md](swift.md) |
 | TypeScript | Changed .ts/.tsx source or a public declaration/generic contract. | [typescript.md](typescript.md) |
 
-Missing coverage uses [universal](../universal.md) plus actual concerns. A guide selects questions, not architecture, model tier, section count or extra tests.
+After inspecting all four catalogs and reading actual matches, use [universal](../universal.md) only for a named uncovered part. Retain independent matches; a non-applicable dimension does not need fallback. A guide selects questions, not architecture, model tier, section count or extra tests.

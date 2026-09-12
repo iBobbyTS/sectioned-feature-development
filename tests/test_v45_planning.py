@@ -19,7 +19,7 @@ class V45PlanningKnowledgeTests(unittest.TestCase):
         inventory=json.loads(text(R/'docs/version-history/v4.5.1/appendix/KNOWLEDGE_INVENTORY.json'))
         expected={row['path'] for row in inventory} | {
             'router.md','universal.md','boundary-handoff.md','examples.md','sources.md',
-            'domains/INDEX.md','languages/INDEX.md','adapters/INDEX.md',
+            'domains/INDEX.md','languages/INDEX.md','adapters/INDEX.md','concerns/INDEX.md',
             'concerns/data-evolution.md','concerns/async-lifecycle.md',
             'concerns/external-integration.md','concerns/performance.md'}
         self.assertEqual({p.relative_to(K).as_posix() for p in K.rglob('*') if p.is_file()}, expected)
@@ -105,7 +105,7 @@ class V45PlanningKnowledgeTests(unittest.TestCase):
     def test_manual_routing_cases_are_not_reported_as_agent_runs(self):
         fixture=json.loads(text(R/'tests/fixtures/planning-routing-v45.json'))
         self.assertFalse(fixture['automatic_model_evaluation_performed'])
-        self.assertEqual(fixture['common_load'],['router.md','universal.md'])
+        self.assertEqual(fixture['common_load'],['router.md','universal.md'])  # Historical 4.5 case data, not 4.5.3 routing policy.
         self.assertEqual(len(fixture['cases']),12)
         for case in fixture['cases']:
             self.assertTrue(case['evidence'] and case['oracle'])
@@ -122,14 +122,14 @@ class V45PlanningKnowledgeTests(unittest.TestCase):
             self.assertFalse((S/'scripts'/name).exists())
 
     def test_version_is_primary_only_no_companion_protocol_bump(self):
-        self.assertEqual(text(R/'VERSION').strip(),'4.5.2')
-        self.assertEqual(text(S/'VERSION').strip(),'4.5.2')
+        self.assertEqual(text(R/'VERSION').strip(),'4.5.3')
+        self.assertEqual(text(S/'VERSION').strip(),'4.5.3')
         self.assertIn('sfd-delegated-review/4.2',text(R/'skill/code-review/references/delegated-pass.md'))
 
     def test_preserves_local_native_final_event_condition(self):
         root=text(S/'SKILL.md')
         for snippet in ['Message Type: FINAL_ANSWER','subAgentActivity.kind=completed',
-                        'If an earlier `MESSAGE` conflicts with `FINAL_ANSWER`, the latter controls']:
+                        'If an earlier `MESSAGE` conflicts with `FINAL_ANSWER`, `FINAL_ANSWER` controls']:
             self.assertIn(snippet,root)
 
     def test_sources_are_optional_and_evidence_limit_explicit(self):

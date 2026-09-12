@@ -1,0 +1,10 @@
+test_nontriggers_do_not_include_first_hard_cap (test_advisor_pack.AdvisorTriggerTests.test_nontriggers_do_not_include_first_hard_cap) ... ok
+test_finalize_is_canonical_atomic_and_idempotent (test_audit_finalize.AuditFinalizeTest.test_finalize_is_canonical_atomic_and_idempotent) ... /tmp/tmpr3kabgav/demo-repo/.agent-work/audit/demo/TRACE.jsonl
+ok
+test_foreign_audit_kind_is_rejected (test_audit_finalize.AuditFinalizeTest.test_foreign_audit_kind_is_rejected) ... /tmp/tmp39zjj81d/demo-repo/.agent-work/audit/demo/TRACE.jsonl
+ok
+test_raw_session_jsonl_is_rejected (test_audit_finalize.AuditFinalizeTest.test_raw_session_jsonl_is_rejected) ... /tmp/tmpec5ojtpn/demo-repo/.agent-work/audit/demo/TRACE.jsonl
+ok
+test_stale_identity_head_is_rejected (test_audit_finalize.AuditFinalizeTest.test_stale_identity_head_is_rejected) ... /tmp/tmpaj6h5o3o/demo-repo/.agent-work/audit/demo/TRACE.jsonl
+ok
+test_concurrent_append_uses_unique_monotonic_sequences (test_audit_trace.AuditTraceTest.test_concurrent_append_uses_unique_monotonic_sequences) ... 

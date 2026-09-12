@@ -33,7 +33,10 @@ class V441HandoffContractTests(unittest.TestCase):
             'skill/sectioned-feature-development/references/external-reviewer-orchestration.md',
             'skill/sectioned-feature-development/references/zcode-mcp-adapter.md',
         }
+        changed_453 = set(json.loads((R/'docs/version-history/v4.5.3/appendix/AUTHORIZED-CHANGES.json').read_text()))
         for name, value in {**BASE['unchanged_history'], **BASE['unchanged_policy_files']}.items():
+            if name in changed_453:
+                continue  # Explicit wording/routing edits are covered by test_v453_explicit_routing.
             self.assertEqual(digest(R/name), actual[name] if name in inherited_changes else value, name)
 
     def test_seven_roles_bindings_stay_the_same(self):
@@ -134,8 +137,8 @@ class V441HandoffContractTests(unittest.TestCase):
 
     def test_version_and_frontmatter(self):
         import re
-        self.assertEqual(text(R/'VERSION').strip(),'4.5.2')
-        self.assertEqual(text(S/'VERSION').strip(),'4.5.2')
+        self.assertEqual(text(R/'VERSION').strip(),'4.5.3')
+        self.assertEqual(text(S/'VERSION').strip(),'4.5.3')
         for skill in [S,C]:
             source=text(skill/'SKILL.md')
             match=re.match(r'^---\n(.*?)\n---\n',source,re.S)

@@ -2,7 +2,7 @@
 
 ## Branch contract
 
-`len(sections)>1` implies `EXECUTE_WITH_COMMITS`, a non-main dedicated feature branch and coherent implementation/repair commits. This also holds after late adoption or a plan revision adds a second section. Conflicting no-commit instructions stop execution before further edits.
+More than one business section **or more than one executable subsection** requires `EXECUTE_WITH_COMMITS`, a dedicated non-main feature branch and coherent implementation/repair commits. This also holds after late adoption or a plan revision crosses either threshold. Conflicting no-commit instructions stop execution before further edits.
 
 Preserve dirty user work. From main, branch creation is authorized; from another branch, obtain the user's base choice. Never reset main to move accidentally committed work. Record original base/current adoption head and ask only for destructive history changes.
 

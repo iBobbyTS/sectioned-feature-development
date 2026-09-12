@@ -1,6 +1,6 @@
 # Domain planning index
 
-Read only to locate a relevant guide. Select all applicable **changed** paths, not every installed technology. This index is not a checklist or requirement source.
+Inspect this catalog once, alongside the other three catalogs, in each fresh PLAN-authoring/review context. Select all applicable **changed** paths and read their relevant guides, not every installed technology or linked file. This index is not a product checklist or requirement source.
 
 | Route | Select from evidence | Guide |
 |---|---|---|
@@ -19,4 +19,4 @@ Read only to locate a relevant guide. Select all applicable **changed** paths, n
 | Systems software / daemons / local IPC | The feature changes a long-lived service, IPC/protocol handler, process lifecycle or resource owner. | [systems-daemons.md](systems-daemons.md) |
 | Web frontend / interaction | A requested change concerns browser-visible interaction, navigation, rendering or client state. | [web-frontend.md](web-frontend.md) |
 
-Missing coverage uses [universal](../universal.md) plus actual concerns. A guide selects questions, not architecture, model tier, section count or extra tests.
+After inspecting all four catalogs and reading actual matches, use [universal](../universal.md) only for a named uncovered part. Retain independent matches; a non-applicable dimension does not need fallback. A guide selects questions, not architecture, model tier, section count or extra tests.

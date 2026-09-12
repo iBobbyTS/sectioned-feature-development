@@ -1,0 +1,19 @@
+test_active_doc_links (test_project.ProjectTests.test_active_doc_links) ... ok
+test_agents_exact_six_combinations (test_project.ProjectTests.test_agents_exact_six_combinations) ... ok
+test_current_tool_family_only_in_adapter (test_project.ProjectTests.test_current_tool_family_only_in_adapter) ... ok
+test_exact_advisor_contract_hash (test_project.ProjectTests.test_exact_advisor_contract_hash) ... ok
+test_explicit_legacy_retirement_backs_up_exact_names (test_project.ProjectTests.test_explicit_legacy_retirement_backs_up_exact_names) ... ok
+test_install_dry_run_and_apply (test_project.ProjectTests.test_install_dry_run_and_apply) ... ok
+test_active_companion_not_historical_only (test_review_compatibility.ReviewCompatibilityTests.test_active_companion_not_historical_only) ... ok
+test_companion_only_dry_run_does_not_write (test_review_compatibility.ReviewCompatibilityTests.test_companion_only_dry_run_does_not_write) ... ok
+test_companion_only_replace_backs_up_and_preserves_others (test_review_compatibility.ReviewCompatibilityTests.test_companion_only_replace_backs_up_and_preserves_others) ... ok
+test_parent_and_companion_protocol_agree (test_review_compatibility.ReviewCompatibilityTests.test_parent_and_companion_protocol_agree) ... ok
+test_required_assurance_and_continuity_are_not_weakened (test_review_compatibility.ReviewCompatibilityTests.test_required_assurance_and_continuity_are_not_weakened) ... ok
+test_same_candidate_is_required_for_clean (test_review_compatibility.ReviewCompatibilityTests.test_same_candidate_is_required_for_clean) ... ok
+test_standalone_lifecycle_is_not_delegated_authority (test_review_compatibility.ReviewCompatibilityTests.test_standalone_lifecycle_is_not_delegated_authority) ... ok
+test_symlink_companion_target_is_rejected (test_review_compatibility.ReviewCompatibilityTests.test_symlink_companion_target_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 16.591s
+
+OK

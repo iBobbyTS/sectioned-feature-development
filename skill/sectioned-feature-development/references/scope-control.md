@@ -63,7 +63,7 @@ Before adding a mechanism, ask:
 - Does this mechanism create another API, lifecycle, state machine, migration, or failure mode?
 - Will the feature remain correct if the mechanism is omitted?
 
-If the last answer is yes, omit it.
+If the feature remains correct without the proposed mechanism, omit that mechanism.
 
 For unanchored support machinery already present in an active feature, deletion is the default. `SIMPLIFY_CURRENT` may retain only the smallest part required by a separately anchored acceptance criterion; it must not preserve a proof system merely because time was already spent building it.
 

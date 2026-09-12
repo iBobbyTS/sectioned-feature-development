@@ -4,6 +4,7 @@
 - Status: PLANNED
 - Repository / feature base / target / current branch: 由实际 Git 填写
 - Execution mode: EXECUTE_WITH_COMMITS
+- Mode rule: 多于一个业务 section 或多于一个可执行 subsection，必须在下一次产品/测试修改前使用 EXECUTE_WITH_COMMITS 和独立非 main feature branch；不得执行时自行省略提交。
 - Branch authority: 用户批准的独立 feature branch
 - Invocation: USER_EXPLICIT
 - Requirements: .agent-work/REQUIREMENTS.md
@@ -15,7 +16,9 @@
 
 ## 规划知识路由与边界样例
 
-- 实际命中的 domain / language / adapter (framework/runtime/platform) / concern 文件、对应源码理由及关键版本限制：只列命中项；未知技术用 universal。
+- 四维目录已检查：domains/INDEX.md、languages/INDEX.md、adapters/INDEX.md、concerns/INDEX.md；不复制全目录。
+- Domain / Language / Adapter / Concern：各写实际读取的命中文件与源码理由；未适用写 NOT_APPLICABLE，已有指南覆盖相同问题可写 COVERED_BY。
+- Universal fallback：not needed，或明确尚未覆盖的技术/边界及理由；先保留并读取所有独立命中项，不能因一个未知后端就整项只用 universal。
 - 多个模块合并到同一计划；选中资料不是新需求，不为每个模块新建 section、测试或 review。
 - 真实边界（如无则省略）：权威 → producer/serializer → 输入样例 → 状态/响应 → 实际 consumer → 可判错检查。
 - 样例来源：SOURCE_INSPECTED / OBSERVED / PLANNED / UNKNOWN；未实施接口不能伪装已运行。

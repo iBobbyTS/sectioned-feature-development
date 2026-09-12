@@ -1,0 +1,6 @@
+test_concurrent_append_uses_unique_monotonic_sequences (test_audit_trace.AuditTraceTest.test_concurrent_append_uses_unique_monotonic_sequences) ... ok
+test_current_family_event_is_valid (test_audit_trace.AuditTraceTest.test_current_family_event_is_valid) ... ok
+test_init_append_validate_and_summary (test_audit_trace.AuditTraceTest.test_init_append_validate_and_summary) ... ok
+test_invalid_invocation_source_is_rejected (test_audit_trace.AuditTraceTest.test_invalid_invocation_source_is_rejected) ... ok
+test_sequence_gap_and_unknown_event_degrade_but_do_not_invalidate (test_audit_trace.AuditTraceTest.test_sequence_gap_and_unknown_event_degrade_but_do_not_invalidate) ... ok
+test_structured_result_summary_does_not_crash (test_audit_trace.AuditTraceTest.test_structured_result_summary_does_not_crash) ... 

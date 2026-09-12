@@ -2,7 +2,8 @@
 
 - Status: PLANNED / EXECUTING / BLOCKED / COMPLETED
 - Repository, branch, feature base, current candidate:
-- Execution mode and branch authority:
+- Execution mode: PLAN_ONLY / EXECUTE_NO_COMMIT / EXECUTE_WITH_COMMITS (choose one; multiple business sections or executable subsections require EXECUTE_WITH_COMMITS):
+- Dedicated feature branch and explicit base authority:
 - Invocation source/timing and user approval when needed:
 - Confirmed requirements / PLAN / original review references:
 - PLAN passes selected / returned / outstanding; main admission and remaining owner decisions:

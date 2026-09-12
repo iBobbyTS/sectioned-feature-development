@@ -31,9 +31,9 @@ The plan should answer:
 
 ## Composable knowledge
 
-Before drafting section boundaries, read [planning/router.md](planning/router.md) and universal, then only domain/language/adapter/concern files activated by the actual changed path. Use its generic fallback for unknown stacks. This is the existing PLAN phase, not an extra review, pass, script or user approval.
+Before drafting section boundaries, read [planning/router.md](planning/router.md) and the four short catalogs: domains/INDEX.md, languages/INDEX.md, adapters/INDEX.md and concerns/INDEX.md under references/planning/. Read the specialized guides matching the actual changed path next. Use universal only for a named uncovered part after catalog inspection and matched-guide reading; do not substitute universal for an available relevant guide. This is the existing PLAN phase, not an extra review, pass, script or user approval.
 
-Record selected paths and short evidence-based reasons in PLAN. Resolve overlapping advice into one boundary/example and one check. The independent PLAN reviewer uses the same selected source references but not the author's prior conversation or another reviewer's verdict. A missing route name or unselected irrelevant checklist item never blocks; a concrete failure needs existing authority.
+Record the four-axis assessment, paths actually read, short evidence-based reasons and any named universal fallback in the existing PLAN routing paragraph. Resolve overlapping advice into one boundary/example and one check. The independent PLAN reviewer checks the four catalogs and source to confirm matches and find omitted relevant guides; the author's selection list is evidence, not the entire available library. Do not supply the author's prior conversation or another reviewer's verdict. A missing route name or unselected irrelevant checklist item never blocks; a concrete failure needs existing authority.
 
 For producer/consumer work, use [boundary-handoff](planning/boundary-handoff.md): original example -> actual request serialization -> owner/state -> response -> actual named consumers. Label source-inspected, observed, planned and unknown evidence. PLAN can specify a future test and its create-before-run owner; it need not execute unfinished code. Handoff replaces planned samples with actual producer evidence; consumers must use the same real shape.
 
@@ -184,7 +184,7 @@ Review in this order; do not spend time making an unnecessary mechanism internal
 7. **Contract integrity:** section boundaries preserve correct intermediate states and do not hide cross-section API/schema/state mismatches.
 8. **Assurance proportionality:** `ONE`/`TWO` is explicit or resolved from actual semantic risk; module labels, repository size, or test count alone do not force dual evidence.
 
-Within these checks, verify that a selected domain/language/adapter/concern really occurs in the changed path and the concrete example survives the actual producer/consumer boundary. Route omissions matter only if they expose a material plan defect; a playbook suggestion alone is `PLAN_NIT` or `PLAN_SCOPE_EXPANSION`, not new authority. Distinguish PLAN_OMISSION from PLAN_ALREADY_REQUIRED_BUT_NOT_IMPLEMENTED; the latter is not solved by extending the plan indefinitely.
+Within these checks, verify that a selected domain/language/adapter/concern really occurs in the changed path and the concrete example survives the actual producer/consumer boundary. Route omissions matter only if they expose a material plan defect; a playbook suggestion alone is `PLAN_NIT` or `PLAN_SCOPE_EXPANSION`, not new authority. Distinguish PLAN_OMISSION from PLAN_ALREADY_REQUIRED_BUT_NOT_IMPLEMENTED; `PLAN_ALREADY_REQUIRED_BUT_NOT_IMPLEMENTED` is not solved by extending the plan indefinitely.
 
 It does not perform repository audit, propose a preferred architecture merely because it is cleaner, add unrequested edge cases, or write implementation details beyond the minimum correction needed to make the existing plan executable.
 
@@ -314,7 +314,7 @@ Before freezing a relevant parent, include a concrete producer→public entry→
 
 For UI async changes, freeze one repeated-event trajectory (edit→save→navigate/close→late result→repeat) and the authoritative pending/identity owner. For representation changes, freeze missing/null/zero/invalid and server→serializer→browser→save round trips. For algorithms, name expected cardinality and a worst-case oracle. For runtime work, state the actual success/terminal/cancel contract and the order of deterministic versus live evidence. These lenses follow P05/P10/P12/P15/P18/P37 in the audit analysis; they do not authorize unrelated hardening.
 
-Separate PLAN_OMISSION from PLAN_ALREADY_REQUIRED_BUT_NOT_IMPLEMENTED: the latter needs the exact requirement and production test in the task packet, not more plan reviewers. Original incidents/preconditions supplied by the user are not evidence of a skill defect.
+Separate PLAN_OMISSION from PLAN_ALREADY_REQUIRED_BUT_NOT_IMPLEMENTED: `PLAN_ALREADY_REQUIRED_BUT_NOT_IMPLEMENTED` needs the exact requirement and production test in the task packet, not more plan reviewers. Original incidents/preconditions supplied by the user are not evidence of a skill defect.
 
 Sections are selected by business acceptance; subsection choice must identify a real internal module increment, a meaningful task-model boundary, or both. Never split by LOC alone or manufacture an interface merely to use a cheaper worker.
 

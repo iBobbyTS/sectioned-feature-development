@@ -1,0 +1,11 @@
+test_structured_result_summary_does_not_crash (test_audit_trace.AuditTraceTest.test_structured_result_summary_does_not_crash) ... ok
+test_accepts_equivalent_existing_pattern (test_ensure_agent_work_untracked.EnsureAgentWorkUntrackedTests.test_accepts_equivalent_existing_pattern) ... ok
+test_adds_local_exclude_and_is_idempotent (test_ensure_agent_work_untracked.EnsureAgentWorkUntrackedTests.test_adds_local_exclude_and_is_idempotent) ... ok
+test_refuses_when_agent_work_is_tracked (test_ensure_agent_work_untracked.EnsureAgentWorkUntrackedTests.test_refuses_when_agent_work_is_tracked) ... ok
+test_extracts_repo_user_messages_and_redacts_secret (test_session_evidence.SessionEvidenceTest.test_extracts_repo_user_messages_and_redacts_secret) ... ok
+test_nontriggers_do_not_include_first_hard_cap (test_advisor_pack.AdvisorTriggerTests.test_nontriggers_do_not_include_first_hard_cap) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 7.926s
+
+OK

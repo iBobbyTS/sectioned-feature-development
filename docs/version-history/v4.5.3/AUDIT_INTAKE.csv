@@ -1,0 +1,4 @@
+source,type,status,note
+user-request,requirements,in_scope,"two requested changes; no new product audit"
+sectioned-feature-development-v4.5.2-project.zip,skill-project,in_scope,"actual supplied project bytes"
+skill-creator.zip,authoring-guidance,in_scope,"local format and validation guidance"

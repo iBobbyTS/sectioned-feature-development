@@ -1,0 +1,134 @@
+{
+  "schema": "sfd-planning-routing-examples/4.5.3",
+  "automatic_model_evaluation_performed": false,
+  "runtime_router_added": false,
+  "inspect_first": [
+    "router.md",
+    "domains/INDEX.md",
+    "languages/INDEX.md",
+    "adapters/INDEX.md",
+    "concerns/INDEX.md"
+  ],
+  "cases": [
+    {
+      "id": "svelte-java",
+      "evidence": "Changed TypeScript Svelte client and plain Java HTTP service share the response contract; no Spring dependency.",
+      "read": [
+        "domains/full-stack.md",
+        "languages/typescript.md",
+        "languages/java.md",
+        "adapters/frameworks/svelte-sveltekit.md",
+        "concerns/external-integration.md",
+        "boundary-handoff.md"
+      ],
+      "universal_for": [],
+      "exclude": [
+        "adapters/frameworks/spring.md"
+      ]
+    },
+    {
+      "id": "sveltekit-not-java",
+      "evidence": "Single SvelteKit TypeScript repository; a Java example in the conversation is not repository evidence.",
+      "read": [
+        "domains/full-stack.md",
+        "languages/typescript.md",
+        "adapters/frameworks/svelte-sveltekit.md",
+        "boundary-handoff.md"
+      ],
+      "universal_for": [],
+      "exclude": [
+        "languages/java.md",
+        "adapters/frameworks/spring.md"
+      ]
+    },
+    {
+      "id": "partial-unknown",
+      "evidence": "Svelte TypeScript frontend plus an actual Elixir backend, whose runtime/language behavior is not covered.",
+      "read": [
+        "domains/full-stack.md",
+        "languages/typescript.md",
+        "adapters/frameworks/svelte-sveltekit.md",
+        "concerns/external-integration.md",
+        "boundary-handoff.md"
+      ],
+      "universal_for": [
+        "Elixir backend language/runtime behavior only"
+      ],
+      "exclude": [
+        "languages/java.md",
+        "languages/python.md"
+      ]
+    },
+    {
+      "id": "python-cli",
+      "evidence": "Python CLI changes argument validation on an existing deterministic code path; no persistence or async change.",
+      "read": [
+        "domains/cli-automation.md",
+        "languages/python.md"
+      ],
+      "universal_for": [],
+      "exclude": [
+        "adapters/frameworks/django.md",
+        "adapters/platforms/macos.md"
+      ]
+    },
+    {
+      "id": "rust-tokio",
+      "evidence": "Rust daemon changes Tokio cancellation and child process lifetime.",
+      "read": [
+        "domains/systems-daemons.md",
+        "languages/rust.md",
+        "adapters/runtimes/tokio.md",
+        "concerns/async-lifecycle.md"
+      ],
+      "universal_for": [],
+      "exclude": [
+        "adapters/frameworks/spring.md"
+      ]
+    },
+    {
+      "id": "swift-server",
+      "evidence": "Swift HTTP service uses an unlisted server framework; host happens to be macOS.",
+      "read": [
+        "domains/backend-services.md",
+        "languages/swift.md",
+        "concerns/external-integration.md"
+      ],
+      "universal_for": [
+        "unlisted server framework contract only"
+      ],
+      "exclude": [
+        "domains/desktop-apps.md",
+        "adapters/platforms/macos.md",
+        "adapters/frameworks/swiftui-appkit.md"
+      ]
+    },
+    {
+      "id": "no-specific-match",
+      "evidence": "Changed symbolic DSL proof-search contract; no listed engineering domain/language/adapter/concern covers its required planning question after catalog inspection.",
+      "read": [],
+      "universal_for": [
+        "whole specified DSL proof-search change"
+      ],
+      "exclude": [
+        "languages/java.md",
+        "languages/python.md"
+      ]
+    },
+    {
+      "id": "guide-partial-coverage",
+      "evidence": "Python helper uses an unlisted device protocol; Python and CLI behavior are covered, exact device response is not.",
+      "read": [
+        "domains/cli-automation.md",
+        "languages/python.md",
+        "concerns/external-integration.md"
+      ],
+      "universal_for": [
+        "specific unlisted device response/lifetime contract"
+      ],
+      "exclude": [
+        "adapters/frameworks/django.md"
+      ]
+    }
+  ]
+}

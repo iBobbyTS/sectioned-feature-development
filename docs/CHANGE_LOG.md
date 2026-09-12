@@ -1,3 +1,11 @@
+# 4.5.3 — 2026-09-11
+
+- 明确多 section/多 executable subsection 必须使用 `EXECUTE_WITH_COMMITS` 和独立非 main feature branch；保留原提交授权、实际 coherent commits 和节奏，不增加每节强制单独 commit。
+- 检查运行 Skill、模板和 Agent 中的次序/指示性代词，将模式、终态、模型失败类别、superseded authority 等关键对象直接命名；不重写历史文档或技术示例。
+- PLAN 作者和独立 reviewer 先查看四维短目录，再读实际匹配的 specialized guides；补 concerns/INDEX，universal 仅用于明确未覆盖部分。目录检查不等于全库读取或每轴必选。
+- 同步根 Skill、planning/router/universal、现有 PLAN/PLAN-review/external packet、原生 plan_reviewer 与 README，避免入口和 developer instructions 冲突。
+- 保留轻量 Agent 调度、九份运行脚本、基础 section 校验、六种模型组合、审查轮换/预算、Advisor、ZAS wait、4.5.2 Audit 启动/继承/完成规则；只在原 PLAN 路由段留下实际依据，不新增校验器或报告。
+
 # 4.5.2 — 2026-09-11
 
 - 恢复根执行链中的 Audit 启动、接管、真实证据保存、最终交付责任；LIVE 默认，OFF 需显式用户依据。
